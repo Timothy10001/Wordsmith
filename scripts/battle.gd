@@ -1,0 +1,632 @@
+extends Control
+
+#export variables
+var enemies: Array[PackedScene]
+var party: Array[PackedScene]
+var dialogue_resource: DialogueResource
+var battle_type: String
+var end_battle_emitted: bool = false
+
+"""
+• init
+	- clean up past battle data
+	- spawn characters
+		> add units in global as a list
+	- set up ui
+• start turn
+• wait (input from ai and player)
+• process input info (do all attacks and shit)
+• checkFinish -> Win (Enemy = 0), Lose (PlayerHealth = 0), End Turn (Loop back to start)
+"""
+#dialogue balloon for battle
+const BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
+
+
+enum STATE{
+	INIT,
+	START_TURN,
+	WAIT,
+	PROCESS,
+	CHECK_FINISH,
+	WIN,
+	LOSE,
+	END_TURN
+}
+var battle_state = STATE.INIT
+
+var paper_overlays = [
+	"res://assets/art/backgrounds/paper_overlay_001.png",
+	"res://assets/art/backgrounds/paper_overlay_002.png",
+	"res://assets/art/backgrounds/paper_overlay_003.png",
+	"res://assets/art/backgrounds/paper_overlay_004.png"
+]
+
+#combine all units (players and enemies) into one array
+var unit_list = []
+#the unit doing a turn
+var selected_unit
+var selected_enemy
+
+var turn = 0
+var turn_count = 0
+var round_count = 0
+var all_units_finished: bool = true
+
+var current_user
+var current_action
+var current_target
+var is_skill_check_required: bool
+
+#AUDIO shit
+
+var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
+@onready var MicPlayer: AudioStreamPlayer = $SkillCheck/MicPlayer
+
+
+#random list of backgrounds
+@onready var background = $Background
+
+#health bars
+@onready var PlayerHealthBar = [$VBoxContainer2/BottomContainer/MainContainer/CharacterContainer/CharacterPanel/CharacterStats/VBoxContainer/PlayerHealth, $VBoxContainer2/BottomContainer/RightContainer/CharacterPanel2/CharacterStats/VBoxContainer/PlayerHealth]
+@onready var PlayerManaBar = [$VBoxContainer2/BottomContainer/MainContainer/CharacterContainer/CharacterPanel/CharacterStats/VBoxContainer/PlayerMana, $VBoxContainer2/BottomContainer/RightContainer/CharacterPanel2/CharacterStats/VBoxContainer/PlayerMana]
+@onready var PlayerHealthLabel = [$VBoxContainer2/BottomContainer/MainContainer/CharacterContainer/CharacterPanel/CharacterStats/VBoxContainer/PlayerHealth/PlayerHealthLabel, $VBoxContainer2/BottomContainer/RightContainer/CharacterPanel2/CharacterStats/VBoxContainer/PlayerHealth/PlayerHealthLabel]
+@onready var PlayerManaLabel = [$VBoxContainer2/BottomContainer/MainContainer/CharacterContainer/CharacterPanel/CharacterStats/VBoxContainer/PlayerMana/PlayerManaLabel, $VBoxContainer2/BottomContainer/RightContainer/CharacterPanel2/CharacterStats/VBoxContainer/PlayerMana/PlayerManaLabel]
+
+@onready var EnemyHealthBar = $VBoxContainer/HBoxContainer/EnemyPanel/HBoxContainer/EnemyHealth
+@onready var EnemyHealthLabel = $VBoxContainer/HBoxContainer/EnemyPanel/HBoxContainer/EnemyHealth/EnemyHealthLabel
+
+
+#containers
+@onready var EnemyContainer = $VBoxContainer/EnemyContainer
+@onready var EnemyPanel = $VBoxContainer/HBoxContainer/EnemyPanel
+
+@onready var MainContainer = $VBoxContainer2/BottomContainer/MainContainer
+@onready var CharacterContainer = $VBoxContainer2/BottomContainer/MainContainer/CharacterContainer
+@onready var SkillsContainer = $VBoxContainer2/BottomContainer/MainContainer/SkillsContainer
+@onready var ItemsContainer = $VBoxContainer2/BottomContainer/MainContainer/ItemsContainer
+
+#left container has teach, skills, items, and guard
+@onready var LeftContainer = $VBoxContainer2/BottomContainer/LeftContainer
+@onready var RightContainer = $VBoxContainer2/BottomContainer/RightContainer
+
+@onready var RightCharacterPanel = $VBoxContainer2/BottomContainer/RightContainer/CharacterPanel2
+#contains cancel and execute attack
+@onready var RightButtonContainer = $VBoxContainer2/BottomContainer/RightContainer/ButtonContainer
+
+
+@onready var FlashCardsButton = $"VBoxContainer2/BottomContainer/MainContainer/SkillsContainer/Flash Cards"
+@onready var IdentifyButton = $VBoxContainer2/BottomContainer/MainContainer/SkillsContainer/Identify
+@onready var StoryTimeButton = $"VBoxContainer2/BottomContainer/MainContainer/SkillsContainer/Story Time"
+@onready var ReviewButton = $VBoxContainer2/BottomContainer/MainContainer/SkillsContainer/Review
+
+#for skill check
+@onready var SkillCheck = $SkillCheck
+@onready var PaperOverlay = $SkillCheck/PaperOverlay
+@onready var SkillIllustration = $SkillCheck/PaperOverlay/SkillIllustration
+@onready var MicButton = $SkillCheck/PaperOverlay/Panel/HBoxContainer/MicButton
+#@onready var capture_stream_to_text: CaptureStreamToText = $CaptureStreamToText
+
+
+#enemy data
+@onready var EnemyName = $VBoxContainer/HBoxContainer/EnemyPanel/VBoxContainer/EnemyName
+@onready var EnemyStatusEffect = $VBoxContainer/HBoxContainer/EnemyPanel/VBoxContainer/EnemyStatusEffectContainer/EnemyStatusEffect
+
+# ONLY FOR DEBUGGING
+# ~~~~~~~~~~~~~~~~~~~~~~~~~
+func _ready():
+	connect_signals()
+	dialogue_resource = load("res://assets/resources/dialogues/battle.dialogue")
+	MicPlayer.stop()
+	#capture_stream_to_text.recording = false
+
+# ~~~~~~~~~~~~~~~~~~~~~
+
+func connect_signals():
+	Global.unit_is_dead.connect(self._on_unit_is_dead)
+	Global.execute.connect(self._on_execute)
+	Global.start_skill_check.connect(self._on_start_skill_check)
+	Global.end_skill_check.connect(self._on_end_skill_check)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	#manages states
+	match(battle_state):
+		STATE.INIT:
+			#initialize battle values and progress bars
+			show_default_container()
+			#for debugging
+			#set_debug_data()
+			unit_list.append(get_player_data())
+			unit_list.append_array(get_enemy_data())
+			set_player_progress_bar_value(get_player_data())
+			battle_state = STATE.START_TURN
+			#print("INIT PHASE")
+		STATE.START_TURN:
+			#start the turn of either enemy or player
+			for unit in unit_list:
+				if unit["is_turn_finished"] == false:
+					all_units_finished = false
+					break
+				all_units_finished = true
+			
+			if all_units_finished:
+				for unit in unit_list:
+					unit["is_turn_finished"] = false
+			#get turn queue is on start turn just in case the player or an enemy does a skill that affects speed
+			get_turn_queue()
+			#the unit that does the turn first
+			get_selected_unit()
+			#checks if current unit is dead or unable to act
+			check_if_selected_unit_is_dead()
+			check_mana_cost()
+			#show UI if player's turn
+			if selected_unit["type"] == "Player":
+				show_default_container()
+			battle_state = STATE.WAIT
+		STATE.WAIT:
+			#wait for player input
+			#print("WAIT PHASE")
+			
+			if selected_unit["type"] == "Enemy":
+				Global.execute.emit()
+			
+			await Global.execute
+			battle_state = STATE.PROCESS
+		STATE.PROCESS:
+			#process all animations and turns
+			update_unit_data()
+			update_enemy_panel_data()
+			update_player_progress_bar_value()
+			#after the dialogue for the skill is over, check finish
+			await Global.dialogue_ended
+			battle_state = STATE.CHECK_FINISH
+		STATE.CHECK_FINISH:
+			#check for completion or do another loop
+			var player_count = 0
+			var enemy_count = 0
+			for unit in unit_list:
+				if unit["type"] == "Player":
+					player_count += 1
+				if unit["type"] == "Enemy":
+					enemy_count += 1
+			if player_count == 0:
+				battle_state = STATE.LOSE
+			if enemy_count == 0:
+				battle_state = STATE.WIN
+			else:
+				battle_state = STATE.END_TURN
+			#print("CHECK FINISH PHASE")
+		STATE.END_TURN:
+			#do another loop
+			turn_count += 1
+			turn += 1
+			if turn > len(unit_list) - 1:
+				turn = 0
+				round_count += 1
+			#print("END TURN PHASE")
+			battle_state = STATE.START_TURN
+		STATE.WIN:
+			#exit battle scene
+			set_player_resource_data()
+			if !end_battle_emitted:
+				end_battle_emitted = true
+				Global.end_battle.emit("Win", battle_type)
+				await Global.end_battle
+			battle_state = null
+		STATE.LOSE:
+			#enter game over
+			if !end_battle_emitted:
+				end_battle_emitted = true
+				Global.end_battle.emit("Lose", battle_type)
+				await Global.end_battle
+			battle_state = null
+
+
+#clear past battle data
+func clear_battle_data():
+	if !party.is_empty():
+		party.clear()
+	if !enemies.is_empty():
+		enemies.clear()
+
+#INITIALIZATIONS
+func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _background_texture_path: String, _type: String):
+	party.append_array(_party)
+	enemies.append_array(_enemies)
+	background.texture = load(_background_texture_path)
+	battle_type = _type
+	
+"""
+var is_debug_data_set := false
+# FOR DEBUGGING
+func set_debug_data():
+	if is_debug_data_set == true:
+		pass
+	else:
+		party.append_array([load("res://scenes/player.tscn")])
+		enemies.append_array([load("res://scenes/enemies/dummy.tscn")])
+		background.texture = load("res://assets/art/backgrounds/generic.png")
+		battle_type = "tutorial"
+		is_debug_data_set = true
+"""
+
+
+func show_default_container():
+	MainContainer.visible = true
+	CharacterContainer.visible = true
+	SkillsContainer.visible = false
+	LeftContainer.visible = true
+	RightContainer.visible = false
+	RightButtonContainer.visible = false
+	RightCharacterPanel.visible = false
+	EnemyPanel.visible = false
+	SkillCheck.visible = false
+	for unit in unit_list:
+		if unit.has("select_button"):
+			unit["select_button"].visible = false
+
+# get unit data
+func get_player_data():
+	for player in party:
+		var player_instance = player.instantiate()
+		add_child(player_instance)
+		var player_data = {
+			"instance": player_instance,
+			"name": player_instance.CharacterResource.name,
+			"type": "Player",
+			"resource": player_instance.CharacterResource,
+			"health": player_instance.health_component.health,
+			"max_health": player_instance.health_component.MAX_HEALTH,
+			"health_component": player_instance.health_component,
+			"mana": player_instance.mana_component.mana,
+			"max_mana": player_instance.mana_component.MAX_MANA,
+			"mana_component": player_instance.mana_component,
+			"speed": player_instance.speed_component.speed,
+			"speed_component": player_instance.speed_component,
+			"skill_component": player_instance.skill_component,
+			"is_turn_finished": false
+		}
+		player_instance.visible = false
+		player_instance.set_process(false)
+		return player_data
+
+func get_enemy_data():
+	var enemy_list = []
+	for enemy in enemies:
+		#spawn enemies from export variable
+		var enemy_instance = enemy.instantiate()
+		# adds enemy sprite
+		EnemyContainer.add_child(enemy_instance)
+		var enemy_data = {
+			"instance": enemy_instance,
+			"name": enemy_instance.CharacterResource.name,
+			"type": "Enemy",
+			"resource": enemy_instance.CharacterResource,
+			"health": enemy_instance.health_component.health,
+			"max_health": enemy_instance.health_component.MAX_HEALTH,
+			"health_component": enemy_instance.health_component,
+			"speed": enemy_instance.speed_component.speed,
+			"speed_component": enemy_instance.speed_component,
+			"select_button": enemy_instance.select_button,
+			"skill_component": enemy_instance.skill_component,
+			#skill names only
+			"skills": enemy_instance.skill_component.skill_list,
+			"is_turn_finished": false
+		}
+		enemy_list.push_back(enemy_data)
+	return enemy_list
+
+
+#display health and mana bars
+func set_player_progress_bar_value(player_data):
+	for i in len(PlayerHealthBar):
+		#for main and right container health and mana bars to be consistent
+		PlayerHealthBar[i].max_value = player_data["max_health"]
+		PlayerManaBar[i].max_value = player_data["max_mana"]
+		PlayerHealthBar[i].value = player_data["health"]
+		PlayerManaBar[i].value = player_data["mana"]
+		PlayerHealthLabel[i].text = "%d/%d" % [player_data["health"], player_data["max_health"]]
+		PlayerManaLabel[i].text = "%d/%d" % [player_data["mana"], player_data["max_mana"]]
+	#selected enemy's healthbar
+
+func update_player_progress_bar_value():
+	for unit in unit_list:
+		if unit["type"] == "Player":
+			for i in len(PlayerHealthBar):
+			#for main and right container health and mana bars to be consistent
+				PlayerHealthBar[i].value = unit["health"]
+				PlayerManaBar[i].value = unit["mana"]
+				PlayerHealthLabel[i].text = "%d/%d" % [unit["health"], unit["max_health"]]
+				PlayerManaLabel[i].text = "%d/%d" % [unit["mana"], unit["max_mana"]]
+
+func set_enemy_panel_data(name, health, max_health):
+	EnemyName.text = name
+	EnemyHealthBar.max_value = max_health
+	EnemyHealthBar.value = health
+	EnemyHealthLabel.text = "%d/%d" % [health, max_health]
+
+func update_enemy_panel_data():
+	for unit in unit_list:
+		if unit["type"] == "Enemy":
+			EnemyHealthBar.value = unit["health"]
+			EnemyHealthLabel.text = "%d/%d" % [unit["health"], unit["max_health"]]
+#--------------------------------------#
+
+
+# GAME LOGIC
+#when execute is pressed check if selected_unit is alive, and it's turn is not yet finished
+func _on_execute():
+	if selected_unit["is_turn_finished"] == false and is_instance_valid(selected_unit["instance"]):
+		if selected_unit["type"] == "Player":
+			if is_skill_check_required:
+				#await skill check before starting the actions
+				Global.start_skill_check.emit()
+				await Global.end_skill_check
+				start_action(current_action, selected_enemy, selected_unit["skill_component"], selected_enemy["instance"], selected_unit)
+			else:
+				start_action(current_action, selected_enemy, selected_unit["skill_component"], selected_enemy["instance"], selected_unit)
+		if selected_unit["type"] == "Enemy":
+			start_action(selected_unit["resource"].enemy_AI(selected_unit["skills"], selected_unit), unit_list[0], selected_unit["skill_component"], unit_list[0]["instance"], selected_unit)
+
+
+#action is the name of the skill
+#sorry for the shitty arrangement
+func start_action(action, target, user_skill_component, target_instance, user):
+	#perform the skill
+	user_skill_component.use_skill(action, target, user_skill_component, target_instance, user)
+	
+	#do dialogue for skill description
+	var balloon = BALLOON.instantiate()
+	get_tree().root.add_child(balloon)
+	balloon.start(dialogue_resource, "use_skill")
+	
+	#change is turn finished to true
+	selected_unit["is_turn_finished"] = true
+
+
+func get_turn_queue():
+	#add turn queue based on speed
+	unit_list.sort_custom(func(a,b): return a["speed"] > b["speed"])
+
+func get_selected_unit():
+	for unit in unit_list:
+		if unit["is_turn_finished"] == false:
+			selected_unit = unit
+			break
+
+
+func update_unit_data():
+	for unit in unit_list:
+		if is_instance_valid(unit["instance"]):
+			unit["health"] = unit["instance"].health_component.health
+			unit["speed"] = unit["instance"].speed_component.speed
+			if unit["type"] == "Player":
+				unit["mana"] = unit["instance"].mana_component.mana
+		
+
+
+func _on_unit_is_dead(instance):
+	for unit in unit_list:
+		if unit["instance"] == instance:
+			unit_list.erase(unit)
+
+func check_if_selected_unit_is_dead():
+	if !is_instance_valid(selected_unit["instance"]):
+		battle_state = STATE.CHECK_FINISH
+		
+
+
+#skill check
+func _on_start_skill_check():
+	SkillCheck.visible = true
+	PaperOverlay.texture = load(paper_overlays.pick_random())
+	# ADD SKILL ILLUSTRATION AND SKILL WORD
+	# ADD TIMER TO REMIND PLAYER TO START READING
+	match current_action:
+		"Flash Cards":
+			pass
+		"Identify":
+			pass
+		"Story Time":
+			pass
+
+
+func _on_end_skill_check():
+	SkillCheck.visible = false
+
+
+func check_mana_cost():
+	for unit in unit_list:
+		if unit["type"] == "Player":
+			if unit["mana"] < 20:
+				FlashCardsButton.disabled = true
+				IdentifyButton.disabled = true
+				StoryTimeButton.disabled = true
+				ReviewButton.disabled = true
+			elif unit["mana"] < 22:
+				FlashCardsButton.disabled = false
+				IdentifyButton.disabled = true
+				StoryTimeButton.disabled = true
+				ReviewButton.disabled = false
+			elif unit["mana"] < 25:
+				FlashCardsButton.disabled = false
+				IdentifyButton.disabled = false
+				StoryTimeButton.disabled = true
+				ReviewButton.disabled = false
+			else:
+				FlashCardsButton.disabled = false
+				IdentifyButton.disabled = false
+				StoryTimeButton.disabled = false
+				ReviewButton.disabled = false
+
+#SET PLAYER DATA AFTER END OF BATTLE:
+func set_player_resource_data():
+	for unit in unit_list:
+		if unit["type"] == "Player":
+			unit["resource"].health = unit["health"]
+			unit["resource"].mana = unit["mana"]
+
+
+#--------------------------------------#
+
+
+#UI RELATED TASKS
+func show_skills():
+	LeftContainer.visible = false
+	CharacterContainer.visible = false
+	SkillsContainer.visible = true
+	RightContainer.visible = true
+	RightButtonContainer.visible = true
+	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = false
+	RightCharacterPanel.visible = false
+
+func show_items():
+	LeftContainer.visible = false
+	CharacterContainer.visible = false
+	ItemsContainer.visible = true
+	RightContainer.visible = true
+	RightButtonContainer.visible = true
+	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = false
+	RightCharacterPanel.visible = false
+
+func show_end_turn():
+	#select enemy pressed by player
+	for unit in unit_list:
+		if unit.has("select_button"):
+			unit["select_button"].visible = true
+			if !unit["select_button"].is_connected("pressed", self._on_select_pressed):
+				unit["select_button"].pressed.connect(self._on_select_pressed.bind(unit["select_button"]))
+	
+	#select the fastest enemy by default
+	for unit in unit_list:
+		if unit.has("select_button"):
+			selected_enemy = unit
+			set_enemy_panel_data(unit["name"], unit["health"], unit["max_health"])
+			break
+	
+	#show the end turn 
+	LeftContainer.visible = false
+	SkillsContainer.visible = false
+	CharacterContainer.visible = true
+	RightContainer.visible = true
+	RightButtonContainer.visible = true
+	RightCharacterPanel.visible = false
+	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = true
+	EnemyPanel.visible = true
+	
+#-----------------------------------#
+
+#PLAYER ACTIONS
+func _on_teach_pressed():
+	show_end_turn()
+	current_action = "Basic Attack"
+	is_skill_check_required = false
+	#ADD BIT OF MANA TO PLAYER AND DO BASIC ATTACK
+
+
+func _on_skills_pressed():
+	show_skills()
+
+
+func _on_items_pressed():
+	show_items()
+
+
+func _on_guard_pressed():
+	show_end_turn()
+	current_action = "Guard"
+	#ADD BIT OF MANA TO PLAYER AND ADD DAMAGE REDUCTION
+
+
+func _on_execute_pressed():
+	#UI stuff
+	RightContainer.visible = false
+	RightButtonContainer.visible = false
+	RightCharacterPanel.visible = false
+	EnemyPanel.visible = false
+	
+	#start turns
+	Global.execute.emit()
+
+
+
+#func set_action_library(user, target)
+#we need to store action names and deals_damage bool
+
+func _on_cancel_pressed():
+	show_default_container()
+	current_action = ""
+
+#----------------------------#
+#WORDSMITH SKILLS
+func _on_flash_cards_pressed():
+	show_end_turn()
+	current_action = "Flash Cards"
+	is_skill_check_required = true
+	
+
+
+func _on_identify_pressed():
+	show_end_turn()
+	current_action = "Identify"
+	is_skill_check_required = true
+
+
+func _on_story_time_pressed():
+	show_end_turn() 
+	current_action = "Story Time"
+	is_skill_check_required = true
+
+
+func _on_review_pressed():
+	show_end_turn()
+	current_action = "Review"
+	is_skill_check_required = true
+
+#---------------------------------------#
+
+func _on_select_pressed(button):
+	for unit in unit_list:
+		if unit.has("select_button"):
+			if unit["select_button"] == button:
+				selected_enemy = unit
+				set_enemy_panel_data(unit["name"], unit["health"], unit["max_health"])
+	EnemyPanel.visible = true
+
+
+#SPEECH TO TEXT
+
+var completed_text := ""
+var partial_text := ""
+
+
+"""
+func _on_capture_stream_to_text_transcribed_msg(is_partial, new_text):
+	if is_partial == true:
+		completed_text += new_text
+		partial_text = ""
+	else:
+		if new_text != "":
+			partial_text = new_text
+"""
+
+
+func _on_mic_button_button_up():
+	await get_tree().create_timer(2.0).timeout
+	#capture_stream_to_text.recording = false
+	print("Timer Stopped!")
+	MicPlayer.stop()
+	print("Completed: " + completed_text)
+	print("Partial: " + partial_text)
+	completed_text.to_lower()
+	partial_text.to_lower()
+
+
+func _on_mic_button_button_down():
+	completed_text = ""
+	partial_text = ""
+	#capture_stream_to_text.recording = true
+	MicPlayer.play()
+
+
+#remove completed text

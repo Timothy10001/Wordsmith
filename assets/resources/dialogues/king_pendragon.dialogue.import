@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://cp2kexmf8f58x"
+path="res://.godot/imported/king_pendragon.dialogue-d2364fdbe1fbca0601b3ccfd6f6b8857.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/king_pendragon.dialogue"
+dest_files=["res://.godot/imported/king_pendragon.dialogue-d2364fdbe1fbca0601b3ccfd6f6b8857.tres"]
+
+[params]
+
+defaults=true

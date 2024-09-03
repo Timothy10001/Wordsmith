@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://xdeqhs4o2cno"]
+
+[ext_resource type="Script" path="res://scripts/components/damage_indicator.gd" id="1_k2oat"]
+[ext_resource type="FontFile" uid="uid://tifhkuc01jal" path="res://assets/fonts/normal.ttf" id="2_lmsmp"]
+
+[sub_resource type="Animation" id="Animation_0x4mj"]
+resource_name = "Rise and Fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LabelContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LabelContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2gwrn"]
+_data = {
+"Rise and Fade": SubResource("Animation_0x4mj")
+}
+
+[node name="DamageIndicator" type="Node2D"]
+script = ExtResource("1_k2oat")
+
+[node name="LabelContainer" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+
+[node name="Label" type="Label" parent="LabelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("2_lmsmp")
+theme_override_font_sizes/font_size = 42
+text = "0"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2gwrn")
+}

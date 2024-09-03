@@ -1,0 +1,52 @@
+[gd_scene load_steps=10 format=3 uid="uid://bmygeyrbf5xxc"]
+
+[ext_resource type="Texture2D" uid="uid://iu0epcgenksv" path="res://assets/art/characters/enemy/dummy.png" id="1_3k7o3"]
+[ext_resource type="Script" path="res://scripts/enemies/dummy.gd" id="1_o55ep"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="3_3dxgx"]
+[ext_resource type="Resource" uid="uid://6ro61bpxcpru" path="res://assets/resources/enemies/dummy/dummy_stats.tres" id="3_m830a"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="4_3ybgq"]
+[ext_resource type="Resource" uid="uid://v18ejooaakpr" path="res://assets/resources/enemies/dummy/skills/do_nothing.tres" id="5_gnxnx"]
+[ext_resource type="PackedScene" uid="uid://ccgruou7ckvwh" path="res://scenes/components/status_effect_component.tscn" id="6_wkhl4"]
+[ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="8_b6lse"]
+[ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="9_3fhxt"]
+
+[node name="Dummy" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+texture = ExtResource("1_3k7o3")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("1_o55ep")
+CharacterResource = ExtResource("3_m830a")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_3dxgx")]
+
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component", "status_effect_component") instance=ExtResource("4_3ybgq")]
+health_component = NodePath("../HealthComponent")
+status_effect_component = NodePath("../StatusEffectComponent")
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("5_gnxnx")])
+user = ExtResource("3_m830a")
+
+[node name="StatusEffectComponent" parent="." instance=ExtResource("6_wkhl4")]
+
+[node name="SpeedComponent" parent="." instance=ExtResource("8_b6lse")]
+
+[node name="DamageIndicator" parent="." instance=ExtResource("9_3fhxt")]

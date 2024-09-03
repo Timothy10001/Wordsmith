@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://dufbme6q2ibb4"]
+
+[ext_resource type="Texture2D" uid="uid://tflg28j1ivjo" path="res://assets/art/characters/placeholder.svg" id="1_ag7e8"]
+[ext_resource type="Script" path="res://scripts/enemies/test.gd" id="1_l1cyr"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="3_f4p13"]
+[ext_resource type="Resource" uid="uid://bro8mb2d2ke1y" path="res://assets/resources/enemies/test/skills/deal_damage.tres" id="4_chwll"]
+[ext_resource type="Resource" uid="uid://b6yqm320s3pv7" path="res://assets/resources/enemies/test/test_stats.tres" id="5_03u16"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="6_edwgc"]
+[ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="7_wodqp"]
+[ext_resource type="PackedScene" uid="uid://ccgruou7ckvwh" path="res://scenes/components/status_effect_component.tscn" id="8_l5obq"]
+[ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="9_6ca3y"]
+
+[node name="Test" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ag7e8")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("1_l1cyr")
+CharacterResource = ExtResource("5_03u16")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component", "status_effect_component") instance=ExtResource("3_f4p13")]
+health_component = NodePath("../HealthComponent")
+status_effect_component = NodePath("../StatusEffectComponent")
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("4_chwll")])
+user = ExtResource("5_03u16")
+
+[node name="HealthComponent" parent="." instance=ExtResource("6_edwgc")]
+
+[node name="SpeedComponent" parent="." instance=ExtResource("7_wodqp")]
+
+[node name="StatusEffectComponent" parent="." instance=ExtResource("8_l5obq")]
+
+[node name="DamageIndicator" parent="." instance=ExtResource("9_6ca3y")]

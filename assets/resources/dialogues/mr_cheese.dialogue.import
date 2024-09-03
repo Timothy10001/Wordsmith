@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://baf1vj421wfk1"
+path="res://.godot/imported/mr_cheese.dialogue-756b53ed7810814b819e5ef7f98b5801.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/mr_cheese.dialogue"
+dest_files=["res://.godot/imported/mr_cheese.dialogue-756b53ed7810814b819e5ef7f98b5801.tres"]
+
+[params]
+
+defaults=true

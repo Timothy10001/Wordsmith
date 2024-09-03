@@ -1,0 +1,46 @@
+~ start
+set npc_class = "King"
+if State.tutorial_status == "not done" and State.current_mission == 0:
+	King Pendragon: Wordsmith! I have summoned you today as I have a favor.
+	King Pendragon: The Dark Wizard Malgrim has put a curse on our people.
+	King Pendragon: The people of our kingdom Lexonia has forgotten how to read.
+	King Pendragon: I want you to teach them how to read again.
+	King Pendragon: Would you like to learn the basics?
+	- Yes
+		King Pendragon: Good, let us go to the training room.
+		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/generic.png", "tutorial")
+		set State.tutorial_status = "done"
+		set State.current_mission = 1
+		=> END
+	- No
+		King Pendragon: Good, now go on with your mission.
+		set State.current_mission = 1
+		do emit("get_mission")
+	=> END
+	
+elif State.tutorial_status == "not done":
+	King Pendragon: Wordsmith! I see you have not gone through our training yet.
+	King Pendragon: Wordsmith! I would like to offer some help.
+	King Pendragon: Would you like to learn the basics?
+	- Yes
+		King Pendragon: Good, let us go to the training room.
+		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/generic.png", "tutorial")
+		set State.tutorial_status = "done"
+		=> END
+	- No
+		King Pendragon: Good, now go on with your mission.
+		=> END
+	
+	
+elif State.current_mission == 1:
+	King Pendragon: Wordsmith, Mr. Cheese has called us for help.
+	King Pendragon: His tavern has become a hangout for rats.
+	King Pendragon: The rats could not read the sign that says: "NO RATS INSIDE"
+	King Pendragon: Would you go help Mr. Cheese?
+	- Yes
+		do emit("get_mission")
+		=> END
+	- No
+		King Pendragon: Okay, come back if you're ready.
+		=> END
+=> END

@@ -1,0 +1,65 @@
+extends Node2D
+class_name SkillComponent
+
+@export var health_component: HealthComponent
+@export var status_effect_component: StatusEffectComponent
+@export var skills: Array[Skill]
+@export var user: Resource
+
+var skill_list = []
+var damage: int
+var heal_amount: int
+var mana_amount: int
+var mana_cost: int
+
+func _ready():
+	for skill in skills:
+		skill_list.push_back(skill.name)
+
+func calculate_damage(skill, target):
+	var strength = user.strength
+	var armor = target["resource"].armor
+	var strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 10))
+	var armor_modifier = 1 - (armor / 100)
+	damage = strength_modifier * armor_modifier
+
+
+func calculate_heal(skill):
+	print("Heal deez")
+
+func calculate_skill_damage(skill, target):
+	var strength = user.strength
+	var armor = target["resource"].armor
+	var armor_modifier = 1 - (armor / 100)
+	var strength_modifier
+	if Global.skill_check_passed:
+		strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 3))
+	elif !Global.skill_check_passed:
+		strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 12))
+	damage = strength_modifier * armor_modifier
+
+#skill_component of USER
+func use_skill(name: String, target, skill_component: SkillComponent, target_instance, _user):
+	for skill in skills:
+		if skill.name == name:
+			mana_amount = skill.mana_amount
+			mana_cost = skill.mana_cost
+			
+			if _user.has("mana"):
+				_user["mana_component"].add_mana(skill_component)
+				_user["mana_component"].remove_mana(skill_component)
+			
+			if skill.deals_damage:
+				
+				if skill.requires_skill_check:
+					calculate_skill_damage(skill, target)
+				else:
+					calculate_damage(skill, target)
+				
+				target["health_component"].damage(skill_component, target_instance)
+				Global.skill_description = skill.description
+				
+			else:
+				calculate_heal(skill)
+		else:
+			print("No such skill")

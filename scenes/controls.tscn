@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://c3kr4v0fqvg0u"]
+
+[ext_resource type="Texture2D" uid="uid://w7dw7daoxytr" path="res://assets/art/ui/ui_controls.png" id="1_pyjpf"]
+[ext_resource type="Script" path="res://scripts/controls.gd" id="1_y0k1c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxua1"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14bq2"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lrau"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33713"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1y1mn"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxgph"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_465es"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdv6e"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(96, 0, 32, 32)
+
+[node name="controls" type="CanvasLayer"]
+script = ExtResource("1_y0k1c")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 67.0
+offset_top = -277.0
+offset_right = 431.0
+offset_bottom = -46.0
+grow_vertical = 0
+
+[node name="up" type="TouchScreenButton" parent="HBoxContainer"]
+position = Vector2(118, -12)
+scale = Vector2(4, 4)
+texture_normal = SubResource("AtlasTexture_pxua1")
+texture_pressed = SubResource("AtlasTexture_14bq2")
+passby_press = true
+action = "ui_up"
+
+[node name="down" type="TouchScreenButton" parent="HBoxContainer"]
+position = Vector2(118, 116)
+scale = Vector2(4, 4)
+texture_normal = SubResource("AtlasTexture_3lrau")
+texture_pressed = SubResource("AtlasTexture_33713")
+passby_press = true
+action = "ui_down"
+
+[node name="left" type="TouchScreenButton" parent="HBoxContainer"]
+position = Vector2(-10, 49)
+scale = Vector2(4, 4)
+texture_normal = SubResource("AtlasTexture_1y1mn")
+texture_pressed = SubResource("AtlasTexture_rxgph")
+passby_press = true
+action = "ui_left"
+
+[node name="right" type="TouchScreenButton" parent="HBoxContainer"]
+position = Vector2(246, 49)
+scale = Vector2(4, 4)
+texture_normal = SubResource("AtlasTexture_465es")
+texture_pressed = SubResource("AtlasTexture_mdv6e")
+passby_press = true
+action = "ui_right"

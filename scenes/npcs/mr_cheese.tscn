@@ -1,0 +1,76 @@
+[gd_scene load_steps=12 format=3 uid="uid://rnslowucwlht"]
+
+[ext_resource type="Script" path="res://scripts/npcs/mr_cheese.gd" id="1_smdkm"]
+[ext_resource type="Texture2D" uid="uid://boind4lbtapmp" path="res://assets/art/characters/npc/mr_cheese.png" id="2_upxtl"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_v5w37"]
+[ext_resource type="PackedScene" uid="uid://bkbkxdafjpdmr" path="res://scenes/npc.tscn" id="3_hhgii"]
+[ext_resource type="Resource" uid="uid://baf1vj421wfk1" path="res://assets/resources/dialogues/mr_cheese.dialogue" id="5_p0gr6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2eyix"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_io81x"]
+atlas = ExtResource("2_upxtl")
+region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cijo2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_io81x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g14km"]
+atlas = ExtResource("2_v5w37")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pi15i"]
+size = Vector2(130, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6runx"]
+size = Vector2(75, 75)
+
+[node name="Mr Cheese" type="CharacterBody2D"]
+script = ExtResource("1_smdkm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2eyix")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cijo2")
+
+[node name="MarginContainer" type="MarginContainer" parent="AnimatedSprite2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -32.0
+offset_right = -24.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="AnimatedSprite2D/MarginContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_g14km")
+
+[node name="NPC" parent="." node_paths=PackedStringArray("touch_screen_button", "collision_shape") instance=ExtResource("3_hhgii")]
+dialogue_resource = ExtResource("5_p0gr6")
+touch_screen_button = NodePath("TouchScreenButton")
+collision_shape = NodePath("CollisionShape2D2")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="NPC"]
+shape = SubResource("RectangleShape2D_pi15i")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="NPC"]
+shape = SubResource("RectangleShape2D_6runx")
+action = "interact"
+
+[connection signal="player_entered" from="NPC" to="." method="_on_npc_player_entered"]
+[connection signal="player_left" from="NPC" to="." method="_on_npc_player_left"]

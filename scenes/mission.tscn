@@ -1,0 +1,118 @@
+[gd_scene load_steps=10 format=3 uid="uid://dlbu6ubgt8rm3"]
+
+[ext_resource type="Texture2D" uid="uid://b5hvn6qtd0656" path="res://assets/art/ui/scroll.png" id="1_gwvk0"]
+[ext_resource type="Script" path="res://scripts/mission.gd" id="1_lscw1"]
+[ext_resource type="FontFile" uid="uid://bo78o48s27ltg" path="res://assets/fonts/king.ttf" id="2_oguhy"]
+[ext_resource type="FontFile" uid="uid://bxror4jw86uab" path="res://assets/fonts/handwritten.ttf" id="3_tuh72"]
+[ext_resource type="FontFile" uid="uid://7i8hqnvqdo7a" path="res://assets/fonts/bold_handwritten.ttf" id="4_ur5a6"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="5_svok0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w4plo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xr7x"]
+atlas = ExtResource("5_svok0")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_affoo"]
+atlas = ExtResource("5_svok0")
+region = Rect2(192, 0, 16, 16)
+
+[node name="Mission" type="CanvasLayer"]
+script = ExtResource("1_lscw1")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_gwvk0")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(500, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_w4plo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_oguhy")
+theme_override_font_sizes/font_size = 75
+text = "KING'S MISSION"
+
+[node name="MissionTitle" type="RichTextLabel" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.94, 0.797433, 0.0846, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/normal_font = ExtResource("3_tuh72")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "Placeholder"
+autowrap_mode = 0
+
+[node name="MissionDescription" type="RichTextLabel" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_ur5a6")
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "Help out Mr. Cheese with his rat problem!"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 150
+alignment = 1
+
+[node name="Yes" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"FlatButton"
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer/Yes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_1xr7x")
+
+[node name="No" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer/No"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_affoo")
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/No" to="." method="_on_no_pressed"]

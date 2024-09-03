@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=2 format=3 uid="uid://b6yqm320s3pv7"]
+
+[ext_resource type="Script" path="res://assets/resources/enemy.gd" id="1_p36ou"]
+
+[resource]
+script = ExtResource("1_p36ou")
+name = "Test"
+health = 150
+strength = 10.0
+speed = 7
+armor = 5
+immortal = false

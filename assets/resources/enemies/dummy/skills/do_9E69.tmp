@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=4 format=3 uid="uid://v18ejooaakpr"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_ycw0c"]
+[ext_resource type="Resource" uid="uid://cgccdt3d5xf2b" path="res://assets/resources/Player.tres" id="2_r75rv"]
+[ext_resource type="Resource" uid="uid://6ro61bpxcpru" path="res://assets/resources/enemies/dummy/dummy_stats.tres" id="3_dimva"]
+
+[resource]
+script = ExtResource("1_ycw0c")
+name = "Do Nothing"
+description = "Dummy does nothing!"
+target = ExtResource("2_r75rv")
+user = ExtResource("3_dimva")
+attack_damage = 15
+heal_amount = 0
+mana_amount = 0
+mana_cost = 0

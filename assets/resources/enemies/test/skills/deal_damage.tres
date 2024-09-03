@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://bro8mb2d2ke1y"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_js807"]
+
+[resource]
+script = ExtResource("1_js807")
+name = "Attack"
+description = "Test talks crazy!"
+target = "SINGLE"
+attack_damage = 10
+heal_amount = 0
+mana_amount = 0
+mana_cost = 0
+deals_damage = true

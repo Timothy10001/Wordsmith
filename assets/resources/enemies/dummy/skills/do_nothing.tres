@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://v18ejooaakpr"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_ycw0c"]
+
+[resource]
+script = ExtResource("1_ycw0c")
+name = "Do Nothing"
+description = "Dummy does nothing!"
+target = "SINGLE"
+attack_damage = 0
+heal_amount = 0
+mana_amount = 0
+mana_cost = 0
+deals_damage = true
+requires_skill_check = false

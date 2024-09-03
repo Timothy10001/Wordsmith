@@ -1,0 +1,79 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Wordsmith"
+config/features=PackedStringArray("4.2", "Mobile")
+
+[audio]
+
+driver/enable_input=true
+driver/mix_rate=16000
+
+[autoload]
+
+Global="*res://scripts/globals.gd"
+SkillCheckWords="*res://scripts/skill_check_words.gd"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+State="*res://scripts/state.gd"
+
+[dialogue_manager]
+
+general/states=["Global", "SkillCheckWords", "State"]
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
+[editor]
+
+run/main_run_args="--rendering-driver opengl3 --gpu-validation --gpu-abort"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_whisper/plugin.cfg")
+
+[input]
+
+interact={
+"deadzone": 0.5,
+"events": []
+}
+skip_text={
+"deadzone": 0.5,
+"events": []
+}
+close_text={
+"deadzone": 0.5,
+"events": []
+}
+yes={
+"deadzone": 0.5,
+"events": []
+}
+no={
+"deadzone": 0.5,
+"events": []
+}
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[internationalization]
+
+locale/translations_pot_files=PackedStringArray("res://assets/resources/dialogues/battle.dialogue", "res://assets/resources/dialogues/king_pendragon.dialogue", "res://assets/resources/dialogues/mr_cheese.dialogue")
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="mobile"

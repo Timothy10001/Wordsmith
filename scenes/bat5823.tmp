@@ -1,0 +1,406 @@
+[gd_scene load_steps=20 format=3 uid="uid://cd2h1if0274f4"]
+
+[ext_resource type="Script" path="res://scripts/battle.gd" id="1_3l4q4"]
+[ext_resource type="FontFile" uid="uid://tifhkuc01jal" path="res://assets/fonts/normal.ttf" id="1_nfhsg"]
+[ext_resource type="PackedScene" uid="uid://bmygeyrbf5xxc" path="res://scenes/enemies/dummy.tscn" id="3_8tj3x"]
+[ext_resource type="PackedScene" uid="uid://c708bnl1qw0ev" path="res://scenes/player.tscn" id="4_ba7g1"]
+[ext_resource type="Texture2D" uid="uid://b8e2ry862q8je" path="res://assets/art/Pixel Crawler - FREE - 1.8/Heroes/Rogue/Idle/Idle-Sheet.png" id="4_f51b5"]
+[ext_resource type="Resource" uid="uid://be328b5hy4tfb" path="res://assets/resources/dialogues/battle.dialogue" id="5_orksd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8i4u0"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiqxl"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+corner_detail = 5
+expand_margin_left = 20.0
+expand_margin_top = 5.0
+expand_margin_right = 20.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lheqb"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.223529, 0.223529, 0.223529, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+corner_detail = 5
+expand_margin_left = 20.0
+expand_margin_top = 5.0
+expand_margin_right = 20.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rmikj"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_54cld"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.537255)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+corner_detail = 5
+expand_margin_left = 20.0
+expand_margin_top = 5.0
+expand_margin_right = 20.0
+expand_margin_bottom = 5.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04l06"]
+bg_color = Color(1, 0.364706, 0.364706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6cva"]
+bg_color = Color(0.513726, 0.878431, 0.298039, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfyt7"]
+bg_color = Color(0.141176, 0.231373, 0.380392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_casnq"]
+bg_color = Color(0.219608, 0.596078, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w38ye"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2c4d2"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_1sk88"]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 30
+Button/fonts/font = ExtResource("1_nfhsg")
+Button/styles/disabled = SubResource("StyleBoxFlat_8i4u0")
+Button/styles/focus = SubResource("StyleBoxFlat_hiqxl")
+Button/styles/hover = SubResource("StyleBoxFlat_lheqb")
+Button/styles/normal = SubResource("StyleBoxFlat_rmikj")
+Button/styles/pressed = SubResource("StyleBoxFlat_54cld")
+Health/base_type = &"ProgressBar"
+Health/colors/font_color = Color(0, 0, 0, 1)
+Health/colors/font_outline_color = Color(1, 1, 1, 1)
+Health/constants/outline_size = 5
+Health/fonts/font = ExtResource("1_nfhsg")
+Health/styles/background = SubResource("StyleBoxFlat_04l06")
+Health/styles/fill = SubResource("StyleBoxFlat_y6cva")
+Label/font_sizes/font_size = 18
+Label/fonts/font = ExtResource("1_nfhsg")
+Mana/base_type = &"ProgressBar"
+Mana/colors/font_color = Color(0, 0, 0, 1)
+Mana/colors/font_outline_color = Color(1, 1, 1, 1)
+Mana/constants/outline_size = 5
+Mana/fonts/font = ExtResource("1_nfhsg")
+Mana/styles/background = SubResource("StyleBoxFlat_mfyt7")
+Mana/styles/fill = SubResource("StyleBoxFlat_casnq")
+Name/base_type = &"Label"
+Name/font_sizes/font_size = 22
+Panel/styles/panel = SubResource("StyleBoxFlat_w38ye")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_2c4d2")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur08r"]
+atlas = ExtResource("4_f51b5")
+region = Rect2(0, 0, 32, 32)
+
+[node name="Battle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_1sk88")
+script = ExtResource("1_3l4q4")
+enemies = Array[PackedScene]([ExtResource("3_8tj3x")])
+player = ExtResource("4_ba7g1")
+dialogue_resource = ExtResource("5_orksd")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="EnemyPanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(190, 130)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/EnemyPanel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="EnemyName" type="Label" parent="VBoxContainer/HBoxContainer/EnemyPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_type_variation = &"Name"
+text = "Dummy"
+
+[node name="EnemyStatusEffectContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/EnemyPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="EnemyStatusEffect" type="TextureRect" parent="VBoxContainer/HBoxContainer/EnemyPanel/VBoxContainer/EnemyStatusEffectContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/EnemyPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/EnemyPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "IP"
+
+[node name="EnemyHealth" type="ProgressBar" parent="VBoxContainer/HBoxContainer/EnemyPanel/HBoxContainer"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"Health"
+step = 1.0
+value = 50.0
+
+[node name="EnemyContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayerContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 225)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -450.0
+offset_top = -200.0
+offset_right = 450.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 1
+
+[node name="CharacterActions" type="PanelContainer" parent="PlayerContainer"]
+custom_minimum_size = Vector2(250, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerContainer/CharacterActions"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="Teach" type="Button" parent="PlayerContainer/CharacterActions/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Teach
+"
+
+[node name="Skills" type="Button" parent="PlayerContainer/CharacterActions/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Skills
+"
+
+[node name="Items" type="Button" parent="PlayerContainer/CharacterActions/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Items
+"
+
+[node name="Guard" type="Button" parent="PlayerContainer/CharacterActions/VBoxContainer"]
+layout_mode = 2
+text = "Guard"
+
+[node name="CharacterContainer" type="Panel" parent="PlayerContainer"]
+custom_minimum_size = Vector2(900, 225)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerContainer/CharacterContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterPanel" type="PanelContainer" parent="PlayerContainer/CharacterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel"]
+layout_mode = 2
+
+[node name="PlayerName" type="Label" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_type_variation = &"Name"
+text = "Wordsmith"
+
+[node name="PlayerStatusEffectContainer" type="HBoxContainer" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="PlayerStatusEffect" type="TextureRect" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/VBoxContainer/PlayerStatusEffectContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Player" type="TextureRect" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/VBoxContainer"]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_ur08r")
+
+[node name="CharacterStats" type="HBoxContainer" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/CharacterStats"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = -3
+
+[node name="Label" type="Label" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/CharacterStats/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/line_spacing = -2
+text = "INT
+EN"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/CharacterStats"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 5
+
+[node name="PlayerHealth" type="ProgressBar" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/CharacterStats/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"Health"
+step = 1.0
+value = 50.0
+
+[node name="PlayerMana" type="ProgressBar" parent="PlayerContainer/CharacterContainer/HBoxContainer/CharacterPanel/CharacterStats/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"Mana"
+step = 1.0
+value = 50.0

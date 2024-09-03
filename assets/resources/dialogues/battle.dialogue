@@ -1,0 +1,19 @@
+~ use_skill
+Narrator: {{Global.skill_description}}
+=> END
+
+~ use_item
+Narrator: Used item
+=> END
+
+~ no_energy
+Narrator: You have no energy!
+=> END
+
+~ win
+Narrator: You have won!
+=> END
+
+~ lose
+Narrator: You have lost!
+=> END

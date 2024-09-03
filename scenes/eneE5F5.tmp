@@ -1,0 +1,23 @@
+[gd_scene load_steps=8 format=3 uid="uid://d20maaqo427mi"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_7yryo"]
+[ext_resource type="Resource" uid="uid://d1i87bvanoq16" path="res://assets/resources/Enemy.tres" id="2_cijll"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/health_component.tscn" id="2_cqufp"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/skill_component.tscn" id="3_04jcv"]
+[ext_resource type="Resource" uid="uid://37d6gdcf05yx" path="res://assets/resources/skill.tres" id="3_8jarl"]
+[ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/speed_component.tscn" id="4_m0x4y"]
+[ext_resource type="PackedScene" uid="uid://ccgruou7ckvwh" path="res://scenes/status_effect_component.tscn" id="5_pwchh"]
+
+[node name="Enemy" type="TextureRect"]
+custom_minimum_size = Vector2(225, 225)
+script = ExtResource("1_7yryo")
+EnemyResource = ExtResource("2_cijll")
+SkillResource = ExtResource("3_8jarl")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_cqufp")]
+
+[node name="SkillComponent" parent="." instance=ExtResource("3_04jcv")]
+
+[node name="SpeedComponent" parent="." instance=ExtResource("4_m0x4y")]
+
+[node name="StatusEffectComponent" parent="." instance=ExtResource("5_pwchh")]

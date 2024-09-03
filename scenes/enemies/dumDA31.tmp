@@ -1,0 +1,22 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmygeyrbf5xxc"]
+
+[ext_resource type="Texture2D" uid="uid://iu0epcgenksv" path="res://assets/art/characters/enemy/dummy.png" id="1_3k7o3"]
+[ext_resource type="Script" path="res://scripts/enemies/dummy.gd" id="1_o55ep"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="3_3dxgx"]
+[ext_resource type="Resource" uid="uid://6ro61bpxcpru" path="res://assets/resources/enemies/dummy/dummy_stats.tres" id="3_m830a"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="4_3ybgq"]
+[ext_resource type="Resource" uid="uid://v18ejooaakpr" path="res://assets/resources/enemies/dummy/skills/do_nothing.tres" id="5_gnxnx"]
+
+[node name="Dummy" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_3k7o3")
+stretch_mode = 3
+script = ExtResource("1_o55ep")
+EnemyResource = ExtResource("3_m830a")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_3dxgx")]
+
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_3ybgq")]
+health_component = NodePath("../HealthComponent")
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("5_gnxnx")])
