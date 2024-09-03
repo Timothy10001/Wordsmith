@@ -32,10 +32,17 @@ func calculate_skill_damage(skill, target):
 	var armor = target["resource"].armor
 	var armor_modifier = 1 - (armor / 100)
 	var strength_modifier
+	var rng = RandomNumberGenerator.new()
 	if Global.skill_check_passed:
 		strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 3))
+		Global.skill_description = skill.description
 	elif !Global.skill_check_passed:
-		strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 12))
+		var miss_chance = rng.randi_range(1, 5)
+		if miss_chance == 4:
+			strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 12))
+		else:
+			strength_modifier = 0
+			Global.skill_description = target["name"] + " could not understand!"
 	damage = strength_modifier * armor_modifier
 
 #skill_component of USER
@@ -57,7 +64,9 @@ func use_skill(name: String, target, skill_component: SkillComponent, target_ins
 					calculate_damage(skill, target)
 				
 				target["health_component"].damage(skill_component, target_instance)
-				Global.skill_description = skill.description
+				
+				if _user["type"] != "Player":
+					Global.skill_description = skill.description
 				
 			else:
 				calculate_heal(skill)

@@ -103,7 +103,7 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 @onready var SkillCheck = $SkillCheck
 @onready var PaperOverlay = $SkillCheck/PaperOverlay
 @onready var SkillIllustration = $SkillCheck/PaperOverlay/SkillIllustration
-@onready var MicButton = $SkillCheck/PaperOverlay/Panel/HBoxContainer/MicButton
+@onready var MicButton = $SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer/MicButton
 #@onready var capture_stream_to_text: CaptureStreamToText = $CaptureStreamToText
 
 
@@ -629,4 +629,11 @@ func _on_mic_button_button_down():
 	MicPlayer.play()
 
 
-#remove completed text
+
+func _on_read_button_pressed():
+	pass # Replace with function body.
+
+
+func _on_skip_button_pressed():
+	Global.skill_check_passed = false
+	Global.end_skill_check.emit()

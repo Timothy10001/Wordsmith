@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://cd2h1if0274f4"]
+[gd_scene load_steps=24 format=3 uid="uid://cd2h1if0274f4"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_3l4q4"]
 [ext_resource type="Theme" uid="uid://cwif4cu3aua73" path="res://assets/resources/battle.tres" id="1_gxkwb"]
 [ext_resource type="Texture2D" uid="uid://b8e2ry862q8je" path="res://assets/art/Pixel Crawler - FREE - 1.8/Heroes/Rogue/Idle/Idle-Sheet.png" id="4_f51b5"]
 [ext_resource type="Texture2D" uid="uid://28hltji5lx5o" path="res://assets/art/backgrounds/paper_overlay_001.png" id="4_m4s3m"]
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="5_ijhi7"]
+[ext_resource type="Texture2D" uid="uid://cm43revcg28mq" path="res://assets/art/ui/skip_button.png" id="6_3b2sa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ur08r"]
 atlas = ExtResource("4_f51b5")
@@ -19,6 +20,48 @@ region = Rect2(80, 16, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_gioil"]
 atlas = ExtResource("5_ijhi7")
 region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax7xv"]
+atlas = ExtResource("5_ijhi7")
+region = Rect2(112, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_37nal"]
+texture = SubResource("AtlasTexture_ax7xv")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a18e2"]
+atlas = ExtResource("5_ijhi7")
+region = Rect2(112, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_byxyr"]
+texture = SubResource("AtlasTexture_a18e2")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wh6j8"]
+atlas = ExtResource("5_ijhi7")
+region = Rect2(128, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lk0jp"]
+texture = SubResource("AtlasTexture_wh6j8")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fghhk"]
+atlas = ExtResource("5_ijhi7")
+region = Rect2(128, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b5olj"]
+texture = SubResource("AtlasTexture_fghhk")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4hbu"]
+atlas = ExtResource("6_3b2sa")
+region = Rect2(0, 0, 96, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hlmeu"]
+texture = SubResource("AtlasTexture_c4hbu")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwph0"]
+atlas = ExtResource("6_3b2sa")
+region = Rect2(0, 32, 96, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_786tx"]
+texture = SubResource("AtlasTexture_fwph0")
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_qv0gn"]
 
@@ -495,7 +538,6 @@ theme_type_variation = &"UIButton"
 text = "Cancel"
 
 [node name="SkillCheck" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="PaperOverlay" type="TextureRect" parent="SkillCheck"]
 anchors_preset = 15
@@ -539,7 +581,10 @@ offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="MicButton" type="TextureButton" parent="SkillCheck/PaperOverlay/Panel/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SkillCheck/PaperOverlay/Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="MicButton" type="TextureButton" parent="SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -547,6 +592,33 @@ size_flags_vertical = 4
 texture_normal = SubResource("AtlasTexture_s5fpw")
 texture_pressed = SubResource("AtlasTexture_gioil")
 stretch_mode = 5
+
+[node name="ReadButton" type="Button" parent="SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_37nal")
+theme_override_styles/hover = SubResource("StyleBoxTexture_byxyr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_lk0jp")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_b5olj")
+
+[node name="MarginContainer" type="MarginContainer" parent="SkillCheck/PaperOverlay/Panel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 8
+
+[node name="SkipButton" type="Button" parent="SkillCheck/PaperOverlay/Panel/MarginContainer"]
+custom_minimum_size = Vector2(225, 75)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_hlmeu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_786tx")
 
 [node name="MicPlayer" type="AudioStreamPlayer" parent="SkillCheck"]
 stream = SubResource("AudioStreamMicrophone_qv0gn")
@@ -563,5 +635,7 @@ bus = &"Record"
 [connection signal="pressed" from="VBoxContainer2/BottomContainer/MainContainer/SkillsContainer/Review" to="." method="_on_review_pressed"]
 [connection signal="pressed" from="VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute" to="." method="_on_execute_pressed"]
 [connection signal="pressed" from="VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
-[connection signal="button_down" from="SkillCheck/PaperOverlay/Panel/HBoxContainer/MicButton" to="." method="_on_mic_button_button_down"]
-[connection signal="button_up" from="SkillCheck/PaperOverlay/Panel/HBoxContainer/MicButton" to="." method="_on_mic_button_button_up"]
+[connection signal="button_down" from="SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer/MicButton" to="." method="_on_mic_button_button_down"]
+[connection signal="button_up" from="SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer/MicButton" to="." method="_on_mic_button_button_up"]
+[connection signal="pressed" from="SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer/ReadButton" to="." method="_on_read_button_pressed"]
+[connection signal="pressed" from="SkillCheck/PaperOverlay/Panel/MarginContainer/SkipButton" to="." method="_on_skip_button_pressed"]
