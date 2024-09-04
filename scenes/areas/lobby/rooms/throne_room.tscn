@@ -435,9 +435,9 @@ layer_3/name = "y-sort"
 layer_3/y_sort_enabled = true
 layer_3/z_index = 1
 layer_3/tile_data = PackedInt32Array(-1179649, 786432, 0, -393225, 1245184, 1, -458745, 1245184, 1, 786423, 1245184, 1, 720903, 1245184, 1)
+metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions"]
 position = Vector2(-8, -413.25)

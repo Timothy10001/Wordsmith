@@ -7,7 +7,7 @@ class_name Player
 @onready var mana_component = $ManaComponent
 @onready var speed_component = $SpeedComponent
 
-const SPEED = 100.0
+const SPEED = 150.0
 var current_direction = "none"
 var is_moving = false
 
