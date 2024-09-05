@@ -20,9 +20,9 @@ signal get_mission
 signal confirm_mission
 signal cancel_mission
 
-signal enter_new_room
+signal enter_new_room(_new_room_index: int, _player_position: Vector2)
 
-signal enter_new_area
+signal enter_new_area(_area: String, _room_index: int)
 signal update_area
 
 signal dialogue_active
@@ -43,7 +43,11 @@ var item_description: String
 
 var skill_check_passed: bool = false
 
-var current_player_position: Vector2
+
+var area_list = {
+	"lobby" : ["res://scenes/areas/lobby/rooms/throne_room.tscn"],
+	"mission 1": ["res://scenes/areas/mission 1/rooms/outside.tscn", "res://scenes/areas/mission 1/rooms/north_001.tscn"]
+}
 
 
 

@@ -2,10 +2,11 @@ extends Node
 
 #add player stats and inventory
 var saved_data = {
-	"area": "Lobby",
-	"room": "Throne Room",
+	"area": "lobby",
+	"room": 0,
 	"current mission": 0,
-	"tutorial status": "not done"
+	"tutorial status": "not done",
+	"player position": Vector2(-8, -54)
 }
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
@@ -18,8 +19,9 @@ var controls_instance
 var dialogue_resource: DialogueResource
 
 func _ready():
-	start()
 	connect_signals()
+	start()
+	
 	
 
 
@@ -27,64 +29,90 @@ func _ready():
 func connect_signals():
 	Global.get_mission.connect(_get_mission)
 	Global.confirm_mission.connect(_on_confirm_mission)
+	#for areas
+	Global.enter_new_area.connect(_on_enter_new_area)
+	Global.enter_new_room.connect(_on_enter_new_room)
 	#for the battle transitions
 	Global.start_battle.connect(_on_start_battle)
 	Global.end_battle.connect(_on_end_battle)
+	
 
 #create rooms in a different scene?
 const controls_scene: PackedScene = preload("res://scenes/controls.tscn")
 const player_scene: PackedScene = preload("res://scenes/player.tscn")
-const throne_room: PackedScene = preload("res://scenes/areas/lobby/rooms/throne_room.tscn")
+
 const transition_scene: PackedScene = preload("res://scenes/transition.tscn")
 const mission_scene: PackedScene = preload("res://scenes/mission.tscn")
-const outside_scene: PackedScene = preload("res://scenes/areas/mission 1/rooms/outside.tscn")
+
+var current_area: Array[PackedScene]
 
 func start() -> void:
+	# TO BE CHANGED
 	State.current_area = saved_data["area"]
 	State.current_room = saved_data["room"]
 	State.current_mission = saved_data["current mission"]
 	State.tutorial_status = saved_data["tutorial status"]
+	State.player_position = saved_data["player position"]
 	
-	controls_instance = controls_scene.instantiate()
+	Global.enter_new_area.emit(State.current_area, State.current_room)
+	Global.enter_new_room.emit(State.current_room, State.player_position)
 	
-	add_child(controls_instance)
 	
-	Rooms.add_child(throne_room.instantiate())
-	
-	player_instance = player_scene.instantiate()
-	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
 	#DUNNO WHAT TO DO HERE YET
 	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").visible = false
 	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").process_mode = Node.PROCESS_MODE_DISABLED
 	
 
-#TO BE CHANGED#
+
+
+
+func get_current_area(_area):
+	current_area = []
+	for room in Global.area_list[_area]:
+		current_area.append(load(room))
+
+func _on_enter_new_area(_area: String, _room_index: int):
+	State.current_area = _area
+	State.current_room = _room_index
+	
+	get_current_area(_area)
+	
+
+func _on_enter_new_room(_new_room_index: int, _player_position: Vector2):
+	Rooms.remove_child(Rooms.get_child(0))
+	
+	controls_instance = controls_scene.instantiate()
+	
+	add_child(controls_instance)
+	
+	Rooms.add_child(current_area[_new_room_index].instantiate())
+	
+	player_instance = player_scene.instantiate()
+	player_instance.position = _player_position 
+	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
+
+
+
 func _get_mission():
 	remove_child(controls_instance)
 	remove_child(player_instance)
-	if State.current_mission == 1:
-		var mission_instance = mission_scene.instantiate()
-		add_child(mission_instance)
-		mission_instance.MissionTitle.text = "[center]Mr Cheese's Dilemma"
-		mission_instance.MissionDescription.text = "[center]Help out Mr. Cheese with his rat problem!"
+	var mission_instance = mission_scene.instantiate()
+	add_child(mission_instance)
+	mission_instance.MissionTitle.text = mission_instance.mission_title_list[State.current_mission]
+	mission_instance.MissionDescription.text = mission_instance.mission_description_list[State.current_mission]
+
 
 func _on_confirm_mission():
-	if State.current_mission == 1:
-		print(player_instance)
-		var transition_instance = transition_scene.instantiate()
-		add_child(transition_instance)
-		transition_instance.iris_transition()
-		await Global.transition_finished
-		Rooms.remove_child(Rooms.get_child(0))
-		
-		controls_instance = controls_scene.instantiate()
-		add_child(controls_instance)
-		
-		player_instance = player_scene.instantiate()
-		
-		Rooms.add_child(outside_scene.instantiate())
-		Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
-#TO BE CHANGED#
+	# do transition
+	var transition_instance = transition_scene.instantiate()
+	add_child(transition_instance)
+	transition_instance.iris_transition()
+	await Global.transition_finished
+	#load new area after transition
+	match State.current_mission:
+		1:
+			Global.enter_new_area.emit("mission 1", 0)
+			Global.enter_new_room.emit(0, Vector2(-88, -24))
 
 
 const battle_scene: PackedScene = preload("res://scenes/battle.tscn")

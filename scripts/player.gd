@@ -2,12 +2,13 @@ extends CharacterBody2D
 class_name Player
 
 @export var CharacterResource: PlayerResource
+
 @onready var health_component = $HealthComponent
 @onready var skill_component = $SkillComponent
 @onready var mana_component = $ManaComponent
 @onready var speed_component = $SpeedComponent
 
-const SPEED = 150.0
+const SPEED = 125.0
 var current_direction = "none"
 var is_moving = false
 

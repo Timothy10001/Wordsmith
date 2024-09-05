@@ -546,3 +546,6 @@ shape = SubResource("RectangleShape2D_4lu3f")
 z_index = 1
 y_sort_enabled = true
 position = Vector2(27, -127)
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-88, -24)
