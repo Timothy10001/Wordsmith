@@ -17,18 +17,20 @@ func _ready():
 
 var has_entered = false
 
-func _on_body_entered(body: Player):
-	has_entered = true
-	touch_screen_button.visible = true
-	print("player has entered")
-	player_entered.emit()
+func _on_body_entered(body):
+	if body is Player:
+		has_entered = true
+		touch_screen_button.visible = true
+		print("player has entered")
+		player_entered.emit()
 
 
-func _on_body_exited(body: Player):
-	touch_screen_button.visible = false
-	has_entered = false
-	print("player has left")
-	player_left.emit()
+func _on_body_exited(body):
+	if body is Player:
+		touch_screen_button.visible = false
+		has_entered = false
+		print("player has left")
+		player_left.emit()
 
 func _process(delta):
 	if has_entered:
