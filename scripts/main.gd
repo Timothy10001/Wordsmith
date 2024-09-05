@@ -79,7 +79,9 @@ func _on_enter_new_area(_area: String, _room_index: int):
 	
 
 func _on_enter_new_room(_new_room_index: int, _player_position: Vector2):
-	Rooms.remove_child(Rooms.get_child(0))
+	if Rooms.get_child_count() > 0:
+		Rooms.remove_child(Rooms.get_child(0))
+	
 	
 	controls_instance = controls_scene.instantiate()
 	
@@ -94,8 +96,10 @@ func _on_enter_new_room(_new_room_index: int, _player_position: Vector2):
 
 
 func _get_mission():
+	
 	remove_child(controls_instance)
-	remove_child(player_instance)
+	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
+	
 	var mission_instance = mission_scene.instantiate()
 	add_child(mission_instance)
 	mission_instance.MissionTitle.text = mission_instance.mission_title_list[State.current_mission]
@@ -141,6 +145,7 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
 	player_instance.visible = false
 	remove_child(controls_instance)
+	
 	#remove player input
 	$CanvasLayer.add_child(battle_instance)
 	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type)
