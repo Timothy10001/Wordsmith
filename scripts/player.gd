@@ -7,13 +7,21 @@ class_name Player
 @onready var skill_component = $SkillComponent
 @onready var mana_component = $ManaComponent
 @onready var speed_component = $SpeedComponent
+@onready var camera = $Camera2D
 
 const SPEED = 125.0
 var current_direction = "none"
 var is_moving = false
 
 func _ready():
-	$AnimatedSprite2D.play("idle")
+	
+	var tilemap_rect = get_parent().get_used_rect()
+	var tilemap_size = get_parent().tile_set.tile_size
+	camera.limit_left = tilemap_rect.position.x * tilemap_size.x
+	camera.limit_right = tilemap_rect.end.x * tilemap_size.x
+	camera.limit_top = tilemap_rect.position.y * tilemap_size.y
+	camera.limit_bottom = tilemap_rect.end.y * tilemap_size.y
+	$AnimatedSprite2D.play("idle_down")
 
 func _physics_process(_delta):
 	player_movement(_delta)
@@ -57,18 +65,30 @@ func play_animation():
 	if is_moving:
 		match direction:
 			"right":
-				animation.flip_h = false
-				animation.play("run")
-			"left":
 				animation.flip_h = true
-				animation.play("run")
+				animation.play("walk_left")
+			"left":
+				animation.flip_h = false
+				animation.play("walk_left")
 			"up":
-				animation.play("idle")
+				animation.play("walk_up")
 			"down":
-				animation.play("idle")
+				animation.play("walk_down")
 			"none":
-				animation.play("idle")
+				animation.play("idle_down")
 	elif !is_moving:
-		animation.play("idle")
+		match direction:
+			"right":
+				animation.flip_h = true
+				animation.play("idle_left")
+			"left":
+				animation.flip_h = false
+				animation.play("idle_left")
+			"up":
+				animation.play("idle_up")
+			"down":
+				animation.play("idle_down")
+			"none":
+				animation.play("idle_down")
 	
 	
