@@ -1,41 +1,21 @@
-extends Control
+extends CanvasLayer
 
-
-@export var loading_bar : ProgressBar
-@export var percentage_label : Label
-
-var scene_path : String
-var progress : Array
-var update : float = 0.0
+@onready var Progress = $MarginContainer/ProgressBar
+@onready var ProgressLabel = $MarginContainer/ProgressBar/percentage_label
+var main_scene = "res://scenes/main.tscn"
+var loading_status = 0
+var progress = []
 
 func _ready():
-
-	scene_path = "res://scenes/main.tscn"
-	ResourceLoader.load_threaded_request(scene_path,"", true)
-	
+	ResourceLoader.load_threaded_request(main_scene)
 
 func _process(delta):
-	ResourceLoader.load_threaded_get_status(scene_path, progress)
+	loading_status = ResourceLoader.load_threaded_get_status(main_scene, progress)
+	Progress.value = progress[0]
+	ProgressLabel.text = "[center]" + str(floor(progress[0] * 100)) + "%"
+	if loading_status == ResourceLoader.THREAD_LOAD_LOADED:
+		await get_tree().create_timer(1.5).timeout
+		get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(main_scene))
 	
-	
-	if progress[0] > update:
-		update = progress[0]
-	
-	
-	if loading_bar.value >=1.0:
-		if update >= 1.0:
-				get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(scene_path))
-	
-	
-	if loading_bar.value < update:
-		loading_bar.value = lerp(loading_bar.value, update, delta)
-	loading_bar.value += delta * 0.2 * \
-		(0.5 if update >= 1.0 else clamp (0.9 - loading_bar.value, 0.0, 1.0))
-		
-		
-	percentage_label.text = str(int(loading_bar.value * 100.0)) +" %"
-	
-	
-	
-		
-		
+
+
