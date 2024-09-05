@@ -6,7 +6,8 @@ var saved_data = {
 	"room": 0,
 	"current mission": 1,
 	"tutorial status": "done",
-	"player position": Vector2(-8, -54)
+	"player position": Vector2(-8, -54),
+	"direction": "up"
 }
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
@@ -53,9 +54,10 @@ func start() -> void:
 	State.current_mission = saved_data["current mission"]
 	State.tutorial_status = saved_data["tutorial status"]
 	State.player_position = saved_data["player position"]
+	State.current_direction = saved_data["direction"]
 	
 	Global.enter_new_area.emit(State.current_area, State.current_room)
-	Global.enter_new_room.emit(State.current_room, State.player_position)
+	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
 	
 	
 	#DUNNO WHAT TO DO HERE YET
@@ -78,20 +80,28 @@ func _on_enter_new_area(_area: String, _room_index: int):
 	get_current_area(_area)
 	
 
-func _on_enter_new_room(_new_room_index: int, _player_position: Vector2):
+func init_current_room():
 	if Rooms.get_child_count() > 0:
 		Rooms.remove_child(Rooms.get_child(0))
-	
-	
+		
 	controls_instance = controls_scene.instantiate()
 	
 	add_child(controls_instance)
 	
-	Rooms.add_child(current_area[_new_room_index].instantiate())
+	Rooms.add_child(current_area[State.current_room].instantiate())
 	
 	player_instance = player_scene.instantiate()
-	player_instance.position = _player_position 
+	player_instance.position = State.player_position
+	print(player_instance.position)
+	player_instance.current_direction = State.current_direction
 	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
+
+func _on_enter_new_room(_new_room_index: int, _player_position: Vector2, _direction: String):
+	State.current_room = _new_room_index
+	State.player_position = _player_position
+	State.current_direction = _direction
+	call_deferred("init_current_room")
+	
 
 
 
@@ -116,7 +126,7 @@ func _on_confirm_mission():
 	match State.current_mission:
 		1:
 			Global.enter_new_area.emit("mission 1", 0)
-			Global.enter_new_room.emit(0, Vector2(-88, -24))
+			Global.enter_new_room.emit(0, Vector2(-88, -24), "down")
 
 
 const battle_scene: PackedScene = preload("res://scenes/battle.tscn")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cu3v73deye6dp"]
+[gd_scene load_steps=3 format=3 uid="uid://cu3v73deye6dp"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_paski"]
+[ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_c5coh"]
 
 [node name="North001" type="Node2D"]
 
@@ -23,5 +24,26 @@ metadata/_edit_lock_ = true
 [node name="Collisions" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
+polygon = PackedVector2Array(-208, -1072, -1104, -1072, -1104, -512, -256, -512, -256, -480, -160, -480, -160, -512, 16, -512, 16, -1072, -80, -1072, -80, -1104, -208, -1104, -208, -1120, 48, -1120, 48, -464, -1152, -464, -1152, -1136, -208, -1136)
+
+[node name="LevelTransition" parent="Collisions" instance=ExtResource("2_c5coh")]
+position = Vector2(-240, -512)
+direction = "down"
+
+[node name="Collision" parent="Collisions/LevelTransition" index="0"]
+position = Vector2(0, 16)
+polygon = PackedVector2Array(-16, 0, 80, 0, 80, 16, -16, 16)
+
+[node name="LevelTransition2" parent="Collisions" instance=ExtResource("2_c5coh")]
+position = Vector2(-160, -1072)
+new_room_index = 2
+direction = "up"
+
+[node name="Collision" parent="Collisions/LevelTransition2" index="0"]
+position = Vector2(0, -16)
+polygon = PackedVector2Array(-48, -16, 80, -16, 80, 0, -48, 0)
 
 [node name="NPCs" type="Node2D" parent="."]
+
+[editable path="Collisions/LevelTransition"]
+[editable path="Collisions/LevelTransition2"]

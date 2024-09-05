@@ -4,6 +4,7 @@ extends Node
 var current_room
 var current_area
 var player_position
+var current_direction
 
 #mission 0 is tutorial
 var tutorial_status: String = "not done"
