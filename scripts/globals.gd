@@ -46,7 +46,7 @@ var skill_check_passed: bool = false
 
 var area_list = {
 	"lobby" : ["res://scenes/areas/lobby/rooms/throne_room.tscn"],
-	"mission 1": ["res://scenes/areas/mission 1/rooms/outside.tscn", "res://scenes/areas/mission 1/rooms/north_001.tscn"]
+	"mission 1": ["res://scenes/areas/mission 1/rooms/outside.tscn", "res://scenes/areas/mission 1/rooms/north_001.tscn", "res://scenes/areas/mission 1/rooms/north_002.tscn", "res://scenes/areas/mission 1/rooms/north_003.tscn"]
 }
 
 

@@ -14,16 +14,15 @@ func _on_body_entered(body):
 		match direction:
 			"up":
 				next_position.x = body.position.x
-				print(next_position)
 				next_position.y = body.position.y - 16
 			"down":
 				next_position.x = body.position.x
 				next_position.y = body.position.y + 16
 			"left":
-				next_position.x = body.position.x - 16
+				next_position.x = body.position.x - 32
 				next_position.y = body.position.y
 			"right":
-				next_position.x = body.position.x + 16
+				next_position.x = body.position.x + 32
 				next_position.y = body.position.y
 			
 		Global.enter_new_room.emit(new_room_index, next_position, direction)
