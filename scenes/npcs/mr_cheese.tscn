@@ -40,6 +40,7 @@ script = ExtResource("1_smdkm")
 shape = SubResource("CircleShape2D_2eyix")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_cijo2")
 
 [node name="MarginContainer" type="MarginContainer" parent="AnimatedSprite2D"]

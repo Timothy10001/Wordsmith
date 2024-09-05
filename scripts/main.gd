@@ -2,10 +2,10 @@ extends Node
 
 #add player stats and inventory
 var saved_data = {
-	"area": "lobby",
+	"area": "mission 1",
 	"room": 0,
-	"current mission": 0,
-	"tutorial status": "not done",
+	"current mission": 1,
+	"tutorial status": "done",
 	"player position": Vector2(-8, -54)
 }
 
