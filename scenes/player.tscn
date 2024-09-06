@@ -154,7 +154,7 @@ animation = &"walk_down"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
-position_smoothing_enabled = true
+limit_smoothed = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_uql5g")]
 

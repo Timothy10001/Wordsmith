@@ -42,7 +42,8 @@ func _process(delta):
 				"right":
 					next_position.x = player.position.x + 32
 					next_position.y = player.position.y
-			Global.enter_new_area.emit(new_area, new_room_index)
+			if State.current_area != new_area:
+				Global.enter_new_area.emit(new_area, new_room_index)
 			Global.enter_new_room.emit(new_room_index, next_position, direction)
 	elif entered and !openable:
 		if Input.is_action_just_pressed("interact"):
