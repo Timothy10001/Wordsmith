@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvke46ty67iv4"]
+[gd_scene load_steps=9 format=3 uid="uid://dvke46ty67iv4"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_b4h5j"]
 [ext_resource type="PackedScene" uid="uid://rnslowucwlht" path="res://scenes/npcs/mr_cheese.tscn" id="2_66il4"]
@@ -7,6 +7,12 @@
 [ext_resource type="Resource" uid="uid://cny7p73ybfma1" path="res://assets/resources/dialogues/interactables/locked_house_door.dialogue" id="4_gxjwi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4lu3f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eievi"]
+size = Vector2(32, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0l7a"]
+size = Vector2(16, 26)
 
 [node name="Outside" type="Node2D"]
 
@@ -53,14 +59,25 @@ direction = "up"
 position = Vector2(-8, -16)
 polygon = PackedVector2Array(-48, 0, 64, 0, 64, 16, -48, 16)
 
-[node name="ToTavern" parent="Collisions" instance=ExtResource("3_a7rb8")]
+[node name="ToTavern" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("3_a7rb8")]
 position = Vector2(112, -176)
+collision = NodePath("CollisionShape2D2")
 direction = "up"
-new_area = "tavern"
+new_area = "mission 1 - tavern"
+openable = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Collisions/ToTavern"]
+position = Vector2(0, 11)
+shape = SubResource("RectangleShape2D_eievi")
+
+[node name="LockedDoor" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("3_a7rb8")]
+position = Vector2(384, -192)
+collision = NodePath("CollisionShape2D2")
 dialogue_resource = ExtResource("4_gxjwi")
 
-[node name="CollisionShape2D" parent="Collisions/ToTavern" index="0"]
-position = Vector2(0, 16)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Collisions/LockedDoor"]
+position = Vector2(8, 3)
+shape = SubResource("RectangleShape2D_x0l7a")
 
 [node name="NPCs" type="Node2D" parent="."]
 
@@ -70,4 +87,3 @@ y_sort_enabled = true
 position = Vector2(0, -112)
 
 [editable path="Collisions/ToNorth001"]
-[editable path="Collisions/ToTavern"]

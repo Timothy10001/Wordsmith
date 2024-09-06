@@ -58,7 +58,7 @@ MISSION 1 - OUTSIDE INDEX
 var area_list = {
 	"lobby" : ["res://scenes/areas/lobby/rooms/throne_room.tscn"],
 	"mission 1 - outside": ["res://scenes/areas/mission 1/rooms/outside.tscn", "res://scenes/areas/mission 1/rooms/north_001.tscn", "res://scenes/areas/mission 1/rooms/north_002.tscn", "res://scenes/areas/mission 1/rooms/north_003.tscn"],
-	"mission 1 - tavern": [],
+	"mission 1 - tavern": ["res://scenes/areas/mission 1/rooms/tavern_001.tscn"],
 	"mission 1 - den": [],
 	"mission 1 - house": []
 }

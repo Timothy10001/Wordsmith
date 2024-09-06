@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var new_room_index: int = 0
+@export var collision: CollisionShape2D
 @export_enum("up","down", "left", "right") var direction: String
 @export var new_area: String
 @export var openable: bool
