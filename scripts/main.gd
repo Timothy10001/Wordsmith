@@ -6,7 +6,7 @@ var saved_data = {
 	"room": 0,
 	"current mission": 1,
 	"tutorial status": "done",
-	"player position": Vector2(-8, -54),
+	"player position": Vector2(-112, -16),
 	"direction": "up"
 }
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://c3kr4v0fqvg0u"]
+[gd_scene load_steps=15 format=3 uid="uid://c3kr4v0fqvg0u"]
 
 [ext_resource type="Texture2D" uid="uid://w7dw7daoxytr" path="res://assets/art/ui/ui_controls.png" id="1_pyjpf"]
 [ext_resource type="Script" path="res://scripts/controls.gd" id="1_y0k1c"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="3_xo72d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pxua1"]
 atlas = ExtResource("1_pyjpf")
@@ -34,6 +35,18 @@ region = Rect2(32, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_mdv6e"]
 atlas = ExtResource("1_pyjpf")
 region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20pes"]
+atlas = ExtResource("3_xo72d")
+region = Rect2(144, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5iq1"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1jbd"]
+atlas = ExtResource("1_pyjpf")
+region = Rect2(128, 32, 32, 32)
 
 [node name="controls" type="CanvasLayer"]
 script = ExtResource("1_y0k1c")
@@ -79,3 +92,34 @@ texture_normal = SubResource("AtlasTexture_465es")
 texture_pressed = SubResource("AtlasTexture_mdv6e")
 passby_press = true
 action = "ui_right"
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(6, 6)
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+
+[node name="PauseButton" type="TextureButton" parent="MarginContainer2"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_20pes")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(5, 5)
+pivot_offset = Vector2(52, 52)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="InteractButton" type="TextureButton" parent="MarginContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_b5iq1")
+texture_pressed = SubResource("AtlasTexture_c1jbd")

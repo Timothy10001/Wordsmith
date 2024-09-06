@@ -31,6 +31,9 @@ signal dialogue_ended
 signal overlay_active
 signal overlay_inactive
 
+signal interactable_entered
+signal interactable_exited
+
 signal mic_pressed
 signal mic_released
 

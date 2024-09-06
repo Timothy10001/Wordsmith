@@ -23,6 +23,7 @@ func _on_body_entered(body):
 		touch_screen_button.visible = true
 		print("player has entered")
 		player_entered.emit()
+		Global.interactable_entered.emit()
 
 
 func _on_body_exited(body):
@@ -31,6 +32,7 @@ func _on_body_exited(body):
 		has_entered = false
 		print("player has left")
 		player_left.emit()
+		Global.interactable_exited.emit()
 
 func _process(delta):
 	if has_entered:
