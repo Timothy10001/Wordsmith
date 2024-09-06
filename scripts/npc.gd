@@ -39,7 +39,8 @@ func _process(delta):
 		if Input.is_action_just_pressed("interact"):
 			touch_screen_button.visible = false
 			action()
-			
+		if Global.dialogue_ended:
+			touch_screen_button.visible = true
 
 func action() -> void:
 	var balloon: Node = BALLOON.instantiate()

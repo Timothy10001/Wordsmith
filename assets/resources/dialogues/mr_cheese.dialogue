@@ -1,12 +1,14 @@
 ~ start
-
-Mr Cheese: Hello! You must be the Wordsmith!
-Mr Cheese: You must help me.
-Mr Cheese: The RATS had made my Fondue a hangout place.
-Mr Cheese: I have no problem with mice and other rats.
-Mr Cheese: But these mice are notorious for bullying other customers.
-Mr Cheese: They never come here before because they can read my sign.
-Mr Cheese: But the curse has made them not understand!
-Mr Cheese: Please come inside and help them read again!
-
+set npc_class = "Middle Class"
+if State.briefed_by_mr_cheese == false:
+	Mr Cheese: Hello! You must be the Wordsmith!
+	Mr Cheese: You must help me.
+	Mr Cheese: The RATS had made my tavern a hangout place.
+	Mr Cheese: They always bully customers.
+	Mr Cheese: They never come here because of the sign outside.
+	Mr Cheese: But because of the curse of the wizard, they can't read it!
+	Mr Cheese: Help me get them out of my tavern and I will reward you!
+	set State.briefed_by_mr_cheese = true
+else:
+	Mr Cheese: Please help me get the RATS out of my tavern!
 => END

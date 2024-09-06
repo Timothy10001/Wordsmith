@@ -9,3 +9,7 @@ var current_direction
 #mission 0 is tutorial
 var tutorial_status: String = "not done"
 var current_mission: int = 0
+
+#mission 1 shit
+
+var briefed_by_mr_cheese: bool = false

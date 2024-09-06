@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 @onready var InteractButton = $MarginContainer/InteractButton
-@onready var PauseButton = $HBoxContainer2/PauseButton
+@onready var PauseButton = $MarginContainer2/PauseButton
 
 func _ready():
 	Global.connect("dialogue_active", _on_dialogue_active)
@@ -29,3 +29,11 @@ func _on_interactable_entered():
 
 func _on_interactable_exited():
 	InteractButton.visible = false
+
+
+func _on_interact_button_pressed():
+	Input.action_press("interact")
+	print(Input.is_action_just_pressed("interact"))
+	await get_tree().create_timer(0.05).timeout
+	Input.action_release("interact")
+	

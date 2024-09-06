@@ -33,6 +33,7 @@ signal overlay_inactive
 
 signal interactable_entered
 signal interactable_exited
+signal start_interactable_dialogue
 
 signal mic_pressed
 signal mic_released
@@ -46,10 +47,20 @@ var item_description: String
 
 var skill_check_passed: bool = false
 
+"""
+MISSION 1 - OUTSIDE INDEX
+0 = main
+1 - 3 = north
+ = east
+"""
+
 
 var area_list = {
 	"lobby" : ["res://scenes/areas/lobby/rooms/throne_room.tscn"],
-	"mission 1": ["res://scenes/areas/mission 1/rooms/outside.tscn", "res://scenes/areas/mission 1/rooms/north_001.tscn", "res://scenes/areas/mission 1/rooms/north_002.tscn", "res://scenes/areas/mission 1/rooms/north_003.tscn"]
+	"mission 1 - outside": ["res://scenes/areas/mission 1/rooms/outside.tscn", "res://scenes/areas/mission 1/rooms/north_001.tscn", "res://scenes/areas/mission 1/rooms/north_002.tscn", "res://scenes/areas/mission 1/rooms/north_003.tscn"],
+	"mission 1 - tavern": [],
+	"mission 1 - den": [],
+	"mission 1 - house": []
 }
 
 

@@ -2,7 +2,7 @@ extends Node
 
 #add player stats and inventory
 var saved_data = {
-	"area": "mission 1",
+	"area": "mission 1 - outside",
 	"room": 0,
 	"current mission": 1,
 	"tutorial status": "done",
@@ -36,6 +36,9 @@ func connect_signals():
 	#for the battle transitions
 	Global.start_battle.connect(_on_start_battle)
 	Global.end_battle.connect(_on_end_battle)
+	#for interactables with dialogue
+	Global.start_interactable_dialogue.connect(_on_start_interactable_dialogue)
+	
 	
 
 #create rooms in a different scene?
@@ -125,7 +128,7 @@ func _on_confirm_mission():
 	#load new area after transition
 	match State.current_mission:
 		1:
-			Global.enter_new_area.emit("mission 1", 0)
+			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-88, -24), "down")
 
 
@@ -195,5 +198,9 @@ func _on_end_battle(state, _type: String):
 		var balloon = BALLOON.instantiate()
 		add_child(balloon)
 		balloon.start(dialogue_resource, "start")
-		
+
+func _on_start_interactable_dialogue(dialogue_resource: DialogueResource):
+	var balloon = BALLOON.instantiate()
+	add_child(balloon)
+	balloon.start(dialogue_resource, "start")
 

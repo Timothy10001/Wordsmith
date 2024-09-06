@@ -49,7 +49,10 @@ var dialogue_line: DialogueLine:
 		#character_label.text = tr(dialogue_line.character, "dialogue")
 
 		var portrait_path: String = "res://assets/art/characters/npc/portraits/%s.png" % dialogue_line.character.to_lower()
-		portrait.texture = load(portrait_path)
+		if FileAccess.file_exists(portrait_path):
+			portrait.texture = load(portrait_path)
+		else:
+			portrait.visible = false
 		
 
 

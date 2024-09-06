@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c3kr4v0fqvg0u"]
+[gd_scene load_steps=16 format=3 uid="uid://c3kr4v0fqvg0u"]
 
 [ext_resource type="Texture2D" uid="uid://w7dw7daoxytr" path="res://assets/art/ui/ui_controls.png" id="1_pyjpf"]
 [ext_resource type="Script" path="res://scripts/controls.gd" id="1_y0k1c"]
@@ -39,6 +39,10 @@ region = Rect2(96, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_20pes"]
 atlas = ExtResource("3_xo72d")
 region = Rect2(144, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wlkj"]
+atlas = ExtResource("3_xo72d")
+region = Rect2(160, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b5iq1"]
 atlas = ExtResource("1_pyjpf")
@@ -103,6 +107,7 @@ theme_override_constants/margin_top = 2
 [node name="PauseButton" type="TextureButton" parent="MarginContainer2"]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_20pes")
+texture_pressed = SubResource("AtlasTexture_4wlkj")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 3
@@ -123,3 +128,5 @@ size_flags_vertical = 0
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_b5iq1")
 texture_pressed = SubResource("AtlasTexture_c1jbd")
+
+[connection signal="pressed" from="MarginContainer/InteractButton" to="." method="_on_interact_button_pressed"]
