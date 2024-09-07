@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="13_1buei"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_etjyt"]
-size = Vector2(16, 16)
+size = Vector2(32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6k0it"]
 atlas = ExtResource("3_e2fpb")

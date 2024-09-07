@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://syml87hsnyxv"]
+[gd_scene load_steps=6 format=3 uid="uid://syml87hsnyxv"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_i2t70"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_y76av"]
+[ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="3_aylp0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1ehc"]
 size = Vector2(32, 16)
@@ -30,7 +31,8 @@ metadata/_edit_lock_ = true
 [node name="Collisions" type="StaticBody2D" parent="."]
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
-polygon = PackedVector2Array(-48, -160, 160, -160, 160, -64, 272, -64, 272, -400, 192, -400, 192, -368, 32, -368, 32, -400, 0, -400, -48, -400, -48, -112, -80, -112, -80, -432, 304, -432, 304, -32, 128, -32, 128, -128, -96, -128, -96, -160)
+position = Vector2(0, 16)
+polygon = PackedVector2Array(-48, -160, 160, -160, 160, -64, 272, -64, 272, -400, 192, -400, 192, -368, 32, -368, 32, -400, 0, -400, 0, -416, -48, -416, -48, -112, -80, -112, -80, -432, 304, -432, 304, -32, 128, -32, 128, -128, -96, -128, -96, -160)
 
 [node name="DoorToOutside" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("2_y76av")]
 collision = NodePath("CollisionShape2D")
@@ -55,3 +57,13 @@ shape = SubResource("RectangleShape2D_fkqup")
 
 [node name="Table" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(0, -336, 208, -336, 208, -384, 192, -384, 192, -368, 0, -368)
+
+[node name="ToTavern004" parent="Collisions" instance=ExtResource("3_aylp0")]
+position = Vector2(-32, -288)
+new_room_index = 3
+direction = "up"
+
+[node name="Collision" parent="Collisions/ToTavern004" index="0"]
+polygon = PackedVector2Array(-16, 0, 32, 0, 32, 16, -16, 16)
+
+[editable path="Collisions/ToTavern004"]

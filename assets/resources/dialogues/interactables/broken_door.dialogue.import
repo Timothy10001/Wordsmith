@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://dfs4k2056cv1"
+path="res://.godot/imported/broken_door.dialogue-056d501ea9a5a66ed0b38f9b43a6ae72.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/broken_door.dialogue"
+dest_files=["res://.godot/imported/broken_door.dialogue-056d501ea9a5a66ed0b38f9b43a6ae72.tres"]
+
+[params]
+
+defaults=true
