@@ -49,7 +49,9 @@ var dialogue_line: DialogueLine:
 		#character_label.text = tr(dialogue_line.character, "dialogue")
 
 		var portrait_path: String = "res://assets/art/characters/npc/portraits/%s.png" % dialogue_line.character.to_lower()
-		if FileAccess.file_exists(portrait_path):
+		var portrait_import_path: String = "res://assets/art/characters/npc/portraits/%s.png.import" % dialogue_line.character.to_lower()
+		
+		if FileAccess.file_exists(portrait_path) or FileAccess.file_exists(portrait_import_path):
 			portrait.texture = load(portrait_path)
 		else:
 			portrait.visible = false

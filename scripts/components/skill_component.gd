@@ -65,6 +65,9 @@ func use_skill(name: String, target, skill_component: SkillComponent, target_ins
 				
 				target["health_component"].damage(skill_component, target_instance)
 				
+				if !skill.requires_skill_check:
+					Global.skill_description = skill.description
+				
 				if _user["type"] != "Player":
 					Global.skill_description = skill.description
 				
