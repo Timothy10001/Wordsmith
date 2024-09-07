@@ -38,6 +38,9 @@ signal start_interactable_dialogue
 signal mic_pressed
 signal mic_released
 
+signal player_rest_start
+signal player_rest_end
+
 #for npc dialogue font
 var npc_class = ""
 

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d28b8s4uq8l1c"]
+
+[ext_resource type="Script" path="res://scripts/interactables/bed.gd" id="1_p2iee"]
+
+[node name="Bed" type="Area2D"]
+script = ExtResource("1_p2iee")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
