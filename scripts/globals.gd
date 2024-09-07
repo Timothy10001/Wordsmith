@@ -47,6 +47,8 @@ var item_description: String
 
 var skill_check_passed: bool = false
 
+var in_battle: bool = false
+
 """
 MISSION 1 - OUTSIDE INDEX
 0 = main

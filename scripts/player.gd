@@ -15,14 +15,15 @@ var is_moving = false
 
 func _ready():
 	#limits camera to size of tilemap
-	var tilemap_rect = get_parent().get_used_rect()
-	var tilemap_size = get_parent().tile_set.tile_size
-	camera.limit_left = tilemap_rect.position.x * tilemap_size.x
-	camera.limit_right = tilemap_rect.end.x * tilemap_size.x
-	camera.limit_top = tilemap_rect.position.y * tilemap_size.y
-	camera.limit_bottom = tilemap_rect.end.y * tilemap_size.y
-	
-	play_animation()
+	if !Global.in_battle:
+		var tilemap_rect = get_parent().get_used_rect()
+		var tilemap_size = get_parent().tile_set.tile_size
+		camera.limit_left = tilemap_rect.position.x * tilemap_size.x
+		camera.limit_right = tilemap_rect.end.x * tilemap_size.x
+		camera.limit_top = tilemap_rect.position.y * tilemap_size.y
+		camera.limit_bottom = tilemap_rect.end.y * tilemap_size.y
+		
+		play_animation()
 
 
 func _physics_process(_delta):

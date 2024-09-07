@@ -1,6 +1,7 @@
 extends Node
 
 #add player stats and inventory
+"""
 var saved_data = {
 	"area": "mission 1 - outside",
 	"room": 0,
@@ -9,7 +10,15 @@ var saved_data = {
 	"player position": Vector2(-112, -16),
 	"direction": "up"
 }
-
+"""
+var saved_data = {
+	"area": "lobby",
+	"room": 0,
+	"current mission": 0,
+	"tutorial status": "not done",
+	"player position": Vector2(0, 0),
+	"direction": "up"
+}
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 
@@ -137,7 +146,7 @@ const battle_scene: PackedScene = preload("res://scenes/battle.tscn")
 func _on_start_battle(party: Array, enemies: Array, background_texture_path: String, _type: String):
 	
 	#initialize battle data
-	
+	Global.in_battle = true
 	var party_array: Array[PackedScene] = []
 	var enemy_array: Array[PackedScene] = []
 	for player in party:
@@ -165,6 +174,7 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	
 
 func _on_end_battle(state, _type: String):
+	Global.in_battle = false
 	var transition_instance = transition_scene.instantiate()
 	#dialogue balloon for this shit
 	dialogue_resource = load("res://assets/resources/dialogues/battle.dialogue")
