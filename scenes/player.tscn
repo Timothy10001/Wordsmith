@@ -145,6 +145,7 @@ script = ExtResource("1_oxoy7")
 CharacterResource = ExtResource("5_mr43v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_etjyt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -153,8 +154,9 @@ sprite_frames = SubResource("SpriteFrames_8tutj")
 animation = &"walk_down"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(3.5, 3.5)
 limit_smoothed = true
+position_smoothing_speed = 4.0
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_uql5g")]
 
