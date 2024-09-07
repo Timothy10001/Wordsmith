@@ -1,7 +1,7 @@
 extends Node
 
 #add player stats and inventory
-"""
+
 var saved_data = {
 	"area": "mission 1 - outside",
 	"room": 0,
@@ -10,6 +10,7 @@ var saved_data = {
 	"player position": Vector2(-112, -16),
 	"direction": "up"
 }
+
 """
 var saved_data = {
 	"area": "lobby",
@@ -19,6 +20,9 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
+"""
+
+
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 

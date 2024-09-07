@@ -53,13 +53,13 @@ var in_battle: bool = false
 MISSION 1 - OUTSIDE INDEX
 0 = main
 1 - 3 = north
- = east
+4 - ? = east
 """
 
 
 var area_list = {
 	"lobby" : ["res://scenes/areas/lobby/rooms/throne_room.tscn"],
-	"mission 1 - outside": ["res://scenes/areas/mission 1/rooms/outside.tscn", "res://scenes/areas/mission 1/rooms/north_001.tscn", "res://scenes/areas/mission 1/rooms/north_002.tscn", "res://scenes/areas/mission 1/rooms/north_003.tscn"],
+	"mission 1 - outside": ["res://scenes/areas/mission 1/rooms/outside.tscn", "res://scenes/areas/mission 1/rooms/north_001.tscn", "res://scenes/areas/mission 1/rooms/north_002.tscn", "res://scenes/areas/mission 1/rooms/north_003.tscn", "res://scenes/areas/mission 1/rooms/east_001.tscn", "res://scenes/areas/mission 1/rooms/east_002.tscn"],
 	"mission 1 - tavern": ["res://scenes/areas/mission 1/rooms/tavern_001.tscn", "res://scenes/areas/mission 1/rooms/tavern_002.tscn", "res://scenes/areas/mission 1/rooms/tavern_003.tscn", "res://scenes/areas/mission 1/rooms/tavern_004.tscn"],
 	"mission 1 - den": [],
 	"mission 1 - house": ["res://scenes/areas/mission 1/rooms/house.tscn"]

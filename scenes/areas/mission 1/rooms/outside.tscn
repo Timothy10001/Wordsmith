@@ -51,7 +51,7 @@ polygon = PackedVector2Array(352, -192, 432, -192, 432, -232, 352, -232)
 polygon = PackedVector2Array(456, -192, 616, -192, 616, -232, 456, -232)
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
-polygon = PackedVector2Array(-256, -472, -576, -472, -576, -224, -320, -224, -320, -96, -432, -96, -432, 16, -288, 16, -288, 192, 760, 192, 760, 16, 784, 16, 784, -64, 760, -64, 760, -160, 784, -160, 784, -256, 760, -256, 768, -472, -144, -472, -144, -504, -256, -504, -256, -520, 808, -520, 808, 248, -608, 248, -608, -520, -256, -520)
+polygon = PackedVector2Array(-256, -472, -576, -472, -576, -224, -320, -224, -320, -96, -432, -96, -432, 16, -288, 16, -288, 192, 760, 192, 760, 16, 800, 16, 800, -64, 760, -64, 760, -160, 800, -160, 800, -256, 768, -256, 768, -472, -144, -472, -144, -504, -256, -504, -256, -520, 832, -512, 832, 256, -608, 248, -608, -520, -256, -520)
 
 [node name="ToNorth001" parent="Collisions" instance=ExtResource("2_vl3h6")]
 position = Vector2(-200, -496)
@@ -92,6 +92,22 @@ openable = true
 position = Vector2(496, -188)
 shape = SubResource("RectangleShape2D_e1y6q")
 
+[node name="ToEast001" parent="Collisions" instance=ExtResource("2_vl3h6")]
+position = Vector2(784, -240)
+new_room_index = 4
+direction = "right"
+
+[node name="Collision" parent="Collisions/ToEast001" index="0"]
+polygon = PackedVector2Array(0, -16, 16, -16, 16, 80, 0, 80)
+
+[node name="ToEast001_2" parent="Collisions" instance=ExtResource("2_vl3h6")]
+position = Vector2(800, -48)
+new_room_index = 4
+direction = "right"
+
+[node name="Collision" parent="Collisions/ToEast001_2" index="0"]
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 64, -16, 64)
+
 [node name="NPCs" type="Node2D" parent="."]
 
 [node name="Mr Cheese" parent="NPCs" instance=ExtResource("2_66il4")]
@@ -100,3 +116,5 @@ y_sort_enabled = true
 position = Vector2(0, -112)
 
 [editable path="Collisions/ToNorth001"]
+[editable path="Collisions/ToEast001"]
+[editable path="Collisions/ToEast001_2"]
