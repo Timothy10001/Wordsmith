@@ -444,6 +444,9 @@ texture = ExtResource("1_55qnk")
 21:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 21:7/0/physics_layer_0/angular_velocity = 0.0
 21:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-22, 2, 22, 2, 22, 8, -22, 8)
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qy8y2"]
 texture = ExtResource("2_dpkka")
@@ -484,6 +487,21 @@ texture = ExtResource("2_dpkka")
 11:2/0/texture_origin = Vector2i(0, 8)
 11:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 11:2/0/physics_layer_0/angular_velocity = 0.0
+0:0/0 = 0
+0:0/0/y_sort_origin = -2
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 2, 6, 2, 6, 5, -6, 5)
+5:0/0 = 0
+5:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:0/0/physics_layer_0/angular_velocity = 0.0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, 1, 7, 1, 7, 6, -7, 6)
+10:0/size_in_atlas = Vector2i(2, 1)
+10:0/0 = 0
+10:0/0/y_sort_origin = -4
+10:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:0/0/physics_layer_0/angular_velocity = 0.0
+10:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15, -5, 15, -5, 15, 7, -15, 7)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_205ou"]
 texture = ExtResource("3_oqurk")

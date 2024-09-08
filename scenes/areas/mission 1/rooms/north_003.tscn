@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqnnhpdbblpvk"]
+[gd_scene load_steps=5 format=3 uid="uid://bqnnhpdbblpvk"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_vn4mg"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_6vxjq"]
+[ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="3_tqicp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3bk5e"]
+size = Vector2(89.25, 16)
 
 [node name="North003" type="Node2D"]
 
@@ -36,8 +40,16 @@ position = Vector2(0, 16)
 polygon = PackedVector2Array(0, -16, 0, 112, -16, 112, -16, -16)
 
 [node name="Cave" type="CollisionPolygon2D" parent="Collisions"]
-polygon = PackedVector2Array(1104, -1616, 1344, -1616, 1344, -1648, 1104, -1648)
+polygon = PackedVector2Array(1104, -1616, 1344, -1616, 1344, -1648, 1312, -1648, 1312, -1664, 1136, -1664, 1136, -1648, 1104, -1648)
 
-[node name="NPCs" type="Node2D" parent="."]
+[node name="DoorToDen" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("3_tqicp")]
+collision = NodePath("CollisionShape2D")
+direction = "up"
+new_area = "mission 1 - den"
+openable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/DoorToDen"]
+position = Vector2(1228.63, -1608)
+shape = SubResource("RectangleShape2D_3bk5e")
 
 [editable path="Collisions/ToNorth002"]

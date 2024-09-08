@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 @export var CharacterResource: PlayerResource
+@export var inventory: Inventory
 
 @onready var health_component = $HealthComponent
 @onready var skill_component = $SkillComponent
