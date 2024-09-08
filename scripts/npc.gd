@@ -14,6 +14,7 @@ const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 
 func _ready():
 	touch_screen_button.visible = false
+	Global.dialogue_ended.connect(_on_dialogue_ended)
 
 var has_entered = false
 
@@ -39,10 +40,11 @@ func _process(delta):
 		if Input.is_action_just_pressed("interact"):
 			touch_screen_button.visible = false
 			action()
-		if Global.dialogue_ended:
-			touch_screen_button.visible = true
 
 func action() -> void:
 	var balloon: Node = BALLOON.instantiate()
 	get_tree().current_scene.add_child(balloon)
 	balloon.start(dialogue_resource, dialogue_start)
+
+func _on_dialogue_ended():
+	touch_screen_button.visible = true
