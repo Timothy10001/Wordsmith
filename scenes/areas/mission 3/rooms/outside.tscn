@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1upkytdmoemx"]
+[gd_scene load_steps=6 format=3 uid="uid://b1upkytdmoemx"]
 
 [ext_resource type="TileSet" uid="uid://dqvce1djursoh" path="res://assets/resources/tile_sets/school.tres" id="1_pqvc5"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_7ctys"]
+[ext_resource type="PackedScene" uid="uid://rhyfuw21g0gl" path="res://scenes/interactables/custom_position_door.tscn" id="3_oe8d8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tjcmg"]
 size = Vector2(45, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n72e5"]
+size = Vector2(64, 16)
 
 [node name="Outside" type="Node2D"]
 
@@ -30,7 +34,7 @@ metadata/_edit_lock_ = true
 polygon = PackedVector2Array(-464, 64, -464, -688, 448, -688, 448, 240, -464, 240, -512, 240, -512, 320, 592, 320, 592, -784, -608, -784, -608, 384, -464, 384)
 
 [node name="School" type="CollisionPolygon2D" parent="Collisions"]
-polygon = PackedVector2Array(-128, -160, -80, -160, -80, -134, -22, -134, -22, -145, 23, -145, 23, -134, 81, -134, 81, -160, 128, -160, 128, -288, -128, -288)
+polygon = PackedVector2Array(-128, -160, -80, -160, -80, -134, -22, -134, -22, -145, 23, -145, 23, -134, 81, -134, 81, -160, 128, -160, 128, -288, 32, -288, 32, -272, -32, -272, -32, -288, -128, -288)
 
 [node name="DoorToSchool001" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("2_7ctys")]
 collision = NodePath("CollisionShape2D")
@@ -41,3 +45,13 @@ openable = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/DoorToSchool001"]
 position = Vector2(0.5, -136.5)
 shape = SubResource("RectangleShape2D_tjcmg")
+
+[node name="CustomPositionDoor" parent="Collisions" instance=ExtResource("3_oe8d8")]
+direction = "down"
+new_area = "mission 3 - school"
+openable = true
+extra_y_position = 368
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/CustomPositionDoor"]
+position = Vector2(0, -280)
+shape = SubResource("RectangleShape2D_n72e5")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://rhyfuw21g0gl"]
+
+[ext_resource type="Script" path="res://scripts/interactables/custompositiondoor.gd" id="1_y4bjj"]
+
+[node name="CustomPositionDoor" type="Area2D"]
+script = ExtResource("1_y4bjj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
