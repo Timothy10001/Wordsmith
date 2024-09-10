@@ -66,7 +66,7 @@ var area_list = {
 	"mission 1 - tavern": ["res://scenes/areas/mission 1/rooms/tavern_001.tscn", "res://scenes/areas/mission 1/rooms/tavern_002.tscn", "res://scenes/areas/mission 1/rooms/tavern_003.tscn", "res://scenes/areas/mission 1/rooms/tavern_004.tscn"],
 	"mission 1 - den": ["res://scenes/areas/mission 1/rooms/den_001.tscn", "res://scenes/areas/mission 1/rooms/den_002.tscn"],
 	"mission 1 - house": ["res://scenes/areas/mission 1/rooms/house.tscn"],
-	"mission 2 - outside": [],
+	"mission 2 - outside": ["res://scenes/areas/mission 2/rooms/outside.tscn"],
 	"mission 3 - outside": ["res://scenes/areas/mission 3/rooms/outside.tscn"],
 	"mission 3 - school": ["res://scenes/areas/mission 3/rooms/school_001.tscn", "res://scenes/areas/mission 3/rooms/school_002.tscn"],
 	"mission 3 - classroom": ["res://scenes/areas/mission 3/rooms/classroom_001.tscn", "res://scenes/areas/mission 3/rooms/classroom_002.tscn", "res://scenes/areas/mission 3/rooms/classroom_003.tscn", "res://scenes/areas/mission 3/rooms/classroom_004.tscn", "res://scenes/areas/mission 3/rooms/classroom_005.tscn"],
