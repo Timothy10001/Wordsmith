@@ -21,7 +21,7 @@ layer_2/y_sort_enabled = true
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array(-2818045, 524291, 3, -2752508, 524291, 3, -2621436, 458755, 2, -3211259, 262147, 13, -3604474, 786435, 0, -2621434, 458755, 2, -3145720, 524291, 12, -2949112, 524291, 12, -2752504, 524291, 12, -3407859, 327683, 6, -3145715, 524291, 12, -2949107, 524291, 12, -2752499, 524291, 12, -3342318, 655363, 1, -3145710, 524291, 12, -2949102, 524291, 12, -2752494, 524291, 12, -3604460, 786435, 0, -3407851, 1048579, 2, -3080171, 1114115, 5, -2949099, 196611, 13, -2818026, 327683, 12)
 layer_3/name = "deco"
-layer_3/tile_data = PackedInt32Array(-3735539, 786435, 9)
+layer_3/tile_data = PackedInt32Array(-3735539, 786435, 9, -2621421, 786435, 16, -2621420, 851971, 16)
 
 [node name="Collisions" type="StaticBody2D" parent="."]
 
@@ -29,9 +29,8 @@ layer_3/tile_data = PackedInt32Array(-3735539, 786435, 9)
 position = Vector2(431, -304)
 polygon = PackedVector2Array(-48, -320, -48, -576, -384, -576, -384, -320, 0, -320, 0, -288, -416, -288, -416, -656, -16, -656, -16, -272, -48, -272)
 
-[node name="DoorToSchool001" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("2_cqod5")]
+[node name="DoorToSchool001" parent="Collisions" instance=ExtResource("2_cqod5")]
 new_room_index = 1
-collision = NodePath("")
 direction = "down"
 new_area = "mission 3 - school"
 openable = true
