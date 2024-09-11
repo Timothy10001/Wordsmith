@@ -3,9 +3,9 @@ extends Node
 #add player stats and inventory
 #debug
 var saved_data = {
-	"area": "mission 3 - outside",
+	"area": "mission 2 - outside",
 	"room": 0,
-	"current mission": 3,
+	"current mission": 2,
 	"tutorial status": "done",
 	"player position": Vector2(0, 0),
 	"direction": "up"
@@ -75,10 +75,9 @@ func start() -> void:
 	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
 	
 	
-	#DUNNO WHAT TO DO HERE YET
+	#Add them to the scene already but remove their visibility
 	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").visible = false
 	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").process_mode = Node.PROCESS_MODE_DISABLED
-	
 
 
 

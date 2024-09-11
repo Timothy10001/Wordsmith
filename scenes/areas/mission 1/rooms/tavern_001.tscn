@@ -14,6 +14,7 @@ size = Vector2(48, 16)
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
+position = Vector2(0, 16)
 tile_set = ExtResource("1_i2t70")
 format = 2
 layer_0/name = "floor"

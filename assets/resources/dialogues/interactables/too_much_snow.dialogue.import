@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://dhc5e06jtxfnl"
+path="res://.godot/imported/too_much_snow.dialogue-badf7ff3c159f01035fe6c3e7c9f60ba.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/too_much_snow.dialogue"
+dest_files=["res://.godot/imported/too_much_snow.dialogue-badf7ff3c159f01035fe6c3e7c9f60ba.tres"]
+
+[params]
+
+defaults=true
