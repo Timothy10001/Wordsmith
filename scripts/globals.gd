@@ -23,7 +23,6 @@ signal cancel_mission
 signal enter_new_room(_new_room_index: int, _player_position: Vector2)
 
 signal enter_new_area(_area: String, _room_index: int)
-signal update_area
 
 signal dialogue_active
 signal dialogue_ended
@@ -68,8 +67,8 @@ var area_list = {
 	"mission 1 - house": ["res://scenes/areas/mission 1/rooms/house.tscn"],
 	"mission 2 - outside": ["res://scenes/areas/mission 2/rooms/outside.tscn"],
 	"mission 2 - house": ["res://scenes/areas/mission 2/rooms/house_001.tscn", "res://scenes/areas/mission 2/rooms/house_002.tscn"],
-	"mission 2 - shed": [],
-	"mission 2 - igloo": [],
+	"mission 2 - shed": ["res://scenes/areas/mission 2/rooms/shed.tscn"],
+	"mission 2 - igloo": ["res://scenes/areas/mission 2/rooms/igloo_001.tscn", "res://scenes/areas/mission 2/rooms/igloo_002.tscn", "res://scenes/areas/mission 2/rooms/igloo_003.tscn"],
 	"mission 3 - outside": ["res://scenes/areas/mission 3/rooms/outside.tscn"],
 	"mission 3 - school": ["res://scenes/areas/mission 3/rooms/school_001.tscn", "res://scenes/areas/mission 3/rooms/school_002.tscn"],
 	"mission 3 - classroom": ["res://scenes/areas/mission 3/rooms/classroom_001.tscn", "res://scenes/areas/mission 3/rooms/classroom_002.tscn", "res://scenes/areas/mission 3/rooms/classroom_003.tscn", "res://scenes/areas/mission 3/rooms/classroom_004.tscn", "res://scenes/areas/mission 3/rooms/classroom_005.tscn"],

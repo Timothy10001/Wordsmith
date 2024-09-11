@@ -83,7 +83,7 @@ func start() -> void:
 
 
 func get_current_area(_area):
-	current_area = []
+	current_area.clear()
 	for room in Global.area_list[_area]:
 		current_area.append(load(room))
 
