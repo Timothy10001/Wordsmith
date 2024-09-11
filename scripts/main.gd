@@ -3,10 +3,10 @@ extends Node
 #add player stats and inventory
 #debug
 var saved_data = {
-	"area": "mission 2 - outside",
+	"area": "lobby",
 	"room": 0,
-	"current mission": 2,
-	"tutorial status": "done",
+	"current mission": 0,
+	"tutorial status": "not done",
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
@@ -80,6 +80,11 @@ func start() -> void:
 	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").process_mode = Node.PROCESS_MODE_DISABLED
 
 
+func enable_player_process():
+	player_instance.process_mode = Node.PROCESS_MODE_INHERIT
+
+func disable_player_process():
+	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func get_current_area(_area):
@@ -122,7 +127,7 @@ func _on_enter_new_room(_new_room_index: int, _player_position: Vector2, _direct
 func _get_mission():
 	
 	remove_child(controls_instance)
-	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
+	call_deferred("disable_player_process")
 	
 	var mission_instance = mission_scene.instantiate()
 	add_child(mission_instance)
@@ -166,7 +171,7 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	await Global.transition_finished
 	
 	#DISABLE PLAYER MOVEMENT
-	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
+	call_deferred("disable_player_process")
 	player_instance.visible = false
 	remove_child(controls_instance)
 	
@@ -199,7 +204,7 @@ func _on_end_battle(state, _type: String):
 	$CanvasLayer.get_node("Battle").queue_free()
 	
 	#ENABLE PLAYER MOVEMENT
-	player_instance.process_mode = Node.PROCESS_MODE_INHERIT
+	call_deferred("enable_player_process")
 	player_instance.visible = true
 	controls_instance = controls_scene.instantiate()
 	add_child(controls_instance)

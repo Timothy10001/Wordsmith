@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Inventory" load_steps=2 format=3 uid="uid://1b1s3rxyxfhm"]
+
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="1_7f76g"]
+
+[resource]
+script = ExtResource("1_7f76g")
+items = Array[Resource("res://assets/resources/item.gd")]([])

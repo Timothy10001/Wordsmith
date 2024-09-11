@@ -40,6 +40,7 @@ func calculate_skill_damage(skill, target):
 		var miss_chance = rng.randi_range(1, 5)
 		if miss_chance == 4:
 			strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 12))
+			Global.skill_description = skill.description
 		else:
 			strength_modifier = 0
 			Global.skill_description = target["name"] + " could not understand!"

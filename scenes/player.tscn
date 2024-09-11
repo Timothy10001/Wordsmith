@@ -1,6 +1,7 @@
-[gd_scene load_steps=31 format=3 uid="uid://c708bnl1qw0ev"]
+[gd_scene load_steps=32 format=3 uid="uid://c708bnl1qw0ev"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_oxoy7"]
+[ext_resource type="Resource" uid="uid://1b1s3rxyxfhm" path="res://assets/resources/player_inventory.tres" id="3_a2rlo"]
 [ext_resource type="Texture2D" uid="uid://1kyhqm246jrq" path="res://assets/art/characters/placeholder/idle.png" id="3_e2fpb"]
 [ext_resource type="Texture2D" uid="uid://cp8jfvlomu3ys" path="res://assets/art/characters/placeholder/walk.png" id="4_scr7f"]
 [ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="4_uql5g"]
@@ -143,6 +144,7 @@ y_sort_enabled = true
 up_direction = Vector2(0, 1)
 script = ExtResource("1_oxoy7")
 CharacterResource = ExtResource("5_mr43v")
+inventory = ExtResource("3_a2rlo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.5, 0.5)
