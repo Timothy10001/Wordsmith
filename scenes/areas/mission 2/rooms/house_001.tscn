@@ -20,9 +20,9 @@ layer_1/tile_data = PackedInt32Array(-851980, 720902, 1, -786444, 720902, 1, -72
 layer_2/name = "ysort"
 layer_2/y_sort_enabled = true
 layer_2/z_index = 1
-layer_2/tile_data = PackedInt32Array(-131078, 917510, 6, -65542, 393222, 13)
+layer_2/tile_data = PackedInt32Array(-458756, 720901, 12, -524296, 393221, 12, -524299, 262149, 12, -65541, 5, 268435468)
 layer_3/name = "deco"
-layer_3/tile_data = PackedInt32Array(-524293, 589830, 2, -458760, 589830, 2, -327685, 589830, 3, -524296, 589830, 3, -393225, 655366, 1, -458758, 589830, 1)
+layer_3/tile_data = PackedInt32Array(-524293, 589830, 2, -458760, 589830, 2, -327685, 589830, 3, -524296, 589830, 3, -393225, 655366, 1, -458758, 589830, 1, 65527, 655365, 3, 65529, 786437, 3, 65528, 720901, 3)
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
