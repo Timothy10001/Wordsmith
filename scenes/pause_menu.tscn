@@ -1,0 +1,59 @@
+[gd_scene load_steps=12 format=3 uid="uid://dacvpnndsxaij"]
+
+[ext_resource type="Texture2D" uid="uid://rw8qi7a3pkxh" path="res://assets/art/ui/book.png" id="1_ggvua"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_jft78"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l64e6"]
+atlas = ExtResource("2_jft78")
+region = Rect2(192, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxvd5"]
+texture = SubResource("AtlasTexture_l64e6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ieayn"]
+texture = SubResource("AtlasTexture_l64e6")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q183d"]
+atlas = ExtResource("2_jft78")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y8gp4"]
+texture = SubResource("AtlasTexture_q183d")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8raxk"]
+atlas = ExtResource("2_jft78")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i1rhx"]
+texture = SubResource("AtlasTexture_8raxk")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovdrk"]
+atlas = ExtResource("2_jft78")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n1otu"]
+texture = SubResource("AtlasTexture_ovdrk")
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ggvua")
+
+[node name="CloseButton" type="Button" parent="TextureRect"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+offset_left = 48.0
+offset_top = 48.0
+offset_right = 148.0
+offset_bottom = 148.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_sxvd5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ieayn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y8gp4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_i1rhx")
+theme_override_styles/focus = SubResource("StyleBoxTexture_n1otu")
