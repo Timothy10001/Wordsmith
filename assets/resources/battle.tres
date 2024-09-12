@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://cwif4cu3aua73"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://cwif4cu3aua73"]
 
 [ext_resource type="FontFile" uid="uid://tifhkuc01jal" path="res://assets/fonts/normal.ttf" id="1_6dtd6"]
 
@@ -9,6 +9,18 @@ expand_margin_top = 14.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6cva"]
 bg_color = Color(0.513726, 0.878431, 0.298039, 1)
 expand_margin_top = 14.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4216j"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfyt7"]
 bg_color = Color(0.141176, 0.231373, 0.380392, 1)
@@ -145,6 +157,8 @@ Health/constants/outline_size = 5
 Health/fonts/font = ExtResource("1_6dtd6")
 Health/styles/background = SubResource("StyleBoxFlat_04l06")
 Health/styles/fill = SubResource("StyleBoxFlat_y6cva")
+Item/base_type = &"PanelContainer"
+Item/styles/panel = SubResource("StyleBoxFlat_4216j")
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 5

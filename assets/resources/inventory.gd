@@ -2,4 +2,4 @@ extends Resource
 
 class_name Inventory
 
-@export var items: Array[Item]
+@export var items: Array[InventorySlot]

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://db7kjgs2dewl8"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_ylm3k"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_eorbh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gfpx"]
+atlas = ExtResource("2_eorbh")
+region = Rect2(112, 240, 16, 16)
+
+[resource]
+script = ExtResource("1_ylm3k")
+name = "Block of Cheese"
+description = "Fondu's signature dish. Adds intelligence and energy."
+texture = SubResource("AtlasTexture_0gfpx")
+stackable = true
+type = "heal"

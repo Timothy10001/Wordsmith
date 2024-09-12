@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://celusrmeindkd"]
+
+[ext_resource type="Theme" uid="uid://cwif4cu3aua73" path="res://assets/resources/battle.tres" id="1_yj6tq"]
+
+[node name="InventoryUI" type="CanvasLayer"]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_yj6tq")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 75
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 75
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="UI/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+columns = 2
