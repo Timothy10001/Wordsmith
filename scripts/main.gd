@@ -31,6 +31,7 @@ const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 var player_instance
 var controls_instance
 var pause_instance
+var mission_instance
 var dialogue_resource: DialogueResource
 
 func _ready():
@@ -53,6 +54,7 @@ func _process(delta):
 func connect_signals():
 	Global.get_mission.connect(_get_mission)
 	Global.confirm_mission.connect(_on_confirm_mission)
+	Global.cancel_mission.connect(_on_cancel_mission)
 	#for areas
 	Global.enter_new_area.connect(_on_enter_new_area)
 	Global.enter_new_room.connect(_on_enter_new_room)
@@ -141,8 +143,9 @@ func _get_mission():
 	Controls.remove_child(Controls.get_child(0))
 	call_deferred("disable_player_process")
 	
-	var mission_instance = mission_scene.instantiate()
-	add_child(mission_instance)
+	mission_instance = mission_scene.instantiate()
+	$CanvasLayer.add_child(mission_instance)
+	
 	mission_instance.MissionTitle.text = mission_instance.mission_title_list[State.current_mission]
 	mission_instance.MissionDescription.text = mission_instance.mission_description_list[State.current_mission]
 
@@ -151,6 +154,7 @@ func _on_confirm_mission():
 	# do transition
 	var transition_instance = transition_scene.instantiate()
 	add_child(transition_instance)
+	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
 	transition_instance.iris_transition()
 	await Global.transition_finished
 	#load new area after transition
@@ -158,6 +162,13 @@ func _on_confirm_mission():
 		1:
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-88, -24), "down")
+
+func _on_cancel_mission():
+	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
+	controls_instance = controls_scene.instantiate()
+	Controls.add_child(controls_instance)
+	call_deferred("enable_player_process")
+	
 
 
 const battle_scene: PackedScene = preload("res://scenes/battle.tscn")
@@ -213,7 +224,7 @@ func _on_end_battle(state, _type: String):
 	transition_instance.fade_transition()
 	await Global.transition_finished
 	
-	$CanvasLayer.get_node("Battle").queue_free()
+	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
 	
 	#ENABLE PLAYER MOVEMENT
 	call_deferred("enable_player_process")
@@ -222,7 +233,7 @@ func _on_end_battle(state, _type: String):
 	Controls.add_child(controls_instance)
 	
 	#TO BE CHANGED#
-	if _type == "tutorial":
+	if _type == "tutorial" and State.current_room == 0:
 		dialogue_resource = load("res://assets/resources/dialogues/king_pendragon.dialogue")
 		var balloon = BALLOON.instantiate()
 		add_child(balloon)

@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://bdr3rranxv4on"
+path="res://.godot/imported/dummy.dialogue-bb317852025fcb9c3da0dd5eee9188ee.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/dummy.dialogue"
+dest_files=["res://.godot/imported/dummy.dialogue-bb317852025fcb9c3da0dd5eee9188ee.tres"]
+
+[params]
+
+defaults=true

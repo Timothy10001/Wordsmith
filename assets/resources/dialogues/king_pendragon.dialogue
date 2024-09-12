@@ -8,7 +8,7 @@ if State.tutorial_status == "not done" and State.current_mission == 0:
 	King Pendragon: Would you like to learn the basics?
 	- Yes
 		King Pendragon: Good, let us go to the training room.
-		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/generic.png", "tutorial")
+		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial")
 		set State.tutorial_status = "done"
 		set State.current_mission = 1
 		=> END
@@ -24,11 +24,12 @@ elif State.tutorial_status == "not done":
 	King Pendragon: Would you like to learn the basics?
 	- Yes
 		King Pendragon: Good, let us go to the training room.
-		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/generic.png", "tutorial")
+		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial")
 		set State.tutorial_status = "done"
 		=> END
 	- No
 		King Pendragon: Good, now go on with your mission.
+		do emit("get_mission")
 		=> END
 	
 	

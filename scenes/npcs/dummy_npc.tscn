@@ -1,24 +1,27 @@
-[gd_scene load_steps=9 format=3 uid="uid://dievyui0yq6g4"]
+[gd_scene load_steps=10 format=3 uid="uid://dievyui0yq6g4"]
 
 [ext_resource type="Script" path="res://scripts/npcs/dummy_npc.gd" id="1_dbrov"]
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="3_elmx2"]
 [ext_resource type="Texture2D" uid="uid://iu0epcgenksv" path="res://assets/art/characters/enemy/dummy.png" id="3_fqw6c"]
 [ext_resource type="PackedScene" uid="uid://bkbkxdafjpdmr" path="res://scenes/npc.tscn" id="4_pwqq3"]
+[ext_resource type="Resource" uid="uid://bdr3rranxv4on" path="res://assets/resources/dialogues/dummy.dialogue" id="5_dd2p3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1xjli"]
 atlas = ExtResource("3_elmx2")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjvlb"]
-size = Vector2(20, 55)
+size = Vector2(16, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o23du"]
-size = Vector2(55, 71)
+size = Vector2(64, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_knibp"]
 size = Vector2(32, 56)
 
 [node name="DummyNPC" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_dbrov")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -43,14 +46,15 @@ size_flags_vertical = 0
 texture = SubResource("AtlasTexture_1xjli")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 0.5)
+position = Vector2(0, 15)
 shape = SubResource("RectangleShape2D_jjvlb")
 
-[node name="NPC" parent="." instance=ExtResource("4_pwqq3")]
+[node name="NPC" parent="." node_paths=PackedStringArray("touch_screen_button", "collision_shape") instance=ExtResource("4_pwqq3")]
+dialogue_resource = ExtResource("5_dd2p3")
+touch_screen_button = NodePath("TouchScreenButton")
+collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC"]
-position = Vector2(0.5, 7.5)
 shape = SubResource("RectangleShape2D_o23du")
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="NPC"]
