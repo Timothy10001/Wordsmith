@@ -13,7 +13,9 @@ func _on_options_button_pressed():
 
 
 func _on_items_button_pressed():
-	pass # Replace with function body.
+	Input.action_press("show_inventory")
+	await get_tree().create_timer(0.05).timeout
+	Input.action_release("show_inventory")
 
 
 func _on_exit_to_lobby_button_pressed():

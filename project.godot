@@ -73,6 +73,14 @@ resume={
 "deadzone": 0.5,
 "events": []
 }
+show_inventory={
+"deadzone": 0.5,
+"events": []
+}
+back_to_pause_menu={
+"deadzone": 0.5,
+"events": []
+}
 
 [input_devices]
 

@@ -83,7 +83,7 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 @onready var MainContainer = $VBoxContainer2/BottomContainer/MainContainer
 @onready var CharacterContainer = $VBoxContainer2/BottomContainer/MainContainer/CharacterContainer
 @onready var SkillsContainer = $VBoxContainer2/BottomContainer/MainContainer/SkillsContainer
-@onready var ItemsContainer = $VBoxContainer2/BottomContainer/MainContainer/ItemsContainer
+@onready var ItemGrid = $VBoxContainer2/BottomContainer/MainContainer/MarginContainer/ItemGrid
 
 #left container has teach, skills, items, and guard
 @onready var LeftContainer = $VBoxContainer2/BottomContainer/LeftContainer
@@ -261,6 +261,7 @@ func show_default_container():
 	RightCharacterPanel.visible = false
 	EnemyPanel.visible = false
 	SkillCheck.visible = false
+	remove_item_grid()
 	for unit in unit_list:
 		if unit.has("select_button"):
 			unit["select_button"].visible = false
@@ -483,7 +484,7 @@ func show_skills():
 func show_items():
 	LeftContainer.visible = false
 	CharacterContainer.visible = false
-	ItemsContainer.visible = true
+	ItemGrid.visible = true
 	RightContainer.visible = true
 	RightButtonContainer.visible = true
 	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = false
@@ -527,9 +528,29 @@ func _on_teach_pressed():
 func _on_skills_pressed():
 	show_skills()
 
-
+# ITEM GRID
 func _on_items_pressed():
 	show_items()
+	populate_item_grid(inventory_data.items)
+
+var inventory_slot_scene: PackedScene = load("res://scenes/inventory_slot.tscn")
+var inventory_data = load("res://assets/resources/player_inventory.tres")
+
+func populate_item_grid(inventory_slots: Array[InventorySlot]) -> void:
+	for child in ItemGrid.get_children():
+		ItemGrid.remove_child(child)
+	
+	for inventory_slot in inventory_slots:
+		var inventory_slot_instance = inventory_slot_scene.instantiate()
+		ItemGrid.add_child(inventory_slot_instance)
+		inventory_slot_instance.visible = false
+		if inventory_slot != null:
+			inventory_slot_instance.visible = true
+			inventory_slot_instance.set_inventory_slot_data(inventory_slot.item, inventory_slot.quantity)
+
+func remove_item_grid():
+	for child in ItemGrid.get_children():
+		ItemGrid.remove_child(child)
 
 
 func _on_guard_pressed():
@@ -548,10 +569,6 @@ func _on_execute_pressed():
 	#start turns
 	Global.execute.emit()
 
-
-
-#func set_action_library(user, target)
-#we need to store action names and deals_damage bool
 
 func _on_cancel_pressed():
 	show_default_container()

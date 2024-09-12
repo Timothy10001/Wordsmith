@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cgcy4scgwksvl"]
 
 [ext_resource type="Theme" uid="uid://cwif4cu3aua73" path="res://assets/resources/battle.tres" id="1_6y6l1"]
-[ext_resource type="Texture2D" uid="uid://c4qsasa06l60u" path="res://assets/resources/atlas/items.tres" id="2_17rls"]
+[ext_resource type="Script" path="res://scripts/inventory_slot.gd" id="2_bqplq"]
 
 [node name="InventorySlot" type="PanelContainer"]
 anchors_preset = 10
@@ -9,9 +9,10 @@ anchor_right = 1.0
 offset_bottom = 44.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 0
 theme = ExtResource("1_6y6l1")
 theme_type_variation = &"Item"
+script = ExtResource("2_bqplq")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(0, 40)
@@ -30,13 +31,12 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = ExtResource("2_17rls")
 stretch_mode = 5
 
 [node name="ItemName" type="Label" parent="MarginContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Block of Cheese"
+text = "Placeholder"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -45,4 +45,4 @@ size_flags_horizontal = 8
 [node name="ItemCount" type="Label" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-text = "x99"
+text = "x0"

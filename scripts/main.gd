@@ -32,6 +32,7 @@ var player_instance
 var controls_instance
 var pause_instance
 var mission_instance
+var inventory_instance
 var dialogue_resource: DialogueResource
 
 func _ready():
@@ -49,6 +50,14 @@ func _process(delta):
 		print("unpaused")
 		get_tree().paused = false
 		remove_child(pause_instance)
+	if Input.is_action_just_pressed("show_inventory"):
+		remove_child(pause_instance)
+		inventory_instance = inventory_scene.instantiate()
+		add_child(inventory_instance)
+	if Input.is_action_just_pressed("back_to_pause_menu"):
+		remove_child(inventory_instance)
+		pause_instance = pause_scene.instantiate()
+		add_child(pause_instance)
 
 #<-TO BE CHANGED->#
 func connect_signals():
@@ -70,7 +79,7 @@ func connect_signals():
 const controls_scene: PackedScene = preload("res://scenes/controls.tscn")
 const player_scene: PackedScene = preload("res://scenes/player.tscn")
 const pause_scene: PackedScene = preload("res://scenes/pause_menu.tscn")
-
+const inventory_scene: PackedScene = preload("res://scenes/inventory_ui.tscn")
 const transition_scene: PackedScene = preload("res://scenes/transition.tscn")
 const mission_scene: PackedScene = preload("res://scenes/mission.tscn")
 
