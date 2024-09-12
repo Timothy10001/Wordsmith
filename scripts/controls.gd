@@ -33,7 +33,12 @@ func _on_interactable_exited():
 
 func _on_interact_button_pressed():
 	Input.action_press("interact")
-	print(Input.is_action_just_pressed("interact"))
 	await get_tree().create_timer(0.05).timeout
 	Input.action_release("interact")
 	
+
+
+func _on_pause_button_pressed():
+	Input.action_press("pause")
+	await get_tree().create_timer(0.05).timeout
+	Input.action_release("pause")

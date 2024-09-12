@@ -3,11 +3,17 @@
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x8nos"]
 
 [node name="Main" type="Node2D"]
+process_mode = 3
 position = Vector2(0, -1)
 script = ExtResource("1_x8nos")
 
 [node name="Rooms" type="Node2D" parent="."]
+process_mode = 1
 
 [node name="Cutscenes" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Controls" type="Node2D" parent="."]
+process_mode = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

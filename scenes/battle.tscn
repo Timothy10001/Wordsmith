@@ -272,9 +272,10 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 
 [node name="Player" type="TextureRect" parent="VBoxContainer2/BottomContainer/MainContainer/CharacterContainer/CharacterPanel/VBoxContainer"]
-custom_minimum_size = Vector2(75, 75)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = SubResource("AtlasTexture_oa3kn")
 
 [node name="CharacterStats" type="HBoxContainer" parent="VBoxContainer2/BottomContainer/MainContainer/CharacterContainer/CharacterPanel"]
@@ -535,7 +536,7 @@ theme_override_constants/separation = 50
 [node name="Execute" type="Button" parent="VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"UIButton"
-text = "Execute"
+text = "Let's Go!"
 
 [node name="Cancel" type="Button" parent="VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer"]
 layout_mode = 2
@@ -543,6 +544,7 @@ theme_type_variation = &"UIButton"
 text = "Cancel"
 
 [node name="SkillCheck" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="PaperOverlay" type="TextureRect" parent="SkillCheck"]
 anchors_preset = 15

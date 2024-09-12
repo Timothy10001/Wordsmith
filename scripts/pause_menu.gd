@@ -1,0 +1,24 @@
+extends CanvasLayer
+
+
+
+func _on_resume_button_pressed():
+	Input.action_press("resume")
+	await get_tree().create_timer(0.05).timeout
+	Input.action_release("resume")
+
+
+func _on_options_button_pressed():
+	pass # Replace with function body.
+
+
+func _on_items_button_pressed():
+	pass # Replace with function body.
+
+
+func _on_exit_to_lobby_button_pressed():
+	pass # Replace with function body.
+
+
+func _on_exit_game_button_pressed():
+	pass # Replace with function body.

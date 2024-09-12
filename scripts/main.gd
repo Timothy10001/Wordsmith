@@ -26,9 +26,11 @@ const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/b
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 
 @onready var Rooms: Node2D = $Rooms
+@onready var Controls: Node2D = $Controls
 
 var player_instance
 var controls_instance
+var pause_instance
 var dialogue_resource: DialogueResource
 
 func _ready():
@@ -37,6 +39,15 @@ func _ready():
 	
 	
 
+func _process(delta):
+	if Input.is_action_just_pressed("pause"):
+		pause_instance = pause_scene.instantiate()
+		add_child(pause_instance)
+		get_tree().paused = true
+	if Input.is_action_just_pressed("resume"):
+		print("unpaused")
+		get_tree().paused = false
+		remove_child(pause_instance)
 
 #<-TO BE CHANGED->#
 func connect_signals():
@@ -56,6 +67,7 @@ func connect_signals():
 #create rooms in a different scene?
 const controls_scene: PackedScene = preload("res://scenes/controls.tscn")
 const player_scene: PackedScene = preload("res://scenes/player.tscn")
+const pause_scene: PackedScene = preload("res://scenes/pause_menu.tscn")
 
 const transition_scene: PackedScene = preload("res://scenes/transition.tscn")
 const mission_scene: PackedScene = preload("res://scenes/mission.tscn")
@@ -105,7 +117,7 @@ func init_current_room():
 		
 	controls_instance = controls_scene.instantiate()
 	
-	add_child(controls_instance)
+	Controls.add_child(controls_instance)
 	
 	Rooms.add_child(current_area[State.current_room].instantiate())
 	
@@ -126,7 +138,7 @@ func _on_enter_new_room(_new_room_index: int, _player_position: Vector2, _direct
 
 func _get_mission():
 	
-	remove_child(controls_instance)
+	Controls.remove_child(Controls.get_child(0))
 	call_deferred("disable_player_process")
 	
 	var mission_instance = mission_scene.instantiate()
@@ -173,7 +185,7 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	#DISABLE PLAYER MOVEMENT
 	call_deferred("disable_player_process")
 	player_instance.visible = false
-	remove_child(controls_instance)
+	Controls.remove_child(Controls.get_child(0))
 	
 	#remove player input
 	$CanvasLayer.add_child(battle_instance)
@@ -207,7 +219,7 @@ func _on_end_battle(state, _type: String):
 	call_deferred("enable_player_process")
 	player_instance.visible = true
 	controls_instance = controls_scene.instantiate()
-	add_child(controls_instance)
+	Controls.add_child(controls_instance)
 	
 	#TO BE CHANGED#
 	if _type == "tutorial":
