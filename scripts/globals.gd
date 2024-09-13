@@ -40,6 +40,8 @@ signal mic_released
 signal player_rest_start
 signal player_rest_end
 
+signal drop_item(inventory_slot: InventorySlot)
+
 #for npc dialogue font
 var npc_class = ""
 

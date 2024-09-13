@@ -8,3 +8,8 @@ class_name Item
 @export var stackable: bool = false
 @export var droppable: bool = false
 @export_enum("stats_upgrade", "heal", "status_effect", "accessory") var type: String
+
+
+func use_item():
+	pass
+

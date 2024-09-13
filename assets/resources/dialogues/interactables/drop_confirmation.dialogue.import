@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://vpd2313xwqx"
+path="res://.godot/imported/drop_confirmation.dialogue-87a1888b47d554bfd3cf34b5fca90168.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/drop_confirmation.dialogue"
+dest_files=["res://.godot/imported/drop_confirmation.dialogue-87a1888b47d554bfd3cf34b5fca90168.tres"]
+
+[params]
+
+defaults=true

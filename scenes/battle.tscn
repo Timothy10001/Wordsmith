@@ -407,6 +407,7 @@ theme_override_constants/margin_bottom = 12
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer2/BottomContainer/MainContainer/MarginContainer"]
 layout_mode = 2
+scroll_deadzone = 10
 
 [node name="ItemGrid" type="GridContainer" parent="VBoxContainer2/BottomContainer/MainContainer/MarginContainer/ScrollContainer"]
 layout_mode = 2

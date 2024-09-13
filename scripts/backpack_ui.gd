@@ -18,17 +18,18 @@ func show_player_inventory():
 	player_inventory_instance.inventory_data.connect("inventory_interacted", _on_inventory_interacted)
 
 
-func _on_inventory_interacted(inventory: Inventory, index: int):
-	#gets the selected inventory slot and makes it highlighted
-	selected_inventory_slot = inventory.selected_slot_data(index)
-	selected_inventory_slot_index = index
-	update_selected_slot()
+func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
+	if type == "select":
+		#set selected slot data
+		selected_inventory_slot = inventory.selected_slot_data(index)
+		selected_inventory_slot_index = index
+		#highlight selected slot
+		update_selected_slot()
 
 
 func update_selected_slot():
 	#highlights selected slot
 	var inventory_slots = player_inventory_instance.get_inventory_slots()
-	print(inventory_slots)
 	for i in inventory_slots.size():
 		if i == selected_inventory_slot_index:
 			inventory_slots[i].selected = true

@@ -126,6 +126,7 @@ func connect_signals():
 	Global.execute.connect(self._on_execute)
 	Global.start_skill_check.connect(self._on_start_skill_check)
 	Global.end_skill_check.connect(self._on_end_skill_check)
+	inventory_data.connect("inventory_interacted", _on_inventory_interacted)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -531,27 +532,55 @@ func _on_skills_pressed():
 # ITEM GRID
 func _on_items_pressed():
 	show_items()
-	populate_item_grid(inventory_data.items)
+	populate_item_grid(inventory_data)
 
 var inventory_slot_scene: PackedScene = load("res://scenes/inventory_slot.tscn")
-var inventory_data = load("res://assets/resources/player_inventory.tres")
+@onready var inventory_data = load("res://assets/resources/player_inventory.tres")
+
+var selected_inventory_slot: InventorySlot
+var selected_inventory_slot_index: int
+
+var inventory_slots: Array[PanelContainer]
+
+func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
+	if type == "select":
+		#set selected slot data
+		selected_inventory_slot = inventory.selected_slot_data(index)
+		selected_inventory_slot_index = index
+		#highlight selected slot
+		update_selected_slot()
+
+
+func update_selected_slot():
+	#highlights selected slot
+	for i in inventory_slots.size():
+		if i == selected_inventory_slot_index:
+			inventory_slots[i].selected = true
+		else:
+			inventory_slots[i].selected = false
+
+
 
 func populate_item_grid(inventory: Inventory) -> void:
 	#remove current children so that it will be automatically updated
 	for child in ItemGrid.get_children():
 		ItemGrid.remove_child(child)
-	
+		inventory_slots.clear()
+		
+		
 	for inventory_slot in inventory.items:
 		#add all inventory slots
 		var inventory_slot_instance = inventory_slot_scene.instantiate()
 		ItemGrid.add_child(inventory_slot_instance)
 		inventory_slot_instance.visible = false
 		inventory_slot_instance.connect("inventory_slot_selected", inventory._on_inventory_slot_selected)
-		
+		inventory_slots.append(inventory_slot_instance)
 		if inventory_slot != null:
 			#if inventory slot isn't null, add slot
 			inventory_slot_instance.visible = true
+			#adds slot's data
 			inventory_slot_instance.set_inventory_slot_data(inventory_slot.item, inventory_slot.quantity)
+
 
 func remove_item_grid():
 	for child in ItemGrid.get_children():

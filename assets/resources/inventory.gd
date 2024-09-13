@@ -15,6 +15,9 @@ func selected_slot_data(index: int):
 	else:
 		return null
 
+func remove_selected_slot_data(index: int):
+	items[index] = null
+
 func _on_inventory_slot_selected(index: int):
-	inventory_interacted.emit(self, index)
+	inventory_interacted.emit(self, index, "select")
 

@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scripts/inventory_slot.gd" id="2_bqplq"]
 
 [node name="InventorySlot" type="PanelContainer"]
+custom_minimum_size = Vector2(750, 0)
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 44.0
