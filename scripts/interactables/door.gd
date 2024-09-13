@@ -5,6 +5,8 @@ extends Area2D
 @export_enum("up","down", "left", "right") var direction: String
 @export var new_area: String
 @export var openable: bool
+@export var requires_key: bool = false
+@export var key: Item
 @export var dialogue_resource: DialogueResource
 
 var entered: bool = false
@@ -27,7 +29,7 @@ func _on_body_exited(body):
 		Global.interactable_exited.emit()
 
 func _process(delta):
-	if entered and openable:
+	if entered and openable and !requires_key:
 		if Input.is_action_just_pressed("interact"):
 			match direction:
 				"up":
@@ -46,5 +48,8 @@ func _process(delta):
 				Global.enter_new_area.emit(new_area, new_room_index)
 			Global.enter_new_room.emit(new_room_index, next_position, direction)
 	elif entered and !openable:
+		if Input.is_action_just_pressed("interact"):
+			Global.start_interactable_dialogue.emit(dialogue_resource)
+	elif entered and requires_key:
 		if Input.is_action_just_pressed("interact"):
 			Global.start_interactable_dialogue.emit(dialogue_resource)
