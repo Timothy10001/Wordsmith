@@ -405,9 +405,11 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="ItemGrid" type="GridContainer" parent="VBoxContainer2/BottomContainer/MainContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer2/BottomContainer/MainContainer/MarginContainer"]
 layout_mode = 2
-columns = 2
+
+[node name="ItemGrid" type="GridContainer" parent="VBoxContainer2/BottomContainer/MainContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
 
 [node name="RightContainer" type="MarginContainer" parent="VBoxContainer2/BottomContainer"]
 visible = false

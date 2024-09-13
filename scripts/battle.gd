@@ -83,7 +83,7 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 @onready var MainContainer = $VBoxContainer2/BottomContainer/MainContainer
 @onready var CharacterContainer = $VBoxContainer2/BottomContainer/MainContainer/CharacterContainer
 @onready var SkillsContainer = $VBoxContainer2/BottomContainer/MainContainer/SkillsContainer
-@onready var ItemGrid = $VBoxContainer2/BottomContainer/MainContainer/MarginContainer/ItemGrid
+@onready var ItemGrid = $VBoxContainer2/BottomContainer/MainContainer/MarginContainer/ScrollContainer/ItemGrid
 
 #left container has teach, skills, items, and guard
 @onready var LeftContainer = $VBoxContainer2/BottomContainer/LeftContainer
@@ -536,15 +536,20 @@ func _on_items_pressed():
 var inventory_slot_scene: PackedScene = load("res://scenes/inventory_slot.tscn")
 var inventory_data = load("res://assets/resources/player_inventory.tres")
 
-func populate_item_grid(inventory_slots: Array[InventorySlot]) -> void:
+func populate_item_grid(inventory: Inventory) -> void:
+	#remove current children so that it will be automatically updated
 	for child in ItemGrid.get_children():
 		ItemGrid.remove_child(child)
 	
-	for inventory_slot in inventory_slots:
+	for inventory_slot in inventory.items:
+		#add all inventory slots
 		var inventory_slot_instance = inventory_slot_scene.instantiate()
 		ItemGrid.add_child(inventory_slot_instance)
 		inventory_slot_instance.visible = false
+		inventory_slot_instance.connect("inventory_slot_selected", inventory._on_inventory_slot_selected)
+		
 		if inventory_slot != null:
+			#if inventory slot isn't null, add slot
 			inventory_slot_instance.visible = true
 			inventory_slot_instance.set_inventory_slot_data(inventory_slot.item, inventory_slot.quantity)
 

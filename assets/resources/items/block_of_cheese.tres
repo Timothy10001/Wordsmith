@@ -13,4 +13,5 @@ name = "Block of Cheese"
 description = "Fondu's signature dish. Adds intelligence and energy."
 texture = SubResource("AtlasTexture_0gfpx")
 stackable = true
+droppable = true
 type = "heal"

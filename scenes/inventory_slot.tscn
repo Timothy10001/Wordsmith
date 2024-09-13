@@ -10,6 +10,7 @@ offset_bottom = 44.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
+mouse_filter = 1
 theme = ExtResource("1_6y6l1")
 theme_type_variation = &"Item"
 script = ExtResource("2_bqplq")
@@ -46,3 +47,5 @@ size_flags_horizontal = 8
 layout_mode = 2
 size_flags_horizontal = 8
 text = "x0"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

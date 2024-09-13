@@ -1,0 +1,38 @@
+extends Control
+
+var player_inventory = load("res://scenes/inventory_ui.tscn")
+var player_inventory_resource = load("res://assets/resources/player_inventory.tres")
+@export var interactable_inventory_resource: Inventory
+var selected_inventory_slot: InventorySlot
+var selected_inventory_slot_index: int
+var player_inventory_instance
+
+func _ready():
+	show_player_inventory()
+
+func show_player_inventory():
+	#shows only the player inventory
+	player_inventory_instance = player_inventory.instantiate()
+	player_inventory_instance.set_inventory_data(player_inventory_resource)
+	add_child(player_inventory_instance)
+	player_inventory_instance.inventory_data.connect("inventory_interacted", _on_inventory_interacted)
+
+
+func _on_inventory_interacted(inventory: Inventory, index: int):
+	#gets the selected inventory slot and makes it highlighted
+	selected_inventory_slot = inventory.selected_slot_data(index)
+	selected_inventory_slot_index = index
+	update_selected_slot()
+
+
+func update_selected_slot():
+	#highlights selected slot
+	var inventory_slots = player_inventory_instance.get_inventory_slots()
+	print(inventory_slots)
+	for i in inventory_slots.size():
+		if i == selected_inventory_slot_index:
+			inventory_slots[i].selected = true
+			player_inventory_instance.set_item_details(selected_inventory_slot.item)
+		else:
+			inventory_slots[i].selected = false
+

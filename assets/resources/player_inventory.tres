@@ -1,14 +1,20 @@
-[gd_resource type="Resource" script_class="Inventory" load_steps=5 format=3 uid="uid://1b1s3rxyxfhm"]
+[gd_resource type="Resource" script_class="Inventory" load_steps=7 format=3 uid="uid://1b1s3rxyxfhm"]
 
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="1_7f76g"]
 [ext_resource type="Resource" uid="uid://c01wuw0j68fh0" path="res://assets/resources/items/picture_book.tres" id="1_lgnth"]
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="2_svni0"]
+[ext_resource type="Resource" uid="uid://db7kjgs2dewl8" path="res://assets/resources/items/block_of_cheese.tres" id="3_8pvmq"]
 
-[sub_resource type="Resource" id="Resource_voxdq"]
+[sub_resource type="Resource" id="Resource_tyj5n"]
 script = ExtResource("2_svni0")
 item = ExtResource("1_lgnth")
 quantity = 1
 
+[sub_resource type="Resource" id="Resource_60n7r"]
+script = ExtResource("2_svni0")
+item = ExtResource("3_8pvmq")
+quantity = 1
+
 [resource]
 script = ExtResource("1_7f76g")
-items = Array[ExtResource("2_svni0")]([SubResource("Resource_voxdq"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+items = Array[ExtResource("2_svni0")]([SubResource("Resource_tyj5n"), SubResource("Resource_60n7r"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

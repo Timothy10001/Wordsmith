@@ -12,21 +12,19 @@ region = Rect2(176, 16, 16, 16)
 atlas = ExtResource("3_7r5ne")
 region = Rect2(192, 16, 16, 16)
 
-[node name="InventoryUI" type="CanvasLayer"]
-script = ExtResource("1_xl21y")
-
-[node name="UI" type="Control" parent="."]
+[node name="InventoryUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_yj6tq")
+script = ExtResource("1_xl21y")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(700, 600)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,23 +36,60 @@ theme_override_constants/margin_top = 75
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 60
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="ItemGrid" type="GridContainer" parent="UI/MarginContainer/PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+scroll_deadzone = 10
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 0
-columns = 2
 
-[node name="BackButton" type="TextureButton" parent="UI"]
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="ItemIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="ItemDescription" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 225)
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="UseButton" type="Button" parent="MarginContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"UIButton"
+text = "Use"
+
+[node name="DropButton" type="Button" parent="MarginContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_type_variation = &"UIButton"
+text = "Drop"
+
+[node name="BackButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 100.0
+offset_bottom = 100.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 texture_normal = SubResource("AtlasTexture_78vji")
 texture_pressed = SubResource("AtlasTexture_gpa7r")
 stretch_mode = 4
 
-[connection signal="pressed" from="UI/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

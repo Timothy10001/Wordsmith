@@ -10,7 +10,8 @@ region = Rect2(80, 208, 16, 16)
 [resource]
 script = ExtResource("1_wdm52")
 name = "Picture Book"
-description = "A picture book you had since you were a baby."
+description = "A picture book you had since you were a baby. (Cannot be dropped)"
 texture = SubResource("AtlasTexture_m63le")
 stackable = false
+droppable = false
 type = "accessory"
