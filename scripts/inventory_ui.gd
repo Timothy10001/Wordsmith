@@ -1,6 +1,8 @@
 extends Control
 #UI FOR INVENTORY WHETHER PLAYER OR INTERACTABLE
 
+signal inventory_item_dropped(index: int)
+
 const inventory_slot_scene: PackedScene = preload("res://scenes/inventory_slot.tscn")
 
 @onready var ItemIcon: TextureRect = $MarginContainer/HBoxContainer/PanelContainer2/VBoxContainer/ItemIcon
@@ -46,18 +48,26 @@ func get_inventory_slots():
 	return inventory_slots
 
 func set_item_details(item: Item):
-	ItemIcon.texture = item.texture
-	ItemDescription.text = item.description
-	if item.droppable:
-		DropButton.visible = true
+	if item:
+		ItemIcon.texture = item.texture
+		ItemDescription.text = item.description
+		if item.droppable:
+			DropButton.visible = true
+		else:
+			DropButton.visible = false
+		if item.type != "accessory":
+			UseButton.visible = true
+		else:
+			UseButton.visible = false
 	else:
 		DropButton.visible = false
-	if item.type != "accessory":
-		UseButton.visible = true
-	else:
 		UseButton.visible = false
+		ItemIcon.texture = null
+		ItemDescription.text = ""
 
 func _on_back_button_pressed():
 	Input.action_press("back_to_pause_menu")
 	await get_tree().create_timer(0.05).timeout
 	Input.action_release("back_to_pause_menu")
+
+

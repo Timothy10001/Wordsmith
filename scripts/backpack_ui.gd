@@ -15,16 +15,25 @@ func show_player_inventory():
 	player_inventory_instance = player_inventory.instantiate()
 	player_inventory_instance.set_inventory_data(player_inventory_resource)
 	add_child(player_inventory_instance)
+	player_inventory_instance.DropButton.connect("pressed", player_inventory_instance.inventory_data._on_inventory_item_dropped)
 	player_inventory_instance.inventory_data.connect("inventory_interacted", _on_inventory_interacted)
 
 
 func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
-	if type == "select":
-		#set selected slot data
-		selected_inventory_slot = inventory.selected_slot_data(index)
-		selected_inventory_slot_index = index
-		#highlight selected slot
-		update_selected_slot()
+	match type:
+		"select":
+			#set selected slot data
+			selected_inventory_slot = inventory.selected_slot_data(index)
+			selected_inventory_slot_index = index
+			#highlight selected slot
+			update_selected_slot()
+		"drop":
+			inventory.remove_selected_slot_data(selected_inventory_slot_index)
+			selected_inventory_slot = null
+			update_selected_slot()
+			print("help")
+		_:
+			pass
 
 
 func update_selected_slot():
@@ -33,7 +42,10 @@ func update_selected_slot():
 	for i in inventory_slots.size():
 		if i == selected_inventory_slot_index:
 			inventory_slots[i].selected = true
-			player_inventory_instance.set_item_details(selected_inventory_slot.item)
+			if selected_inventory_slot != null:
+				player_inventory_instance.set_item_details(selected_inventory_slot.item)
+			else:
+				player_inventory_instance.set_item_details(null)
 		else:
 			inventory_slots[i].selected = false
 
