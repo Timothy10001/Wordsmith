@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c67rgg1f002s1"]
+[gd_scene load_steps=21 format=3 uid="uid://c67rgg1f002s1"]
 
 [ext_resource type="Shader" path="res://scripts/misc/scroll.gdshader" id="1_7of86"]
 [ext_resource type="Texture2D" uid="uid://b6lqfvu4mrg2o" path="res://assets/art/backgrounds/clouds.png" id="1_qxyg3"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="9_percs"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="10_1vlpd"]
 [ext_resource type="Resource" uid="uid://db7kjgs2dewl8" path="res://assets/resources/items/block_of_cheese.tres" id="10_walvv"]
+[ext_resource type="Texture2D" uid="uid://cwnh18676ptto" path="res://assets/resources/atlas/chest.tres" id="12_fya5s"]
+[ext_resource type="Texture2D" uid="uid://bcftjmmqh2qyn" path="res://assets/art/environments/chest_01.png" id="13_kg8fp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xkcmh"]
 shader = ExtResource("1_7of86")
@@ -34,6 +36,10 @@ items = Array[ExtResource("9_percs")]([SubResource("Resource_aga8j"), SubResourc
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhk6u"]
 size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mq5hn"]
+atlas = ExtResource("13_kg8fp")
+region = Rect2(16, 0, 16, 16)
 
 [node name="Throne Room" type="Node2D"]
 y_sort_enabled = true
@@ -94,12 +100,24 @@ z_index = 1
 position = Vector2(-8, -348)
 
 [node name="Interactables" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
 
-[node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("6_00yj3")]
+[node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision", "opened_texture", "closed_texture") instance=ExtResource("6_00yj3")]
 collision = NodePath("CollisionShape2D")
 dialogue_resource = ExtResource("7_nwve0")
 inventory = SubResource("Resource_ekv7x")
+opened_texture = NodePath("open")
+closed_texture = NodePath("closed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
 position = Vector2(64, -48)
 shape = SubResource("RectangleShape2D_uhk6u")
+
+[node name="closed" type="Sprite2D" parent="Interactables/Chest"]
+position = Vector2(64, -48)
+texture = ExtResource("12_fya5s")
+
+[node name="open" type="Sprite2D" parent="Interactables/Chest"]
+position = Vector2(64, -48)
+texture = SubResource("AtlasTexture_mq5hn")

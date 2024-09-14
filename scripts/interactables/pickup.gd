@@ -4,19 +4,10 @@ extends Area2D
 @export var collision: CollisionShape2D
 @export var dialogue_resource: DialogueResource
 @export var inventory: Inventory
-@export var opened_texture: Sprite2D
-@export var closed_texture: Sprite2D
-
-
 var player_inventory: Inventory = load("res://assets/resources/player_inventory.tres")
 
 var entered: bool = false
 var player
-
-func _ready():
-	if closed_texture and opened_texture:
-		closed_texture.visible = true
-		opened_texture.visible = false
 
 func _on_body_entered(body):
 	if body is Player:
@@ -35,9 +26,6 @@ func _on_body_exited(body):
 func _process(delta):
 	if entered:
 		if Input.is_action_just_pressed("interact"):
-			if closed_texture and opened_texture:
-				closed_texture.visible = false
-				opened_texture.visible = true
 			if inventory.items:
 				for slot in inventory.items:
 					#if a slot in the chest exists
@@ -53,6 +41,7 @@ func _process(delta):
 								
 								player_inventory.items[item_index].fully_merge_with(slot)
 								inventory.remove_item(slot.item.name)
+								queue_free()
 							else:
 								#the chest item is added onto another slot if it cannot fully merge
 								set_interactable_dialogue(slot, "item_picked_up")
@@ -60,13 +49,17 @@ func _process(delta):
 								
 								player_inventory.add_item(slot)
 								inventory.remove_item(slot.item.name)
+								queue_free()
+								
 						else:
 							#the chest item is added onto another slot if it's a new item
+							print(slot.quantity)
 							set_interactable_dialogue(slot, "item_picked_up")
 							await Global.dialogue_ended
 							
 							player_inventory.add_item(slot)
 							inventory.remove_item(slot.item.name)
+							queue_free()
 					else:
 						break
 			Global.start_interactable_dialogue.emit(dialogue_resource, "no_more_items")

@@ -21,6 +21,7 @@ func add_item(other_item: InventorySlot):
 			pass
 		else:
 			items.append(other_item)
+			print(other_item.item.name)
 			inventory_updated.emit(self)
 			break
 
@@ -50,3 +51,9 @@ func search_inventory(_item_name: String):
 				return i
 	return null
 
+func has_item(_item_name: String):
+	for i in items.size():
+		if items[i]:
+			return true
+		else:
+			return false

@@ -252,4 +252,7 @@ func _on_start_interactable_dialogue(dialogue_resource: DialogueResource, title:
 	var balloon = BALLOON.instantiate()
 	add_child(balloon)
 	balloon.start(dialogue_resource, title)
+	call_deferred("disable_player_process")
+	await Global.dialogue_ended
+	call_deferred("enable_player_process")
 

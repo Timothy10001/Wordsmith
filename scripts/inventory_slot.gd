@@ -15,9 +15,10 @@ func _process(delta):
 		self.theme_type_variation = "Item"
 
 func set_inventory_slot_data(item: Item, quantity: int):
-	ItemIcon.texture = item.texture
-	ItemName.text = item.name
-	ItemCount.text = "x " + str(quantity)
+	if ItemIcon and ItemName and ItemCount:
+		ItemIcon.texture = item.texture
+		ItemName.text = item.name
+		ItemCount.text = "x " + str(quantity)
 
 
 func _on_gui_input(event):

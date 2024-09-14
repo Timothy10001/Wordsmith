@@ -8,4 +8,5 @@ class_name PlayerResource
 @export var speed: int = 10
 @export var armor: int = 10
 @export var mana: int = 100
+@export var max_mana: int = 100
 @export var immortal: bool

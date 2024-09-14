@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/interactables/chest.gd" id="1_sy8d8"]
 
 [node name="Chest" type="Area2D"]
+y_sort_enabled = true
 script = ExtResource("1_sy8d8")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
