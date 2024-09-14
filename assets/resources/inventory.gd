@@ -15,8 +15,22 @@ func selected_slot_data(index: int):
 	else:
 		return null
 
-func add_item(_item: Item):
-	pass
+func add_item(other_item: InventorySlot):
+	for slot in items:
+		if slot:
+			pass
+		else:
+			items.append(other_item)
+			inventory_updated.emit(self)
+			break
+
+func remove_item(other_item_name: String):
+	for i in items.size():
+		#if the slot exists
+		if items[i]:
+			if items[i].item.name == other_item_name:
+				items[i] = null
+				inventory_updated.emit(self)
 
 func remove_selected_slot_data(index: int):
 	items[index] = null
@@ -29,9 +43,10 @@ func _on_inventory_item_dropped():
 	inventory_interacted.emit(self, 0, "drop")
 
 #returns index
-func search_inventory(_item: Item):
+func search_inventory(_item_name: String):
 	for i in items.size():
-		if items[i] == _item:
-			return i
-		else:
-			return null
+		if items[i]:
+			if _item_name == items[i].item.name:
+				return i
+	return null
+

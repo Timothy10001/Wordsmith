@@ -1,0 +1,7 @@
+~ item_picked_up
+Narrator: You found {{Global.item_name}} x{{Global.item_quantity}}.
+=> END
+
+~ no_more_items
+Narrator: No more items!
+=> END

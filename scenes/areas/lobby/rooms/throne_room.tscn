@@ -1,16 +1,39 @@
-[gd_scene load_steps=8 format=3 uid="uid://c67rgg1f002s1"]
+[gd_scene load_steps=18 format=3 uid="uid://c67rgg1f002s1"]
 
 [ext_resource type="Shader" path="res://scripts/misc/scroll.gdshader" id="1_7of86"]
 [ext_resource type="Texture2D" uid="uid://b6lqfvu4mrg2o" path="res://assets/art/backgrounds/clouds.png" id="1_qxyg3"]
 [ext_resource type="PackedScene" uid="uid://cp4of08lo2v1o" path="res://scenes/npcs/king_pendragon.tscn" id="3_su3qj"]
 [ext_resource type="TileSet" uid="uid://do2u15nb0ki1f" path="res://assets/resources/tile_sets/castle.tres" id="3_vmxc5"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="4_s166m"]
+[ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="6_00yj3"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="7_nwve0"]
+[ext_resource type="Resource" uid="uid://c01wuw0j68fh0" path="res://assets/resources/items/picture_book.tres" id="8_c5yhe"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="9_percs"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="10_1vlpd"]
+[ext_resource type="Resource" uid="uid://db7kjgs2dewl8" path="res://assets/resources/items/block_of_cheese.tres" id="10_walvv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xkcmh"]
 shader = ExtResource("1_7of86")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qg4kq"]
 size = Vector2(32, 16)
+
+[sub_resource type="Resource" id="Resource_aga8j"]
+script = ExtResource("9_percs")
+item = ExtResource("8_c5yhe")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_1plko"]
+script = ExtResource("9_percs")
+item = ExtResource("10_walvv")
+quantity = 20
+
+[sub_resource type="Resource" id="Resource_ekv7x"]
+script = ExtResource("10_1vlpd")
+items = Array[ExtResource("9_percs")]([SubResource("Resource_aga8j"), SubResource("Resource_1plko")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uhk6u"]
+size = Vector2(32, 32)
 
 [node name="Throne Room" type="Node2D"]
 y_sort_enabled = true
@@ -69,3 +92,14 @@ polygon = PackedVector2Array(-288, -336, 272, -336, 272, 240, 80, 240, 80, 256, 
 [node name="King Pendragon" parent="NPCs" instance=ExtResource("3_su3qj")]
 z_index = 1
 position = Vector2(-8, -348)
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("6_00yj3")]
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("7_nwve0")
+inventory = SubResource("Resource_ekv7x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
+position = Vector2(64, -48)
+shape = SubResource("RectangleShape2D_uhk6u")

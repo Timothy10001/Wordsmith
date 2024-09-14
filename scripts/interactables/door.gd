@@ -49,7 +49,7 @@ func _process(delta):
 			Global.enter_new_room.emit(new_room_index, next_position, direction)
 	elif entered and !openable:
 		if Input.is_action_just_pressed("interact"):
-			Global.start_interactable_dialogue.emit(dialogue_resource)
+			Global.start_interactable_dialogue.emit(dialogue_resource, "start")
 	elif entered and requires_key:
 		if Input.is_action_just_pressed("interact"):
-			Global.start_interactable_dialogue.emit(dialogue_resource)
+			Global.start_interactable_dialogue.emit(dialogue_resource, "start")

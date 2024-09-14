@@ -248,8 +248,8 @@ func _on_end_battle(state, _type: String):
 		add_child(balloon)
 		balloon.start(dialogue_resource, "start")
 
-func _on_start_interactable_dialogue(dialogue_resource: DialogueResource):
+func _on_start_interactable_dialogue(dialogue_resource: DialogueResource, title: String):
 	var balloon = BALLOON.instantiate()
 	add_child(balloon)
-	balloon.start(dialogue_resource, "start")
+	balloon.start(dialogue_resource, title)
 
