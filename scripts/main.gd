@@ -173,6 +173,9 @@ func _on_confirm_mission():
 		1:
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-88, -24), "down")
+		2:
+			Global.enter_new_area.emit("mission 2 - outside", 0)
+			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
 
 func _on_cancel_mission():
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
@@ -254,7 +257,5 @@ func _on_start_interactable_dialogue(dialogue_resource: DialogueResource, title:
 	var balloon = BALLOON.instantiate()
 	add_child(balloon)
 	balloon.start(dialogue_resource, title)
-	call_deferred("disable_player_process")
-	await Global.dialogue_ended
-	call_deferred("enable_player_process")
+
 

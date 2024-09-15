@@ -5,3 +5,15 @@ Narrator: You find a bookmark on Page 14.
 Narrator: The text inspires you to cook.
 
 => END
+
+~ tavern_bookshelf_2
+
+Narrator: It's a bunch of recipe books for different dishes.
+
+=> END
+
+~ tavern_bookshelf_3
+
+Narrator: There's books for inspiring chefs.
+
+=> END
