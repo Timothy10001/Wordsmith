@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://0e4cqtrxwquj"]
+
+[ext_resource type="Script" path="res://scripts/interactables/dialogue_object.gd" id="1_vwhx4"]
+
+[node name="DialogueObject" type="Area2D"]
+script = ExtResource("1_vwhx4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

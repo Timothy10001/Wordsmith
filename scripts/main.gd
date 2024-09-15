@@ -114,6 +114,8 @@ func get_current_area(_area):
 	current_area.clear()
 	for room in Global.area_list[_area]:
 		current_area.append(load(room))
+	
+
 
 func _on_enter_new_area(_area: String, _room_index: int):
 	State.current_area = _area
