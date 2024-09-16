@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvke46ty67iv4"]
+[gd_scene load_steps=12 format=3 uid="uid://dvke46ty67iv4"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_b4h5j"]
 [ext_resource type="PackedScene" uid="uid://rnslowucwlht" path="res://scenes/npcs/mr_cheese.tscn" id="2_66il4"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_vl3h6"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="3_a7rb8"]
 [ext_resource type="Resource" uid="uid://cny7p73ybfma1" path="res://assets/resources/dialogues/interactables/locked_house_door.dialogue" id="4_gxjwi"]
+[ext_resource type="Resource" uid="uid://bxwwnfkrqak32" path="res://assets/resources/items/mission_1_house_key.tres" id="5_hbfnp"]
 [ext_resource type="PackedScene" uid="uid://di4sis4pjpkqx" path="res://scenes/npcs/old_man_o_malley.tscn" id="6_s5jvv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4lu3f"]
@@ -89,6 +90,9 @@ collision = NodePath("CollisionShape2D")
 direction = "up"
 new_area = "mission 1 - house"
 openable = true
+requires_key = true
+key = ExtResource("5_hbfnp")
+dialogue_resource = ExtResource("4_gxjwi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/HouseDoor"]
 position = Vector2(496, -188)
@@ -117,7 +121,9 @@ y_sort_enabled = true
 position = Vector2(0, -112)
 
 [node name="OldManOMalley" parent="NPCs" instance=ExtResource("6_s5jvv")]
-position = Vector2(544, -176)
+position = Vector2(560, -176)
+
+[node name="Interactables" type="Node2D" parent="."]
 
 [editable path="Collisions/ToNorth001"]
 [editable path="Collisions/ToEast001"]

@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://di4sis4pjpkqx"]
+[gd_scene load_steps=10 format=3 uid="uid://di4sis4pjpkqx"]
 
+[ext_resource type="Script" path="res://scripts/npcs/old_man_o_malley.gd" id="1_i7klj"]
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="1_wu0ig"]
 [ext_resource type="PackedScene" uid="uid://bkbkxdafjpdmr" path="res://scenes/npc.tscn" id="2_cl5u6"]
 [ext_resource type="Resource" uid="uid://bnl0nyeioiptn" path="res://assets/resources/dialogues/old_man_o_malley.dialogue" id="3_de7tj"]
@@ -23,6 +24,7 @@ size = Vector2(36, 48)
 [node name="OldManOMalley" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
+script = ExtResource("1_i7klj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
@@ -60,3 +62,6 @@ shape = SubResource("RectangleShape2D_m3f75")
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="NPC"]
 shape = SubResource("RectangleShape2D_cgmwa")
+
+[connection signal="player_entered" from="NPC" to="." method="_on_npc_player_entered"]
+[connection signal="player_left" from="NPC" to="." method="_on_npc_player_left"]

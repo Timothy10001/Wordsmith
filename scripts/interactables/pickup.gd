@@ -4,10 +4,14 @@ extends Area2D
 @export var collision: CollisionShape2D
 @export var dialogue_resource: DialogueResource
 @export var inventory: Inventory
+@export var sprite: Sprite2D
 var player_inventory: Inventory = load("res://assets/resources/player_inventory.tres")
 
 var entered: bool = false
 var player
+
+func _ready():
+	sprite.visible = true
 
 func _on_body_entered(body):
 	if body is Player:
@@ -40,6 +44,7 @@ func _process(delta):
 								await Global.dialogue_ended
 								
 								player_inventory.items[item_index].fully_merge_with(slot)
+								player_inventory.inventory_updated.emit(player_inventory)
 								inventory.remove_item(slot.item.name)
 								queue_free()
 							else:

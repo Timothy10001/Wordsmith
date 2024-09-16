@@ -1,7 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://5tg52q50nxl4"]
+[gd_scene load_steps=13 format=3 uid="uid://5tg52q50nxl4"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_wsu2v"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="3_ayqap"]
+[ext_resource type="PackedScene" uid="uid://c3tqr87ilgnri" path="res://scenes/interactables/pickup.tscn" id="3_jrosi"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="4_vtemh"]
+[ext_resource type="Resource" uid="uid://cmhr6sn0lq64b" path="res://assets/resources/items/rat_mask.tres" id="5_bkrcu"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="6_1o7e6"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="7_e2x3o"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="8_hrbju"]
+
+[sub_resource type="Resource" id="Resource_578s6"]
+script = ExtResource("6_1o7e6")
+item = ExtResource("5_bkrcu")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_ynkfc"]
+script = ExtResource("7_e2x3o")
+items = Array[ExtResource("6_1o7e6")]([SubResource("Resource_578s6")])
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edps1"]
+atlas = ExtResource("8_hrbju")
+region = Rect2(16, 352, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vygj8"]
+size = Vector2(16, 16)
 
 [node name="Den002" type="Node2D"]
 
@@ -32,5 +54,22 @@ direction = "down"
 
 [node name="Collision" parent="Collisions/ToDen002" index="0"]
 polygon = PackedVector2Array(-16, 16, 80, 16, 80, 32, -16, 32)
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Pickup" parent="Interactables" node_paths=PackedStringArray("collision", "sprite") instance=ExtResource("3_jrosi")]
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("4_vtemh")
+inventory = SubResource("Resource_ynkfc")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="Interactables/Pickup"]
+position = Vector2(1224, -1912)
+scale = Vector2(1, 0.999996)
+texture = SubResource("AtlasTexture_edps1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Pickup"]
+position = Vector2(1224, -1912)
+shape = SubResource("RectangleShape2D_vygj8")
 
 [editable path="Collisions/ToDen002"]

@@ -68,7 +68,7 @@ var dialogue_line: DialogueLine:
 				font_size = 48
 			"High Class":
 				font_path = "res://assets/fonts/normal.ttf"
-				font_size = 48
+				font_size = 32
 			"Middle Class":
 				font_path = "res://assets/fonts/handwritten.ttf"
 				font_size = 48
@@ -76,10 +76,12 @@ var dialogue_line: DialogueLine:
 				font_path = "res://assets/fonts/bad_handwritten.ttf"
 				font_size = 86
 			_:
-				font_path = "res://assets/fonts/normal.ttf" 
+				font_path = "res://assets/fonts/normal.ttf"
+				font_size = 32
 		
 		dialogue_label.add_theme_font_override("normal_font", load(font_path))
 		dialogue_label.add_theme_font_size_override("normal_font_size", font_size)
+		
 
 		dialogue_label.hide()
 		dialogue_label.dialogue_line = dialogue_line

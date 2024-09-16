@@ -1,11 +1,17 @@
-[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://bxwwnfkrqak32"]
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://bxwwnfkrqak32"]
 
 [ext_resource type="Script" path="res://assets/resources/item.gd" id="1_j7vkv"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_5hsgd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sht4p"]
+atlas = ExtResource("2_5hsgd")
+region = Rect2(0, 352, 16, 16)
 
 [resource]
 script = ExtResource("1_j7vkv")
 name = "House Key"
-description = ""
+description = "Unlocks Old Man O'Malley's house. It's covered in sugar."
+texture = SubResource("AtlasTexture_sht4p")
 stackable = false
 droppable = false
-type = ""
+type = "accessory"

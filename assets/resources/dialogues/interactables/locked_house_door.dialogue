@@ -1,6 +1,14 @@
 ~ start
 set npc_class = "High Class"
 Narrator: This door is locked.
-Narrator: There is no one inside.
+Narrator: There's no one inside
+
+=> END
+
+~ without_key
+
+set npc_class = "High Class"
+Narrator: This door is locked.
+Narrator: You need a key.
 
 => END

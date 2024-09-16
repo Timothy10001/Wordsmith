@@ -1,7 +1,15 @@
 ~ item_picked_up
+set npc_class = "High Class"
 Narrator: You found {{Global.item_name}} x{{Global.item_quantity}}.
 => END
 
 ~ no_more_items
+set npc_class = "High Class"
 Narrator: No more items!
+=> END
+
+~ no_items
+set npc_class = "High Class"
+Narrator: You search...
+Narrator: There's nothing of use inside.
 => END

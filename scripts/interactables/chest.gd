@@ -52,6 +52,7 @@ func _process(delta):
 								await Global.dialogue_ended
 								
 								player_inventory.items[item_index].fully_merge_with(slot)
+								player_inventory.inventory_updated.emit(player_inventory)
 								inventory.remove_item(slot.item.name)
 							else:
 								#the chest item is added onto another slot if it cannot fully merge
@@ -69,6 +70,9 @@ func _process(delta):
 							inventory.remove_item(slot.item.name)
 					else:
 						break
+			else:
+				Global.start_interactable_dialogue.emit(dialogue_resource, "no_items")
+				return
 			Global.start_interactable_dialogue.emit(dialogue_resource, "no_more_items")
 
 

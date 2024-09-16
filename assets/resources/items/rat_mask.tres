@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://cmhr6sn0lq64b"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_yu241"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_44ykn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmm5f"]
+atlas = ExtResource("2_44ykn")
+region = Rect2(16, 352, 16, 16)
+
+[resource]
+script = ExtResource("1_yu241")
+name = "Rat Mask"
+description = "A mask that looks like a rat's head"
+texture = SubResource("AtlasTexture_rmm5f")
+stackable = false
+droppable = false
+type = "accessory"

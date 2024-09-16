@@ -16,11 +16,11 @@ func selected_slot_data(index: int):
 		return null
 
 func add_item(other_item: InventorySlot):
-	for slot in items:
-		if slot:
+	for i in items.size():
+		if items[i]:
 			pass
 		else:
-			items.append(other_item)
+			items[i] = other_item
 			print(other_item.item.name)
 			inventory_updated.emit(self)
 			break
@@ -54,6 +54,6 @@ func search_inventory(_item_name: String):
 func has_item(_item_name: String):
 	for i in items.size():
 		if items[i]:
-			return true
-		else:
-			return false
+			if items[i].item.name == _item_name:
+				return true
+	return false
