@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://ciois588kx51c"
+path="res://.godot/imported/snow_pot.dialogue-cbbc9d6b4363fd3fda7b49953be37cdb.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/snow_pot.dialogue"
+dest_files=["res://.godot/imported/snow_pot.dialogue-cbbc9d6b4363fd3fda7b49953be37cdb.tres"]
+
+[params]
+
+defaults=true

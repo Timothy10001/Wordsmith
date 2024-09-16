@@ -37,8 +37,8 @@ signal start_interactable_dialogue
 signal mic_pressed
 signal mic_released
 
-signal player_rest_start
-signal player_rest_end
+signal start_sleep
+signal end_sleep
 
 signal drop_item(inventory_slot: InventorySlot)
 

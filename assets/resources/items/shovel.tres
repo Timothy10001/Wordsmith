@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://74yxjqqulgwt"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_r4ajh"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_mpbuu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50dq7"]
+atlas = ExtResource("2_mpbuu")
+region = Rect2(48, 160, 16, 16)
+
+[resource]
+script = ExtResource("1_r4ajh")
+name = "Shovel"
+description = "Used to shovel snow."
+texture = SubResource("AtlasTexture_50dq7")
+stackable = false
+droppable = false
+type = "accessory"

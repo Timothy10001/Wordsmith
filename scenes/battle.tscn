@@ -71,6 +71,7 @@ texture = SubResource("AtlasTexture_fwph0")
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_qv0gn"]
 
 [node name="Battle" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

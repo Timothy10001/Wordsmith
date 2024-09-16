@@ -2,6 +2,7 @@ extends Node
 
 #add player stats and inventory
 #debug
+"""
 var saved_data = {
 	"area": "mission 1 - outside",
 	"room": 0,
@@ -10,8 +11,9 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-#lobby
 """
+
+#lobby
 var saved_data = {
 	"area": "lobby",
 	"room": 0,
@@ -20,7 +22,7 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-"""
+
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -38,7 +40,6 @@ var dialogue_resource: DialogueResource
 func _ready():
 	connect_signals()
 	start()
-	
 	
 
 func _process(delta):
@@ -72,8 +73,9 @@ func connect_signals():
 	Global.end_battle.connect(_on_end_battle)
 	#for interactables with dialogue
 	Global.start_interactable_dialogue.connect(_on_start_interactable_dialogue)
-	
-	
+	Global.start_sleep.connect(_on_start_sleep)
+	Global.end_sleep.connect(_on_end_sleep)
+
 
 #create rooms in a different scene?
 const controls_scene: PackedScene = preload("res://scenes/controls.tscn")
@@ -109,6 +111,14 @@ func enable_player_process():
 func disable_player_process():
 	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
 
+func add_controls():
+	if Controls.get_child_count() == 0:
+		controls_instance = controls_scene.instantiate()
+		Controls.add_child(controls_instance)
+
+func remove_controls():
+	if Controls.get_child_count() >= 1:
+		Controls.remove_child(Controls.get_child(0))
 
 func get_current_area(_area):
 	current_area.clear()
@@ -128,17 +138,14 @@ func init_current_room():
 	if Rooms.get_child_count() > 0:
 		Rooms.remove_child(Rooms.get_child(0))
 		
-	if Controls.get_child_count() == 0:
-		controls_instance = controls_scene.instantiate()
-		
-		Controls.add_child(controls_instance)
+	add_controls()
 	
 	Rooms.add_child(current_area[State.current_room].instantiate())
 	
 	player_instance = player_scene.instantiate()
 	player_instance.position = State.player_position
-	print(player_instance.position)
 	player_instance.current_direction = State.current_direction
+	
 	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
 
 func _on_enter_new_room(_new_room_index: int, _player_position: Vector2, _direction: String):
@@ -152,8 +159,8 @@ func _on_enter_new_room(_new_room_index: int, _player_position: Vector2, _direct
 
 func _get_mission():
 	
-	Controls.remove_child(Controls.get_child(0))
-	call_deferred("disable_player_process")
+	remove_controls()
+	get_tree().paused = true
 	
 	mission_instance = mission_scene.instantiate()
 	$CanvasLayer.add_child(mission_instance)
@@ -169,6 +176,7 @@ func _on_confirm_mission():
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
 	transition_instance.iris_transition()
 	await Global.transition_finished
+	
 	#load new area after transition
 	match State.current_mission:
 		1:
@@ -180,10 +188,9 @@ func _on_confirm_mission():
 
 func _on_cancel_mission():
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
-	controls_instance = controls_scene.instantiate()
-	Controls.add_child(controls_instance)
-	call_deferred("enable_player_process")
 	
+	add_controls()
+	get_tree().paused = false
 
 
 const battle_scene: PackedScene = preload("res://scenes/battle.tscn")
@@ -209,14 +216,15 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	await Global.transition_finished
 	
 	#DISABLE PLAYER MOVEMENT
-	call_deferred("disable_player_process")
+	get_tree().paused = true
 	player_instance.visible = false
-	Controls.remove_child(Controls.get_child(0))
+	remove_controls()
 	
 	#remove player input
 	$CanvasLayer.add_child(battle_instance)
 	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type)
-	
+
+
 
 func _on_end_battle(state, _type: String):
 	Global.in_battle = false
@@ -242,10 +250,10 @@ func _on_end_battle(state, _type: String):
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
 	
 	#ENABLE PLAYER MOVEMENT
-	call_deferred("enable_player_process")
+	get_tree().paused = false
 	player_instance.visible = true
-	controls_instance = controls_scene.instantiate()
-	Controls.add_child(controls_instance)
+	
+	add_controls()
 	
 	#TO BE CHANGED#
 	if _type == "tutorial" and State.current_room == 0:
@@ -259,4 +267,22 @@ func _on_start_interactable_dialogue(dialogue_resource: DialogueResource, title:
 	add_child(balloon)
 	balloon.start(dialogue_resource, title)
 
+func _on_start_sleep():
+	player_instance.visible = false
+	get_tree().paused = true
+	remove_controls()
+	
+	#ADD HEALTH AND MANA
+	var transition_instance = transition_scene.instantiate()
+	add_child(transition_instance)
+	transition_instance.sleep_transition()
+	await Global.transition_finished
+	
+	Global.end_sleep.emit()
+
+
+func _on_end_sleep():
+	get_tree().paused = false
+	add_controls()
+	player_instance.visible = true
 

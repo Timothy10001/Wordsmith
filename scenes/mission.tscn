@@ -18,6 +18,7 @@ atlas = ExtResource("5_svok0")
 region = Rect2(192, 0, 16, 16)
 
 [node name="Mission" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_lscw1")
 
 [node name="TextureRect" type="TextureRect" parent="."]

@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bg7ygyklc4oq0"]
+[gd_scene load_steps=12 format=3 uid="uid://bg7ygyklc4oq0"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_tvu47"]
 [ext_resource type="Shader" path="res://scripts/misc/scroll.gdshader" id="1_ux8y6"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_k0awt"]
 [ext_resource type="Texture2D" uid="uid://b6lqfvu4mrg2o" path="res://assets/art/backgrounds/clouds.png" id="2_kt2yi"]
+[ext_resource type="PackedScene" uid="uid://di4sis4pjpkqx" path="res://scenes/npcs/old_man_o_malley.tscn" id="5_bimur"]
+[ext_resource type="PackedScene" uid="uid://d28b8s4uq8l1c" path="res://scenes/interactables/bed.tscn" id="5_lvp32"]
+[ext_resource type="Texture2D" uid="uid://ddpadqw2efo5l" path="res://assets/art/environments/bed.png" id="6_vxsbm"]
+[ext_resource type="Texture2D" uid="uid://cvwcqs38sh45g" path="res://assets/art/environments/sleeping.png" id="7_dt6dk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6qv8n"]
 shader = ExtResource("1_ux8y6")
@@ -11,7 +15,11 @@ shader = ExtResource("1_ux8y6")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2586o"]
 size = Vector2(32, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6vuk"]
+size = Vector2(41, 48)
+
 [node name="House" type="Node2D"]
+y_sort_enabled = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 480.0
@@ -41,13 +49,13 @@ layer_2/y_sort_enabled = true
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array(-983004, 393221, 12, -983007, 262149, 12, -851931, 720901, 268435463)
 layer_3/name = "deco"
-layer_3/tile_data = PackedInt32Array(-1179618, 983046, 1, -1114082, 983046, 1, -1179617, 1048582, 1, -1114081, 1048582, 1, -1245154, 983046, 0, -1245153, 1048582, 0, -1441763, 1048582, 11)
+layer_3/tile_data = PackedInt32Array(-1179618, 983046, 1, -1114082, 983046, 1, -1179617, 1048582, 1, -1114081, 1048582, 1, -1245154, 983046, 0, -1245153, 1048582, 0)
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
-polygon = PackedVector2Array(448, -192, 448, -256, 480, -256, 480, -304, 448, -304, 448, -336, 496, -336, 496, -352, 448, -352, 448, -368, 544, -368, 544, -304, 512, -304, 512, -256, 624, -256, 624, -192, 640, -192, 640, -400, 432, -400, 432, -176, 656, -176, 656, -192)
+polygon = PackedVector2Array(448, -192, 448, -256, 480, -256, 480, -304, 448, -304, 448, -336, 487, -336, 487, -349, 448, -349, 448, -368, 544, -368, 544, -304, 512, -304, 512, -256, 624, -256, 624, -192, 640, -192, 640, -400, 432, -400, 432, -176, 656, -176, 656, -192)
 
 [node name="Door" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("2_k0awt")]
 collision = NodePath("CollisionShape2D")
@@ -60,4 +68,27 @@ position = Vector2(496, -200)
 shape = SubResource("RectangleShape2D_2586o")
 
 [node name="NPCs" type="Node2D" parent="."]
-visible = false
+y_sort_enabled = true
+
+[node name="OldManOMalley" parent="NPCs" instance=ExtResource("5_bimur")]
+position = Vector2(557, -217)
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Bed" parent="Interactables" node_paths=PackedStringArray("Collision", "bed_sprite", "sleeping_sprite") instance=ExtResource("5_lvp32")]
+position = Vector2(512, -336)
+Collision = NodePath("CollisionShape2D")
+bed_sprite = NodePath("Bed")
+sleeping_sprite = NodePath("Sleeping")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Bed"]
+position = Vector2(-36.5, -8)
+shape = SubResource("RectangleShape2D_c6vuk")
+
+[node name="Bed" type="Sprite2D" parent="Interactables/Bed"]
+position = Vector2(-41, -16)
+texture = ExtResource("6_vxsbm")
+
+[node name="Sleeping" type="Sprite2D" parent="Interactables/Bed"]
+position = Vector2(-41, -16)
+texture = ExtResource("7_dt6dk")

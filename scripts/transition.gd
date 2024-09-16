@@ -14,6 +14,9 @@ func fade_transition():
 	$AnimationPlayer.play("Fade In")
 	$Fade.visible = true
 
+func sleep_transition():
+	$AnimationPlayer.play("Sleep Fade In")
+	$Fade.visible = true
 
 func _on_animation_player_animation_finished(anim_name):
 
@@ -23,9 +26,17 @@ func _on_animation_player_animation_finished(anim_name):
 			Global.transition_finished.emit()
 		"Fade From Black":
 			$Iris.visible = false
+			queue_free()
 		"Fade In":
 			$AnimationPlayer.play("Fade Out")
 			Global.transition_finished.emit()
 		"Fade Out":
 			$Fade.visible = false
+			queue_free()
+		"Sleep Fade In":
+			$AnimationPlayer.play("Sleep Fade Out")
+			Global.transition_finished.emit()
+		"Sleep Fade Out":
+			$Fade.visible = false
+			queue_free()
 
