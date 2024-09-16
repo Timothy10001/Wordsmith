@@ -8,6 +8,7 @@
 size = Vector2(32, 16)
 
 [node name="TrainingRoom" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -41,6 +42,7 @@ shape = SubResource("RectangleShape2D_vypff")
 polygon = PackedVector2Array(-320, -336, -96, -336, -96, -432, -320, -432, -352, -432, -352, -464, -64, -464, -64, -304, -336, -304, -336, -480, -320, -480)
 
 [node name="NPCs" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="DummyNPC" parent="NPCs" instance=ExtResource("3_vj5na")]
 position = Vector2(-208, -432)

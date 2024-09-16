@@ -11,7 +11,7 @@ atlas = ExtResource("3_elmx2")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jjvlb"]
-size = Vector2(16, 18)
+size = Vector2(12, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o23du"]
 size = Vector2(64, 80)
@@ -31,10 +31,10 @@ texture = ExtResource("3_fqw6c")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -16.0
-offset_top = -32.0
-offset_right = -16.0
-offset_bottom = -32.0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = -24.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -46,10 +46,11 @@ size_flags_vertical = 0
 texture = SubResource("AtlasTexture_1xjli")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 15)
+position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_jjvlb")
 
 [node name="NPC" parent="." node_paths=PackedStringArray("touch_screen_button", "collision_shape") instance=ExtResource("4_pwqq3")]
+visible = false
 dialogue_resource = ExtResource("5_dd2p3")
 touch_screen_button = NodePath("TouchScreenButton")
 collision_shape = NodePath("CollisionShape2D")

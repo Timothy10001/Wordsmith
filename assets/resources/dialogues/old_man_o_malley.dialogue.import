@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://bnl0nyeioiptn"
+path="res://.godot/imported/old_man_o_malley.dialogue-c36544c4287f889b4a8e0662a2aad3b5.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/old_man_o_malley.dialogue"
+dest_files=["res://.godot/imported/old_man_o_malley.dialogue-c36544c4287f889b4a8e0662a2aad3b5.tres"]
+
+[params]
+
+defaults=true

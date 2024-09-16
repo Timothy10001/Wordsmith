@@ -128,9 +128,10 @@ func init_current_room():
 	if Rooms.get_child_count() > 0:
 		Rooms.remove_child(Rooms.get_child(0))
 		
-	controls_instance = controls_scene.instantiate()
-	
-	Controls.add_child(controls_instance)
+	if !Controls.get_child(0):
+		controls_instance = controls_scene.instantiate()
+		
+		Controls.add_child(controls_instance)
 	
 	Rooms.add_child(current_area[State.current_room].instantiate())
 	
