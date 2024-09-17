@@ -1,0 +1,14 @@
+~ start
+set npc_class = "High Class"
+Narrator: This door is locked.
+Narrator: There's no one inside
+
+=> END
+
+~ without_key
+
+set npc_class = "High Class"
+Narrator: This igloo has too much snow inside.
+Narrator: You can dig it out with a shovel.
+
+=> END

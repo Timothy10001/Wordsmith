@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://b38y24a1immlq"
+path="res://.godot/imported/snowy_igloo.dialogue-46153c4fdbc3828b1d9c8878f8ded4ae.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/snowy_igloo.dialogue"
+dest_files=["res://.godot/imported/snowy_igloo.dialogue-46153c4fdbc3828b1d9c8878f8ded4ae.tres"]
+
+[params]
+
+defaults=true

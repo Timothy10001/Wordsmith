@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://vwlccqobmnw2"]
+[gd_scene load_steps=8 format=3 uid="uid://vwlccqobmnw2"]
 
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_kba3v"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_bvhh0"]
+[ext_resource type="PackedScene" uid="uid://d28b8s4uq8l1c" path="res://scenes/interactables/bed.tscn" id="3_dwlqg"]
+[ext_resource type="Texture2D" uid="uid://ddpadqw2efo5l" path="res://assets/art/environments/bed.png" id="4_dd4si"]
+[ext_resource type="Texture2D" uid="uid://cvwcqs38sh45g" path="res://assets/art/environments/sleeping.png" id="5_8gix5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xaccc"]
 size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ja61c"]
+size = Vector2(48, 41)
 
 [node name="Igloo002" type="Node2D"]
 
@@ -19,7 +25,7 @@ layer_1/tile_data = PackedInt32Array(-786431, 1245184, 0, -720895, 1245184, 0, -
 layer_2/name = "ysort"
 layer_2/y_sort_enabled = true
 layer_2/z_index = 1
-layer_2/tile_data = PackedInt32Array(-524279, 589824, 9, -458741, 720896, 8, -458745, 917504, 9, -393205, 851968, 10, -262138, 720896, 8)
+layer_2/tile_data = PackedInt32Array(-524279, 589824, 9, -458741, 720896, 8, -393205, 851968, 10, -262138, 720896, 8)
 layer_3/name = "deco"
 layer_3/tile_data = PackedInt32Array(-327671, 589824, 8, -327668, 589824, 8)
 metadata/_edit_lock_ = true
@@ -39,3 +45,22 @@ openable = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/ToOutside"]
 position = Vector2(152, -24)
 shape = SubResource("RectangleShape2D_xaccc")
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Bed" parent="Interactables" node_paths=PackedStringArray("Collision", "bed_sprite", "sleeping_sprite") instance=ExtResource("3_dwlqg")]
+Collision = NodePath("CollisionShape2D")
+bed_sprite = NodePath("Bed")
+sleeping_sprite = NodePath("Sleeping")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Bed"]
+position = Vector2(112, -90)
+shape = SubResource("RectangleShape2D_ja61c")
+
+[node name="Bed" type="Sprite2D" parent="Interactables/Bed"]
+position = Vector2(112, -96)
+texture = ExtResource("4_dd4si")
+
+[node name="Sleeping" type="Sprite2D" parent="Interactables/Bed"]
+position = Vector2(112, -96)
+texture = ExtResource("5_8gix5")

@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://tlxsuemt0nj1"]
+[gd_scene load_steps=13 format=3 uid="uid://tlxsuemt0nj1"]
 
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_k6446"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_hgk1l"]
 [ext_resource type="Resource" uid="uid://dhc5e06jtxfnl" path="res://assets/resources/dialogues/interactables/too_much_snow.dialogue" id="3_2132o"]
+[ext_resource type="Resource" uid="uid://74yxjqqulgwt" path="res://assets/resources/items/shovel.tres" id="4_todn4"]
+[ext_resource type="Resource" uid="uid://b38y24a1immlq" path="res://assets/resources/dialogues/interactables/snowy_igloo.dialogue" id="5_udr1d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kh7sp"]
 size = Vector2(96, 16)
@@ -103,6 +105,9 @@ collision = NodePath("CollisionShape2D")
 direction = "up"
 new_area = "mission 2 - igloo"
 openable = true
+requires_key = true
+key = ExtResource("4_todn4")
+dialogue_resource = ExtResource("5_udr1d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/ToIgloo002"]
 position = Vector2(152, -24)

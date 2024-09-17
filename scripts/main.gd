@@ -2,18 +2,18 @@ extends Node
 
 #add player stats and inventory
 #debug
-"""
+
 var saved_data = {
-	"area": "mission 1 - outside",
-	"room": 0,
-	"current mission": 1,
+	"area": "mission 2 - highway",
+	"room": 1,
+	"current mission": 2,
 	"tutorial status": "done",
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-"""
 
 #lobby
+"""
 var saved_data = {
 	"area": "lobby",
 	"room": 0,
@@ -22,7 +22,7 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-
+"""
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")

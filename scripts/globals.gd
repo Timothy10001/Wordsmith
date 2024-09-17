@@ -74,6 +74,7 @@ var area_list = {
 	"mission 2 - house": ["res://scenes/areas/mission 2/rooms/house_001.tscn", "res://scenes/areas/mission 2/rooms/house_002.tscn"],
 	"mission 2 - shed": ["res://scenes/areas/mission 2/rooms/shed.tscn"],
 	"mission 2 - igloo": ["res://scenes/areas/mission 2/rooms/igloo_001.tscn", "res://scenes/areas/mission 2/rooms/igloo_002.tscn", "res://scenes/areas/mission 2/rooms/igloo_003.tscn"],
+	"mission 2 - highway": ["res://scenes/areas/mission 2/rooms/highway.tscn", "res://scenes/areas/mission 2/rooms/highway_scrolling.tscn"],
 	"mission 3 - outside": ["res://scenes/areas/mission 3/rooms/outside.tscn"],
 	"mission 3 - school": ["res://scenes/areas/mission 3/rooms/school_001.tscn", "res://scenes/areas/mission 3/rooms/school_002.tscn"],
 	"mission 3 - classroom": ["res://scenes/areas/mission 3/rooms/classroom_001.tscn", "res://scenes/areas/mission 3/rooms/classroom_002.tscn", "res://scenes/areas/mission 3/rooms/classroom_003.tscn", "res://scenes/areas/mission 3/rooms/classroom_004.tscn", "res://scenes/areas/mission 3/rooms/classroom_005.tscn"],
