@@ -1,0 +1,8 @@
+~ start
+
+Narrator: Are you sure you want to go back to the lobby?
+- Yes
+	do emit("back_to_lobby")
+- No
+	=> END
+=> END

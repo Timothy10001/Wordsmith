@@ -3,6 +3,8 @@ extends Node
 signal start_game
 signal save_game
 
+signal back_to_lobby
+
 signal start_battle
 signal end_battle
 signal lost_battle

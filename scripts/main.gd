@@ -4,11 +4,11 @@ extends Node
 #debug
 
 var saved_data = {
-	"area": "mission 2 - highway",
-	"room": 1,
-	"current mission": 2,
+	"area": "mission 1 - outside",
+	"room": 0,
+	"current mission": 1,
 	"tutorial status": "done",
-	"player position": Vector2(0, 0),
+	"player position": Vector2(-224, -16),
 	"direction": "up"
 }
 
@@ -62,6 +62,8 @@ func _process(delta):
 
 #<-TO BE CHANGED->#
 func connect_signals():
+	Global.back_to_lobby.connect(_on_back_to_lobby)
+	
 	Global.get_mission.connect(_get_mission)
 	Global.confirm_mission.connect(_on_confirm_mission)
 	Global.cancel_mission.connect(_on_cancel_mission)
@@ -181,7 +183,7 @@ func _on_confirm_mission():
 	match State.current_mission:
 		1:
 			Global.enter_new_area.emit("mission 1 - outside", 0)
-			Global.enter_new_room.emit(0, Vector2(-88, -24), "down")
+			Global.enter_new_room.emit(0, Vector2(-224, -16), "down")
 		2:
 			Global.enter_new_area.emit("mission 2 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
@@ -286,3 +288,20 @@ func _on_end_sleep():
 	add_controls()
 	player_instance.visible = true
 
+func _on_back_to_lobby():
+	# do transition
+	remove_controls()
+	get_tree().paused = true
+	
+	var transition_instance = transition_scene.instantiate()
+	add_child(transition_instance)
+	transition_instance.iris_transition()
+	await Global.transition_finished
+	
+	Global.enter_new_area.emit("lobby", 0)
+	Global.enter_new_room.emit(0, Vector2(0,0), "down")
+	
+	add_controls()
+	get_tree().paused = false
+	
+	

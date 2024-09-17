@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgv5p840ijn6m"]
+
+[ext_resource type="Texture2D" uid="uid://cykuli7qwfu4q" path="res://assets/art/environments/carriage.png" id="1_odaym"]
+[ext_resource type="Script" path="res://scripts/interactables/carriage.gd" id="1_oxtxy"]
+
+[node name="Carriage" type="Area2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_oxtxy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_odaym")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

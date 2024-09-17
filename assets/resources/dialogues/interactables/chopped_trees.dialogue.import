@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://d87erwsb7ilt"
+path="res://.godot/imported/chopped_trees.dialogue-11a6094fa5446bb3ea4a5bb58c18c8ab.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/chopped_trees.dialogue"
+dest_files=["res://.godot/imported/chopped_trees.dialogue-11a6094fa5446bb3ea4a5bb58c18c8ab.tres"]
+
+[params]
+
+defaults=true

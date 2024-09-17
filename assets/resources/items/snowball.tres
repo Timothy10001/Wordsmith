@@ -10,8 +10,9 @@ region = Rect2(96, 288, 16, 16)
 [resource]
 script = ExtResource("1_hjw5f")
 name = "Snowball"
-description = "Can use to catch someone's attention."
+description = "Can use to catch someone's attention. Gives Listening status effect."
 texture = SubResource("AtlasTexture_8sp30")
 stackable = true
 droppable = true
 type = "status_effect"
+target = "enemy"

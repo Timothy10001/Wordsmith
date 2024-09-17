@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://crhoh863ac78x"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_uxths"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_40u37"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fgml"]
+atlas = ExtResource("2_40u37")
+region = Rect2(0, 224, 16, 16)
+
+[resource]
+script = ExtResource("1_uxths")
+name = "Apple"
+description = "Keeps the doctor away! Heals 15 INT and adds 10 EN."
+texture = SubResource("AtlasTexture_2fgml")
+stackable = true
+droppable = true
+type = "heal"
+target = "player"
