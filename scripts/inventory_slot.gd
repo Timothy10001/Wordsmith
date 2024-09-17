@@ -8,7 +8,7 @@ signal inventory_slot_selected(index: int)
 
 var selected: bool = false
 
-func _process(delta):
+func _process(_delta):
 	if selected:
 		self.theme_type_variation = "ItemSelected"
 	else:

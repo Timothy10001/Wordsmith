@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dvke46ty67iv4"]
+[gd_scene load_steps=31 format=3 uid="uid://dvke46ty67iv4"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_b4h5j"]
 [ext_resource type="PackedScene" uid="uid://rnslowucwlht" path="res://scenes/npcs/mr_cheese.tscn" id="2_66il4"]
@@ -31,6 +31,9 @@ size = Vector2(16, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e1y6q"]
 size = Vector2(16, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vyvnw"]
+size = Vector2(16, 16)
 
 [sub_resource type="Resource" id="Resource_acgdh"]
 script = ExtResource("9_t0ifj")
@@ -157,6 +160,11 @@ direction = "right"
 
 [node name="Collision" parent="Collisions/ToEast001_2" index="0"]
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 64, -16, 64)
+
+[node name="Chest" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(560, 112)
+shape = SubResource("RectangleShape2D_vyvnw")
+debug_color = Color(1, 0.0096655, 0.0341409, 0.42)
 
 [node name="NPCs" type="Node2D" parent="."]
 y_sort_enabled = true

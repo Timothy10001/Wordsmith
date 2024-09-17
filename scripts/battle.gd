@@ -129,7 +129,7 @@ func connect_signals():
 	inventory_data.connect("inventory_interacted", _on_inventory_interacted)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	#manages states
 	match(battle_state):
 		STATE.INIT:
@@ -341,8 +341,8 @@ func update_player_progress_bar_value():
 				PlayerHealthLabel[i].text = "%d/%d" % [unit["health"], unit["max_health"]]
 				PlayerManaLabel[i].text = "%d/%d" % [unit["mana"], unit["max_mana"]]
 
-func set_enemy_panel_data(name, health, max_health):
-	EnemyName.text = name
+func set_enemy_panel_data(enemy_name, health, max_health):
+	EnemyName.text = enemy_name
 	EnemyHealthBar.max_value = max_health
 	EnemyHealthBar.value = health
 	EnemyHealthLabel.text = "%d/%d" % [health, max_health]

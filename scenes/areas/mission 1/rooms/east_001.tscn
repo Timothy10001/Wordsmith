@@ -1,7 +1,63 @@
-[gd_scene load_steps=3 format=3 uid="uid://gameduitedeg"]
+[gd_scene load_steps=23 format=3 uid="uid://gameduitedeg"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_3hbc2"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_dpsd8"]
+[ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="3_ble2j"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="4_4qs6y"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="4_awxlv"]
+[ext_resource type="Texture2D" uid="uid://bcftjmmqh2qyn" path="res://assets/art/environments/chest_01.png" id="4_q0xp4"]
+[ext_resource type="Resource" uid="uid://crhoh863ac78x" path="res://assets/resources/items/apple.tres" id="4_wnc4t"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="5_f248h"]
+[ext_resource type="Resource" uid="uid://entqnkt37a5b" path="res://assets/resources/items/strawberry.tres" id="6_walvs"]
+[ext_resource type="Resource" uid="uid://dmc3jb7dd35co" path="res://assets/resources/items/bread.tres" id="10_3eiuk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_si7yw"]
+size = Vector2(16, 16)
+
+[sub_resource type="Resource" id="Resource_kvpxi"]
+script = ExtResource("5_f248h")
+item = ExtResource("4_wnc4t")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_2gdr7"]
+script = ExtResource("5_f248h")
+item = ExtResource("6_walvs")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_34ihx"]
+script = ExtResource("4_4qs6y")
+items = Array[ExtResource("5_f248h")]([SubResource("Resource_kvpxi"), SubResource("Resource_2gdr7")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4f2l"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_72kd4"]
+atlas = ExtResource("4_q0xp4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vburw"]
+atlas = ExtResource("4_q0xp4")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="Resource" id="Resource_4eqca"]
+script = ExtResource("5_f248h")
+item = ExtResource("10_3eiuk")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_0u1ga"]
+script = ExtResource("4_4qs6y")
+items = Array[ExtResource("5_f248h")]([SubResource("Resource_4eqca")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqfbe"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2uhr8"]
+atlas = ExtResource("4_q0xp4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty1u8"]
+atlas = ExtResource("4_q0xp4")
+region = Rect2(16, 0, 16, 16)
 
 [node name="East001" type="Node2D"]
 
@@ -55,6 +111,53 @@ direction = "right"
 
 [node name="Collision" parent="Collisions/ToEast002_2" index="0"]
 polygon = PackedVector2Array(-16, -32, 16, -32, 16, 80, -16, 80)
+
+[node name="Chest" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(992, -336)
+shape = SubResource("RectangleShape2D_si7yw")
+debug_color = Color(1, 0.0096655, 0.0341409, 0.42)
+
+[node name="Chest2" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(896, -80)
+shape = SubResource("RectangleShape2D_si7yw")
+debug_color = Color(1, 0.0096655, 0.0341409, 0.42)
+
+[node name="Interactables" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision", "opened_texture", "closed_texture") instance=ExtResource("3_ble2j")]
+position = Vector2(992, -336)
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("4_awxlv")
+inventory = SubResource("Resource_34ihx")
+opened_texture = NodePath("Opened")
+closed_texture = NodePath("Closed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
+shape = SubResource("RectangleShape2D_j4f2l")
+
+[node name="Closed" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_72kd4")
+
+[node name="Opened" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_vburw")
+
+[node name="Chest2" parent="Interactables" node_paths=PackedStringArray("collision", "opened_texture", "closed_texture") instance=ExtResource("3_ble2j")]
+position = Vector2(896, -80)
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("4_awxlv")
+inventory = SubResource("Resource_0u1ga")
+opened_texture = NodePath("Opened")
+closed_texture = NodePath("Closed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest2"]
+shape = SubResource("RectangleShape2D_wqfbe")
+
+[node name="Closed" type="Sprite2D" parent="Interactables/Chest2"]
+texture = SubResource("AtlasTexture_2uhr8")
+
+[node name="Opened" type="Sprite2D" parent="Interactables/Chest2"]
+texture = SubResource("AtlasTexture_ty1u8")
 
 [editable path="Collisions/ToOutside"]
 [editable path="Collisions/ToOutside2"]

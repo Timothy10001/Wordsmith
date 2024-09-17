@@ -42,7 +42,7 @@ func _ready():
 	start()
 	
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		pause_instance = pause_scene.instantiate()
 		add_child(pause_instance)
@@ -264,10 +264,10 @@ func _on_end_battle(state, _type: String):
 		add_child(balloon)
 		balloon.start(dialogue_resource, "start")
 
-func _on_start_interactable_dialogue(dialogue_resource: DialogueResource, title: String):
+func _on_start_interactable_dialogue(_dialogue_resource: DialogueResource, title: String):
 	var balloon = BALLOON.instantiate()
 	add_child(balloon)
-	balloon.start(dialogue_resource, title)
+	balloon.start(_dialogue_resource, title)
 
 func _on_start_sleep():
 	player_instance.visible = false

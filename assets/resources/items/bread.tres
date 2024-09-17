@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://dmc3jb7dd35co"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_er38b"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_0qejq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ucndb"]
+atlas = ExtResource("2_0qejq")
+region = Rect2(208, 224, 16, 16)
+
+[resource]
+script = ExtResource("1_er38b")
+name = "Bread"
+description = "Soft, fluffy, and throwable. Applies Listening."
+texture = SubResource("AtlasTexture_ucndb")
+stackable = true
+droppable = true
+type = "status_effect"
+target = "enemy"

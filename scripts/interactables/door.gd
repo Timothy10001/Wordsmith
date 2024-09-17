@@ -29,7 +29,7 @@ func _on_body_exited(body):
 		player = body
 		Global.interactable_exited.emit()
 
-func _process(delta):
+func _process(_delta):
 	if entered:
 		if openable and !requires_key:
 			if Input.is_action_just_pressed("interact"):

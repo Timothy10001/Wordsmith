@@ -35,7 +35,7 @@ func _on_body_exited(body):
 		player_left.emit()
 		Global.interactable_exited.emit()
 
-func _process(delta):
+func _process(_delta):
 	if has_entered:
 		if Input.is_action_just_pressed("interact"):
 			touch_screen_button.visible = false

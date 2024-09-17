@@ -1,7 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://cu3v73deye6dp"]
+[gd_scene load_steps=15 format=3 uid="uid://cu3v73deye6dp"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_paski"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_c5coh"]
+[ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="3_yk7qf"]
+[ext_resource type="Texture2D" uid="uid://bcftjmmqh2qyn" path="res://assets/art/environments/chest_01.png" id="4_8ygdi"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="4_f5iud"]
+[ext_resource type="Resource" uid="uid://entqnkt37a5b" path="res://assets/resources/items/strawberry.tres" id="5_jlex7"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="6_tqbhe"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="7_kbhig"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n47ft"]
+size = Vector2(16, 16)
+
+[sub_resource type="Resource" id="Resource_1hlgs"]
+script = ExtResource("6_tqbhe")
+item = ExtResource("5_jlex7")
+quantity = 5
+
+[sub_resource type="Resource" id="Resource_mob1x"]
+script = ExtResource("7_kbhig")
+items = Array[ExtResource("6_tqbhe")]([SubResource("Resource_1hlgs")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1usuf"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqtsh"]
+atlas = ExtResource("4_8ygdi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eq7v4"]
+atlas = ExtResource("4_8ygdi")
+region = Rect2(16, 0, 16, 16)
 
 [node name="North001" type="Node2D"]
 
@@ -43,7 +72,32 @@ direction = "up"
 position = Vector2(0, -16)
 polygon = PackedVector2Array(-48, -16, 80, -16, 80, 0, -48, 0)
 
+[node name="Chest" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(-704, -688)
+shape = SubResource("RectangleShape2D_n47ft")
+debug_color = Color(0.90527, 0.304533, 0, 0.42)
+
 [node name="NPCs" type="Node2D" parent="."]
+
+[node name="Interactables" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision", "opened_texture", "closed_texture") instance=ExtResource("3_yk7qf")]
+position = Vector2(-704, -688)
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("4_f5iud")
+inventory = SubResource("Resource_mob1x")
+opened_texture = NodePath("Opened")
+closed_texture = NodePath("Closed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
+shape = SubResource("RectangleShape2D_1usuf")
+
+[node name="Closed" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_eqtsh")
+
+[node name="Opened" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_eq7v4")
 
 [editable path="Collisions/ToOutside"]
 [editable path="Collisions/ToNorth002"]

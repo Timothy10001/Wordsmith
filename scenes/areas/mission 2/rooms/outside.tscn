@@ -1,10 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://tlxsuemt0nj1"]
+[gd_scene load_steps=17 format=3 uid="uid://tlxsuemt0nj1"]
 
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_k6446"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_hgk1l"]
 [ext_resource type="Resource" uid="uid://dhc5e06jtxfnl" path="res://assets/resources/dialogues/interactables/too_much_snow.dialogue" id="3_2132o"]
 [ext_resource type="Resource" uid="uid://74yxjqqulgwt" path="res://assets/resources/items/shovel.tres" id="4_todn4"]
 [ext_resource type="Resource" uid="uid://b38y24a1immlq" path="res://assets/resources/dialogues/interactables/snowy_igloo.dialogue" id="5_udr1d"]
+[ext_resource type="PackedScene" uid="uid://bgv5p840ijn6m" path="res://scenes/interactables/carriage.tscn" id="6_px0pe"]
+[ext_resource type="Resource" uid="uid://dxoq28yrebm5p" path="res://assets/resources/dialogues/interactables/carriage.dialogue" id="7_mqr4v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_of7r2"]
+size = Vector2(76.5, 29)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kh7sp"]
 size = Vector2(96, 16)
@@ -26,6 +31,9 @@ size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kn8c0"]
 size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lttsx"]
+size = Vector2(117, 74.5)
 
 [node name="Outside" type="Node2D"]
 
@@ -52,6 +60,11 @@ polygon = PackedVector2Array(-336, -448, 96, -448, 96, -480, 192, -480, 192, -44
 
 [node name="Water" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-336, -416, 336, -416, 336, -304, 160, -304, -12, -304, -12, -320, 0, -320, 0, -352, 16, -352, 16, -320, 48, -320, 48, -336, 96, -336, 96, -320, 160, -320, 160, -352, 144, -352, 144, -368, 112, -368, 112, -360, 48, -360, 48, -384, 32, -384, 32, -400, -64, -400, -64, -376, -112, -376, -112, -400, -176, -400, -176, -384, -192, -384, -192, -352, -176, -352, -176, -336, -128, -336, -128, -352, -64, -352, -64, -336, -48, -336, -48, -320, -36, -320, -36, -304, -336, -304)
+
+[node name="Carriage" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(-224.25, 105.5)
+shape = SubResource("RectangleShape2D_of7r2")
+debug_color = Color(0.986485, 0, 0.323109, 0.42)
 
 [node name="ToNorth" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("2_hgk1l")]
 collision = NodePath("CollisionShape2D")
@@ -123,3 +136,15 @@ openable = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/ToIgloo003"]
 position = Vector2(232, 56)
 shape = SubResource("RectangleShape2D_kn8c0")
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Carriage" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("6_px0pe")]
+position = Vector2(-224, 80)
+collision = NodePath("")
+direction = "down"
+dialogue_resource = ExtResource("7_mqr4v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Carriage"]
+position = Vector2(0, 21.25)
+shape = SubResource("RectangleShape2D_lttsx")

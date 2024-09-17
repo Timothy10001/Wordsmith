@@ -33,7 +33,7 @@ metadata/_edit_lock_ = true
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 position = Vector2(0, 16)
-polygon = PackedVector2Array(-48, -160, 160, -160, 160, -64, 272, -64, 272, -400, 192, -400, 192, -368, 32, -368, 32, -400, 0, -400, 0, -416, -48, -416, -48, -304, 0, -304, 0, -292, -48, -292, -48, -112, -80, -112, -80, -432, 304, -432, 304, -32, 128, -32, 128, -128, -96, -128, -96, -160)
+polygon = PackedVector2Array(-48, -160, 160, -160, 160, -64, 272, -64, 272, -400, 192, -400, 192, -384, 48, -384, 48, -400, 0, -400, 0, -416, -48, -416, -48, -304, 0, -304, 0, -292, -48, -292, -48, -112, -80, -112, -80, -432, 304, -432, 304, -32, 128, -32, 128, -128, -96, -128, -96, -160)
 
 [node name="DoorToOutside" parent="Collisions" node_paths=PackedStringArray("collision") instance=ExtResource("2_y76av")]
 collision = NodePath("CollisionShape2D")
@@ -57,7 +57,7 @@ position = Vector2(-24, -392)
 shape = SubResource("RectangleShape2D_fkqup")
 
 [node name="Table" type="CollisionPolygon2D" parent="Collisions"]
-polygon = PackedVector2Array(0, -336, 208, -336, 208, -384, 192, -384, 192, -368, 0, -368)
+polygon = PackedVector2Array(16, -320, 208, -320, 208, -384, 192, -384, 192, -352, 16, -352)
 
 [node name="ToTavern004" parent="Collisions" instance=ExtResource("3_aylp0")]
 position = Vector2(-32, -288)
