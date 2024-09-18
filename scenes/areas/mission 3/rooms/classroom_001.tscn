@@ -38,3 +38,6 @@ openable = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/DoorToSchool001"]
 position = Vector2(-320, -328)
 shape = SubResource("RectangleShape2D_nhl42")
+
+[node name="Interactables" type="Node2D" parent="."]
+y_sort_enabled = true

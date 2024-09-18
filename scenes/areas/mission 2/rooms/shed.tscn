@@ -1,9 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://000efojulyoi"]
+[gd_scene load_steps=17 format=3 uid="uid://000efojulyoi"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_6d7v4"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_umc8w"]
+[ext_resource type="PackedScene" uid="uid://0e4cqtrxwquj" path="res://scenes/interactables/dialogue_object.tscn" id="3_gvmql"]
+[ext_resource type="Resource" uid="uid://8ef4o0aw2xui" path="res://assets/resources/dialogues/interactables/fireplace.dialogue" id="4_fps67"]
+[ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="5_1y23e"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="6_jbcs0"]
+[ext_resource type="Resource" uid="uid://chwqn7jrvuxfu" path="res://assets/resources/items/coffee.tres" id="7_f33a8"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="8_ub5od"]
+[ext_resource type="Resource" uid="uid://b4tnp2bhjekbr" path="res://assets/resources/items/notebook.tres" id="9_g1vbf"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="10_6lk3w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qqlyk"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_do3k4"]
+size = Vector2(16, 16)
+
+[sub_resource type="Resource" id="Resource_hpabf"]
+script = ExtResource("8_ub5od")
+item = ExtResource("7_f33a8")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_fg4rq"]
+script = ExtResource("8_ub5od")
+item = ExtResource("9_g1vbf")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_q2j4n"]
+script = ExtResource("10_6lk3w")
+items = Array[ExtResource("8_ub5od")]([SubResource("Resource_hpabf"), SubResource("Resource_fg4rq")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h6rgn"]
 size = Vector2(16, 16)
 
 [node name="Shed" type="Node2D"]
@@ -38,3 +66,23 @@ openable = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/ToOutside"]
 position = Vector2(-216, 8)
 shape = SubResource("RectangleShape2D_qqlyk")
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Fireplace" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("3_gvmql")]
+Collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("4_fps67")
+title = "start"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Fireplace"]
+position = Vector2(-184, -24)
+shape = SubResource("RectangleShape2D_do3k4")
+
+[node name="Notebook and Coffee" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("5_1y23e")]
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("6_jbcs0")
+inventory = SubResource("Resource_q2j4n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Notebook and Coffee"]
+position = Vector2(-248, -24)
+shape = SubResource("RectangleShape2D_h6rgn")

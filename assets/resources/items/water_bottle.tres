@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://dkbc6623umoh1"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_jfjr0"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_8h6qh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4tnk"]
+atlas = ExtResource("2_8h6qh")
+region = Rect2(80, 304, 16, 16)
+
+[resource]
+script = ExtResource("1_jfjr0")
+name = "Water Bottle"
+description = "Don't forget to drink it. Adds 15 EN and removes status effects."
+texture = SubResource("AtlasTexture_b4tnk")
+stackable = true
+droppable = true
+type = "consumable"
+target = "player"

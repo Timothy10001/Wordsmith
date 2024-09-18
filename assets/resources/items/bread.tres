@@ -14,5 +14,5 @@ description = "Soft, fluffy, and throwable. Applies Listening."
 texture = SubResource("AtlasTexture_ucndb")
 stackable = true
 droppable = true
-type = "status_effect"
+type = "consumable"
 target = "enemy"

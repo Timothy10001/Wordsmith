@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://bkvm3s34d6o1r"
+path="res://.godot/imported/rat_den_sign.dialogue-20c6ebcad96930fb3dc0951d5c76eabe.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/rat_den_sign.dialogue"
+dest_files=["res://.godot/imported/rat_den_sign.dialogue-20c6ebcad96930fb3dc0951d5c76eabe.tres"]
+
+[params]
+
+defaults=true

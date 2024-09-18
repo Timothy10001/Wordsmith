@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://cdhd01lp5hbcv"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_1jgx0"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_oahvg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08l0g"]
+atlas = ExtResource("2_oahvg")
+region = Rect2(96, 176, 16, 16)
+
+[resource]
+script = ExtResource("1_1jgx0")
+name = "Teaching Stick"
+description = "Captures attention. Applies Listening to enemies."
+texture = SubResource("AtlasTexture_08l0g")
+stackable = true
+droppable = true
+type = "consumable"
+target = "enemy"

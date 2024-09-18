@@ -3,9 +3,13 @@ extends Control
 var player_inventory = load("res://scenes/inventory_ui.tscn")
 var player_inventory_resource = load("res://assets/resources/player_inventory.tres")
 @export var interactable_inventory_resource: Inventory
+
+var dialogue_resource: DialogueResource = load("res://assets/resources/dialogues/interactables/inventory_confirmation.dialogue")
+
 var selected_inventory_slot: InventorySlot
 var selected_inventory_slot_index: int
 var player_inventory_instance
+
 
 func _ready():
 	show_player_inventory()
@@ -31,7 +35,6 @@ func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
 			inventory.remove_selected_slot_data(selected_inventory_slot_index)
 			selected_inventory_slot = null
 			update_selected_slot()
-			print("help")
 		_:
 			pass
 

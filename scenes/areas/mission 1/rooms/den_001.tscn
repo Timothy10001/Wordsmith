@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://dr8erlirvq563"]
+[gd_scene load_steps=9 format=3 uid="uid://dr8erlirvq563"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_4kvak"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_glwnp"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="3_n8bka"]
+[ext_resource type="PackedScene" uid="uid://0e4cqtrxwquj" path="res://scenes/interactables/dialogue_object.tscn" id="4_f62g5"]
+[ext_resource type="Resource" uid="uid://rajcohj25naw" path="res://assets/resources/dialogues/interactables/rat_den_bookshelf.dialogue" id="5_edejd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kbg3o"]
 size = Vector2(112, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_844am"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68feq"]
+size = Vector2(16, 16)
 
 [node name="Den001" type="Node2D"]
 
@@ -48,5 +56,23 @@ direction = "up"
 
 [node name="Collision" parent="Collisions/ToDen002" index="0"]
 polygon = PackedVector2Array(-16, 0, 80, 0, 80, 16, -16, 16)
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Bookshelf" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("4_f62g5")]
+Collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("5_edejd")
+title = "start"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Bookshelf"]
+position = Vector2(1128, -1688)
+shape = SubResource("RectangleShape2D_844am")
+
+[node name="Sign" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("4_f62g5")]
+Collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Sign"]
+position = Vector2(1192, -1720)
+shape = SubResource("RectangleShape2D_68feq")
 
 [editable path="Collisions/ToDen002"]

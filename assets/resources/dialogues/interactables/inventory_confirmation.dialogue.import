@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://vpd2313xwqx"
+path="res://.godot/imported/inventory_confirmation.dialogue-285dee5b06d844b57be1a01b2a181950.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/inventory_confirmation.dialogue"
+dest_files=["res://.godot/imported/inventory_confirmation.dialogue-285dee5b06d844b57be1a01b2a181950.tres"]
+
+[params]
+
+defaults=true

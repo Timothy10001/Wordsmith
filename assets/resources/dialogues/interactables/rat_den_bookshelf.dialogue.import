@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://rajcohj25naw"
+path="res://.godot/imported/rat_den_bookshelf.dialogue-26cfd7902b6559a798105da6350b088d.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/rat_den_bookshelf.dialogue"
+dest_files=["res://.godot/imported/rat_den_bookshelf.dialogue-26cfd7902b6559a798105da6350b088d.tres"]
+
+[params]
+
+defaults=true

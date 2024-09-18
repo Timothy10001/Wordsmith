@@ -9,4 +9,7 @@ O'Malley: For me, I cannot get into my home.
 O'Malley: I think I left it in the basement of Fondu.
 O'Malley: For 30 years, I always had the 4th drawer.
 
+if State.current_area == "mission 1 - house":
+	O'Malley: Thanks for giving me the key.
+	O'Malley: You can rest up here if you want.
 => END

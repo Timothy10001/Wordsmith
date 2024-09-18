@@ -14,5 +14,5 @@ description = "Keeps the doctor away! Heals 15 INT and adds 10 EN."
 texture = SubResource("AtlasTexture_2fgml")
 stackable = true
 droppable = true
-type = "heal"
+type = "consumable"
 target = "player"

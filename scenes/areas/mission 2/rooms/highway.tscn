@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://ceu6owmo32ewg"]
+[gd_scene load_steps=7 format=3 uid="uid://ceu6owmo32ewg"]
 
 [ext_resource type="Texture2D" uid="uid://bbjknmg65fjqq" path="res://assets/art/backgrounds/snow_highway_sky.png" id="1_c3x6q"]
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_t6yd0"]
 [ext_resource type="Texture2D" uid="uid://da3fpa6cs141p" path="res://assets/art/backgrounds/snow_highway_middle.png" id="2_8picb"]
+[ext_resource type="PackedScene" uid="uid://bgv5p840ijn6m" path="res://scenes/interactables/carriage.tscn" id="4_v63ql"]
+[ext_resource type="Resource" uid="uid://dxoq28yrebm5p" path="res://assets/resources/dialogues/interactables/carriage.dialogue" id="5_mdkwh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fyejy"]
+size = Vector2(104, 77)
 
 [node name="Highway" type="Node2D"]
+position = Vector2(-640, -208)
 
 [node name="Sky" type="Sprite2D" parent="."]
 position = Vector2(664, 72)
@@ -34,3 +40,15 @@ metadata/_edit_lock_ = true
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(336, 224, 992, 224, 992, 144, 304, 144, 304, 112, 1008, 112, 1008, 256, 320, 256, 320, 96, 336, 96)
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Carriage" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("4_v63ql")]
+position = Vector2(560, 160)
+collision = NodePath("CollisionShape2D")
+direction = "down"
+dialogue_resource = ExtResource("5_mdkwh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Carriage"]
+position = Vector2(0, 18)
+shape = SubResource("RectangleShape2D_fyejy")

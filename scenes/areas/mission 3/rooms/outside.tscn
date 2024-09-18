@@ -1,10 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1upkytdmoemx"]
+[gd_scene load_steps=17 format=3 uid="uid://b1upkytdmoemx"]
 
 [ext_resource type="TileSet" uid="uid://dqvce1djursoh" path="res://assets/resources/tile_sets/school.tres" id="1_pqvc5"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_7ctys"]
 [ext_resource type="PackedScene" uid="uid://rhyfuw21g0gl" path="res://scenes/interactables/custom_position_door.tscn" id="3_oe8d8"]
 [ext_resource type="PackedScene" uid="uid://bgv5p840ijn6m" path="res://scenes/interactables/carriage.tscn" id="4_roycd"]
 [ext_resource type="Resource" uid="uid://dxoq28yrebm5p" path="res://assets/resources/dialogues/interactables/carriage.dialogue" id="5_ikfhp"]
+[ext_resource type="PackedScene" uid="uid://0e4cqtrxwquj" path="res://scenes/interactables/dialogue_object.tscn" id="6_nq35w"]
+[ext_resource type="Resource" uid="uid://df3low4uk5m7c" path="res://assets/resources/dialogues/interactables/playground.dialogue" id="7_y70a6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_11iwj"]
 size = Vector2(76, 27)
@@ -17,6 +19,21 @@ size = Vector2(64, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_48bq4"]
 size = Vector2(117, 74.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_goslv"]
+size = Vector2(112, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4a2jd"]
+size = Vector2(128, 72)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6etxc"]
+size = Vector2(256, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dpkcb"]
+size = Vector2(144, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2wjbm"]
+size = Vector2(112, 112)
 
 [node name="Outside" type="Node2D"]
 
@@ -70,13 +87,57 @@ position = Vector2(0, -280)
 shape = SubResource("RectangleShape2D_n72e5")
 
 [node name="Interactables" type="Node2D" parent="."]
+y_sort_enabled = true
 
-[node name="Carriage" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("4_roycd")]
+[node name="Carriage" parent="Interactables" instance=ExtResource("4_roycd")]
 position = Vector2(-224, 128)
-collision = NodePath("")
 direction = "down"
 dialogue_resource = ExtResource("5_ikfhp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Carriage"]
 position = Vector2(0, 21.25)
 shape = SubResource("RectangleShape2D_48bq4")
+
+[node name="Ropes" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("6_nq35w")]
+Collision = NodePath("CollisionShape2D")
+title = "start"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Ropes"]
+position = Vector2(-360, -136)
+shape = SubResource("RectangleShape2D_goslv")
+
+[node name="Playground001" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("6_nq35w")]
+Collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("7_y70a6")
+title = "cant_fit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Playground001"]
+position = Vector2(256, -476)
+shape = SubResource("RectangleShape2D_4a2jd")
+
+[node name="Playground002" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("6_nq35w")]
+Collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("7_y70a6")
+title = "cant_fit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Playground002"]
+position = Vector2(160, -552)
+shape = SubResource("RectangleShape2D_6etxc")
+
+[node name="Swings" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("6_nq35w")]
+Collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("7_y70a6")
+title = "swings"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Swings"]
+position = Vector2(104, -456)
+shape = SubResource("RectangleShape2D_dpkcb")
+
+[node name="Slides" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("6_nq35w")]
+Collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("7_y70a6")
+title = "slide"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Slides"]
+position = Vector2(344, -104)
+shape = SubResource("RectangleShape2D_2wjbm")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bg7ygyklc4oq0"]
+[gd_scene load_steps=20 format=3 uid="uid://bg7ygyklc4oq0"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_tvu47"]
 [ext_resource type="Shader" path="res://scripts/misc/scroll.gdshader" id="1_ux8y6"]
@@ -9,6 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://ddpadqw2efo5l" path="res://assets/art/environments/bed.png" id="6_vxsbm"]
 [ext_resource type="Texture2D" uid="uid://cvwcqs38sh45g" path="res://assets/art/environments/sleeping.png" id="7_dt6dk"]
 [ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="9_y25m5"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="10_2jodl"]
+[ext_resource type="Resource" uid="uid://dmc3jb7dd35co" path="res://assets/resources/items/bread.tres" id="11_dvcmk"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="12_y1f2w"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="13_crpra"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6qv8n"]
 shader = ExtResource("1_ux8y6")
@@ -18,6 +22,18 @@ size = Vector2(32, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c6vuk"]
 size = Vector2(41, 48)
+
+[sub_resource type="Resource" id="Resource_c118t"]
+script = ExtResource("12_y1f2w")
+item = ExtResource("11_dvcmk")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_d0x5e"]
+script = ExtResource("13_crpra")
+items = Array[ExtResource("12_y1f2w")]([SubResource("Resource_c118t")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3x2x"]
+size = Vector2(16, 16)
 
 [node name="House" type="Node2D"]
 y_sort_enabled = true
@@ -50,7 +66,7 @@ layer_2/y_sort_enabled = true
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array(-983004, 393221, 12, -983007, 262149, 12, -851931, 720901, 268435463)
 layer_3/name = "deco"
-layer_3/tile_data = PackedInt32Array(-1179618, 983046, 1, -1114082, 983046, 1, -1179617, 1048582, 1, -1114081, 1048582, 1, -1245154, 983046, 0, -1245153, 1048582, 0)
+layer_3/tile_data = PackedInt32Array(-1179618, 983046, 1, -1114082, 983046, 1, -1179617, 1048582, 1, -1114081, 1048582, 1, -1245154, 983046, 0, -1245153, 1048582, 0, -851938, 655366, 3, -851937, 720902, 3)
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
@@ -72,7 +88,7 @@ shape = SubResource("RectangleShape2D_2586o")
 y_sort_enabled = true
 
 [node name="OldManOMalley" parent="NPCs" instance=ExtResource("5_bimur")]
-position = Vector2(574, -214)
+position = Vector2(464, -257)
 
 [node name="Interactables" type="Node2D" parent="."]
 
@@ -94,4 +110,11 @@ texture = ExtResource("6_vxsbm")
 position = Vector2(-41, -16)
 texture = ExtResource("7_dt6dk")
 
-[node name="Chest" parent="Interactables" instance=ExtResource("9_y25m5")]
+[node name="Bread" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("9_y25m5")]
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("10_2jodl")
+inventory = SubResource("Resource_d0x5e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Bread"]
+position = Vector2(528, -217)
+shape = SubResource("RectangleShape2D_g3x2x")

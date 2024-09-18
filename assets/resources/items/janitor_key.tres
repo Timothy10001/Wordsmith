@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://cr6qewt6m2g7o"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_4wfpe"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_l21k3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wc37"]
+atlas = ExtResource("2_l21k3")
+region = Rect2(160, 176, 16, 16)
+
+[resource]
+script = ExtResource("1_4wfpe")
+name = "Janitor's Key"
+description = "Keys to the Stock Room."
+texture = SubResource("AtlasTexture_8wc37")
+stackable = false
+droppable = false
+type = "accessory"
+target = ""

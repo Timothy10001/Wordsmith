@@ -1,9 +1,0 @@
-~ start
-
-Narrator: Are you sure you want to drop this item?
-- Yes
-	#drop item
-	=> END
-- No
-	=> END
-=> END

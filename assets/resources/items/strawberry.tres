@@ -14,5 +14,5 @@ description = "Sweet and delicious. Removes Status Effects."
 texture = SubResource("AtlasTexture_x2m1b")
 stackable = true
 droppable = true
-type = "status_effect"
+type = "consumable"
 target = "player"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cldmsj5y4488m"]
+[gd_scene load_steps=14 format=3 uid="uid://cldmsj5y4488m"]
 
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_popm6"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_wun82"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://74yxjqqulgwt" path="res://assets/resources/items/shovel.tres" id="5_uqbi4"]
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="6_i1bra"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="7_j3cep"]
+[ext_resource type="PackedScene" uid="uid://0e4cqtrxwquj" path="res://scenes/interactables/dialogue_object.tscn" id="8_i7bcu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2nkl"]
 size = Vector2(16, 16)
@@ -22,6 +23,9 @@ items = Array[ExtResource("6_i1bra")]([SubResource("Resource_hfn5u")])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h4uli"]
 size = Vector2(24, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m1cj1"]
+size = Vector2(16, 16)
 
 [node name="Igloo003" type="Node2D"]
 
@@ -67,3 +71,10 @@ inventory = SubResource("Resource_xufn3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
 position = Vector2(280, -5)
 shape = SubResource("RectangleShape2D_h4uli")
+
+[node name="Sign" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("8_i7bcu")]
+Collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Sign"]
+position = Vector2(232, -24)
+shape = SubResource("RectangleShape2D_m1cj1")

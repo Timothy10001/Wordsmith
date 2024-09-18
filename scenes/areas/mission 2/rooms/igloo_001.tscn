@@ -1,10 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://5pkss2h4wq0w"]
+[gd_scene load_steps=18 format=3 uid="uid://5pkss2h4wq0w"]
 
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_d2ey1"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_7a6wx"]
+[ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="3_tkpvn"]
+[ext_resource type="Resource" uid="uid://ciois588kx51c" path="res://assets/resources/dialogues/interactables/snow_pot.dialogue" id="4_nk8lv"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="5_or40c"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="6_i2dek"]
+[ext_resource type="Texture2D" uid="uid://bcftjmmqh2qyn" path="res://assets/art/environments/chest_01.png" id="6_w4802"]
+[ext_resource type="Resource" uid="uid://wjmn2yecnewn" path="res://assets/resources/items/snowball.tres" id="7_gdryj"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="8_6wuap"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lhi2l"]
 size = Vector2(16, 16)
+
+[sub_resource type="Resource" id="Resource_wdcoe"]
+script = ExtResource("5_or40c")
+items = Array[ExtResource("8_6wuap")]([])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q5opf"]
+size = Vector2(21, 20)
+
+[sub_resource type="Resource" id="Resource_2wmak"]
+script = ExtResource("8_6wuap")
+item = ExtResource("7_gdryj")
+quantity = 6
+
+[sub_resource type="Resource" id="Resource_2luih"]
+script = ExtResource("5_or40c")
+items = Array[ExtResource("8_6wuap")]([SubResource("Resource_2wmak")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hw0t5"]
+size = Vector2(24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2x58q"]
+atlas = ExtResource("6_w4802")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv25c"]
+atlas = ExtResource("6_w4802")
+region = Rect2(16, 16, 16, 16)
 
 [node name="Igloo001" type="Node2D"]
 
@@ -19,7 +53,7 @@ layer_1/tile_data = PackedInt32Array(-262150, 1245184, 0, -196614, 1245184, 0, -
 layer_2/name = "ysort"
 layer_2/y_sort_enabled = true
 layer_2/z_index = 1
-layer_2/tile_data = PackedInt32Array(-196608, 917504, 9, -65531, 851968, 10, 131070, 917504, 8, -196606, 589824, 9)
+layer_2/tile_data = PackedInt32Array(-196608, 917504, 9, -65531, 851968, 10, 131070, 917504, 8)
 layer_3/name = "deco"
 layer_3/tile_data = PackedInt32Array(-262143, 589824, 10, -65535, 589824, 10)
 metadata/_edit_lock_ = true
@@ -38,3 +72,33 @@ openable = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions/ToOutside"]
 position = Vector2(40, 56)
 shape = SubResource("RectangleShape2D_lhi2l")
+
+[node name="Interactables" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="EmptyPot" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("3_tkpvn")]
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("4_nk8lv")
+inventory = SubResource("Resource_wdcoe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/EmptyPot"]
+position = Vector2(8, -36)
+shape = SubResource("RectangleShape2D_q5opf")
+
+[node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision", "opened_texture", "closed_texture") instance=ExtResource("3_tkpvn")]
+position = Vector2(45, -40)
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("6_i2dek")
+inventory = SubResource("Resource_2luih")
+opened_texture = NodePath("Opened")
+closed_texture = NodePath("Closed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_hw0t5")
+
+[node name="Closed" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_2x58q")
+
+[node name="Opened" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_lv25c")

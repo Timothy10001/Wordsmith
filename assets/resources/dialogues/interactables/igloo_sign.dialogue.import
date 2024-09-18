@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://b3g8c28ki0aek"
+path="res://.godot/imported/igloo_sign.dialogue-8b33b7c541b104d583cb32fb8a1dc8be.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/igloo_sign.dialogue"
+dest_files=["res://.godot/imported/igloo_sign.dialogue-8b33b7c541b104d583cb32fb8a1dc8be.tres"]
+
+[params]
+
+defaults=true

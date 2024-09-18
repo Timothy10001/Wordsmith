@@ -14,5 +14,5 @@ description = "Can use to catch someone's attention. Gives Listening status effe
 texture = SubResource("AtlasTexture_8sp30")
 stackable = true
 droppable = true
-type = "status_effect"
+type = "consumable"
 target = "enemy"

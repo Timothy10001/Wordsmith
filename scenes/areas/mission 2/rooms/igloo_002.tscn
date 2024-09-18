@@ -1,16 +1,54 @@
-[gd_scene load_steps=8 format=3 uid="uid://vwlccqobmnw2"]
+[gd_scene load_steps=23 format=3 uid="uid://vwlccqobmnw2"]
 
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_kba3v"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_bvhh0"]
 [ext_resource type="PackedScene" uid="uid://d28b8s4uq8l1c" path="res://scenes/interactables/bed.tscn" id="3_dwlqg"]
 [ext_resource type="Texture2D" uid="uid://ddpadqw2efo5l" path="res://assets/art/environments/bed.png" id="4_dd4si"]
 [ext_resource type="Texture2D" uid="uid://cvwcqs38sh45g" path="res://assets/art/environments/sleeping.png" id="5_8gix5"]
+[ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="6_in5ar"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="7_ns8iy"]
+[ext_resource type="Texture2D" uid="uid://bcftjmmqh2qyn" path="res://assets/art/environments/chest_01.png" id="8_mfqge"]
+[ext_resource type="Resource" uid="uid://chwqn7jrvuxfu" path="res://assets/resources/items/coffee.tres" id="8_y5flb"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="9_44nqj"]
+[ext_resource type="Resource" uid="uid://dmc3jb7dd35co" path="res://assets/resources/items/bread.tres" id="10_5dcek"]
+[ext_resource type="Resource" uid="uid://wjmn2yecnewn" path="res://assets/resources/items/snowball.tres" id="11_e6fy1"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="12_v4v3j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xaccc"]
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ja61c"]
 size = Vector2(48, 41)
+
+[sub_resource type="Resource" id="Resource_g6l33"]
+script = ExtResource("9_44nqj")
+item = ExtResource("8_y5flb")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_qhokr"]
+script = ExtResource("9_44nqj")
+item = ExtResource("10_5dcek")
+quantity = 4
+
+[sub_resource type="Resource" id="Resource_phjpu"]
+script = ExtResource("9_44nqj")
+item = ExtResource("11_e6fy1")
+quantity = 7
+
+[sub_resource type="Resource" id="Resource_fxcgr"]
+script = ExtResource("12_v4v3j")
+items = Array[ExtResource("9_44nqj")]([SubResource("Resource_g6l33"), SubResource("Resource_qhokr"), SubResource("Resource_phjpu")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vxgev"]
+size = Vector2(24, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_roybv"]
+atlas = ExtResource("8_mfqge")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijnej"]
+atlas = ExtResource("8_mfqge")
+region = Rect2(16, 16, 16, 16)
 
 [node name="Igloo002" type="Node2D"]
 
@@ -25,7 +63,7 @@ layer_1/tile_data = PackedInt32Array(-786431, 1245184, 0, -720895, 1245184, 0, -
 layer_2/name = "ysort"
 layer_2/y_sort_enabled = true
 layer_2/z_index = 1
-layer_2/tile_data = PackedInt32Array(-524279, 589824, 9, -458741, 720896, 8, -393205, 851968, 10, -262138, 720896, 8)
+layer_2/tile_data = PackedInt32Array(-458741, 720896, 8, -393205, 851968, 10, -262138, 720896, 8)
 layer_3/name = "deco"
 layer_3/tile_data = PackedInt32Array(-327671, 589824, 8, -327668, 589824, 8)
 metadata/_edit_lock_ = true
@@ -47,6 +85,7 @@ position = Vector2(152, -24)
 shape = SubResource("RectangleShape2D_xaccc")
 
 [node name="Interactables" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="Bed" parent="Interactables" node_paths=PackedStringArray("Collision", "bed_sprite", "sleeping_sprite") instance=ExtResource("3_dwlqg")]
 Collision = NodePath("CollisionShape2D")
@@ -64,3 +103,21 @@ texture = ExtResource("4_dd4si")
 [node name="Sleeping" type="Sprite2D" parent="Interactables/Bed"]
 position = Vector2(112, -96)
 texture = ExtResource("5_8gix5")
+
+[node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision", "opened_texture", "closed_texture") instance=ExtResource("6_in5ar")]
+position = Vector2(154, -121)
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("7_ns8iy")
+inventory = SubResource("Resource_fxcgr")
+opened_texture = NodePath("Opened")
+closed_texture = NodePath("Closed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_vxgev")
+
+[node name="Closed" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_roybv")
+
+[node name="Opened" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_ijnej")
