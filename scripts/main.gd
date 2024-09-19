@@ -4,11 +4,11 @@ extends Node
 #debug
 
 var saved_data = {
-	"area": "mission 1 - outside",
+	"area": "mission 3 - outside",
 	"room": 0,
-	"current mission": 1,
+	"current mission": 3,
 	"tutorial status": "done",
-	"player position": Vector2(-224, -16),
+	"player position": Vector2(0, 0),
 	"direction": "up"
 }
 

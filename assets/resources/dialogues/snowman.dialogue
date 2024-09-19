@@ -1,0 +1,10 @@
+~ start
+set npc_class = "Middle Class"
+
+Snowman: Hello! You must be the Wordsmith.
+Snowman: The curse caused these drivers to not be able to read those signs.
+Snowman: We keep getting run over.
+Snowman: We don't get hurt, but it's takes time for us to rebuild.
+Snowman: Please teach them how to read again.
+
+=> END

@@ -1,5 +1,5 @@
 ~ drop_item
-
+set npc_class = "High Class"
 Narrator: Are you sure you want to drop this item?
 - Yes
 	#drop item
@@ -9,7 +9,7 @@ Narrator: Are you sure you want to drop this item?
 => END
 
 ~ use_item
-
+set npc_class = "High Class"
 Narrator: Are you sure you want to use this item?
 - Yes
 	#use item

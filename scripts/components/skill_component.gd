@@ -47,9 +47,9 @@ func calculate_skill_damage(skill, target):
 	damage = strength_modifier * armor_modifier
 
 #skill_component of USER
-func use_skill(name: String, target, skill_component: SkillComponent, target_instance, _user):
+func use_skill(_name: String, target, skill_component: SkillComponent, target_instance, _user):
 	for skill in skills:
-		if skill.name == name:
+		if skill.name == _name:
 			mana_amount = skill.mana_amount
 			mana_cost = skill.mana_cost
 			

@@ -1,5 +1,5 @@
 ~ start
-
+set npc_class = "Low Class"
 if State.current_mission == 0:
 	if State.tutorial_status == "not done":
 		Dummy: Hello Wordsmith!

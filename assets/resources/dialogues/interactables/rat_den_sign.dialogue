@@ -1,5 +1,5 @@
 ~ start
-
+set npc_class = "Low Class"
 Narrator: "Go in here to be part of the rats."
 
 => END

@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://bmaulr60t86j5"
+path="res://.godot/imported/run_over_snowman.dialogue-1cea4582d9087535f6cf1881f94f72da.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/run_over_snowman.dialogue"
+dest_files=["res://.godot/imported/run_over_snowman.dialogue-1cea4582d9087535f6cf1881f94f72da.tres"]
+
+[params]
+
+defaults=true

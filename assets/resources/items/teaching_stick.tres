@@ -10,7 +10,7 @@ region = Rect2(96, 176, 16, 16)
 [resource]
 script = ExtResource("1_1jgx0")
 name = "Teaching Stick"
-description = "Captures attention. Applies Listening to enemies."
+description = "Captures attention. Applies Silence to enemies."
 texture = SubResource("AtlasTexture_08l0g")
 stackable = true
 droppable = true

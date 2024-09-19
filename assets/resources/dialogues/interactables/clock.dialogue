@@ -1,5 +1,5 @@
 ~ start
-
+set npc_class = "High Class"
 Narrator: It's 8 o' clock.
 
 => END

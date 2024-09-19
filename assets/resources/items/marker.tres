@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://b8ldf5o06v0bv"]
+
+[ext_resource type="Script" path="res://assets/resources/item.gd" id="1_f22m5"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_7buvt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0gj4"]
+atlas = ExtResource("2_7buvt")
+region = Rect2(32, 352, 16, 16)
+
+[resource]
+script = ExtResource("1_f22m5")
+name = "Marker"
+description = "Write down what you teach. Removes 25 IP"
+texture = SubResource("AtlasTexture_p0gj4")
+stackable = true
+droppable = true
+type = "consumable"
+target = "enemy"

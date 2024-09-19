@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://ry6lfrb1n18q"
+path="res://.godot/imported/cool_snowman.dialogue-9b594d7ef28973b7cb06f06a5d8ee273.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/cool_snowman.dialogue"
+dest_files=["res://.godot/imported/cool_snowman.dialogue-9b594d7ef28973b7cb06f06a5d8ee273.tres"]
+
+[params]
+
+defaults=true

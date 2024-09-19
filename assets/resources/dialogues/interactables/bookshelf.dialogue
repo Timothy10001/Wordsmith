@@ -1,5 +1,5 @@
 ~ tavern_bookshelf_1
-
+set npc_class = "High Class"
 Narrator: You open a book titled: "Anyone Can Cook: by Chef Gusteau"
 Narrator: You find a bookmark on Page 14.
 Narrator: The text inspires you to cook.
@@ -7,13 +7,13 @@ Narrator: The text inspires you to cook.
 => END
 
 ~ tavern_bookshelf_2
-
+set npc_class = "High Class"
 Narrator: It's a bunch of recipe books for different dishes.
 
 => END
 
 ~ tavern_bookshelf_3
-
+set npc_class = "High Class"
 Narrator: There's books for inspiring chefs.
 
 => END

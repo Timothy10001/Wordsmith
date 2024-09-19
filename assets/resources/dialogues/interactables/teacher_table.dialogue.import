@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://cmaocs3e15yr1"
+path="res://.godot/imported/teacher_table.dialogue-6fc438e73ddf381e6db3c27ed4a0f3ff.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/teacher_table.dialogue"
+dest_files=["res://.godot/imported/teacher_table.dialogue-6fc438e73ddf381e6db3c27ed4a0f3ff.tres"]
+
+[params]
+
+defaults=true

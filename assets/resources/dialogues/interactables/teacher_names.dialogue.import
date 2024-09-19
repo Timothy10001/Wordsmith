@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://orqv1tiwer0q"
+path="res://.godot/imported/teacher_names.dialogue-5f6ca3211eb1714d54f548ba07dc91f2.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/teacher_names.dialogue"
+dest_files=["res://.godot/imported/teacher_names.dialogue-5f6ca3211eb1714d54f548ba07dc91f2.tres"]
+
+[params]
+
+defaults=true

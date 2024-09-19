@@ -1,5 +1,5 @@
 ~ start
-
+set npc_class = "High Class"
 Narrator: The books are all about jokes and puns.
 
 => END

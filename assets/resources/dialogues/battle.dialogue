@@ -1,19 +1,24 @@
 ~ use_skill
+set npc_class = "High Class"
 Narrator: {{Global.skill_description}}
 => END
 
 ~ use_item
+set npc_class = "High Class"
 Narrator: Used item
 => END
 
 ~ no_energy
+set npc_class = "High Class"
 Narrator: You have no energy!
 => END
 
 ~ win
+set npc_class = "High Class"
 Narrator: You have won!
 => END
 
 ~ lose
+set npc_class = "High Class"
 Narrator: You have lost!
 => END

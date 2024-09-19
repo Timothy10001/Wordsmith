@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://balblf8n8680y"
+path="res://.godot/imported/janitor.dialogue-131ac4c24ee09447dbf577b6e6085dfd.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/janitor.dialogue"
+dest_files=["res://.godot/imported/janitor.dialogue-131ac4c24ee09447dbf577b6e6085dfd.tres"]
+
+[params]
+
+defaults=true

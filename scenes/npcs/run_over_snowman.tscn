@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://bun6wdutkeup7"]
+
+[ext_resource type="Script" path="res://scripts/npcs/run_over_snowman.gd" id="1_xcyto"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_khpfp"]
+[ext_resource type="PackedScene" uid="uid://bkbkxdafjpdmr" path="res://scenes/npc.tscn" id="3_0t2at"]
+[ext_resource type="Resource" uid="uid://bmaulr60t86j5" path="res://assets/resources/dialogues/run_over_snowman.dialogue" id="4_88y4n"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7iswl"]
+size = Vector2(36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5loj"]
+atlas = ExtResource("2_khpfp")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgvv3"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_te6il"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wt4r6"]
+size = Vector2(36, 36)
+
+[node name="RunOverSnowman" type="CharacterBody2D"]
+script = ExtResource("1_xcyto")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_7iswl")
+
+[node name="MarginContainer" type="MarginContainer" parent="Sprite2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -18.0
+offset_right = -18.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Sprite2D/MarginContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_u5loj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_qgvv3")
+
+[node name="NPC" parent="." node_paths=PackedStringArray("touch_screen_button", "collision_shape") instance=ExtResource("3_0t2at")]
+z_index = 1
+y_sort_enabled = true
+dialogue_resource = ExtResource("4_88y4n")
+touch_screen_button = NodePath("TouchScreenButton")
+collision_shape = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC"]
+shape = SubResource("RectangleShape2D_te6il")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="NPC"]
+shape = SubResource("RectangleShape2D_wt4r6")
+
+[connection signal="player_entered" from="NPC" to="." method="_on_npc_player_entered"]
+[connection signal="player_left" from="NPC" to="." method="_on_npc_player_left"]

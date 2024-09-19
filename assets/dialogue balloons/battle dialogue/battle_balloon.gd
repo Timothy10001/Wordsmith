@@ -65,18 +65,19 @@ var dialogue_line: DialogueLine:
 		match character_class:
 			"King":
 				font_path = "res://assets/fonts/king.ttf"
-				font_size = 42
+				font_size = 48
 			"High Class":
 				font_path = "res://assets/fonts/normal.ttf"
-				font_size = 42
+				font_size = 32
 			"Middle Class":
 				font_path = "res://assets/fonts/handwritten.ttf"
-				font_size = 42
+				font_size = 48
 			"Low Class":
 				font_path = "res://assets/fonts/bad_handwritten.ttf"
-				font_size = 80
+				font_size = 40
 			_:
 				font_path = "res://assets/fonts/normal.ttf" 
+				font_size = 32
 		
 		dialogue_label.add_theme_font_override("normal_font", load(font_path))
 		dialogue_label.add_theme_font_size_override("normal_font_size", font_size)

@@ -74,7 +74,7 @@ var dialogue_line: DialogueLine:
 				font_size = 48
 			"Low Class":
 				font_path = "res://assets/fonts/bad_handwritten.ttf"
-				font_size = 86
+				font_size = 40
 			_:
 				font_path = "res://assets/fonts/normal.ttf"
 				font_size = 32

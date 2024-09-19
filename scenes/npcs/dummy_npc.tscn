@@ -50,7 +50,6 @@ position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_jjvlb")
 
 [node name="NPC" parent="." node_paths=PackedStringArray("touch_screen_button", "collision_shape") instance=ExtResource("4_pwqq3")]
-visible = false
 dialogue_resource = ExtResource("5_dd2p3")
 touch_screen_button = NodePath("TouchScreenButton")
 collision_shape = NodePath("CollisionShape2D")

@@ -1,5 +1,5 @@
 ~ start
-
+set npc_class = "High Class"
 Narrator: The door is broken.
 Narrator: You cannot open it.
 

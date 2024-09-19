@@ -1,5 +1,5 @@
 ~ start
-
-Narrator: Welcome to my Humble Abode. - Snowguy
+set npc_class = "Low Class"
+Narrator: Welcome to my Humble Abode. - Snowman 3
 
 => END

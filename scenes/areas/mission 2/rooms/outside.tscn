@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://tlxsuemt0nj1"]
+[gd_scene load_steps=33 format=3 uid="uid://tlxsuemt0nj1"]
 
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_k6446"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_hgk1l"]
@@ -7,6 +7,16 @@
 [ext_resource type="Resource" uid="uid://b38y24a1immlq" path="res://assets/resources/dialogues/interactables/snowy_igloo.dialogue" id="5_udr1d"]
 [ext_resource type="PackedScene" uid="uid://bgv5p840ijn6m" path="res://scenes/interactables/carriage.tscn" id="6_px0pe"]
 [ext_resource type="Resource" uid="uid://dxoq28yrebm5p" path="res://assets/resources/dialogues/interactables/carriage.dialogue" id="7_mqr4v"]
+[ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="8_7d5w8"]
+[ext_resource type="PackedScene" uid="uid://bun6wdutkeup7" path="res://scenes/npcs/run_over_snowman.tscn" id="8_mo7t7"]
+[ext_resource type="PackedScene" uid="uid://copiosootwu56" path="res://scenes/npcs/snowman.tscn" id="9_4nv73"]
+[ext_resource type="Resource" uid="uid://bt5wg4f3jk8xb" path="res://assets/resources/dialogues/interactables/chest.dialogue" id="9_j6oud"]
+[ext_resource type="Resource" uid="uid://wjmn2yecnewn" path="res://assets/resources/items/snowball.tres" id="9_jevm2"]
+[ext_resource type="Texture2D" uid="uid://bcftjmmqh2qyn" path="res://assets/art/environments/chest_01.png" id="9_n3f8q"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="10_ahjew"]
+[ext_resource type="PackedScene" uid="uid://c40ugfy6eqhrv" path="res://scenes/npcs/cool_snowman.tscn" id="10_dtc08"]
+[ext_resource type="Resource" uid="uid://entqnkt37a5b" path="res://assets/resources/items/strawberry.tres" id="11_f6pqq"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="12_ygxvj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_of7r2"]
 size = Vector2(76.5, 29)
@@ -34,6 +44,31 @@ size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lttsx"]
 size = Vector2(117, 74.5)
+
+[sub_resource type="Resource" id="Resource_0dmw5"]
+script = ExtResource("10_ahjew")
+item = ExtResource("9_jevm2")
+quantity = 5
+
+[sub_resource type="Resource" id="Resource_l8yw3"]
+script = ExtResource("10_ahjew")
+item = ExtResource("11_f6pqq")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_o7cno"]
+script = ExtResource("12_ygxvj")
+items = Array[ExtResource("10_ahjew")]([SubResource("Resource_0dmw5"), SubResource("Resource_l8yw3")])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jnbon"]
+size = Vector2(26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydaht"]
+atlas = ExtResource("9_n3f8q")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb87g"]
+atlas = ExtResource("9_n3f8q")
+region = Rect2(16, 16, 16, 16)
 
 [node name="Outside" type="Node2D"]
 
@@ -139,12 +174,39 @@ shape = SubResource("RectangleShape2D_kn8c0")
 
 [node name="Interactables" type="Node2D" parent="."]
 
-[node name="Carriage" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("6_px0pe")]
+[node name="Carriage" parent="Interactables" instance=ExtResource("6_px0pe")]
 position = Vector2(-224, 80)
-collision = NodePath("")
 direction = "down"
 dialogue_resource = ExtResource("7_mqr4v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Carriage"]
 position = Vector2(0, 21.25)
 shape = SubResource("RectangleShape2D_lttsx")
+
+[node name="Chest" parent="Interactables" node_paths=PackedStringArray("opened_texture", "closed_texture") instance=ExtResource("8_7d5w8")]
+position = Vector2(-160, -384)
+dialogue_resource = ExtResource("9_j6oud")
+inventory = SubResource("Resource_o7cno")
+opened_texture = NodePath("Opened")
+closed_texture = NodePath("Closed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
+shape = SubResource("RectangleShape2D_jnbon")
+
+[node name="Closed" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_ydaht")
+
+[node name="Opened" type="Sprite2D" parent="Interactables/Chest"]
+texture = SubResource("AtlasTexture_lb87g")
+
+[node name="NPCs" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="RunOverSnowman" parent="NPCs" instance=ExtResource("8_mo7t7")]
+position = Vector2(112, 192)
+
+[node name="Snowman" parent="NPCs" instance=ExtResource("9_4nv73")]
+position = Vector2(-64, 80)
+
+[node name="CoolSnowman" parent="NPCs" instance=ExtResource("10_dtc08")]
+position = Vector2(96, -48)
