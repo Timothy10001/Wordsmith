@@ -5,10 +5,11 @@
 [resource]
 script = ExtResource("1_app78")
 name = "Wordsmith"
-health = 100
+health = 20
 max_health = 100
 strength = 3.0
 speed = 10
 armor = 10
 mana = 100
+max_mana = 100
 immortal = false

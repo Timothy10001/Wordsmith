@@ -22,6 +22,7 @@ offset_right = 16.0
 offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
 size_flags_horizontal = 3
 texture = ExtResource("1_3k7o3")
 expand_mode = 3

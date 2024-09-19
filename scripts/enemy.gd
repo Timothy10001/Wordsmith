@@ -117,7 +117,7 @@ func _on_battle_area_body_entered(body):
 	if body is Player:
 		pass
 		#print("battle on")
-		#Global.start_battle.emit("res://scenes/player.tscn", )
+		Global.start_battle.emit(["res://scenes/player.tscn"], [enemy_battle_path], "res://assets/art/backgrounds/tutorial.png", "battle")
 
 
 

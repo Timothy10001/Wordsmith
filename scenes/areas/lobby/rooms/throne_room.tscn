@@ -214,6 +214,7 @@ y_sort_enabled = true
 [node name="Rat" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("6_rd0be")]
 position = Vector2(-192, -16)
 enemy_name = "Rat"
+enemy_battle_path = "res://scenes/enemies/rat.tscn"
 sprite = NodePath("AnimatedSprite2D")
 detection_area = 96.0
 battle_area = 32.0
@@ -227,24 +228,5 @@ sprite_frames = SubResource("SpriteFrames_4amxb")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat"]
-position = Vector2(1, 4.5)
-shape = SubResource("RectangleShape2D_2d45n")
-
-[node name="Rat2" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("6_rd0be")]
-position = Vector2(48, -144)
-enemy_name = "Rat"
-sprite = NodePath("../Rat/AnimatedSprite2D")
-detection_area = 96.0
-battle_area = 32.0
-enemy_collision = NodePath("../Rat/CollisionShape2D")
-speed = 75.0
-chases = true
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat2"]
-scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_4amxb")
-animation = &"idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat2"]
 position = Vector2(1, 4.5)
 shape = SubResource("RectangleShape2D_2d45n")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=2 format=3 uid="uid://bxirb0tchjmyo"]
+
+[ext_resource type="Script" path="res://assets/resources/enemy.gd" id="1_xhaj3"]
+
+[resource]
+script = ExtResource("1_xhaj3")
+name = "Rat"
+health = 150
+strength = 10.0
+speed = 7
+armor = 5
+immortal = false

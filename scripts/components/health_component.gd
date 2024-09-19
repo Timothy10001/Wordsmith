@@ -12,8 +12,12 @@ var health : int
 
 
 func _ready():
-	MAX_HEALTH = get_parent().CharacterResource.health
-	health = MAX_HEALTH
+	if get_parent().CharacterResource.name == "Wordsmith":
+		MAX_HEALTH = get_parent().CharacterResource.max_health
+		health = get_parent().CharacterResource.health
+	else:
+		MAX_HEALTH = get_parent().CharacterResource.health
+		health = MAX_HEALTH
 	health = clamp(health, 0, MAX_HEALTH)
 	immortal = get_parent().CharacterResource.immortal
 	DamageIndicator = get_parent().get_node("DamageIndicator")

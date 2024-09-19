@@ -75,4 +75,4 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 			else:
 				calculate_heal(skill)
 		else:
-			print("No such skill")
+			pass

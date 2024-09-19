@@ -83,7 +83,8 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 @onready var MainContainer = $VBoxContainer2/BottomContainer/MainContainer
 @onready var CharacterContainer = $VBoxContainer2/BottomContainer/MainContainer/CharacterContainer
 @onready var SkillsContainer = $VBoxContainer2/BottomContainer/MainContainer/SkillsContainer
-@onready var ItemGrid = $VBoxContainer2/BottomContainer/MainContainer/MarginContainer/ScrollContainer/ItemGrid
+@onready var ItemGrid = $VBoxContainer2/BottomContainer/MainContainer/ItemContainer/ScrollContainer/ItemGrid
+@onready var ItemContainer = $VBoxContainer2/BottomContainer/MainContainer/ItemContainer
 
 #left container has teach, skills, items, and guard
 @onready var LeftContainer = $VBoxContainer2/BottomContainer/LeftContainer
@@ -190,9 +191,10 @@ func _process(_delta):
 					player_count += 1
 				if unit["type"] == "Enemy":
 					enemy_count += 1
+			print("Player Count: " + str(player_count))
 			if player_count == 0:
 				battle_state = STATE.LOSE
-			if enemy_count == 0:
+			elif enemy_count == 0:
 				battle_state = STATE.WIN
 			else:
 				battle_state = STATE.END_TURN
@@ -216,6 +218,7 @@ func _process(_delta):
 			battle_state = null
 		STATE.LOSE:
 			#enter game over
+			print("lost")
 			if !end_battle_emitted:
 				end_battle_emitted = true
 				Global.end_battle.emit("Lose", battle_type)
@@ -256,6 +259,7 @@ func show_default_container():
 	MainContainer.visible = true
 	CharacterContainer.visible = true
 	SkillsContainer.visible = false
+	ItemContainer.visible = false
 	LeftContainer.visible = true
 	RightContainer.visible = false
 	RightButtonContainer.visible = false
@@ -477,6 +481,7 @@ func show_skills():
 	LeftContainer.visible = false
 	CharacterContainer.visible = false
 	SkillsContainer.visible = true
+	ItemContainer.visible = false
 	RightContainer.visible = true
 	RightButtonContainer.visible = true
 	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = false
@@ -485,6 +490,7 @@ func show_skills():
 func show_items():
 	LeftContainer.visible = false
 	CharacterContainer.visible = false
+	ItemContainer.visible = true
 	ItemGrid.visible = true
 	RightContainer.visible = true
 	RightButtonContainer.visible = true

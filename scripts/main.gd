@@ -242,6 +242,7 @@ func _on_end_battle(state, _type: String):
 		var balloon = BATTLE_BALLOON.instantiate()
 		add_child(balloon)
 		balloon.start(dialogue_resource, "lose")
+		player_instance.CharacterResource.health = int(player_instance.CharacterResource.max_health / 2)
 	
 	await Global.dialogue_ended
 	add_child(transition_instance)
@@ -268,6 +269,7 @@ func _on_start_interactable_dialogue(_dialogue_resource: DialogueResource, title
 	var balloon = BALLOON.instantiate()
 	add_child(balloon)
 	balloon.start(_dialogue_resource, title)
+
 
 func _on_start_sleep():
 	player_instance.visible = false

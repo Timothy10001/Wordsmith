@@ -1,0 +1,56 @@
+[gd_scene load_steps=11 format=3 uid="uid://bcge8way148he"]
+
+[ext_resource type="Texture2D" uid="uid://cpxkx2qd2rh17" path="res://assets/art/characters/enemy/rat_sprite.png" id="1_cgdcl"]
+[ext_resource type="Script" path="res://scripts/enemies/rat.gd" id="2_5cyb6"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="2_y5eu8"]
+[ext_resource type="Resource" uid="uid://bxirb0tchjmyo" path="res://assets/resources/enemies/rat/rat_stats.tres" id="3_4bgx3"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="3_ibtvx"]
+[ext_resource type="PackedScene" uid="uid://ccgruou7ckvwh" path="res://scenes/components/status_effect_component.tscn" id="4_b5ojp"]
+[ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="5_ayt3v"]
+[ext_resource type="Resource" uid="uid://b58804xtbmubu" path="res://assets/resources/enemies/rat/skills/loud_squeak.tres" id="6_fbwq0"]
+[ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="6_p2400"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfmw6"]
+atlas = ExtResource("1_cgdcl")
+region = Rect2(0, 0, 48, 48)
+
+[node name="Rat" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.75, 1.75)
+texture = SubResource("AtlasTexture_yfmw6")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("2_5cyb6")
+CharacterResource = ExtResource("3_4bgx3")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_y5eu8")]
+
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component", "status_effect_component") instance=ExtResource("3_ibtvx")]
+health_component = NodePath("../HealthComponent")
+status_effect_component = NodePath("../StatusEffectComponent")
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("6_fbwq0")])
+user = ExtResource("3_4bgx3")
+
+[node name="StatusEffectComponent" parent="." instance=ExtResource("4_b5ojp")]
+
+[node name="SpeedComponent" parent="." instance=ExtResource("5_ayt3v")]
+
+[node name="DamageIndicator" parent="." instance=ExtResource("6_p2400")]
