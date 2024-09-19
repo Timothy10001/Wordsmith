@@ -21,6 +21,8 @@ enum STATE {
 var enemy_state = STATE.IDLE
 var direction = Vector2.DOWN
 var player = null
+var area_entered: bool = false
+
 
 func _ready():
 	randomize()
@@ -82,13 +84,22 @@ func randomize_array(array: Array):
 func _on_detection_area_body_entered(body):
 	if body is Player:
 		player = body
-		if chases:
+		if chases and not area_entered:
 			enemy_state = STATE.CHASE
 
 func _on_detection_area_body_exited(body):
 	if body is Player:
 		player = null
 		enemy_state = STATE.IDLE
+
+func _on_detection_area_area_entered(area):
+	if area.name == "DetectionArea":
+		area_entered = true
+		enemy_state = STATE.IDLE
+
+func _on_detection_area_area_exited(area):
+	if area.name == "DetectionArea":
+		area_entered = false
 
 func _on_timer_timeout():
 	if enemy_state != STATE.CHASE:
@@ -104,5 +115,12 @@ func _on_end_battle(state, _type: String):
 
 func _on_battle_area_body_entered(body):
 	if body is Player:
-		print("battle on")
+		pass
+		#print("battle on")
 		#Global.start_battle.emit("res://scenes/player.tscn", )
+
+
+
+
+
+
