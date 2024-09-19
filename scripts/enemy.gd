@@ -8,11 +8,13 @@ enum STATE {
 }
 
 @export var enemy_name: String
-@export var enemy_battle_scene: PackedScene
+@export var enemy_battle_path: String
 @export var sprite: AnimatedSprite2D
 @export var detection_area: float = 0
+@export var battle_area: float = 0
 @export var enemy_collision: CollisionShape2D
 @export var speed: float
+@export var chases: bool
 
 @onready var timer = $Timer
 
@@ -23,6 +25,7 @@ var player = null
 func _ready():
 	randomize()
 	$DetectionArea/CollisionShape2D.shape.radius = detection_area
+	$BattleArea/CollisionShape2D.shape.radius = battle_area
 	Global.end_battle.connect(_on_end_battle)
 
 
@@ -79,7 +82,8 @@ func randomize_array(array: Array):
 func _on_detection_area_body_entered(body):
 	if body is Player:
 		player = body
-		enemy_state = STATE.CHASE
+		if chases:
+			enemy_state = STATE.CHASE
 
 func _on_detection_area_body_exited(body):
 	if body is Player:
@@ -88,7 +92,7 @@ func _on_detection_area_body_exited(body):
 
 func _on_timer_timeout():
 	if enemy_state != STATE.CHASE:
-		timer.wait_time = randomize_array([0.5, 1.0, 1.5])
+		timer.wait_time = randomize_array([0.5, 0.75, 1.0])
 		enemy_state = randomize_array([STATE.IDLE, STATE.CHOOSE_DIRECTION, STATE.MOVE])
 
 func _on_end_battle(state, _type: String):
@@ -98,4 +102,7 @@ func _on_end_battle(state, _type: String):
 		pass
 
 
-
+func _on_battle_area_body_entered(body):
+	if body is Player:
+		print("battle on")
+		#Global.start_battle.emit("res://scenes/player.tscn", )

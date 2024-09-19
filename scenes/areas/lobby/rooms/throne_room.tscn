@@ -148,7 +148,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2d45n"]
-size = Vector2(32, 32)
+size = Vector2(24, 25)
 
 [node name="Throne Room" type="Node2D"]
 y_sort_enabled = true
@@ -216,13 +216,16 @@ position = Vector2(-192, -16)
 enemy_name = "Rat"
 sprite = NodePath("AnimatedSprite2D")
 detection_area = 96.0
+battle_area = 32.0
 enemy_collision = NodePath("CollisionShape2D")
 speed = 75.0
+chases = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat"]
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_4amxb")
-animation = &"run_up"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat"]
-position = Vector2(0, 7)
+position = Vector2(1, 4.5)
 shape = SubResource("RectangleShape2D_2d45n")
