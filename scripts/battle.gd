@@ -105,7 +105,7 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 @onready var PaperOverlay = $SkillCheck/PaperOverlay
 @onready var SkillIllustration = $SkillCheck/PaperOverlay/SkillIllustration
 @onready var MicButton = $SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer/MicButton
-#@onready var capture_stream_to_text: CaptureStreamToText = $CaptureStreamToText
+
 
 
 #enemy data
@@ -659,16 +659,6 @@ func _on_select_pressed(button):
 var completed_text := ""
 var partial_text := ""
 
-
-"""
-func _on_capture_stream_to_text_transcribed_msg(is_partial, new_text):
-	if is_partial == true:
-		completed_text += new_text
-		partial_text = ""
-	else:
-		if new_text != "":
-			partial_text = new_text
-"""
 
 
 func _on_mic_button_button_up():

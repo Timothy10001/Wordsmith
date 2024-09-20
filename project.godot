@@ -41,7 +41,7 @@ run/main_run_args="--rendering-driver opengl3 --gpu-validation --gpu-abort"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_whisper/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 [input]
 
