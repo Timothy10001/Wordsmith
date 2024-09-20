@@ -630,14 +630,17 @@ func _on_select_pressed(button):
 #SPEECH TO TEXT
 
 var current_word: String
-@onready var CurrentWord = $SkillCheck/PaperOverlay/CurrentWord
+@onready var CurrentWord = $SkillCheck/PaperOverlay/WordContainer/CurrentWord
 @onready var ProcessingLabel = $SkillCheck/MarginContainer
-
+@onready var CurrentSentence = $SkillCheck/PaperOverlay/WordContainer/CurrentSentence
 
 #skill check
 func _on_start_skill_check():
 	SkillCheck.visible = true
 	TryAgain.visible = false
+	SkillIllustration.visible = false
+	CurrentSentence.visible = false
+	CurrentWord.visible = false
 	
 	if Global.TTS_available:
 		ReadButton.visible = true
@@ -655,12 +658,35 @@ func _on_start_skill_check():
 		"Flash Cards":
 			random_index = randi_range(0, SkillCheckWords.flash_cards["words"].size() - 1)
 			current_word = SkillCheckWords.flash_cards["words"][random_index]
+			CurrentWord.size_flags_horizontal = SIZE_SHRINK_CENTER
+			CurrentWord.size_flags_vertical = SIZE_SHRINK_CENTER
 			CurrentWord.text = current_word
-			print(current_word)
+			CurrentWord.visible = true
 		"Identify":
-			pass
+			PaperOverlay.texture = null
+			random_index = randi_range(0, SkillCheckWords.identify["words"].size() - 1)
+			current_word = SkillCheckWords.flash_cards["words"][random_index]
+			CurrentWord.size_flags_horizontal = SIZE_SHRINK_CENTER
+			CurrentWord.size_flags_vertical = SIZE_SHRINK_END
+			CurrentWord.text = blank_text(current_word)
+			CurrentWord.visible = true
 		"Story Time":
-			pass
+			PaperOverlay.texture = null
+			random_index = randi_range(0, SkillCheckWords.story_time["words"].size() - 1)
+			current_word = SkillCheckWords.story_time["words"][random_index]
+			CurrentSentence.text = SkillCheckWords.story_time["sentences"][random_index]
+			CurrentSentence.visible = true
+			SkillIllustration.texture = load(SkillCheckWords.story_time["illustration"][random_index])
+			SkillIllustration.visible = true
+	
+	print(current_word)
+
+
+func blank_text(text: String):
+	var result = ""
+	for i in text.length():
+		result += "_ "
+	return result
 
 
 func _on_end_skill_check():
