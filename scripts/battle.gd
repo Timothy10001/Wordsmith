@@ -670,6 +670,8 @@ func _on_start_skill_check():
 			CurrentWord.size_flags_vertical = SIZE_SHRINK_END
 			CurrentWord.text = blank_text(current_word)
 			CurrentWord.visible = true
+			SkillIllustration.texture = load(SkillCheckWords.identify["illustration"][random_index])
+			SkillIllustration.visible = true
 		"Story Time":
 			PaperOverlay.texture = null
 			random_index = randi_range(0, SkillCheckWords.story_time["words"].size() - 1)
