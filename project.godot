@@ -16,8 +16,8 @@ config/features=PackedStringArray("4.2", "Mobile")
 
 [audio]
 
+general/text_to_speech=true
 driver/enable_input=true
-driver/mix_rate=16000
 
 [autoload]
 

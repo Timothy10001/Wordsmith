@@ -60,7 +60,7 @@ var is_skill_check_required: bool
 #AUDIO shit
 
 var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
-@onready var MicPlayer: AudioStreamPlayer = $SkillCheck/MicPlayer
+
 
 
 #random list of backgrounds
@@ -105,8 +105,8 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 @onready var PaperOverlay = $SkillCheck/PaperOverlay
 @onready var SkillIllustration = $SkillCheck/PaperOverlay/SkillIllustration
 @onready var MicButton = $SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer/MicButton
-
-
+@onready var ReadButton = $SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer/ReadButton
+@onready var SkipButton = $SkillCheck/PaperOverlay/Panel/MarginContainer/SkipButton
 
 #enemy data
 @onready var EnemyName = $VBoxContainer/HBoxContainer/EnemyPanel/VBoxContainer/EnemyName
@@ -117,8 +117,6 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 func _ready():
 	connect_signals()
 	dialogue_resource = load("res://assets/resources/dialogues/battle.dialogue")
-	MicPlayer.stop()
-	#capture_stream_to_text.recording = false
 
 # ~~~~~~~~~~~~~~~~~~~~~
 
@@ -129,9 +127,17 @@ func connect_signals():
 	Global.end_skill_check.connect(self._on_end_skill_check)
 	inventory_data.connect("inventory_interacted", _on_inventory_interacted)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(_delta):
 	#manages states
+	if DisplayServer.tts_is_speaking():
+		MicButton.disabled = true
+		SkipButton.disabled = true
+		ReadButton.disabled = true
+	else:
+		MicButton.disabled = false
+		SkipButton.disabled = false
+		ReadButton.disabled = false
 	match(battle_state):
 		STATE.INIT:
 			#initialize battle values and progress bars
@@ -239,20 +245,7 @@ func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _
 	enemies.append_array(_enemies)
 	background.texture = load(_background_texture_path)
 	battle_type = _type
-	
-"""
-var is_debug_data_set := false
-# FOR DEBUGGING
-func set_debug_data():
-	if is_debug_data_set == true:
-		pass
-	else:
-		party.append_array([load("res://scenes/player.tscn")])
-		enemies.append_array([load("res://scenes/enemies/dummy.tscn")])
-		background.texture = load("res://assets/art/backgrounds/generic.png")
-		battle_type = "tutorial"
-		is_debug_data_set = true
-"""
+
 
 
 func show_default_container():
@@ -423,25 +416,6 @@ func check_if_selected_unit_is_dead():
 	if !is_instance_valid(selected_unit["instance"]):
 		battle_state = STATE.CHECK_FINISH
 		
-
-
-#skill check
-func _on_start_skill_check():
-	SkillCheck.visible = true
-	PaperOverlay.texture = load(paper_overlays.pick_random())
-	# ADD SKILL ILLUSTRATION AND SKILL WORD
-	# ADD TIMER TO REMIND PLAYER TO START READING
-	match current_action:
-		"Flash Cards":
-			pass
-		"Identify":
-			pass
-		"Story Time":
-			pass
-
-
-func _on_end_skill_check():
-	SkillCheck.visible = false
 
 
 func check_mana_cost():
@@ -625,7 +599,6 @@ func _on_flash_cards_pressed():
 	is_skill_check_required = true
 	
 
-
 func _on_identify_pressed():
 	show_end_turn()
 	current_action = "Identify"
@@ -656,34 +629,97 @@ func _on_select_pressed(button):
 
 #SPEECH TO TEXT
 
+var current_word: String
+@onready var CurrentWord = $SkillCheck/PaperOverlay/CurrentWord
+@onready var ProcessingLabel = $SkillCheck/MarginContainer
+
+
+#skill check
+func _on_start_skill_check():
+	SkillCheck.visible = true
+	TryAgain.visible = false
+	
+	if Global.TTS_available:
+		ReadButton.visible = true
+	else:
+		ReadButton.visible = false
+	
+	ProcessingLabel.visible = false
+	PaperOverlay.texture = load(paper_overlays.pick_random())
+	
+	randomize()
+	var random_index
+	
+	# ADD SKILL ILLUSTRATION AND SKILL WORD
+	match current_action:
+		"Flash Cards":
+			random_index = randi_range(0, SkillCheckWords.flash_cards["words"].size() - 1)
+			current_word = SkillCheckWords.flash_cards["words"][random_index]
+			CurrentWord.text = current_word
+			print(current_word)
+		"Identify":
+			pass
+		"Story Time":
+			pass
+
+
+func _on_end_skill_check():
+	SkillCheck.visible = false
+	ProcessingLabel.visible = false
+
 var completed_text := ""
-var partial_text := ""
 
 
+@onready var speech_to_text: SpeechToText = $SpeechToText
 
 func _on_mic_button_button_up():
-	await get_tree().create_timer(2.0).timeout
-	#capture_stream_to_text.recording = false
+	MicButton.disabled = true
+	await get_tree().create_timer(1.5).timeout
+	ProcessingLabel.visible = true
+	animation_player.play("processing")
+	speech_to_text.stop_recording()
 	print("Timer Stopped!")
-	MicPlayer.stop()
-	print("Completed: " + completed_text)
-	print("Partial: " + partial_text)
-	completed_text.to_lower()
-	partial_text.to_lower()
+	await speech_to_text.STT_response_generated
+	check_if_skill_check_passed()
 
 
 func _on_mic_button_button_down():
 	completed_text = ""
-	partial_text = ""
-	#capture_stream_to_text.recording = true
-	MicPlayer.play()
-
-
-
-func _on_read_button_pressed():
-	pass # Replace with function body.
+	speech_to_text.start_recording()
+	SkipButton.disabled = true
+	ReadButton.disabled = true
+	TryAgain.visible = false
 
 
 func _on_skip_button_pressed():
 	Global.skill_check_passed = false
 	Global.end_skill_check.emit()
+
+func _on_speech_to_text_stt_response_generated(response):
+	completed_text = response
+
+var try_again_text = ["Please try again.", "Try again, you can do it!", "You can do it one more time!", "Try again, you got this!"]
+
+func check_if_skill_check_passed():
+	MicButton.disabled = false
+	SkipButton.disabled = false
+	ReadButton.disabled = false
+	
+	ProcessingLabel.visible = false
+	animation_player.stop()
+	print("Completed Text: " + str(completed_text))
+	if current_word in completed_text or current_word.to_lower() in completed_text:
+		Global.skill_check_passed = true
+		Global.end_skill_check.emit()
+	else:
+		TryAgain.text = try_again_text.pick_random()
+		TryAgain.visible = true
+
+@onready var TryAgain = $SkillCheck/MarginContainer/TryAgain
+
+func _on_read_button_pressed():
+	TryAgain.visible = false
+	DisplayServer.tts_speak(current_word, Global.Voices[Global.VoiceID]["id"])
+
+# ANIMATION STUFF
+@onready var animation_player = $AnimationPlayer

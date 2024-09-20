@@ -101,7 +101,10 @@ func start() -> void:
 	Global.enter_new_area.emit(State.current_area, State.current_room)
 	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
 	
-	
+	if Global.Voices:
+		Global.TTS_available = true
+	else:
+		Global.TTS_available = false
 	#Add them to the scene already but remove their visibility
 	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").visible = false
 	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").process_mode = Node.PROCESS_MODE_DISABLED

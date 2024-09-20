@@ -56,7 +56,9 @@ var skill_check_passed: bool = false
 
 var in_battle: bool = false
 
-
+var Voices: Array[Dictionary] = DisplayServer.tts_get_voices()
+var VoiceID: int = 0
+var TTS_available: bool
 
 """
 MISSION 1 - OUTSIDE INDEX

@@ -22,3 +22,7 @@ Narrator: You have won!
 set npc_class = "High Class"
 Narrator: They couldn't understand what you taught them!
 => END
+
+~ try_again
+set npc_class = "High Class"
+Narrator: Please try again.
