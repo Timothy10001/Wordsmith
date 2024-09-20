@@ -414,6 +414,9 @@ func update_unit_data():
 func _on_unit_is_dead(instance):
 	for unit in unit_list:
 		if unit["instance"] == instance:
+			if unit["type"] == "Player":
+				update_unit_data()
+				update_player_progress_bar_value()
 			unit_list.erase(unit)
 
 func check_if_selected_unit_is_dead():

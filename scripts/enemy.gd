@@ -17,6 +17,7 @@ enum STATE {
 @export var chases: bool
 
 @onready var timer = $Timer
+@onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
 var enemy_state = STATE.IDLE
 var direction = Vector2.DOWN
@@ -31,22 +32,26 @@ func _ready():
 	Global.end_battle.connect(_on_end_battle)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if enemy_state == STATE.CHASE:
-		var direction_to_player = player.global_position - global_position
+		navigation_agent.target_position = player.global_position
+		if navigation_agent.is_navigation_finished():
+			return
+		var next_path_position = navigation_agent.get_next_path_position()
 		
-		var x_abs = abs(direction_to_player.x)
-		var y_abs = abs(direction_to_player.y)
+		direction = global_position.direction_to(next_path_position)
+		
+		var x_abs = abs(direction.x)
+		var y_abs = abs(direction.y)
 		
 		if x_abs > y_abs:
-			direction = Vector2(sign(direction_to_player.x), 0)
+			direction = Vector2(sign(direction.x), 0)
 		else:
-			direction = Vector2(0, sign(direction_to_player.y))
+			direction = Vector2(0, sign(direction.y))
 		
-		var movement = direction * speed * delta
-		move_and_collide(movement)
-		#position += (player.position - position).normalized() * speed * delta
-		#move_and_collide(Vector2(0,0))
+		velocity = direction * speed
+		
+		move_and_slide()
 
 
 func _process(delta):
@@ -73,7 +78,7 @@ func _process(delta):
 			_:
 				pass
 
-func move(delta):
+func move(_delta):
 	velocity = direction * speed
 	move_and_slide()
 

@@ -30,6 +30,7 @@ func damage(skill: SkillComponent, instance):
 	
 	#free parent when health goes to zero
 	if health <= 0:
+		health = 0
 		Global.unit_is_dead.emit(instance)
 		#play fade animation
 		var tween = get_tree().create_tween()

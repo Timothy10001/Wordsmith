@@ -20,5 +20,5 @@ Narrator: You have won!
 
 ~ lose
 set npc_class = "High Class"
-Narrator: You have lost!
+Narrator: They couldn't understand what you taught them!
 => END

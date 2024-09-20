@@ -1,154 +1,16 @@
-[gd_scene load_steps=27 format=3 uid="uid://c67rgg1f002s1"]
+[gd_scene load_steps=8 format=3 uid="uid://c67rgg1f002s1"]
 
 [ext_resource type="Shader" path="res://scripts/misc/scroll.gdshader" id="1_7of86"]
 [ext_resource type="Texture2D" uid="uid://b6lqfvu4mrg2o" path="res://assets/art/backgrounds/clouds.png" id="1_qxyg3"]
 [ext_resource type="PackedScene" uid="uid://cp4of08lo2v1o" path="res://scenes/npcs/king_pendragon.tscn" id="3_su3qj"]
 [ext_resource type="TileSet" uid="uid://do2u15nb0ki1f" path="res://assets/resources/tile_sets/castle.tres" id="3_vmxc5"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="4_s166m"]
-[ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="6_rd0be"]
-[ext_resource type="Texture2D" uid="uid://cpxkx2qd2rh17" path="res://assets/art/characters/enemy/rat_sprite.png" id="7_kvqh6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xkcmh"]
 shader = ExtResource("1_7of86")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qg4kq"]
 size = Vector2(32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gn8hx"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gqa05"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ad2ap"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2hk65"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(0, 240, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drjsd"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(48, 240, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t0yjn"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(96, 240, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ry7l7"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(0, 96, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tgtmi"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(48, 96, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q4lij"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(96, 96, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p0tnh"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(0, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5t2t0"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(48, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4npct"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(96, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mpcgq"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(0, 192, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sah3q"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(48, 192, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gdey5"]
-atlas = ExtResource("7_kvqh6")
-region = Rect2(96, 192, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_4amxb"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gn8hx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gqa05")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ad2ap")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2hk65")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drjsd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t0yjn")
-}],
-"loop": true,
-"name": &"run_down",
-"speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ry7l7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tgtmi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q4lij")
-}],
-"loop": true,
-"name": &"run_left",
-"speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p0tnh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5t2t0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4npct")
-}],
-"loop": true,
-"name": &"run_right",
-"speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mpcgq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sah3q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gdey5")
-}],
-"loop": true,
-"name": &"run_up",
-"speed": 6.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2d45n"]
-size = Vector2(24, 25)
 
 [node name="Throne Room" type="Node2D"]
 y_sort_enabled = true
@@ -184,6 +46,8 @@ layer_3/tile_data = PackedInt32Array(-1114115, 786432, 9, -1048579, 786432, 10, 
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-39, -288, -24, -316, 7, -316, 23, -288)
@@ -207,26 +71,3 @@ polygon = PackedVector2Array(-288, -336, 272, -336, 272, 240, 80, 240, 80, 256, 
 [node name="King Pendragon" parent="NPCs" instance=ExtResource("3_su3qj")]
 z_index = 1
 position = Vector2(-8, -348)
-
-[node name="Enemies" type="Node2D" parent="."]
-y_sort_enabled = true
-
-[node name="Rat" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("6_rd0be")]
-position = Vector2(-192, -16)
-enemy_name = "Rat"
-enemy_battle_path = "res://scenes/enemies/rat.tscn"
-sprite = NodePath("AnimatedSprite2D")
-detection_area = 96.0
-battle_area = 32.0
-enemy_collision = NodePath("CollisionShape2D")
-speed = 75.0
-chases = true
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat"]
-scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_4amxb")
-animation = &"idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat"]
-position = Vector2(1, 4.5)
-shape = SubResource("RectangleShape2D_2d45n")

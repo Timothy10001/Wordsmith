@@ -199,6 +199,11 @@ const battle_scene: PackedScene = preload("res://scenes/battle.tscn")
 
 func _on_start_battle(party: Array, enemies: Array, background_texture_path: String, _type: String):
 	
+	#DISABLE PLAYER MOVEMENT
+	get_tree().paused = true
+	player_instance.visible = false
+	remove_controls()
+	
 	#initialize battle data
 	Global.in_battle = true
 	var party_array: Array[PackedScene] = []
@@ -217,12 +222,6 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	transition_instance.iris_transition()
 	await Global.transition_finished
 	
-	#DISABLE PLAYER MOVEMENT
-	get_tree().paused = true
-	player_instance.visible = false
-	remove_controls()
-	
-	#remove player input
 	$CanvasLayer.add_child(battle_instance)
 	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type)
 
@@ -243,6 +242,7 @@ func _on_end_battle(state, _type: String):
 		add_child(balloon)
 		balloon.start(dialogue_resource, "lose")
 		player_instance.CharacterResource.health = int(player_instance.CharacterResource.max_health / 2)
+		Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
 	
 	await Global.dialogue_ended
 	add_child(transition_instance)

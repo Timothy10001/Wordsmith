@@ -11,6 +11,8 @@ radius = 48.0
 [node name="Enemy" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_nhqvg")
 
 [node name="DetectionArea" type="Area2D" parent="."]
@@ -27,6 +29,12 @@ shape = SubResource("CircleShape2D_0ofyw")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+radius = 30.0
+avoidance_layers = 0
+avoidance_mask = 0
+debug_enabled = true
 
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]
