@@ -138,12 +138,11 @@ func _process(_delta):
 		MicButton.disabled = false
 		SkipButton.disabled = false
 		ReadButton.disabled = false
+		
 	match(battle_state):
 		STATE.INIT:
 			#initialize battle values and progress bars
 			show_default_container()
-			#for debugging
-			#set_debug_data()
 			unit_list.append(get_player_data())
 			unit_list.append_array(get_enemy_data())
 			set_player_progress_bar_value(get_player_data())
@@ -166,14 +165,20 @@ func _process(_delta):
 			get_selected_unit()
 			#checks if current unit is dead or unable to act
 			check_if_selected_unit_is_dead()
+			check_if_selected_unit_is_stunned()
+			
+			#check unit's current status effect
+			check_selected_unit_status_effect()
 			check_mana_cost()
 			#show UI if player's turn
-			if selected_unit["type"] == "Player":
+			if selected_unit["type"] == "Player" and !selected_unit["is_turn_finished"]:
 				show_default_container()
 			battle_state = STATE.WAIT
 		STATE.WAIT:
 			#wait for player input
 			#print("WAIT PHASE")
+			if selected_unit["is_turn_finished"] and selected_unit["type"] == "Player":
+				battle_state = STATE.PROCESS
 			
 			if selected_unit["type"] == "Enemy":
 				Global.execute.emit()
@@ -197,7 +202,6 @@ func _process(_delta):
 					player_count += 1
 				if unit["type"] == "Enemy":
 					enemy_count += 1
-			print("Player Count: " + str(player_count))
 			if player_count == 0:
 				battle_state = STATE.LOSE
 			elif enemy_count == 0:
@@ -355,18 +359,39 @@ func update_enemy_panel_data():
 # GAME LOGIC
 #when execute is pressed check if selected_unit is alive, and it's turn is not yet finished
 func _on_execute():
+	if selected_unit["is_turn_finished"] and is_instance_valid(selected_unit["instance"]):
+		return
 	if selected_unit["is_turn_finished"] == false and is_instance_valid(selected_unit["instance"]):
 		if selected_unit["type"] == "Player":
-			if is_skill_check_required:
-				#await skill check before starting the actions
-				Global.start_skill_check.emit()
-				await Global.end_skill_check
-				start_action(current_action, selected_enemy, selected_unit["skill_component"], selected_enemy["instance"], selected_unit)
+			if current_action == "Use Item":
+				ItemContainer.visible = false
+				CharacterContainer.visible = true
+				if selected_inventory_slot.item.target == "player":
+					inventory_data.use_item(selected_inventory_slot_index, selected_unit["instance"])
+					var balloon = BALLOON.instantiate()
+					get_tree().root.add_child(balloon)
+					balloon.start(dialogue_resource, "use_item")
+					#change is turn finished to true
+					selected_unit["is_turn_finished"] = true
+				elif selected_inventory_slot.item.target == "enemy":
+					inventory_data.use_item(selected_inventory_slot_index, selected_enemy["instance"])
+					var balloon = BALLOON.instantiate()
+					get_tree().root.add_child(balloon)
+					balloon.start(dialogue_resource, "use_item")
+					#change is turn finished to true
+					selected_unit["is_turn_finished"] = true
 			else:
-				start_action(current_action, selected_enemy, selected_unit["skill_component"], selected_enemy["instance"], selected_unit)
+				if is_skill_check_required:
+					#await skill check before starting the actions
+					Global.start_skill_check.emit()
+					await Global.end_skill_check
+					start_action(current_action, selected_enemy, selected_unit["skill_component"], selected_enemy["instance"], selected_unit)
+				else:
+					start_action(current_action, selected_enemy, selected_unit["skill_component"], selected_enemy["instance"], selected_unit)
 		if selected_unit["type"] == "Enemy":
-			start_action(selected_unit["resource"].enemy_AI(selected_unit["skills"], selected_unit), unit_list[0], selected_unit["skill_component"], unit_list[0]["instance"], selected_unit)
-
+			for unit in unit_list:
+				if unit["type"] == "Player":
+					start_action(selected_unit["resource"].enemy_AI(selected_unit["skills"], selected_unit, unit["instance"]), unit_list[0], selected_unit["skill_component"], unit_list[0]["instance"], selected_unit)
 
 #action is the name of the skill
 #sorry for the shitty arrangement
@@ -382,6 +407,21 @@ func start_action(action, target, user_skill_component, target_instance, user):
 	#change is turn finished to true
 	selected_unit["is_turn_finished"] = true
 
+func stunned_dialogue(_unit):
+	if _unit["type"] == "Player":
+		#change is turn finished to true
+		selected_unit["is_turn_finished"] = true
+		var balloon = BALLOON.instantiate()
+		get_tree().root.add_child(balloon)
+		balloon.start(dialogue_resource, "player_stunned")
+		
+	else:
+			#change is turn finished to true
+		selected_unit["is_turn_finished"] = true
+		var balloon = BALLOON.instantiate()
+		get_tree().root.add_child(balloon)
+		balloon.start(dialogue_resource, "enemy_stunned")
+	battle_state = STATE.CHECK_FINISH
 
 func get_turn_queue():
 	#add turn queue based on speed
@@ -416,7 +456,24 @@ func check_if_selected_unit_is_dead():
 	if !is_instance_valid(selected_unit["instance"]):
 		battle_state = STATE.CHECK_FINISH
 		
+func check_if_selected_unit_is_stunned():
+	if is_instance_valid(selected_unit["instance"]):
+		if selected_unit["instance"].current_stun_duration > 0:
+			if selected_unit["type"] == "Player":
+				selected_unit["instance"].current_stun_duration -= 1
+				stunned_dialogue(selected_unit)
+			else:
+				selected_unit["instance"].current_stun_duration -= 1
+				stunned_dialogue(selected_unit)
+		else:
+			selected_unit["is_turn_finished"] = false
 
+func check_selected_unit_status_effect():
+	if is_instance_valid(selected_unit["instance"]):
+		if selected_unit["instance"].current_miss_duration > 0:
+			selected_unit["instance"].current_miss_duration -= 1
+		if selected_unit["instance"].current_damage_duration > 0:
+			selected_unit["instance"].current_damage_duration -= 1
 
 func check_mana_cost():
 	for unit in unit_list:
@@ -471,7 +528,7 @@ func show_items():
 	ItemGrid.visible = true
 	RightContainer.visible = true
 	RightButtonContainer.visible = true
-	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = false
+	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = true
 	RightCharacterPanel.visible = false
 
 func show_end_turn():
@@ -492,6 +549,7 @@ func show_end_turn():
 	#show the end turn 
 	LeftContainer.visible = false
 	SkillsContainer.visible = false
+	ItemContainer.visible = false
 	CharacterContainer.visible = true
 	RightContainer.visible = true
 	RightButtonContainer.visible = true
@@ -515,6 +573,7 @@ func _on_skills_pressed():
 # ITEM GRID
 func _on_items_pressed():
 	show_items()
+	current_action = "Use Item"
 	populate_item_grid(inventory_data)
 
 var inventory_slot_scene: PackedScene = load("res://scenes/inventory_slot.tscn")

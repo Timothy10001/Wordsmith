@@ -2,8 +2,6 @@ extends Node2D
 class_name HealthComponent
 
 signal health_changed(int)
-signal status_effect_applied(StatusEffectComponent)
-signal status_effect_removed(StatusEffectComponent)
  
 var DamageIndicator: Node2D
 var immortal: bool
@@ -43,12 +41,21 @@ func damage(skill: SkillComponent, instance):
 func heal(skill: SkillComponent):
 	#add signal for changed health
 	health += skill.heal_amount
+	if health > MAX_HEALTH:
+		health = MAX_HEALTH
+	health_changed.emit(skill.heal_amount)
+	get_parent().CharacterResource.health = health
 
+func item_heal(item: Item):
+	health += item.heal_value
+	if health > MAX_HEALTH:
+		health = MAX_HEALTH
+	health_changed.emit(item.heal_value)
+	get_parent().CharacterResource.health = health
 
-func apply_status_effect(status_effect: StatusEffectComponent):
-	pass
-
-func remove_status_effect(status_effect: StatusEffectComponent):
-	pass
-
+func item_damage(item: Item):
+	health -= item.damage
+	health_changed.emit(item.damage)
+	DamageIndicator.display_damage_number(item.damage, false)
+	get_parent().CharacterResource.health = health
 

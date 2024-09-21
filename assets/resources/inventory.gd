@@ -8,12 +8,25 @@ signal inventory_interacted(inventory: Inventory, index: int)
 @export var items: Array[InventorySlot]
 
 func selected_slot_data(index: int):
-	var item = items[index]
+	var slot = items[index]
 	#returns the selected slot's item data
-	if item:
-		return item
+	if slot:
+		return slot
 	else:
 		return null
+
+func use_item(index: int, target):
+	var slot = items[index]
+	if not slot:
+		return
+	#add use item functionality
+	if slot.item.type == "consumable":
+		slot.quantity -= 1
+		if slot.quantity < 1:
+			items[index] = null
+	slot.item.use_item(target)
+	inventory_updated.emit(self)
+
 
 func add_item(other_item: InventorySlot):
 	for i in items.size():
@@ -42,6 +55,9 @@ func _on_inventory_slot_selected(index: int):
 
 func _on_inventory_item_dropped():
 	inventory_interacted.emit(self, 0, "drop")
+
+func _on_inventory_item_used():
+	inventory_interacted.emit(self, 0, "use")
 
 #returns index
 func search_inventory(_item_name: String):

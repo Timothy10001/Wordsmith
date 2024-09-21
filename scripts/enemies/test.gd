@@ -5,3 +5,4 @@ extends TextureRect
 @onready var speed_component = $SpeedComponent
 @onready var select_button = $TextureButton
 @export var CharacterResource: Enemy
+

@@ -7,4 +7,8 @@ extends TextureRect
 @onready var select_button = $TextureButton
 @export var CharacterResource: Enemy
 
+var current_stun_duration: int = 0
+var current_miss_duration: int = 0
+var current_damage_duration: int = 0
+
 

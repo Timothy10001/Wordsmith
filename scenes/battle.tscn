@@ -464,7 +464,6 @@ visible = false
 layout_mode = 2
 
 [node name="CharacterPanel2" type="PanelContainer" parent="VBoxContainer2/BottomContainer/RightContainer"]
-visible = false
 custom_minimum_size = Vector2(250, 215)
 layout_mode = 2
 
@@ -571,7 +570,6 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="ButtonContainer" type="VBoxContainer" parent="VBoxContainer2/BottomContainer/RightContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Panel" type="Panel" parent="VBoxContainer2/BottomContainer/RightContainer/ButtonContainer"]
@@ -604,6 +602,7 @@ theme_type_variation = &"UIButton"
 text = "Cancel"
 
 [node name="SkillCheck" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="PaperOverlay" type="TextureRect" parent="SkillCheck"]
 anchors_preset = 15

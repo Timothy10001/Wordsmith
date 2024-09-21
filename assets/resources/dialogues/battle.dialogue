@@ -5,7 +5,7 @@ Narrator: {{Global.skill_description}}
 
 ~ use_item
 set npc_class = "High Class"
-Narrator: Used item
+Narrator: The Wordsmith uses an item!
 => END
 
 ~ no_energy
@@ -23,6 +23,13 @@ set npc_class = "High Class"
 Narrator: They couldn't understand what you taught them!
 => END
 
-~ try_again
+
+~ enemy_stunned
 set npc_class = "High Class"
-Narrator: Please try again.
+Narrator: ...
+=> END
+
+~ player_stunned
+set npc_class = "High Class"
+Narrator: You are confused!
+=> END

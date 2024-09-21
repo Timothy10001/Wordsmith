@@ -2,10 +2,10 @@ extends Node2D
 class_name SkillComponent
 
 @export var health_component: HealthComponent
-@export var status_effect_component: StatusEffectComponent
 @export var skills: Array[Skill]
 @export var user: Resource
 
+var miss_chance: int = 0
 var skill_list = []
 var damage: int
 var heal_amount: int
@@ -24,7 +24,7 @@ func calculate_damage(skill, target):
 	damage = strength_modifier * armor_modifier
 
 
-func calculate_heal(skill):
+func calculate_heal(_skill):
 	print("Heal deez")
 
 func calculate_skill_damage(skill, target):
@@ -32,19 +32,23 @@ func calculate_skill_damage(skill, target):
 	var armor = target["resource"].armor
 	var armor_modifier = 1 - (armor / 100)
 	var strength_modifier
-	var rng = RandomNumberGenerator.new()
+	var missed
 	if Global.skill_check_passed:
 		strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 3))
 		Global.skill_description = skill.description
 	elif !Global.skill_check_passed:
-		var miss_chance = rng.randi_range(1, 5)
-		if miss_chance == 4:
+		missed = calculate_miss_chance(80)
+		if !missed:
 			strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 12))
 			Global.skill_description = skill.description
 		else:
 			strength_modifier = 0
 			Global.skill_description = target["name"] + " could not understand!"
-	damage = strength_modifier * armor_modifier
+	missed = calculate_miss_chance(miss_chance)
+	if !missed:
+		damage = strength_modifier * armor_modifier
+	else:
+		damage = 0
 
 #skill_component of USER
 func use_skill(_name: String, target, skill_component: SkillComponent, target_instance, _user):
@@ -61,11 +65,16 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 				
 				if skill.requires_skill_check:
 					calculate_skill_damage(skill, target)
-				else:
+				elif skill.status_effect == "none":
 					calculate_damage(skill, target)
 				
-				target["health_component"].damage(skill_component, target_instance)
+				if skill.status_effect == "stun":
+					target["instance"].current_stun_duration += skill.stun_duration
+					print(target["instance"].current_stun_duration)
 				
+				if skill.status_effect == "none":
+					target["health_component"].damage(skill_component, target_instance)
+					
 				if !skill.requires_skill_check:
 					Global.skill_description = skill.description
 				
@@ -76,3 +85,13 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 				calculate_heal(skill)
 		else:
 			pass
+
+func calculate_miss_chance(_miss_chance: int):
+	var rng = RandomNumberGenerator.new()
+	var random_number = rng.randi_range(0, 100)
+	if random_number <= _miss_chance:
+		return true
+	else:
+		return false
+
+

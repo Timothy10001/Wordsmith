@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://6ro61bpxcpru" path="res://assets/resources/enemies/dummy/dummy_stats.tres" id="3_m830a"]
 [ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="4_3ybgq"]
 [ext_resource type="Resource" uid="uid://v18ejooaakpr" path="res://assets/resources/enemies/dummy/skills/do_nothing.tres" id="5_gnxnx"]
-[ext_resource type="PackedScene" uid="uid://ccgruou7ckvwh" path="res://scenes/components/status_effect_component.tscn" id="6_wkhl4"]
+[ext_resource type="Resource" uid="uid://d4bb8b3gavkrs" path="res://assets/resources/enemies/dummy/skills/stun.tres" id="7_3knur"]
 [ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="8_b6lse"]
 [ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="9_3fhxt"]
 
@@ -40,13 +40,10 @@ grow_vertical = 2
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_3dxgx")]
 
-[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component", "status_effect_component") instance=ExtResource("4_3ybgq")]
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_3ybgq")]
 health_component = NodePath("../HealthComponent")
-status_effect_component = NodePath("../StatusEffectComponent")
-skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("5_gnxnx")])
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("5_gnxnx"), ExtResource("7_3knur")])
 user = ExtResource("3_m830a")
-
-[node name="StatusEffectComponent" parent="." instance=ExtResource("6_wkhl4")]
 
 [node name="SpeedComponent" parent="." instance=ExtResource("8_b6lse")]
 

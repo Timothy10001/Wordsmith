@@ -10,13 +10,17 @@ class_name Player
 @onready var speed_component = $SpeedComponent
 @onready var camera = $Camera2D
 
+var current_stun_duration: int = 0
+var current_miss_duration: int = 0
+var current_damage_duration: int = 0
+
 const SPEED = 125.0
 var current_direction = "none"
 var is_moving = false
 
 func _ready():
 	#limits camera to size of tilemap
-	if !Global.in_battle:
+	if !Global.in_battle and get_parent() is TileMap:
 		var tilemap_rect = get_parent().get_used_rect()
 		var tilemap_size = get_parent().tile_set.tile_size
 		camera.limit_left = tilemap_rect.position.x * tilemap_size.x

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dufbme6q2ibb4"]
+[gd_scene load_steps=9 format=3 uid="uid://dufbme6q2ibb4"]
 
 [ext_resource type="Texture2D" uid="uid://tflg28j1ivjo" path="res://assets/art/characters/placeholder.svg" id="1_ag7e8"]
 [ext_resource type="Script" path="res://scripts/enemies/test.gd" id="1_l1cyr"]
@@ -7,7 +7,6 @@
 [ext_resource type="Resource" uid="uid://b6yqm320s3pv7" path="res://assets/resources/enemies/test/test_stats.tres" id="5_03u16"]
 [ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="6_edwgc"]
 [ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="7_wodqp"]
-[ext_resource type="PackedScene" uid="uid://ccgruou7ckvwh" path="res://scenes/components/status_effect_component.tscn" id="8_l5obq"]
 [ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="9_6ca3y"]
 
 [node name="Test" type="TextureRect"]
@@ -38,14 +37,12 @@ grow_vertical = 2
 
 [node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component", "status_effect_component") instance=ExtResource("3_f4p13")]
 health_component = NodePath("../HealthComponent")
-status_effect_component = NodePath("../StatusEffectComponent")
+status_effect_component = NodePath("")
 skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("4_chwll")])
 user = ExtResource("5_03u16")
 
 [node name="HealthComponent" parent="." instance=ExtResource("6_edwgc")]
 
 [node name="SpeedComponent" parent="." instance=ExtResource("7_wodqp")]
-
-[node name="StatusEffectComponent" parent="." instance=ExtResource("8_l5obq")]
 
 [node name="DamageIndicator" parent="." instance=ExtResource("9_6ca3y")]

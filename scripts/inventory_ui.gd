@@ -1,7 +1,8 @@
 extends Control
 #UI FOR INVENTORY WHETHER PLAYER OR INTERACTABLE
 
-signal inventory_item_dropped(index: int)
+signal inventory_item_dropped
+signal inventory_item_used
 
 const inventory_slot_scene: PackedScene = preload("res://scenes/inventory_slot.tscn")
 
@@ -55,7 +56,7 @@ func set_item_details(item: Item):
 			DropButton.visible = true
 		else:
 			DropButton.visible = false
-		if item.type != "accessory":
+		if item.type != "accessory" and item.target != "enemy":
 			UseButton.visible = true
 		else:
 			UseButton.visible = false
@@ -69,5 +70,4 @@ func _on_back_button_pressed():
 	Input.action_press("back_to_pause_menu")
 	await get_tree().create_timer(0.05).timeout
 	Input.action_release("back_to_pause_menu")
-
 

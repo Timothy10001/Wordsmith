@@ -15,3 +15,8 @@ class_name Skill
 @export var deals_damage: bool
 
 @export var requires_skill_check: bool
+
+@export_enum("none", "damage over time", "stun", "miss") var status_effect: String = "none"
+
+@export var stun_duration: int = 0
+@export var stun_chance: int = 0
