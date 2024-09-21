@@ -5,6 +5,7 @@ class_name Enemy
 @export var health: int
 @export var strength: float
 @export var speed: int
+@export var initial_armor: int
 @export var armor: int
 @export var immortal: bool
 

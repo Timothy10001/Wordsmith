@@ -15,7 +15,7 @@ Narrator: You have no energy!
 
 ~ win
 set npc_class = "High Class"
-Narrator: You have won!
+Narrator: You have taught them successfully!
 => END
 
 ~ lose

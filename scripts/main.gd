@@ -2,7 +2,7 @@ extends Node
 
 #add player stats and inventory
 #debug
-
+"""
 var saved_data = {
 	"area": "mission 1 - outside",
 	"room": 0,
@@ -11,9 +11,9 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-
-#lobby
 """
+#lobby
+
 var saved_data = {
 	"area": "lobby",
 	"room": 0,
@@ -22,7 +22,7 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-"""
+
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -181,7 +181,7 @@ func _on_confirm_mission():
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
 	transition_instance.iris_transition()
 	await Global.transition_finished
-	
+	get_tree().paused = false
 	#load new area after transition
 	match State.current_mission:
 		1:

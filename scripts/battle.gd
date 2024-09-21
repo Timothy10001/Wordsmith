@@ -170,9 +170,11 @@ func _process(_delta):
 			#check unit's current status effect
 			check_selected_unit_status_effect()
 			check_mana_cost()
+			
 			#show UI if player's turn
 			if selected_unit["type"] == "Player" and !selected_unit["is_turn_finished"]:
 				show_default_container()
+			print(selected_unit["resource"].armor)
 			battle_state = STATE.WAIT
 		STATE.WAIT:
 			#wait for player input
@@ -251,8 +253,9 @@ func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _
 	battle_type = _type
 
 
-
 func show_default_container():
+	if selected_unit:
+		selected_unit["resource"].armor = selected_unit["resource"].initial_armor
 	MainContainer.visible = true
 	CharacterContainer.visible = true
 	SkillsContainer.visible = false

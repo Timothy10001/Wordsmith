@@ -42,6 +42,7 @@ signal mic_released
 signal start_sleep
 signal end_sleep
 
+
 signal drop_item(inventory_slot: InventorySlot)
 
 #for npc dialogue font

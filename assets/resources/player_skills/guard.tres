@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://37n4b1p0r5vp"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_cqplv"]
+
+[resource]
+script = ExtResource("1_cqplv")
+name = "Guard"
+description = "The Wordsmith covers his ears!"
+target = "SINGLE"
+attack_damage = 0
+heal_amount = 0
+mana_amount = 10
+mana_cost = 0
+deals_damage = false
+requires_skill_check = false
+status_effect = "none"
+stun_duration = 0
+chance = 0

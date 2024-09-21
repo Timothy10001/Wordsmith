@@ -21,6 +21,7 @@ func calculate_damage(skill, target):
 	var armor = target["resource"].armor
 	var strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 10))
 	var armor_modifier = 1 - (armor / 100)
+	print(armor)
 	damage = strength_modifier * armor_modifier
 
 
@@ -57,6 +58,10 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 		if skill.name == _name:
 			mana_amount = skill.mana_amount
 			mana_cost = skill.mana_cost
+			
+			if skill.name == "Guard":
+				_user["resource"].armor += _user["resource"].armor * 0.5
+				_user["mana_component"].add_mana(skill_component)
 			
 			if _user.has("mana"):
 				_user["mana_component"].add_mana(skill_component)

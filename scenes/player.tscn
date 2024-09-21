@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c708bnl1qw0ev"]
+[gd_scene load_steps=32 format=3 uid="uid://c708bnl1qw0ev"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_oxoy7"]
 [ext_resource type="Resource" uid="uid://1b1s3rxyxfhm" path="res://assets/resources/player_inventory.tres" id="3_a2rlo"]
@@ -16,6 +16,7 @@
 [ext_resource type="Resource" uid="uid://cjxml4aqwy7a" path="res://assets/resources/player_skills/story_time.tres" id="10_8hyo4"]
 [ext_resource type="Resource" uid="uid://rtahi4ddsqae" path="res://assets/resources/player_skills/review.tres" id="11_cn1td"]
 [ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="13_1buei"]
+[ext_resource type="Resource" uid="uid://37n4b1p0r5vp" path="res://assets/resources/player_skills/guard.tres" id="13_5l48a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_etjyt"]
 size = Vector2(24, 24)
@@ -164,7 +165,7 @@ limit_smoothed = true
 
 [node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_ivl23")]
 health_component = NodePath("../HealthComponent")
-skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("7_4ojcw"), ExtResource("8_cccag"), ExtResource("9_c7ask"), ExtResource("10_8hyo4"), ExtResource("11_cn1td")])
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("7_4ojcw"), ExtResource("8_cccag"), ExtResource("9_c7ask"), ExtResource("10_8hyo4"), ExtResource("11_cn1td"), ExtResource("13_5l48a")])
 user = ExtResource("5_mr43v")
 
 [node name="ManaComponent" parent="." instance=ExtResource("6_dw37t")]

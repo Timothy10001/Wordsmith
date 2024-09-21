@@ -6,7 +6,8 @@
 script = ExtResource("1_xhaj3")
 name = "Rat"
 health = 125
-strength = 2.0
+strength = 1.0
 speed = 7
+initial_armor = 2
 armor = 2
 immortal = false
