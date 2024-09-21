@@ -19,4 +19,4 @@ class_name Skill
 @export_enum("none", "damage over time", "stun", "miss") var status_effect: String = "none"
 
 @export var stun_duration: int = 0
-@export var stun_chance: int = 0
+@export var chance: int = 0

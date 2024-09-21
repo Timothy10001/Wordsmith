@@ -512,6 +512,7 @@ func set_player_resource_data():
 
 #UI RELATED TASKS
 func show_skills():
+	show_enemy_selection()
 	LeftContainer.visible = false
 	CharacterContainer.visible = false
 	SkillsContainer.visible = true
@@ -522,6 +523,7 @@ func show_skills():
 	RightCharacterPanel.visible = false
 
 func show_items():
+	show_enemy_selection()
 	LeftContainer.visible = false
 	CharacterContainer.visible = false
 	ItemContainer.visible = true
@@ -530,8 +532,9 @@ func show_items():
 	RightButtonContainer.visible = true
 	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = true
 	RightCharacterPanel.visible = false
+	
 
-func show_end_turn():
+func show_enemy_selection():
 	#select enemy pressed by player
 	for unit in unit_list:
 		if unit.has("select_button"):
@@ -545,7 +548,10 @@ func show_end_turn():
 			selected_enemy = unit
 			set_enemy_panel_data(unit["name"], unit["health"], unit["max_health"])
 			break
-	
+
+
+func show_end_turn():
+	show_enemy_selection()
 	#show the end turn 
 	LeftContainer.visible = false
 	SkillsContainer.visible = false
@@ -595,6 +601,7 @@ func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
 
 func update_selected_slot():
 	#highlights selected slot
+	print(selected_inventory_slot_index)
 	for i in inventory_slots.size():
 		if i == selected_inventory_slot_index:
 			inventory_slots[i].selected = true

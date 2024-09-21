@@ -10,9 +10,15 @@ region = Rect2(208, 224, 16, 16)
 [resource]
 script = ExtResource("1_er38b")
 name = "Bread"
-description = "Soft, fluffy, and throwable. Applies Listening."
+description = "Soft, fluffy, and throwable. Applies Silence."
 texture = SubResource("AtlasTexture_ucndb")
 stackable = true
 droppable = true
 type = "consumable"
 target = "enemy"
+heal_value = 0
+mana_value = 0
+stun_duration = 0
+miss_duration = 0
+damage_duration = 0
+damage = 0

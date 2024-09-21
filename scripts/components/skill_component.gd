@@ -24,8 +24,9 @@ func calculate_damage(skill, target):
 	damage = strength_modifier * armor_modifier
 
 
-func calculate_heal(_skill):
-	print("Heal deez")
+func calculate_heal(_skill, _user):
+	heal_amount = _skill.heal_amount
+	Global.skill_description = _skill.description
 
 func calculate_skill_damage(skill, target):
 	var strength = user.strength
@@ -82,7 +83,8 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 					Global.skill_description = skill.description
 				
 			else:
-				calculate_heal(skill)
+				calculate_heal(skill, _user)
+				_user["health_component"].heal(skill_component)
 		else:
 			pass
 
