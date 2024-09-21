@@ -263,7 +263,6 @@ func show_default_container():
 	RightCharacterPanel.visible = false
 	EnemyPanel.visible = false
 	SkillCheck.visible = false
-	remove_item_grid()
 	for unit in unit_list:
 		if unit.has("select_button"):
 			unit["select_button"].visible = false
@@ -601,9 +600,9 @@ func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
 
 func update_selected_slot():
 	#highlights selected slot
-	print(selected_inventory_slot_index)
 	for i in inventory_slots.size():
 		if i == selected_inventory_slot_index:
+			print("selected")
 			inventory_slots[i].selected = true
 		else:
 			inventory_slots[i].selected = false
@@ -624,16 +623,12 @@ func populate_item_grid(inventory: Inventory) -> void:
 		inventory_slot_instance.visible = false
 		inventory_slot_instance.connect("inventory_slot_selected", inventory._on_inventory_slot_selected)
 		inventory_slots.append(inventory_slot_instance)
-		if inventory_slot != null:
+		if inventory_slot != null and inventory_slot.item.type != "accessory":
 			#if inventory slot isn't null, add slot
 			inventory_slot_instance.visible = true
 			#adds slot's data
 			inventory_slot_instance.set_inventory_slot_data(inventory_slot.item, inventory_slot.quantity)
 
-
-func remove_item_grid():
-	for child in ItemGrid.get_children():
-		ItemGrid.remove_child(child)
 
 
 func _on_guard_pressed():
@@ -680,7 +675,7 @@ func _on_story_time_pressed():
 func _on_review_pressed():
 	show_end_turn()
 	current_action = "Review"
-	is_skill_check_required = true
+	is_skill_check_required = false
 
 #---------------------------------------#
 

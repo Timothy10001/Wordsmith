@@ -27,3 +27,4 @@ func _on_gui_input(event):
 	if event is InputEventScreenTouch:
 		if event.pressed and rect.has_point(event.position):
 			inventory_slot_selected.emit(get_index())
+			print("slot selected = " + str(selected))
