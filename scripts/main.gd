@@ -2,18 +2,18 @@ extends Node
 
 #add player stats and inventory
 #debug
-"""
+
 var saved_data = {
-	"area": "mission 3 - outside",
+	"area": "mission 1 - outside",
 	"room": 0,
-	"current mission": 3,
+	"current mission": 1,
 	"tutorial status": "done",
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-"""
-#lobby
 
+#lobby
+"""
 var saved_data = {
 	"area": "lobby",
 	"room": 0,
@@ -22,7 +22,7 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-
+"""
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -278,6 +278,9 @@ func _on_start_sleep():
 	player_instance.visible = false
 	get_tree().paused = true
 	remove_controls()
+	
+	player_instance.CharacterResource.health = player_instance.CharacterResource.max_health
+	player_instance.CharacterResource.mana = player_instance.CharacterResource.max_mana
 	
 	#ADD HEALTH AND MANA
 	var transition_instance = transition_scene.instantiate()

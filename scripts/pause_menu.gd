@@ -10,6 +10,8 @@ var player_resource = load("res://assets/resources/Player.tres")
 
 func _ready():
 	health.text = "%s/%s" % [player_resource.health, player_resource.max_health]
+	mana.text = "%s/%s" % [player_resource.mana, player_resource.max_mana]
+	strength.text = "%s" % player_resource.strength
 
 func _on_resume_button_pressed():
 	Input.action_press("resume")
