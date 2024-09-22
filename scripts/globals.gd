@@ -9,7 +9,6 @@ signal start_battle
 signal end_battle
 signal lost_battle
 signal unit_is_dead
-signal remove_enemy
 
 signal execute
 signal start_skill_check

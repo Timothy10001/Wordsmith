@@ -29,7 +29,6 @@ func _ready():
 	randomize()
 	$DetectionArea/CollisionShape2D.shape.radius = detection_area
 	$BattleArea/CollisionShape2D.shape.radius = battle_area
-	Global.remove_enemy.connect(_on_remove_enemy)
 
 
 func _physics_process(_delta):
@@ -114,17 +113,12 @@ func _on_timer_timeout():
 		timer.wait_time = randomize_array([0.5, 0.75, 1.0])
 		enemy_state = randomize_array([STATE.IDLE, STATE.CHOOSE_DIRECTION, STATE.MOVE])
 
-func _on_remove_enemy():
-	var tween = get_tree().create_tween()
-	tween.tween_property(get_parent(), "modulate", Color("fff", 0.0), 1)
-	await tween.finished
-	queue_free()
 
 
 func _on_battle_area_body_entered(body):
 	if body is Player:
 		enemy_state = STATE.IDLE
-		Global.start_battle.emit(["res://scenes/player.tscn"], [enemy_battle_path], "res://assets/art/backgrounds/tutorial.png", "battle")
+		Global.start_battle.emit(["res://scenes/player.tscn"], [enemy_battle_path], "res://assets/art/backgrounds/tutorial.png", "battle", self)
 
 
 

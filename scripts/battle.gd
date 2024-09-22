@@ -2,6 +2,7 @@ extends Control
 
 #export variables
 var enemies: Array[PackedScene]
+var enemy_node: Node2D
 var party: Array[PackedScene]
 var dialogue_resource: DialogueResource
 var battle_type: String
@@ -46,6 +47,7 @@ var unit_list = []
 #the unit doing a turn
 var selected_unit
 var selected_enemy
+
 
 var total_enemy_experience: int
 var total_enemy_loot: Inventory
@@ -227,7 +229,7 @@ func _process(_delta):
 			set_player_resource_data()
 			if !end_battle_emitted:
 				end_battle_emitted = true
-				Global.end_battle.emit("Win", battle_type, total_enemy_experience, total_enemy_loot)
+				Global.end_battle.emit("Win", battle_type, total_enemy_experience, total_enemy_loot, enemy_node)
 				await Global.end_battle
 			battle_state = null
 		STATE.LOSE:
@@ -235,7 +237,7 @@ func _process(_delta):
 			print("lost")
 			if !end_battle_emitted:
 				end_battle_emitted = true
-				Global.end_battle.emit("Lose", battle_type, total_enemy_experience, total_enemy_loot)
+				Global.end_battle.emit("Lose", battle_type, total_enemy_experience, total_enemy_loot, enemy_node)
 				await Global.end_battle
 			battle_state = null
 
@@ -248,11 +250,13 @@ func clear_battle_data():
 		enemies.clear()
 
 #INITIALIZATIONS
-func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _background_texture_path: String, _type: String):
+func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _background_texture_path: String, _type: String, _enemy_node: Node2D):
 	party.append_array(_party)
 	enemies.append_array(_enemies)
 	background.texture = load(_background_texture_path)
 	battle_type = _type
+	if _enemy_node:
+		enemy_node = _enemy_node
 
 
 func show_default_container():

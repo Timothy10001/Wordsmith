@@ -204,7 +204,7 @@ func _on_cancel_mission():
 
 const battle_scene: PackedScene = preload("res://scenes/battle.tscn")
 
-func _on_start_battle(party: Array, enemies: Array, background_texture_path: String, _type: String):
+func _on_start_battle(party: Array, enemies: Array, background_texture_path: String, _type: String, _enemy_node: Node2D):
 	
 	#DISABLE PLAYER MOVEMENT
 	get_tree().paused = true
@@ -230,11 +230,11 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	await Global.transition_finished
 	
 	$CanvasLayer.add_child(battle_instance)
-	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type)
+	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type, _enemy_node)
 
 
 
-func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventory):
+func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventory, _enemy_node: Node2D):
 	Global.in_battle = false
 	var transition_instance = transition_scene.instantiate()
 	#dialogue balloon for this shit
@@ -264,7 +264,12 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 	player_instance.visible = true
 	
 	if state == "Win":
-		Global.remove_enemy.emit()
+		if _enemy_node:
+			#removes enemy
+			var tween = get_tree().create_tween()
+			tween.tween_property(_enemy_node, "modulate", Color("fff", 0.0), 1)
+			await tween.finished
+			_enemy_node.queue_free()
 		if experience_gained > 0:
 			
 			Global.experience = experience_gained
