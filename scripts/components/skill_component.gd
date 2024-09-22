@@ -18,11 +18,10 @@ func _ready():
 
 func calculate_damage(skill, target):
 	var strength = user.strength
-	var armor = target["resource"].armor
-	var strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 10))
+	var armor = float(target["resource"].armor)
+	var strength_modifier = float(skill.attack_damage * (1 + (sqrt(strength) / 10)))
 	var armor_modifier = 1 - (armor / 100)
-	print(armor)
-	damage = strength_modifier * armor_modifier
+	damage = round(strength_modifier * armor_modifier)
 
 
 func calculate_heal(_skill, _user):
@@ -31,24 +30,24 @@ func calculate_heal(_skill, _user):
 
 func calculate_skill_damage(skill, target):
 	var strength = user.strength
-	var armor = target["resource"].armor
+	var armor = float(target["resource"].armor)
 	var armor_modifier = 1 - (armor / 100)
 	var strength_modifier
 	var missed
 	if Global.skill_check_passed:
-		strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 3))
+		strength_modifier = float(skill.attack_damage * (1 + (sqrt(strength) / 3)))
 		Global.skill_description = skill.description
 	elif !Global.skill_check_passed:
 		missed = calculate_miss_chance(80)
 		if !missed:
-			strength_modifier = skill.attack_damage * (1 + (sqrt(strength) / 12))
+			strength_modifier = float(skill.attack_damage * (1 + (sqrt(strength) / 12)))
 			Global.skill_description = skill.description
 		else:
 			strength_modifier = 0
 			Global.skill_description = target["name"] + " could not understand!"
 	missed = calculate_miss_chance(miss_chance)
 	if !missed:
-		damage = strength_modifier * armor_modifier
+		damage = round(strength_modifier * armor_modifier)
 	else:
 		damage = 0
 
@@ -60,8 +59,9 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 			mana_cost = skill.mana_cost
 			
 			if skill.name == "Guard":
-				_user["resource"].armor += _user["resource"].armor * 0.5
+				_user["resource"].armor *= 3
 				_user["mana_component"].add_mana(skill_component)
+				Global.skill_description = skill.description
 			
 			if _user.has("mana"):
 				_user["mana_component"].add_mana(skill_component)
@@ -76,7 +76,6 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 				
 				if skill.status_effect == "stun":
 					target["instance"].current_stun_duration += skill.stun_duration
-					print(target["instance"].current_stun_duration)
 				
 				if skill.status_effect == "none":
 					target["health_component"].damage(skill_component, target_instance)
@@ -87,9 +86,11 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 				if _user["type"] != "Player":
 					Global.skill_description = skill.description
 				
-			else:
+			elif skill.name != "Guard":
 				calculate_heal(skill, _user)
 				_user["health_component"].heal(skill_component)
+			else:
+				pass
 		else:
 			pass
 

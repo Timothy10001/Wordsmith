@@ -2,6 +2,7 @@ extends Node2D
 @onready var animation_player = $AnimationPlayer
 
 func display_damage_number(value: int, type: String):
+	print(type)
 	match type:
 		"damage":
 			$LabelContainer/Label.add_theme_color_override("font_color", Color("ffffff"))

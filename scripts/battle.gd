@@ -256,7 +256,6 @@ func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _
 
 
 func show_default_container():
-	
 	if selected_unit:
 		selected_unit["resource"].armor = selected_unit["resource"].initial_armor
 	MainContainer.visible = true

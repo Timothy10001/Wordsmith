@@ -10,9 +10,15 @@ region = Rect2(64, 224, 16, 16)
 [resource]
 script = ExtResource("1_4yg5v")
 name = "Strawberry"
-description = "Sweet and delicious. Removes Status Effects."
+description = "Sweet and delicious. Adds 15 INT."
 texture = SubResource("AtlasTexture_x2m1b")
 stackable = true
 droppable = true
 type = "consumable"
 target = "player"
+heal_value = 15
+mana_value = 0
+stun_duration = 0
+miss_duration = 0
+damage_duration = 0
+damage = 0

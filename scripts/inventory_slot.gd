@@ -19,7 +19,6 @@ func set_inventory_slot_data(item: Item, quantity: int):
 		ItemIcon.texture = item.texture
 		ItemName.text = item.name
 		ItemCount.text = "x " + str(quantity)
-	print("help")
 
 
 func _on_gui_input(event):

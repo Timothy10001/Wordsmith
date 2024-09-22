@@ -15,3 +15,5 @@ mana = 100
 max_mana = 100
 immortal = false
 level = 1
+experience_required = 0
+experience = 0

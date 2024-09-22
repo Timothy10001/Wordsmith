@@ -22,6 +22,7 @@ func use_item(index: int, target):
 	#add use item functionality
 	if slot.item.type == "consumable":
 		slot.quantity -= 1
+		print(slot.quantity)
 		if slot.quantity < 1:
 			items[index] = null
 	slot.item.use_item(target)

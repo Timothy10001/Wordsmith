@@ -11,7 +11,9 @@ var experience_required
 
 func _ready():
 	level = CharacterResource.level
+	CharacterResource.experience = experience
 	experience_required = get_required_experience(level + 1)
+	CharacterResource.experience_required = experience_required
 	
 
 func get_required_experience(_level):
@@ -28,10 +30,10 @@ func gain_experience(amount):
 func level_up():
 	level += level + 1
 	CharacterResource.level = level
-	CharacterResource.strength += CharacterResource.strength + 3
-	CharacterResource.max_health += CharacterResource.max_health + 15
-	CharacterResource.max_mana += CharacterResource.max_mana + 15
-	CharacterResource.initial_armor += 3
+	CharacterResource.strength += 3
+	CharacterResource.max_health += 15
+	CharacterResource.max_mana += 15
+	CharacterResource.initial_armor += 2
 	
 	Global.start_interactable_dialogue.emit(load("res://assets/resources/dialogues/level_up.dialogue"), "start")
 	experience_required = get_required_experience(level + 1)

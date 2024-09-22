@@ -50,14 +50,19 @@ func _process(_delta):
 		print("unpaused")
 		get_tree().paused = false
 		remove_child(pause_instance)
+		if $CanvasLayer.get_child_count() > 0:
+			$CanvasLayer.remove_child($CanvasLayer.get_child(0))
 	if Input.is_action_just_pressed("show_inventory"):
-		remove_child(pause_instance)
-		backpack_instance = backpack_scene.instantiate()
-		$CanvasLayer.add_child(backpack_instance)
+		pause_instance.visible = false
+		if $CanvasLayer.get_child_count() == 0:
+			
+			backpack_instance = backpack_scene.instantiate()
+			$CanvasLayer.add_child(backpack_instance)
+		else:
+			backpack_instance.visible = true
 	if Input.is_action_just_pressed("back_to_pause_menu"):
-		$CanvasLayer.remove_child(backpack_instance)
-		pause_instance = pause_scene.instantiate()
-		add_child(pause_instance)
+		pause_instance.visible = true
+		backpack_instance.visible = false
 
 #<-TO BE CHANGED->#
 func connect_signals():
@@ -273,6 +278,7 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		if loot.items[0] != null:
 			add_loot(loot)
 	
+	await Global.dialogue_ended
 	add_controls()
 	
 	#TO BE CHANGED#

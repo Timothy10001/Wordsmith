@@ -4,6 +4,7 @@ var player_resource = load("res://assets/resources/Player.tres")
 @onready var health = $TextureRect/MarginContainer/StatsContainer/Health
 @onready var mana = $TextureRect/MarginContainer/StatsContainer/Mana
 @onready var strength = $TextureRect/MarginContainer/StatsContainer/Strength
+@onready var armor = $TextureRect/MarginContainer/StatsContainer/Armor
 @onready var level = $TextureRect/MarginContainer/StatsContainer/Level
 @onready var experience = $TextureRect/MarginContainer/StatsContainer/Experience
 
@@ -12,6 +13,9 @@ func _ready():
 	health.text = "%s/%s" % [player_resource.health, player_resource.max_health]
 	mana.text = "%s/%s" % [player_resource.mana, player_resource.max_mana]
 	strength.text = "%s" % player_resource.strength
+	armor.text = "%s" % player_resource.initial_armor
+	level.text = "%s" % player_resource.level
+	experience.text = "%s/%s" % [player_resource.experience, player_resource.experience_required]
 
 func _on_resume_button_pressed():
 	Input.action_press("resume")

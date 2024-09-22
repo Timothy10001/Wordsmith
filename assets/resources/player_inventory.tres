@@ -20,7 +20,7 @@ quantity = 1
 [sub_resource type="Resource" id="Resource_170bu"]
 script = ExtResource("2_svni0")
 item = ExtResource("4_vyduh")
-quantity = 2
+quantity = 64
 
 [sub_resource type="Resource" id="Resource_j8586"]
 script = ExtResource("2_svni0")

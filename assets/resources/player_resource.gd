@@ -13,4 +13,5 @@ class_name PlayerResource
 @export var immortal: bool
 
 @export var level := 1
-
+@export var experience_required: int = 0
+@export var experience: int = 0
