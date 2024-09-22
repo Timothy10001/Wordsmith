@@ -1,0 +1,6 @@
+~ start
+
+set npc_class = "High Class"
+Narrator: You leveled up!
+
+=> END

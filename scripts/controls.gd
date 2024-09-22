@@ -12,6 +12,11 @@ func _ready():
 	Global.interactable_exited.connect(_on_interactable_exited)
 	InteractButton.visible = false
 	
+
+func _process(_delta):
+	if Global.chased:
+		InteractButton.visible = false
+
 func _on_dialogue_active():
 	self.visible = false
 

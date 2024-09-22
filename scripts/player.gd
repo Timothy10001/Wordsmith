@@ -10,6 +10,7 @@ class_name Player
 @onready var speed_component = $SpeedComponent
 @onready var level_component = $LevelComponent
 @onready var camera = $Camera2D
+@onready var ChaseIndicator = $AnimatedSprite2D/ChaseIndicator
 
 var current_stun_duration: int = 0
 var current_miss_duration: int = 0
@@ -20,6 +21,7 @@ var current_direction = "none"
 var is_moving = false
 
 func _ready():
+	ChaseIndicator.visible = false
 	#limits camera to size of tilemap
 	if !Global.in_battle and get_parent() is TileMap:
 		var tilemap_rect = get_parent().get_used_rect()
@@ -31,6 +33,11 @@ func _ready():
 		
 		play_animation()
 
+func _process(_delta):
+	if Global.chased:
+		ChaseIndicator.visible = true
+	else:
+		ChaseIndicator.visible = false
 
 func _physics_process(_delta):
 	player_movement(_delta)

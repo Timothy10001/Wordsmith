@@ -46,8 +46,11 @@ signal end_sleep
 
 signal drop_item(inventory_slot: InventorySlot)
 
+var experience: int
 #for npc dialogue font
 var npc_class = ""
+
+var chased: bool
 
 #item and skill description for battle dialogue
 var skill_description: String

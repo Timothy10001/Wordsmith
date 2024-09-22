@@ -24,7 +24,7 @@ func damage(skill: SkillComponent, instance):
 	if !immortal:
 		health -= skill.damage
 		health_changed.emit(skill.damage)
-		DamageIndicator.display_damage_number(skill.damage, false)
+		DamageIndicator.display_damage_number(skill.damage, "damage")
 	
 	#free parent when health goes to zero
 	if health <= 0:
@@ -44,7 +44,7 @@ func heal(skill: SkillComponent):
 	if health > MAX_HEALTH:
 		health = MAX_HEALTH
 	health_changed.emit(skill.heal_amount)
-	DamageIndicator.display_damage_number(skill.heal_amount, true)
+	DamageIndicator.display_damage_number(skill.heal_amount, "heal")
 	if get_parent().CharacterResource.name == "Wordsmith":
 		get_parent().CharacterResource.health = health
 
@@ -53,15 +53,14 @@ func item_heal(item: Item):
 	if health > MAX_HEALTH:
 		health = MAX_HEALTH
 	health_changed.emit(item.heal_value)
-	DamageIndicator.display_damage_number(item.heal_value, true)
+	DamageIndicator.display_damage_number(item.heal_value, "heal")
 	if get_parent().CharacterResource.name == "Wordsmith":
 		get_parent().CharacterResource.health = health
 
 func item_damage(item: Item):
 	health -= item.damage
 	health_changed.emit(item.damage)
-	DamageIndicator.display_damage_number(item.damage, false)
-	DamageIndicator.display_damage_number(item.damage, false)
+	DamageIndicator.display_damage_number(item.damage, "damage")
 	if get_parent().CharacterResource.name == "Wordsmith":
 		get_parent().CharacterResource.health = health
 

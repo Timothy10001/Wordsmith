@@ -258,13 +258,22 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 	get_tree().paused = false
 	player_instance.visible = true
 	
-	add_controls()
 	if state == "Win":
+		Global.remove_enemy.emit()
 		if experience_gained > 0:
-			pass
+			
+			Global.experience = experience_gained
+			
+			var balloon = BATTLE_BALLOON.instantiate()
+			add_child(balloon)
+			balloon.start(dialogue_resource, "exp_gained")
+			await Global.dialogue_ended
+			
+			player_instance.level_component.gain_experience(experience_gained)
 		if loot.items[0] != null:
 			add_loot(loot)
-			Global.remove_enemy.emit()
+	
+	add_controls()
 	
 	#TO BE CHANGED#
 	if _type == "tutorial" and State.current_room == 0:

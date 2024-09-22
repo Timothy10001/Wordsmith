@@ -177,7 +177,6 @@ func _process(_delta):
 			#show UI if player's turn
 			if selected_unit["type"] == "Player" and !selected_unit["is_turn_finished"]:
 				show_default_container()
-			print(selected_unit["resource"].armor)
 			battle_state = STATE.WAIT
 		STATE.WAIT:
 			#wait for player input
@@ -331,9 +330,6 @@ func get_enemy_data():
 			"is_turn_finished": false
 		}
 		enemy_list.push_back(enemy_data)
-		
-	print(total_enemy_experience)
-	print(total_enemy_loot.items)
 	return enemy_list
 
 
@@ -620,7 +616,6 @@ func update_selected_slot():
 	#highlights selected slot
 	for i in inventory_slots.size():
 		if i == selected_inventory_slot_index:
-			print("selected")
 			inventory_slots[i].selected = true
 		else:
 			inventory_slots[i].selected = false

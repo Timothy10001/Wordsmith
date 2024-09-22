@@ -34,6 +34,7 @@ func _ready():
 
 func _physics_process(_delta):
 	if enemy_state == STATE.CHASE:
+		Global.chased = true
 		navigation_agent.target_position = player.global_position
 		if navigation_agent.is_navigation_finished():
 			return
@@ -68,6 +69,7 @@ func _process(delta):
 			sprite.play("run_down")
 	
 	if enemy_state != STATE.CHASE:
+		Global.chased = false
 		match enemy_state:
 			STATE.IDLE:
 				pass
@@ -94,6 +96,7 @@ func _on_detection_area_body_entered(body):
 
 func _on_detection_area_body_exited(body):
 	if body is Player:
+		Global.chased = false
 		player = null
 		enemy_state = STATE.IDLE
 
@@ -112,13 +115,15 @@ func _on_timer_timeout():
 		enemy_state = randomize_array([STATE.IDLE, STATE.CHOOSE_DIRECTION, STATE.MOVE])
 
 func _on_remove_enemy():
+	var tween = get_tree().create_tween()
+	tween.tween_property(get_parent(), "modulate", Color("fff", 0.0), 1)
+	await tween.finished
 	queue_free()
 
 
 func _on_battle_area_body_entered(body):
 	if body is Player:
-		pass
-		#print("battle on")
+		enemy_state = STATE.IDLE
 		Global.start_battle.emit(["res://scenes/player.tscn"], [enemy_battle_path], "res://assets/art/backgrounds/tutorial.png", "battle")
 
 

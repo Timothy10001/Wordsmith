@@ -33,3 +33,7 @@ Narrator: ...
 set npc_class = "High Class"
 Narrator: You are confused!
 => END
+
+~ exp_gained
+set npc_class = "High Class"
+Narrator: You gained {{Global.experience}} EXP!

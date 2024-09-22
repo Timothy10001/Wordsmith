@@ -18,3 +18,4 @@ Narrator: There's nothing of use inside.
 set npc_class = "High Class"
 Narrator: You got {{Global.item_name}} x{{Global.item_quantity}}!
 => END
+

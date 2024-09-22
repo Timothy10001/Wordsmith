@@ -23,5 +23,5 @@ speed = 7
 initial_armor = 2
 armor = 2
 immortal = false
-experience = 10
+experience = 11
 inventory = SubResource("Resource_uskn3")

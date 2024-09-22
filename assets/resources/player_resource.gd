@@ -14,7 +14,3 @@ class_name PlayerResource
 
 @export var level := 1
 
-#level x value
-
-var experience = 0
-var experience_required = 0
