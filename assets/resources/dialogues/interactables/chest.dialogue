@@ -13,3 +13,8 @@ set npc_class = "High Class"
 Narrator: You search...
 Narrator: There's nothing of use inside.
 => END
+
+~ loot_get
+set npc_class = "High Class"
+Narrator: You got {{Global.item_name}} x{{Global.item_quantity}}!
+=> END

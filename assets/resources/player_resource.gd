@@ -11,3 +11,10 @@ class_name PlayerResource
 @export var mana: int = 100
 @export var max_mana: int = 100
 @export var immortal: bool
+
+@export var level := 1
+
+#level x value
+
+var experience = 0
+var experience_required = 0

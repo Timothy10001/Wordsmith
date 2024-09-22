@@ -3,8 +3,10 @@ extends Node2D
 
 func display_damage_number(value: int, is_heal: bool = false):
 	if value == 0:
+		$LabelContainer/Label.add_theme_color_override("font_color", Color("ffffff"))
 		$LabelContainer/Label.text = "MISS!"
 	else:
+		$LabelContainer/Label.add_theme_color_override("font_color", Color("ffffff"))
 		$LabelContainer/Label.text = "-" + str(value)
 	if is_heal:
 		$LabelContainer/Label.text = "+" + str(value)

@@ -7,7 +7,7 @@ var MAX_MANA : int
 var mana: int
 
 func _ready():
-	MAX_MANA = get_parent().CharacterResource.mana
+	MAX_MANA = get_parent().CharacterResource.max_mana
 	mana = MAX_MANA
 	mana = clamp(mana, 0, MAX_MANA)
 

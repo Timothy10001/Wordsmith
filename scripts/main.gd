@@ -2,7 +2,7 @@ extends Node
 
 #add player stats and inventory
 #debug
-"""
+
 var saved_data = {
 	"area": "mission 1 - outside",
 	"room": 0,
@@ -11,9 +11,8 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-"""
 #lobby
-
+"""
 var saved_data = {
 	"area": "lobby",
 	"room": 0,
@@ -22,7 +21,7 @@ var saved_data = {
 	"player position": Vector2(0, 0),
 	"direction": "up"
 }
-
+"""
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -230,7 +229,7 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 
 
 
-func _on_end_battle(state, _type: String):
+func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventory):
 	Global.in_battle = false
 	var transition_instance = transition_scene.instantiate()
 	#dialogue balloon for this shit
@@ -260,6 +259,12 @@ func _on_end_battle(state, _type: String):
 	player_instance.visible = true
 	
 	add_controls()
+	if state == "Win":
+		if experience_gained > 0:
+			pass
+		if loot.items[0] != null:
+			add_loot(loot)
+			Global.remove_enemy.emit()
 	
 	#TO BE CHANGED#
 	if _type == "tutorial" and State.current_room == 0:
@@ -267,6 +272,49 @@ func _on_end_battle(state, _type: String):
 		var balloon = BALLOON.instantiate()
 		add_child(balloon)
 		balloon.start(dialogue_resource, "start")
+
+
+func add_loot(inventory: Inventory):
+	var player_inventory = player_instance.inventory
+	if inventory.items:
+		for slot in inventory.items:
+			#if a slot in the chest exists
+			if slot:
+				#if the player has the same item as the chest
+				if player_inventory.search_inventory(slot.item.name):
+					var item_index = player_inventory.search_inventory(slot.item.name)
+					#if the chest item can fully merge with the player's item
+					if player_inventory.items[item_index].can_fully_merge_with(slot):
+						
+						set_interactable_dialogue(slot, "loot_get")
+						await Global.dialogue_ended
+						
+						player_inventory.items[item_index].fully_merge_with(slot)
+						player_inventory.inventory_updated.emit(player_inventory)
+						inventory.remove_item(slot.item.name)
+					else:
+						#the chest item is added onto another slot if it cannot fully merge
+						set_interactable_dialogue(slot, "loot_get")
+						await Global.dialogue_ended
+						
+						player_inventory.add_item(slot)
+						inventory.remove_item(slot.item.name)
+				else:
+					#the chest item is added onto another slot if it's a new item
+					set_interactable_dialogue(slot, "loot_get")
+					await Global.dialogue_ended
+					
+					player_inventory.add_item(slot)
+					inventory.remove_item(slot.item.name)
+			else:
+				break
+	else:
+		return
+
+func set_interactable_dialogue(slot: InventorySlot, title: String):
+	Global.item_name = slot.item.name
+	Global.item_quantity = slot.quantity
+	Global.start_interactable_dialogue.emit(load("res://assets/resources/dialogues/interactables/chest.dialogue"), title)
 
 func _on_start_interactable_dialogue(_dialogue_resource: DialogueResource, title: String):
 	var balloon = BALLOON.instantiate()

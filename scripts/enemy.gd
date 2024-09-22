@@ -29,7 +29,7 @@ func _ready():
 	randomize()
 	$DetectionArea/CollisionShape2D.shape.radius = detection_area
 	$BattleArea/CollisionShape2D.shape.radius = battle_area
-	Global.end_battle.connect(_on_end_battle)
+	Global.remove_enemy.connect(_on_remove_enemy)
 
 
 func _physics_process(_delta):
@@ -111,11 +111,8 @@ func _on_timer_timeout():
 		timer.wait_time = randomize_array([0.5, 0.75, 1.0])
 		enemy_state = randomize_array([STATE.IDLE, STATE.CHOOSE_DIRECTION, STATE.MOVE])
 
-func _on_end_battle(state, _type: String):
-	if state == "Win":
-		queue_free()
-	elif state == "Lose":
-		pass
+func _on_remove_enemy():
+	queue_free()
 
 
 func _on_battle_area_body_entered(body):

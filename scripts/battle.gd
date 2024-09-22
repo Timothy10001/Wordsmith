@@ -47,6 +47,9 @@ var unit_list = []
 var selected_unit
 var selected_enemy
 
+var total_enemy_experience: int
+var total_enemy_loot: Inventory
+
 var turn = 0
 var turn_count = 0
 var round_count = 0
@@ -225,7 +228,7 @@ func _process(_delta):
 			set_player_resource_data()
 			if !end_battle_emitted:
 				end_battle_emitted = true
-				Global.end_battle.emit("Win", battle_type)
+				Global.end_battle.emit("Win", battle_type, total_enemy_experience, total_enemy_loot)
 				await Global.end_battle
 			battle_state = null
 		STATE.LOSE:
@@ -233,7 +236,7 @@ func _process(_delta):
 			print("lost")
 			if !end_battle_emitted:
 				end_battle_emitted = true
-				Global.end_battle.emit("Lose", battle_type)
+				Global.end_battle.emit("Lose", battle_type, total_enemy_experience, total_enemy_loot)
 				await Global.end_battle
 			battle_state = null
 
@@ -254,6 +257,7 @@ func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _
 
 
 func show_default_container():
+	
 	if selected_unit:
 		selected_unit["resource"].armor = selected_unit["resource"].initial_armor
 	MainContainer.visible = true
@@ -274,7 +278,7 @@ func show_default_container():
 func get_player_data():
 	for player in party:
 		var player_instance = player.instantiate()
-		add_child(player_instance)
+		$VBoxContainer2/BottomContainer/MainContainer/CharacterContainer/CharacterPanel/VBoxContainer.add_child(player_instance)
 		var player_data = {
 			"instance": player_instance,
 			"name": player_instance.CharacterResource.name,
@@ -291,7 +295,9 @@ func get_player_data():
 			"skill_component": player_instance.skill_component,
 			"is_turn_finished": false
 		}
-		player_instance.visible = false
+		player_instance.get_node("CollisionShape2D").visible = false
+		player_instance.get_node("AnimatedSprite2D").visible = false
+		player_instance.get_node("Camera2D").visible = false
 		player_instance.set_process(false)
 		return player_data
 
@@ -302,6 +308,12 @@ func get_enemy_data():
 		var enemy_instance = enemy.instantiate()
 		# adds enemy sprite
 		EnemyContainer.add_child(enemy_instance)
+		total_enemy_experience += enemy_instance.CharacterResource.experience
+		total_enemy_loot = Inventory.new()
+		total_enemy_loot.items.resize(10)
+		if enemy_instance.CharacterResource.inventory != null:
+			for slot in enemy_instance.CharacterResource.inventory.items:
+				total_enemy_loot.add_item(slot)
 		var enemy_data = {
 			"instance": enemy_instance,
 			"name": enemy_instance.CharacterResource.name,
@@ -319,6 +331,9 @@ func get_enemy_data():
 			"is_turn_finished": false
 		}
 		enemy_list.push_back(enemy_data)
+		
+	print(total_enemy_experience)
+	print(total_enemy_loot.items)
 	return enemy_list
 
 

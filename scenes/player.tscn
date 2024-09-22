@@ -175,4 +175,3 @@ user = ExtResource("5_mr43v")
 [node name="LevelComponent" parent="." instance=ExtResource("9_ms482")]
 
 [node name="DamageIndicator" parent="." instance=ExtResource("13_1buei")]
-visible = false

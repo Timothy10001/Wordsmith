@@ -1,13 +1,27 @@
-[gd_resource type="Resource" script_class="Enemy" load_steps=2 format=3 uid="uid://bxirb0tchjmyo"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=7 format=3 uid="uid://bxirb0tchjmyo"]
 
+[ext_resource type="Resource" uid="uid://crhoh863ac78x" path="res://assets/resources/items/apple.tres" id="1_dmwcc"]
 [ext_resource type="Script" path="res://assets/resources/enemy.gd" id="1_xhaj3"]
+[ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="2_u7uul"]
+[ext_resource type="Script" path="res://assets/resources/inventory.gd" id="3_jbliv"]
+
+[sub_resource type="Resource" id="Resource_hex1x"]
+script = ExtResource("2_u7uul")
+item = ExtResource("1_dmwcc")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_uskn3"]
+script = ExtResource("3_jbliv")
+items = Array[ExtResource("2_u7uul")]([SubResource("Resource_hex1x")])
 
 [resource]
 script = ExtResource("1_xhaj3")
 name = "Rat"
-health = 125
+health = 20
 strength = 1.0
 speed = 7
 initial_armor = 2
 armor = 2
 immortal = false
+experience = 10
+inventory = SubResource("Resource_uskn3")

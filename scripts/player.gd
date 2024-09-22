@@ -8,6 +8,7 @@ class_name Player
 @onready var skill_component = $SkillComponent
 @onready var mana_component = $ManaComponent
 @onready var speed_component = $SpeedComponent
+@onready var level_component = $LevelComponent
 @onready var camera = $Camera2D
 
 var current_stun_duration: int = 0

@@ -8,6 +8,8 @@ class_name Enemy
 @export var initial_armor: int
 @export var armor: int
 @export var immortal: bool
+@export var experience: int
+@export var inventory: Inventory
 
 func enemy_AI(skills, user, target):
 	#checks all enemy skills
