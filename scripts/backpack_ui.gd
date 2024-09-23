@@ -20,7 +20,6 @@ func show_player_inventory():
 	player_instance = player.instantiate()
 	add_child(player_instance)
 	player_instance.visible = false
-	
 	player_inventory_instance = player_inventory.instantiate()
 	player_inventory_instance.set_inventory_data(player_inventory_resource)
 	add_child(player_inventory_instance)

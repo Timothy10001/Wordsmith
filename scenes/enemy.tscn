@@ -9,10 +9,11 @@ radius = 84.1487
 radius = 48.0
 
 [node name="Enemy" type="CharacterBody2D"]
-z_index = 1
 y_sort_enabled = true
 collision_layer = 2
-collision_mask = 4
+collision_mask = 5
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_nhqvg")
 
 [node name="DetectionArea" type="Area2D" parent="."]

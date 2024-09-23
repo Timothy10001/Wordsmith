@@ -18,6 +18,7 @@ class_name Item
 @export var damage: int = 0
 
 func use_item(_target):
+	#print("item used")
 	if type != "accessory":
 		if heal_value != 0:
 			_target.health_component.item_heal(self)

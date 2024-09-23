@@ -1,27 +1,13 @@
 extends Node
 
 #add player stats and inventory
-#debug
 
-var saved_data = {
-	"area": "mission 1 - outside",
-	"room": 0,
-	"current mission": 1,
-	"tutorial status": "done",
-	"player position": Vector2(0, 0),
-	"direction": "up"
-}
-#lobby
-"""
-var saved_data = {
-	"area": "lobby",
-	"room": 0,
-	"current mission": 0,
-	"tutorial status": "not done",
-	"player position": Vector2(0, 0),
-	"direction": "up"
-}
-"""
+var current_area_name: String = "mission 1 - outside"
+var current_room: int = 0
+var current_mission: int = 1
+var tutorial_status: String = "done"
+var player_position: Vector2 = Vector2(0,0)
+var current_direction: String = "up"
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -51,11 +37,12 @@ func _process(_delta):
 		get_tree().paused = false
 		remove_child(pause_instance)
 		if $CanvasLayer.get_child_count() > 0:
-			$CanvasLayer.remove_child($CanvasLayer.get_child(0))
+			$CanvasLayer.get_child(0).queue_free()
+		backpack_instance = null
+		pause_instance = null
 	if Input.is_action_just_pressed("show_inventory"):
 		pause_instance.visible = false
 		if $CanvasLayer.get_child_count() == 0:
-			
 			backpack_instance = backpack_scene.instantiate()
 			$CanvasLayer.add_child(backpack_instance)
 		else:
@@ -95,13 +82,15 @@ var current_area: Array[PackedScene]
 
 func start() -> void:
 	# TO BE CHANGED
-	State.current_area = saved_data["area"]
-	State.current_room = saved_data["room"]
-	State.current_mission = saved_data["current mission"]
-	State.tutorial_status = saved_data["tutorial status"]
-	State.player_position = saved_data["player position"]
-	State.current_direction = saved_data["direction"]
 	
+	State.current_area = current_area_name
+	State.current_room = current_room
+	State.current_mission = current_mission
+	State.tutorial_status  = tutorial_status
+	State.player_position = player_position
+	State.current_direction = current_direction
+	
+	GameStateService.new_game()
 	Global.enter_new_area.emit(State.current_area, State.current_room)
 	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
 	
@@ -130,6 +119,7 @@ func remove_controls():
 		Controls.remove_child(Controls.get_child(0))
 
 func get_current_area(_area):
+	GameStateService.on_scene_transitioning()
 	current_area.clear()
 	for room in Global.area_list[_area]:
 		current_area.append(load(room))
@@ -139,11 +129,15 @@ func get_current_area(_area):
 func _on_enter_new_area(_area: String, _room_index: int):
 	State.current_area = _area
 	State.current_room = _room_index
+	current_area_name = _area
+	current_room = _room_index
 	
 	get_current_area(_area)
 	
 
 func init_current_room():
+	GameStateService.on_scene_transitioning()
+	#print(GameStateService._game_state)
 	if Rooms.get_child_count() > 0:
 		Rooms.remove_child(Rooms.get_child(0))
 		
@@ -151,23 +145,33 @@ func init_current_room():
 	
 	Rooms.add_child(current_area[State.current_room].instantiate())
 	
+	if Rooms.get_child(0).has_node("Enemies"):
+		init_current_enemies(Rooms.get_child(0).get_node("Enemies"))
+	
 	player_instance = player_scene.instantiate()
 	player_instance.position = State.player_position
 	player_instance.current_direction = State.current_direction
 	
 	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
 
+var removed_enemies: Array[String]
+
+func init_current_enemies(enemy_node: Node2D):
+	for enemy_index in range(enemy_node.get_child_count()):
+		if !removed_enemies.is_empty():
+			for i in range(removed_enemies.size()):
+				if enemy_node.get_child(enemy_index).name == removed_enemies[i]:
+					enemy_node.get_child(enemy_index).queue_free()
+
 func _on_enter_new_room(_new_room_index: int, _player_position: Vector2, _direction: String):
 	State.current_room = _new_room_index
+	current_room = _new_room_index
 	State.player_position = _player_position
 	State.current_direction = _direction
 	call_deferred("init_current_room")
-	
-
 
 
 func _get_mission():
-	
 	remove_controls()
 	get_tree().paused = true
 	
@@ -191,9 +195,11 @@ func _on_confirm_mission():
 		1:
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-224, -16), "down")
+			removed_enemies = []
 		2:
 			Global.enter_new_area.emit("mission 2 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
+			removed_enemies = []
 
 func _on_cancel_mission():
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
@@ -233,7 +239,6 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type, _enemy_node)
 
 
-
 func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventory, _enemy_node: Node2D):
 	Global.in_battle = false
 	var transition_instance = transition_scene.instantiate()
@@ -263,9 +268,10 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 	get_tree().paused = false
 	player_instance.visible = true
 	
-	if state == "Win":
+	if state == "Win" and _type != "tutorial":
 		if _enemy_node:
 			#removes enemy
+			removed_enemies.append(_enemy_node.name)
 			var tween = get_tree().create_tween()
 			tween.tween_property(_enemy_node, "modulate", Color("fff", 0.0), 1)
 			await tween.finished
@@ -282,16 +288,16 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 			player_instance.level_component.gain_experience(experience_gained)
 		if loot.items[0] != null:
 			add_loot(loot)
-	
-	await Global.dialogue_ended
-	add_controls()
-	
 	#TO BE CHANGED#
 	if _type == "tutorial" and State.current_room == 0:
 		dialogue_resource = load("res://assets/resources/dialogues/king_pendragon.dialogue")
 		var balloon = BALLOON.instantiate()
 		add_child(balloon)
 		balloon.start(dialogue_resource, "start")
+		return
+	
+	add_controls()
+
 
 
 func add_loot(inventory: Inventory):

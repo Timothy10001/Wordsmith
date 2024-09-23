@@ -51,9 +51,12 @@ var dialogue_line: DialogueLine:
 		var portrait_path: String = "res://assets/art/characters/npc/portraits/%s.png" % dialogue_line.character.to_lower()
 		var portrait_import_path: String = "res://assets/art/characters/npc/portraits/%s.png.import" % dialogue_line.character.to_lower()
 		
+		
 		if FileAccess.file_exists(portrait_path) or FileAccess.file_exists(portrait_import_path):
 			portrait.texture = load(portrait_path)
+			portrait.visible = true
 		else:
+			portrait.texture = null
 			portrait.visible = false
 		
 

@@ -9,7 +9,7 @@ var player_resource = load("res://assets/resources/Player.tres")
 @onready var experience = $TextureRect/MarginContainer/StatsContainer/Experience
 
 
-func _ready():
+func _process(_delta):
 	health.text = "%s/%s" % [player_resource.health, player_resource.max_health]
 	mana.text = "%s/%s" % [player_resource.mana, player_resource.max_mana]
 	strength.text = "%s" % player_resource.strength

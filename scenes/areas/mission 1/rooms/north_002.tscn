@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c653ftt0vhodk"]
+[gd_scene load_steps=38 format=3 uid="uid://c653ftt0vhodk"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_m30uc"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_hbifl"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="6_thp18"]
 [ext_resource type="Resource" uid="uid://entqnkt37a5b" path="res://assets/resources/items/strawberry.tres" id="7_xpota"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="8_4jgd7"]
+[ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="10_6ahd2"]
+[ext_resource type="Texture2D" uid="uid://cpxkx2qd2rh17" path="res://assets/art/characters/enemy/rat_sprite.png" id="11_d3fqe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj3jy"]
 size = Vector2(16, 16)
@@ -38,7 +40,220 @@ region = Rect2(0, 0, 16, 16)
 atlas = ExtResource("4_l1ckm")
 region = Rect2(16, 0, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_52i8a"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddxgm"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyk61"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ve8xl"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(0, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16c05"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(48, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_en8c4"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(96, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1j6b5"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd3cr"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_258l8"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slgvh"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(0, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u07fe"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(48, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lpld"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(96, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52886"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(0, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayaph"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(48, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n57x3"]
+atlas = ExtResource("11_d3fqe")
+region = Rect2(96, 192, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yb6yo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52i8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddxgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyk61")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ve8xl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16c05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_en8c4")
+}],
+"loop": true,
+"name": &"run_down",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1j6b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd3cr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_258l8")
+}],
+"loop": true,
+"name": &"run_left",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slgvh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u07fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lpld")
+}],
+"loop": true,
+"name": &"run_right",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52886")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayaph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n57x3")
+}],
+"loop": true,
+"name": &"run_up",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxm7x"]
+size = Vector2(26, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r0j7f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52i8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddxgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyk61")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ve8xl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16c05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_en8c4")
+}],
+"loop": true,
+"name": &"run_down",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1j6b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd3cr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_258l8")
+}],
+"loop": true,
+"name": &"run_left",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slgvh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u07fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lpld")
+}],
+"loop": true,
+"name": &"run_right",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52886")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayaph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n57x3")
+}],
+"loop": true,
+"name": &"run_up",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ps4k"]
+size = Vector2(27, 14)
+
 [node name="North002" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -51,7 +266,7 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "ysort"
 layer_2/y_sort_enabled = true
 layer_2/z_index = 1
-layer_2/tile_data = PackedInt32Array(-4521989, 1, 5, -4521987, 1, 5, -5177346, 1, 5, -5308416, 1, 5, -5046271, 1, 5, -4784127, 1, 5, -4587519, 1, 5, -4784126, 1, 5, -4718590, 1, 5, -4980733, 1, 5, -5373946, 1, 5, -5242873, 1, 5, -5898225, 1, 5, -5505006, 1, 5, -5701612, 1, 5, -5505002, 1, 5, -5898217, 1, 5, -5504999, 1, 5, -5701600, 1, 5, -5636064, 1, 5, -5832667, 1, 5, -5504987, 1, 5, -5570518, 1, 5, -5832661, 1, 5, -5504980, 1, 5, -6553613, 1, 5, -6488077, 1, 5, -6160397, 1, 5, -6094861, 1, 5, -5963787, 1, 5, -6488074, 1, 5, -5570576, 1, 5, -5373968, 1, 5, -5242895, 1, 5, -5046287, 1, 5, -4849678, 1, 5, -6291461, 1, 5, -6356999, 1, 5, -6488061, 1, 5, -6488044, 1, 5, -6619104, 1, 5, -6488034, 1, 5, -6684638, 1, 5, -6553578, 1, 5, -6619111, 1, 5, -6619096, 1, 5, -6553587, 1, 5, -6553597, 1, 5, -6553599, 1, 5, -6553604, 1, 5, -6225924, 1, 5, -6160390, 1, 5, -6160391, 1, 5, -6160393, 1, 5, -6094857, 1, 5, -6357007, 1, 5, -6094864, 1, 5, -5898256, 1, 5, -5832720, 1, 5, -6619128, 1, 5, -6553593, 1, 5, -6029325, 524289, 6, -6225931, 524289, 6, -6357001, 524289, 6, -6422534, 524289, 6, -6488066, 524289, 6, -6422530, 524289, 6, -6225929, 524289, 6, -6225930, 524289, 6, -6422533, 524289, 6, -6488056, 524289, 6, -6488055, 524289, 6, -6553586, 524289, 6, -6619102, 524289, 6, -6553584, 524289, 6, -6488045, 524289, 6, -6619107, 524289, 6, -4849669, 1, 1, -6094850, 1, 1, -5636094, 1, 1, -5373950, 1, 1, -5898237, 1, 1, -6553595, 1, 1, -5767162, 1, 1, -6094836, 1, 1, -5832688, 1, 1, -6225900, 1, 1, -5373932, 1, 1, -6225891, 1, 1, -6160351, 1, 1, -5636059, 1, 1, -5701621, 655361, 7, -5570552, 655361, 7, -5636083, 655361, 7, -5832693, 655361, 7, -5832677, 655361, 7, -5701604, 655361, 7, -5701645, 655361, 7, -4653070, 655361, 7, -4915195, 655361, 7, -4653049, 655361, 7, -5046262, 1, 5, -4980726, 1, 5, -4784118, 1, 5, -5308405, 1, 1, -5046261, 1, 5, -4849653, 1, 5, -4521973, 1, 5, -4849651, 1, 5, -4653043, 1, 5, -5308402, 1, 5, -5242866, 1, 5, -5046257, 1, 5, -5177328, 1, 5, -4915184, 1, 5, -4521968, 1, 5, -4915183, 1, 5, -4784111, 1, 5, -5242862, 1, 5, -4784110, 1, 5, -4718574, 1, 5, -4587502, 1, 5, -4653037, 1, 5, -5111788, 1, 5, -4784108, 1, 5, -4587500, 1, 5, -4521964, 1, 5, -5111787, 1, 5, -4718571, 1, 5, -4521963, 1, 5, -5242858, 1, 5, -4980714, 1, 5, -5046249, 1, 5, -4849641, 1, 5, -4718569, 1, 1, -5111784, 1, 5, -4653032, 1, 5, -5177319, 1, 5, -5111783, 1, 5, -4915175, 524289, 6, -4587495, 1, 5, -5308390, 1, 5, -5242854, 1, 5, -5046246, 1, 5, -4718565, 1, 5, -4915172, 1, 5, -5046243, 1, 5, -4849635, 1, 5, -4784099, 1, 5, -5177314, 1, 5, -5046242, 1, 5, -4849634, 1, 5, -4587490, 1, 5, -5308385, 1, 5, -4980705, 1, 5, -4784097, 1, 5, -4718561, 1, 5, -4587489, 1, 5, -5046240, 1, 5, -4915168, 1, 5, -4718560, 1, 5, -5242847, 1, 5, -5046239, 1, 5, -4915167, 1, 5, -4718559, 1, 5, -4653023, 1, 5, -4784094, 1, 5, -4587486, 1, 5, -5242845, 1, 5, -4784093, 1, 5, -4718557, 1, 5, -5242844, 1, 5, -5111772, 1, 5, -5046236, 1, 5, -4915164, 1, 5, -4587484, 1, 5, -4521948, 1, 5, -5242843, 1, 5, -5046235, 1, 5, -4849627, 1, 5, -4784091, 1, 5, -4718555, 1, 5, -4849626, 1, 5, -4784090, 1, 5, -5308377, 1, 5, -5111769, 1, 5, -4915161, 1, 5, -4653017, 1, 5, -4980696, 1, 5, -4784088, 1, 5, -4718552, 1, 5, -4521944, 1, 5, -5111767, 1, 5, -5046231, 1, 5, -4849623, 1, 5, -4784087, 1, 5, -4718551, 1, 5, -4587479, 1, 5, -5242838, 1, 5, -5177302, 1, 5, -5046230, 1, 5, -4849622, 1, 5, -5242837, 1, 5, -5177301, 1, 5, -4849621, 1, 5, -5177300, 1, 5, -4849620, 1, 5, -4718548, 1, 5, -4521940, 1, 5, -5242835, 1, 5, -4915155, 1, 5, -4784083, 1, 5)
+layer_2/tile_data = PackedInt32Array(-4521989, 1, 5, -4521987, 1, 5, -5308416, 1, 5, -5046271, 1, 5, -4784127, 1, 5, -4587519, 1, 5, -4784126, 1, 5, -4718590, 1, 5, -4980733, 1, 5, -5373946, 1, 5, -5242873, 1, 5, -5505006, 1, 5, -5701612, 1, 5, -5505002, 1, 5, -5898217, 1, 5, -5504999, 1, 5, -5701600, 1, 5, -5636064, 1, 5, -5832667, 1, 5, -5504987, 1, 5, -5570518, 1, 5, -5832661, 1, 5, -5504980, 1, 5, -6553613, 1, 5, -6488077, 1, 5, -6160397, 1, 5, -6094861, 1, 5, -5963787, 1, 5, -6488074, 1, 5, -5570576, 1, 5, -5373968, 1, 5, -5242895, 1, 5, -5046287, 1, 5, -4849678, 1, 5, -6291461, 1, 5, -6356999, 1, 5, -6488061, 1, 5, -6488044, 1, 5, -6619104, 1, 5, -6488034, 1, 5, -6684638, 1, 5, -6553578, 1, 5, -6619111, 1, 5, -6619096, 1, 5, -6553587, 1, 5, -6553597, 1, 5, -6553599, 1, 5, -6553604, 1, 5, -6225924, 1, 5, -6160390, 1, 5, -6160391, 1, 5, -6160393, 1, 5, -6094857, 1, 5, -6357007, 1, 5, -6094864, 1, 5, -5898256, 1, 5, -5832720, 1, 5, -6619128, 1, 5, -6553593, 1, 5, -6029325, 524289, 6, -6225931, 524289, 6, -6357001, 524289, 6, -6422534, 524289, 6, -6488066, 524289, 6, -6422530, 524289, 6, -6225929, 524289, 6, -6225930, 524289, 6, -6422533, 524289, 6, -6488056, 524289, 6, -6488055, 524289, 6, -6553586, 524289, 6, -6619102, 524289, 6, -6553584, 524289, 6, -6488045, 524289, 6, -6619107, 524289, 6, -4849669, 1, 1, -6094850, 1, 1, -5373950, 1, 1, -6553595, 1, 1, -5832688, 1, 1, -5373932, 1, 1, -5636059, 1, 1, -5701621, 655361, 7, -5570552, 655361, 7, -5636083, 655361, 7, -5832677, 655361, 7, -5701604, 655361, 7, -5701645, 655361, 7, -4653070, 655361, 7, -4915195, 655361, 7, -4653049, 655361, 7, -5046262, 1, 5, -4980726, 1, 5, -4784118, 1, 5, -5308405, 1, 1, -5046261, 1, 5, -4849653, 1, 5, -4521973, 1, 5, -4849651, 1, 5, -4653043, 1, 5, -5308402, 1, 5, -5242866, 1, 5, -5046257, 1, 5, -5177328, 1, 5, -4915184, 1, 5, -4521968, 1, 5, -4915183, 1, 5, -4784111, 1, 5, -5242862, 1, 5, -4784110, 1, 5, -4718574, 1, 5, -4587502, 1, 5, -4653037, 1, 5, -5111788, 1, 5, -4784108, 1, 5, -4587500, 1, 5, -4521964, 1, 5, -5111787, 1, 5, -4718571, 1, 5, -4521963, 1, 5, -5242858, 1, 5, -4980714, 1, 5, -5046249, 1, 5, -4849641, 1, 5, -4718569, 1, 1, -5111784, 1, 5, -4653032, 1, 5, -5177319, 1, 5, -5111783, 1, 5, -4915175, 524289, 6, -4587495, 1, 5, -5308390, 1, 5, -5242854, 1, 5, -5046246, 1, 5, -4718565, 1, 5, -4915172, 1, 5, -5046243, 1, 5, -4849635, 1, 5, -4784099, 1, 5, -5177314, 1, 5, -5046242, 1, 5, -4849634, 1, 5, -4587490, 1, 5, -5308385, 1, 5, -4980705, 1, 5, -4784097, 1, 5, -4718561, 1, 5, -4587489, 1, 5, -5046240, 1, 5, -4915168, 1, 5, -4718560, 1, 5, -5242847, 1, 5, -5046239, 1, 5, -4915167, 1, 5, -4718559, 1, 5, -4653023, 1, 5, -4784094, 1, 5, -4587486, 1, 5, -5242845, 1, 5, -4784093, 1, 5, -4718557, 1, 5, -5242844, 1, 5, -5111772, 1, 5, -5046236, 1, 5, -4915164, 1, 5, -4587484, 1, 5, -4521948, 1, 5, -5242843, 1, 5, -5046235, 1, 5, -4849627, 1, 5, -4784091, 1, 5, -4718555, 1, 5, -4849626, 1, 5, -4784090, 1, 5, -5308377, 1, 5, -5111769, 1, 5, -4915161, 1, 5, -4653017, 1, 5, -4980696, 1, 5, -4784088, 1, 5, -4718552, 1, 5, -4521944, 1, 5, -5111767, 1, 5, -5046231, 1, 5, -4849623, 1, 5, -4784087, 1, 5, -4718551, 1, 5, -4587479, 1, 5, -5242838, 1, 5, -5177302, 1, 5, -5046230, 1, 5, -4849622, 1, 5, -5242837, 1, 5, -5177301, 1, 5, -4849621, 1, 5, -5177300, 1, 5, -4849620, 1, 5, -4718548, 1, 5, -4521940, 1, 5, -5242835, 1, 5, -4915155, 1, 5, -4784083, 1, 5)
 layer_3/name = "deco"
 layer_3/tile_data = PackedInt32Array()
 metadata/_edit_lock_ = true
@@ -83,9 +298,8 @@ position = Vector2(-64, -1232)
 shape = SubResource("RectangleShape2D_vj3jy")
 debug_color = Color(0.90527, 0.304533, 0, 0.42)
 
-[node name="NPCs" type="Node2D" parent="."]
-
 [node name="Interactables" type="Node2D" parent="."]
+z_index = 1
 y_sort_enabled = true
 
 [node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision", "opened_texture", "closed_texture") instance=ExtResource("3_ev2mg")]
@@ -104,6 +318,48 @@ texture = SubResource("AtlasTexture_a3jmh")
 
 [node name="Opened" type="Sprite2D" parent="Interactables/Chest"]
 texture = SubResource("AtlasTexture_s6rp2")
+
+[node name="Enemies" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="Rat003" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("10_6ahd2")]
+position = Vector2(-150, -1367)
+enemy_name = "Rat"
+enemy_battle_path = "res://scenes/enemies/rat.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 96.0
+battle_area = 32.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 75.0
+chases = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat003"]
+sprite_frames = SubResource("SpriteFrames_yb6yo")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat003"]
+position = Vector2(2, 15.5)
+shape = SubResource("RectangleShape2D_kxm7x")
+
+[node name="Rat004" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("10_6ahd2")]
+position = Vector2(196, -1546)
+enemy_name = "Rat"
+enemy_battle_path = "res://scenes/enemies/rat.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 96.0
+battle_area = 32.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 75.0
+chases = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat004"]
+sprite_frames = SubResource("SpriteFrames_r0j7f")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat004"]
+position = Vector2(2.5, 16)
+shape = SubResource("RectangleShape2D_1ps4k")
 
 [editable path="Collisions/ToNorth003"]
 [editable path="Collisions/ToNorth001"]

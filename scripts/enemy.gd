@@ -110,7 +110,7 @@ func _on_detection_area_area_exited(area):
 
 func _on_timer_timeout():
 	if enemy_state != STATE.CHASE:
-		timer.wait_time = randomize_array([0.5, 0.75, 1.0])
+		timer.wait_time = randomize_array([0.25, 0.5, 0.75])
 		enemy_state = randomize_array([STATE.IDLE, STATE.CHOOSE_DIRECTION, STATE.MOVE])
 
 
@@ -119,9 +119,3 @@ func _on_battle_area_body_entered(body):
 	if body is Player:
 		enemy_state = STATE.IDLE
 		Global.start_battle.emit(["res://scenes/player.tscn"], [enemy_battle_path], "res://assets/art/backgrounds/tutorial.png", "battle", self)
-
-
-
-
-
-

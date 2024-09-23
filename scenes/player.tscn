@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c708bnl1qw0ev"]
+[gd_scene load_steps=35 format=3 uid="uid://c708bnl1qw0ev"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_oxoy7"]
 [ext_resource type="Resource" uid="uid://1b1s3rxyxfhm" path="res://assets/resources/player_inventory.tres" id="3_a2rlo"]
@@ -18,6 +18,7 @@
 [ext_resource type="Resource" uid="uid://rtahi4ddsqae" path="res://assets/resources/player_skills/review.tres" id="11_cn1td"]
 [ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="13_1buei"]
 [ext_resource type="Resource" uid="uid://37n4b1p0r5vp" path="res://assets/resources/player_skills/guard.tres" id="13_5l48a"]
+[ext_resource type="Script" path="res://addons/game_state_saver/game_state_helper.gd" id="19_ntf6y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_etjyt"]
 size = Vector2(24, 24)
@@ -201,3 +202,7 @@ user = ExtResource("5_mr43v")
 CharacterResource = ExtResource("5_mr43v")
 
 [node name="DamageIndicator" parent="." instance=ExtResource("13_1buei")]
+
+[node name="GameStateHelper" type="Node" parent="."]
+script = ExtResource("19_ntf6y")
+save_properties = Array[String](["CharacterResource", "inventory"])

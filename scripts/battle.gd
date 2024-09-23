@@ -52,6 +52,7 @@ var selected_enemy
 var total_enemy_experience: int
 var total_enemy_loot: Inventory
 
+
 var turn = 0
 var turn_count = 0
 var round_count = 0
@@ -257,6 +258,7 @@ func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _
 	battle_type = _type
 	if _enemy_node:
 		enemy_node = _enemy_node
+
 
 
 func show_default_container():

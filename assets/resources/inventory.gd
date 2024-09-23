@@ -22,9 +22,9 @@ func use_item(index: int, target):
 	#add use item functionality
 	if slot.item.type == "consumable":
 		slot.quantity -= 1
-		print(slot.quantity)
 		if slot.quantity < 1:
 			items[index] = null
+	print("item used")
 	slot.item.use_item(target)
 	inventory_updated.emit(self)
 

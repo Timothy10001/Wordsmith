@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddktrys17vcy4"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_x8nos"]
+[ext_resource type="Script" path="res://addons/game_state_saver/game_state_helper.gd" id="2_gh745"]
+
+[node name="Main" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_x8nos")
+metadata/_edit_lock_ = true
+
+[node name="Rooms" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Cutscenes" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Controls" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameStateHelper" type="Node" parent="."]
+script = ExtResource("2_gh745")
+save_properties = Array[String](["current_area_name", "current_room", "current_mission", "tutorial_status", "player_position", "current_direction"])

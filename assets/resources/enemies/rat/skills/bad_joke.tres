@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://dh52ba431wg08"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_dw3w3"]
+
+[resource]
+script = ExtResource("1_dw3w3")
+name = "Bad Joke"
+description = "The rat tells you a bad joke."
+target = "SINGLE"
+attack_damage = 0
+heal_amount = 0
+mana_amount = 0
+mana_cost = 0
+deals_damage = true
+requires_skill_check = false
+status_effect = "none"
+stun_duration = 1
+chance = 10

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bcge8way148he"]
+[gd_scene load_steps=12 format=3 uid="uid://bcge8way148he"]
 
 [ext_resource type="Texture2D" uid="uid://cpxkx2qd2rh17" path="res://assets/art/characters/enemy/rat_sprite.png" id="1_cgdcl"]
 [ext_resource type="Script" path="res://scripts/enemies/rat.gd" id="2_5cyb6"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="5_ayt3v"]
 [ext_resource type="Resource" uid="uid://b58804xtbmubu" path="res://assets/resources/enemies/rat/skills/loud_squeak.tres" id="6_fbwq0"]
 [ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="6_p2400"]
+[ext_resource type="Resource" uid="uid://bx1f1k81q6w05" path="res://assets/resources/enemies/rat/skills/laugh.tres" id="7_cgqgc"]
+[ext_resource type="Resource" uid="uid://dh52ba431wg08" path="res://assets/resources/enemies/rat/skills/bad_joke.tres" id="8_acihr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yfmw6"]
 atlas = ExtResource("1_cgdcl")
@@ -44,7 +46,7 @@ grow_vertical = 2
 
 [node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_ibtvx")]
 health_component = NodePath("../HealthComponent")
-skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("6_fbwq0")])
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("6_fbwq0"), ExtResource("7_cgqgc"), ExtResource("8_acihr")])
 user = ExtResource("3_4bgx3")
 
 [node name="SpeedComponent" parent="." instance=ExtResource("5_ayt3v")]
