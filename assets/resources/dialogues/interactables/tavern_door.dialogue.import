@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://cwt2tq0eyk4di"
+path="res://.godot/imported/tavern_door.dialogue-3c306bcda67abfac6e7beb9845ff47c8.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/interactables/tavern_door.dialogue"
+dest_files=["res://.godot/imported/tavern_door.dialogue-3c306bcda67abfac6e7beb9845ff47c8.tres"]
+
+[params]
+
+defaults=true

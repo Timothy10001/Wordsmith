@@ -1,0 +1,10 @@
+~ without_key
+
+set npc_class = "Low Class"
+Rat: Hi! Wait a minute...
+Rat: You don't look like a rat.
+Rat: I'm sorry but you can't get in.
+Rat: Come back if you've become a rat. (or if you look like one)
+Rat: If you really want to, you can get a RAT MASK up north in our den.
+
+=> END

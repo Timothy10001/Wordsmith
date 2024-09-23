@@ -1,10 +1,12 @@
-[gd_scene load_steps=31 format=3 uid="uid://dvke46ty67iv4"]
+[gd_scene load_steps=33 format=3 uid="uid://dvke46ty67iv4"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_b4h5j"]
 [ext_resource type="PackedScene" uid="uid://rnslowucwlht" path="res://scenes/npcs/mr_cheese.tscn" id="2_66il4"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_vl3h6"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="3_a7rb8"]
+[ext_resource type="Resource" uid="uid://cmhr6sn0lq64b" path="res://assets/resources/items/rat_mask.tres" id="4_270lx"]
 [ext_resource type="Resource" uid="uid://cny7p73ybfma1" path="res://assets/resources/dialogues/interactables/locked_house_door.dialogue" id="4_gxjwi"]
+[ext_resource type="Resource" uid="uid://cwt2tq0eyk4di" path="res://assets/resources/dialogues/interactables/tavern_door.dialogue" id="5_77u4w"]
 [ext_resource type="Resource" uid="uid://bxwwnfkrqak32" path="res://assets/resources/items/mission_1_house_key.tres" id="5_hbfnp"]
 [ext_resource type="PackedScene" uid="uid://di4sis4pjpkqx" path="res://scenes/npcs/old_man_o_malley.tscn" id="6_s5jvv"]
 [ext_resource type="PackedScene" uid="uid://cdbdgkigbjfga" path="res://scenes/interactables/chest.tscn" id="8_7580h"]
@@ -120,6 +122,9 @@ collision = NodePath("CollisionShape2D2")
 direction = "up"
 new_area = "mission 1 - tavern"
 openable = true
+requires_key = true
+key = ExtResource("4_270lx")
+dialogue_resource = ExtResource("5_77u4w")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Collisions/ToTavern"]
 position = Vector2(0, 11)
