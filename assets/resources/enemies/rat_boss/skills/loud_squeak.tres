@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://b7luri0wqhklg"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_5cd5q"]
+
+[resource]
+script = ExtResource("1_5cd5q")
+name = "Loud Squeak"
+description = "The Rat Boss starts squeaking nonsense!"
+target = "SINGLE"
+attack_damage = 17
+heal_amount = 0
+mana_amount = 0
+mana_cost = 0
+deals_damage = true
+requires_skill_check = false
+status_effect = "none"
+stun_duration = 0
+chance = 0

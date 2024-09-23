@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=2 format=3 uid="uid://byl75ghhf7ljc"]
+
+[ext_resource type="Script" path="res://assets/resources/enemy.gd" id="1_j0oe0"]
+
+[resource]
+script = ExtResource("1_j0oe0")
+name = "Rat Boss"
+health = 500
+strength = 3.0
+speed = 8
+initial_armor = 5
+armor = 5
+immortal = false
+experience = 200

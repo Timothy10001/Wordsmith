@@ -21,4 +21,4 @@ process_mode = 1
 
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource("2_gh745")
-save_properties = Array[String](["current_area_name", "current_room", "current_mission", "tutorial_status", "player_position", "current_direction", "removed_enemies"])
+save_properties = Array[String](["current_area_name", "current_room", "current_mission", "tutorial_status", "player_position", "current_direction", "removed_enemies", "current_mission_enemy_count", "current_mission_enemy_required"])

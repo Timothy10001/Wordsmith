@@ -6,6 +6,10 @@ var current_area
 var player_position
 var current_direction
 
+var current_mission_enemy_count: int
+var current_mission_enemy_required: int
+
+
 #mission 0 is tutorial
 var tutorial_status: String = "not done"
 var current_mission: int = 0
@@ -13,3 +17,4 @@ var current_mission: int = 0
 #mission 1 shit
 
 var briefed_by_mr_cheese: bool = false
+

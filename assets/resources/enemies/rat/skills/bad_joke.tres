@@ -13,6 +13,6 @@ mana_amount = 0
 mana_cost = 0
 deals_damage = true
 requires_skill_check = false
-status_effect = "none"
+status_effect = "stun"
 stun_duration = 1
 chance = 10

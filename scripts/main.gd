@@ -9,6 +9,9 @@ var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
+var current_mission_enemy_count: int = 1
+var current_mission_enemy_required: int = 1
+
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 
@@ -89,6 +92,9 @@ func start() -> void:
 	State.tutorial_status  = tutorial_status
 	State.player_position = player_position
 	State.current_direction = current_direction
+	State.current_mission_enemy_count = current_mission_enemy_count
+	State.current_mission_enemy_required = current_mission_enemy_required
+	
 	
 	GameStateService.new_game()
 	Global.enter_new_area.emit(State.current_area, State.current_room)
@@ -110,12 +116,14 @@ func disable_player_process():
 	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
 
 func add_controls():
-	if Controls.get_child_count() == 0:
+	if Controls.get_child_count() < 3:
+		enemy_required_instance = enemy_required_scene.instantiate()
+		Controls.add_child(enemy_required_instance)
 		controls_instance = controls_scene.instantiate()
 		Controls.add_child(controls_instance)
 
 func remove_controls():
-	if Controls.get_child_count() >= 1:
+	for i in range(Controls.get_child_count()):
 		Controls.remove_child(Controls.get_child(0))
 
 func get_current_area(_area):
@@ -123,7 +131,6 @@ func get_current_area(_area):
 	current_area.clear()
 	for room in Global.area_list[_area]:
 		current_area.append(load(room))
-	
 
 
 func _on_enter_new_area(_area: String, _room_index: int):
@@ -153,6 +160,7 @@ func init_current_room():
 	player_instance.current_direction = State.current_direction
 	
 	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
+	
 
 var removed_enemies: Array[String]
 
@@ -181,6 +189,8 @@ func _get_mission():
 	mission_instance.MissionTitle.text = mission_instance.mission_title_list[State.current_mission]
 	mission_instance.MissionDescription.text = mission_instance.mission_description_list[State.current_mission]
 
+const enemy_required_scene: PackedScene = preload("res://scenes/enemies_required.tscn")
+var enemy_required_instance
 
 func _on_confirm_mission():
 	# do transition
@@ -196,6 +206,10 @@ func _on_confirm_mission():
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-224, -16), "down")
 			removed_enemies = []
+			current_mission_enemy_count = 1
+			current_mission_enemy_required = 1
+			State.current_mission_enemy_count = current_mission_enemy_count
+			State.current_mission_enemy_required = current_mission_enemy_required
 		2:
 			Global.enter_new_area.emit("mission 2 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
@@ -213,9 +227,11 @@ const battle_scene: PackedScene = preload("res://scenes/battle.tscn")
 func _on_start_battle(party: Array, enemies: Array, background_texture_path: String, _type: String, _enemy_node: Node2D):
 	
 	#DISABLE PLAYER MOVEMENT
-	get_tree().paused = true
 	player_instance.visible = false
 	remove_controls()
+	get_tree().paused = true
+	
+	
 	
 	#initialize battle data
 	Global.in_battle = true
@@ -234,7 +250,7 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	
 	transition_instance.iris_transition()
 	await Global.transition_finished
-	
+		
 	$CanvasLayer.add_child(battle_instance)
 	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type, _enemy_node)
 
@@ -268,10 +284,14 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 	get_tree().paused = false
 	player_instance.visible = true
 	
-	if state == "Win" and _type != "tutorial":
+	if state == "Win" and _type == "battle":
 		if _enemy_node:
 			#removes enemy
 			removed_enemies.append(_enemy_node.name)
+			current_mission_enemy_count -= 1
+			if current_mission_enemy_count < 0:
+				current_mission_enemy_count = 0
+			State.current_mission_enemy_count = current_mission_enemy_count
 			var tween = get_tree().create_tween()
 			tween.tween_property(_enemy_node, "modulate", Color("fff", 0.0), 1)
 			await tween.finished
@@ -295,8 +315,11 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		add_child(balloon)
 		balloon.start(dialogue_resource, "start")
 		return
+	if state == "Win" and _type == "boss_battle":
+		print("nig")
 	
 	add_controls()
+
 
 
 

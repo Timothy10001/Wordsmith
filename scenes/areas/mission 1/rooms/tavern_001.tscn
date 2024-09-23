@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://syml87hsnyxv"]
+[gd_scene load_steps=17 format=3 uid="uid://syml87hsnyxv"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_i2t70"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_y76av"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="7_fbyyd"]
 [ext_resource type="Resource" uid="uid://ds5q7ub33673q" path="res://assets/resources/items/cheese_juice.tres" id="8_6gx1g"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="8_qqjtm"]
+[ext_resource type="PackedScene" uid="uid://c5xridcjg0ccn" path="res://scenes/npcs/rat_boss.tscn" id="10_lxnjp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1ehc"]
 size = Vector2(32, 16)
@@ -34,6 +35,7 @@ items = Array[ExtResource("7_fbyyd")]([SubResource("Resource_s2hkp"), SubResourc
 size = Vector2(144, 16)
 
 [node name="Tavern001" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -53,6 +55,9 @@ layer_3/tile_data = PackedInt32Array(-1835011, 786438, 1, -1769475, 786438, 2, -
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+y_sort_enabled = true
+collision_layer = 4
+collision_mask = 3
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 position = Vector2(0, 16)
@@ -92,6 +97,7 @@ position = Vector2(0, 4)
 polygon = PackedVector2Array(-16, 12, 32, 12, 32, 16, -16, 16)
 
 [node name="Interactables" type="Node2D" parent="."]
+z_index = 1
 y_sort_enabled = true
 
 [node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("4_ovm4u")]
@@ -102,5 +108,12 @@ inventory = SubResource("Resource_ehfw0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Chest"]
 position = Vector2(120, -360)
 shape = SubResource("RectangleShape2D_faxc4")
+
+[node name="NPCs" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="RatBoss" parent="NPCs" instance=ExtResource("10_lxnjp")]
+position = Vector2(108, -334)
 
 [editable path="Collisions/ToTavern004"]

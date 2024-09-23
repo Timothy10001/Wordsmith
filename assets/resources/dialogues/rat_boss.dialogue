@@ -1,0 +1,21 @@
+~ start
+if State.current_mission_enemy_count == 0:
+	set npc_class = "Low Class"
+	Rat Boss: Hey, where is everybody?
+	Rat Boss: Hey you!
+	Rat Boss: Wait, you're the Wordsmith?
+	Rat Boss: Why are you here?
+	Rat Boss: Let's hang out!
+	do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/rat_boss.tscn"], "res://assets/art/backgrounds/tutorial.png", "boss_battle", null)
+	=> END
+else:
+	set npc_class = "Low Class"
+	Rat Boss: So I told her, that's a grate one!
+	Rat Boss: HAHAHAHAHAHA.
+	Rat Boss: I'm having such a grate time.
+
+	set npc_class = "High Class"
+	Narrator: It seems like he's very distracted.
+	Narrator: Maybe teaching all the other rats to leave will make him listen.
+	=> END
+=> END

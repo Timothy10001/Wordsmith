@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://c5xridcjg0ccn"]
+
+[ext_resource type="Script" path="res://scripts/npcs/rat_boss.gd" id="1_38uy7"]
+[ext_resource type="SpriteFrames" uid="uid://bljf7f8bm3r1f" path="res://assets/resources/enemies/rat_boss/sprites/rat_boss.tres" id="1_edgqq"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_8rfgg"]
+[ext_resource type="PackedScene" uid="uid://bkbkxdafjpdmr" path="res://scenes/npc.tscn" id="3_ko6u2"]
+[ext_resource type="Resource" uid="uid://bdpf16w0cdvt7" path="res://assets/resources/dialogues/rat_boss.dialogue" id="4_hvamq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgr14"]
+atlas = ExtResource("2_8rfgg")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vh5jo"]
+size = Vector2(27, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_07m4a"]
+size = Vector2(144.5, 129.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qy0lo"]
+
+[node name="RatBoss" type="CharacterBody2D"]
+script = ExtResource("1_38uy7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_edgqq")
+animation = &"sitting"
+frame = 2
+frame_progress = 0.812497
+
+[node name="MarginContainer" type="MarginContainer" parent="AnimatedSprite2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="AnimatedSprite2D/MarginContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_vgr14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 16.5)
+shape = SubResource("RectangleShape2D_vh5jo")
+
+[node name="NPC" parent="." node_paths=PackedStringArray("touch_screen_button", "collision_shape") instance=ExtResource("3_ko6u2")]
+dialogue_resource = ExtResource("4_hvamq")
+touch_screen_button = NodePath("TouchScreenButton")
+collision_shape = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC"]
+shape = SubResource("RectangleShape2D_07m4a")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="NPC"]
+shape = SubResource("RectangleShape2D_qy0lo")
+
+[connection signal="player_entered" from="NPC" to="." method="_on_npc_player_entered"]
+[connection signal="player_left" from="NPC" to="." method="_on_npc_player_left"]

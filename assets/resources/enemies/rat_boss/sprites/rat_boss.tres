@@ -1,0 +1,58 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://bljf7f8bm3r1f"]
+
+[ext_resource type="Texture2D" uid="uid://culd4a5eppm47" path="res://assets/art/characters/enemy/rat_boss_sprite.png" id="1_j8dhf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cayp4"]
+atlas = ExtResource("1_j8dhf")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0ffb"]
+atlas = ExtResource("1_j8dhf")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_417e3"]
+atlas = ExtResource("1_j8dhf")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ekag"]
+atlas = ExtResource("1_j8dhf")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpayh"]
+atlas = ExtResource("1_j8dhf")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xaii5"]
+atlas = ExtResource("1_j8dhf")
+region = Rect2(96, 48, 48, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cayp4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0ffb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_417e3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ekag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpayh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xaii5")
+}],
+"loop": true,
+"name": &"sitting",
+"speed": 5.0
+}]

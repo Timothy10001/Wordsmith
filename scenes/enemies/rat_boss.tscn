@@ -1,0 +1,53 @@
+[gd_scene load_steps=12 format=3 uid="uid://dno63stscfsqn"]
+
+[ext_resource type="Texture2D" uid="uid://culd4a5eppm47" path="res://assets/art/characters/enemy/rat_boss_sprite.png" id="1_42uf4"]
+[ext_resource type="Script" path="res://scripts/enemies/rat_boss.gd" id="2_bhytl"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="2_bqflf"]
+[ext_resource type="Resource" uid="uid://byl75ghhf7ljc" path="res://assets/resources/enemies/rat_boss/rat_boss_stats.tres" id="3_lsdee"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="3_mahpi"]
+[ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="4_y6x68"]
+[ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="5_i4288"]
+[ext_resource type="Resource" uid="uid://b7luri0wqhklg" path="res://assets/resources/enemies/rat_boss/skills/loud_squeak.tres" id="6_6ccur"]
+[ext_resource type="Resource" uid="uid://blyfv6qfwll0n" path="res://assets/resources/enemies/rat_boss/skills/laugh.tres" id="7_eug77"]
+[ext_resource type="Resource" uid="uid://ckx5irjnxv8bd" path="res://assets/resources/enemies/rat_boss/skills/terrible_joke.tres" id="8_u3r34"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rysf4"]
+atlas = ExtResource("1_42uf4")
+region = Rect2(0, 0, 48, 48)
+
+[node name="RatBoss" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_rysf4")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("2_bhytl")
+CharacterResource = ExtResource("3_lsdee")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_bqflf")]
+
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_mahpi")]
+health_component = NodePath("../HealthComponent")
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("6_6ccur"), ExtResource("7_eug77"), ExtResource("8_u3r34")])
+user = ExtResource("3_lsdee")
+
+[node name="SpeedComponent" parent="." instance=ExtResource("4_y6x68")]
+
+[node name="DamageIndicator" parent="." instance=ExtResource("5_i4288")]
