@@ -16,6 +16,6 @@ else:
 
 	set npc_class = "High Class"
 	Narrator: It seems like he's very distracted.
-	Narrator: Maybe teaching all the other rats to leave will make him listen.
+	Narrator: Maybe teaching all the other rats will make him listen.
 	=> END
 => END

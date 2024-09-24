@@ -55,6 +55,10 @@ func _physics_process(_delta):
 
 
 func _process(delta):
+	if !Global.enemy_battle_active:
+		$BattleArea/CollisionShape2D.disabled = true
+	else:
+		$BattleArea/CollisionShape2D.disabled = false
 	if enemy_state == STATE.IDLE:
 		sprite.play("idle")
 	elif enemy_state == STATE.MOVE or enemy_state == STATE.CHASE:
@@ -90,12 +94,14 @@ func randomize_array(array: Array):
 func _on_detection_area_body_entered(body):
 	if body is Player:
 		player = body
+		Global.is_inside_detection_area = true
 		if chases and not area_entered:
 			enemy_state = STATE.CHASE
 
 func _on_detection_area_body_exited(body):
 	if body is Player:
 		Global.chased = false
+		Global.is_inside_detection_area = false
 		player = null
 		enemy_state = STATE.IDLE
 
@@ -103,10 +109,14 @@ func _on_detection_area_area_entered(area):
 	if area.name == "DetectionArea":
 		area_entered = true
 		enemy_state = STATE.IDLE
+	else:
+		return
 
 func _on_detection_area_area_exited(area):
 	if area.name == "DetectionArea":
 		area_entered = false
+	else:
+		return
 
 func _on_timer_timeout():
 	if enemy_state != STATE.CHASE:

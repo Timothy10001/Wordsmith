@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://syml87hsnyxv"]
+[gd_scene load_steps=38 format=3 uid="uid://syml87hsnyxv"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_i2t70"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_y76av"]
@@ -10,6 +10,8 @@
 [ext_resource type="Resource" uid="uid://ds5q7ub33673q" path="res://assets/resources/items/cheese_juice.tres" id="8_6gx1g"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="8_qqjtm"]
 [ext_resource type="PackedScene" uid="uid://c5xridcjg0ccn" path="res://scenes/npcs/rat_boss.tscn" id="10_lxnjp"]
+[ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="11_vlun4"]
+[ext_resource type="Texture2D" uid="uid://cpxkx2qd2rh17" path="res://assets/art/characters/enemy/rat_sprite.png" id="12_0rmxd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1ehc"]
 size = Vector2(32, 16)
@@ -34,6 +36,218 @@ items = Array[ExtResource("7_fbyyd")]([SubResource("Resource_s2hkp"), SubResourc
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faxc4"]
 size = Vector2(144, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_52i8a"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddxgm"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyk61"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ve8xl"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(0, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16c05"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(48, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_en8c4"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(96, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1j6b5"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd3cr"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_258l8"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slgvh"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(0, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u07fe"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(48, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lpld"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(96, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52886"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(0, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayaph"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(48, 192, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n57x3"]
+atlas = ExtResource("12_0rmxd")
+region = Rect2(96, 192, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ajni"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52i8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddxgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyk61")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ve8xl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16c05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_en8c4")
+}],
+"loop": true,
+"name": &"run_down",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1j6b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd3cr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_258l8")
+}],
+"loop": true,
+"name": &"run_left",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slgvh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u07fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lpld")
+}],
+"loop": true,
+"name": &"run_right",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52886")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayaph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n57x3")
+}],
+"loop": true,
+"name": &"run_up",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ksko3"]
+size = Vector2(27, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ef7p3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52i8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddxgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyk61")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ve8xl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16c05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_en8c4")
+}],
+"loop": true,
+"name": &"run_down",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1j6b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd3cr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_258l8")
+}],
+"loop": true,
+"name": &"run_left",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slgvh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u07fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lpld")
+}],
+"loop": true,
+"name": &"run_right",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52886")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayaph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n57x3")
+}],
+"loop": true,
+"name": &"run_up",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uv0sb"]
+size = Vector2(27, 14)
+
 [node name="Tavern001" type="Node2D"]
 y_sort_enabled = true
 
@@ -55,6 +269,7 @@ layer_3/tile_data = PackedInt32Array(-1835011, 786438, 1, -1769475, 786438, 2, -
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+z_index = 1
 y_sort_enabled = true
 collision_layer = 4
 collision_mask = 3
@@ -115,5 +330,45 @@ y_sort_enabled = true
 
 [node name="RatBoss" parent="NPCs" instance=ExtResource("10_lxnjp")]
 position = Vector2(108, -334)
+
+[node name="Enemies" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="Rat011" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("11_vlun4")]
+position = Vector2(232, -327)
+enemy_name = "Rat"
+enemy_battle_path = "res://scenes/enemies/rat.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 96.0
+battle_area = 32.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 75.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat011"]
+sprite_frames = SubResource("SpriteFrames_3ajni")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat011"]
+position = Vector2(2.5, 16)
+shape = SubResource("RectangleShape2D_ksko3")
+
+[node name="Rat012" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("11_vlun4")]
+position = Vector2(56, -298)
+enemy_name = "Rat"
+enemy_battle_path = "res://scenes/enemies/rat.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 96.0
+battle_area = 32.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 75.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat012"]
+sprite_frames = SubResource("SpriteFrames_ef7p3")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat012"]
+position = Vector2(2.5, 16)
+shape = SubResource("RectangleShape2D_uv0sb")
 
 [editable path="Collisions/ToTavern004"]

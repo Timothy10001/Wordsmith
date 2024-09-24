@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dfsgydy33h38g"]
+[gd_scene load_steps=24 format=3 uid="uid://dfsgydy33h38g"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_1akfc"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_5ka26"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="6_2lb5j"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="7_dfb8y"]
 [ext_resource type="Resource" uid="uid://dkbc6623umoh1" path="res://assets/resources/items/water_bottle.tres" id="9_4lpvb"]
+[ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="10_vvxx0"]
+[ext_resource type="SpriteFrames" uid="uid://dvhlxosrhum5l" path="res://assets/resources/enemies/rat/sprites/rat.tres" id="11_f885d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_583aq"]
 size = Vector2(48, 16)
@@ -51,7 +53,11 @@ items = Array[ExtResource("6_2lb5j")]([])
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymsng"]
 size = Vector2(16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rmal"]
+size = Vector2(27, 14)
+
 [node name="Tavern002" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -70,6 +76,8 @@ layer_3/tile_data = PackedInt32Array(-1900538, 589830, 1, -2162678, 589830, 1, -
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+z_index = 1
+y_sort_enabled = true
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-48, -400, -48, -560, 272, -560, 272, -400, 304, -400, 304, -592, -80, -592, -80, -368, 336, -368, 336, -400, 272, -400, 272, -384, 224, -384, 224, -400)
@@ -94,6 +102,8 @@ position = Vector2(0, 16)
 polygon = PackedVector2Array(-16, -16, 32, -16, 32, 0, -16, 0)
 
 [node name="Interactables" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
 
 [node name="Bread" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("4_df68n")]
 collision = NodePath("../../Collisions/ToTavern001/CollisionShape2D")
@@ -130,5 +140,27 @@ inventory = SubResource("Resource_fnecf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/EmptyFridge"]
 position = Vector2(8, -536)
 shape = SubResource("RectangleShape2D_ymsng")
+
+[node name="Enemies" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="Rat013" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("10_vvxx0")]
+position = Vector2(130, -524)
+enemy_name = "Rat"
+enemy_battle_path = "res://scenes/enemies/rat.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 96.0
+battle_area = 32.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 75.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat013"]
+sprite_frames = ExtResource("11_f885d")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat013"]
+position = Vector2(2.5, 16)
+shape = SubResource("RectangleShape2D_4rmal")
 
 [editable path="Collisions/ToTavernBasement"]

@@ -14,7 +14,10 @@ func display_damage_number(value: int, type: String):
 			$LabelContainer/Label.text = "+" + str(value)
 		"mana":
 			$LabelContainer/Label.add_theme_color_override("font_color", Color("3898ff"))
-			$LabelContainer/Label.text = "+" + str(value)
+			if value >= 0:
+				$LabelContainer/Label.text = "+" + str(value)
+			else:
+				$LabelContainer/Label.text = "-" + str(value)
 	
 	animation_player.play("Rise and Fade")
 

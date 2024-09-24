@@ -4,6 +4,7 @@ extends CanvasLayer
 func _ready():
 	$Iris.visible = false
 	$Fade.visible = false
+	Global.transition_ready.emit()
 
 
 func iris_transition():

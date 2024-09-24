@@ -16,6 +16,7 @@ signal end_skill_check
 signal all_turns_finished
 
 signal transition
+signal transition_ready
 signal transition_finished
 
 signal get_mission
@@ -56,7 +57,7 @@ var experience: int
 var npc_class = ""
 
 var chased: bool
-
+var is_inside_detection_area: bool = false
 #item and skill description for battle dialogue
 var skill_description: String
 var item_name: String
@@ -70,6 +71,7 @@ var Voices: Array[Dictionary] = DisplayServer.tts_get_voices()
 var VoiceID: int = 0
 var TTS_available: bool
 
+var enemy_battle_active: bool = true
 """
 MISSION 1 - OUTSIDE INDEX
 0 = main

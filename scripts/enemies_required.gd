@@ -15,5 +15,8 @@ func _process(_delta):
 			1:
 				texture_rect.texture = load("res://assets/art/characters/npc/portraits/rat.png")
 				label.text = "s to be taught: %s" % State.current_mission_enemy_count
+			2:
+				texture_rect.texture = null
+				label.text = "s to be taught: %s" % State.current_mission_enemy_count
 	else:
 		queue_free()

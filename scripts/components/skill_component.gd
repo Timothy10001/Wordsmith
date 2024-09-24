@@ -76,6 +76,7 @@ func use_skill(_name: String, target, skill_component: SkillComponent, target_in
 				
 				if skill.status_effect == "stun":
 					target["instance"].current_stun_duration += skill.stun_duration
+					target["health_component"].damage(skill_component, target_instance)
 				
 				if skill.status_effect == "none":
 					target["health_component"].damage(skill_component, target_instance)

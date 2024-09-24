@@ -14,7 +14,7 @@ func _ready():
 	
 
 func _process(_delta):
-	if Global.chased:
+	if Global.chased or Global.is_inside_detection_area:
 		InteractButton.visible = false
 
 func _on_dialogue_active():

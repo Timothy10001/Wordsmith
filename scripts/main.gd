@@ -9,8 +9,8 @@ var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
-var current_mission_enemy_count: int = 0
-var current_mission_enemy_required: int = 0
+var current_mission_enemy_count: int = 14
+var current_mission_enemy_required: int = 14
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -120,6 +120,11 @@ func enable_player_process():
 func disable_player_process():
 	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
 
+func add_iris_transition():
+	var transition_instance = transition_scene.instantiate()
+	add_child(transition_instance)
+	transition_instance.iris_transition()
+
 func add_controls():
 	if Controls.get_child_count() == 0:
 		enemy_required_instance = enemy_required_scene.instantiate()
@@ -201,10 +206,9 @@ var enemy_required_instance
 
 func _on_confirm_mission():
 	# do transition
-	var transition_instance = transition_scene.instantiate()
-	add_child(transition_instance)
+	
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
-	transition_instance.iris_transition()
+	
 	await Global.transition_finished
 	get_tree().paused = false
 	#load new area after transition
@@ -213,8 +217,8 @@ func _on_confirm_mission():
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-224, -16), "down")
 			removed_enemies = []
-			current_mission_enemy_count = 1
-			current_mission_enemy_required = 1
+			current_mission_enemy_count = 14
+			current_mission_enemy_required = 14
 			State.current_mission_enemy_count = current_mission_enemy_count
 			State.current_mission_enemy_required = current_mission_enemy_required
 		2:
@@ -241,8 +245,14 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	player_instance.visible = false
 	remove_controls()
 	get_tree().paused = true
+	Global.enemy_battle_active = false
 	
+	call_deferred("add_iris_transition")
+	await Global.transition_finished
 	
+	#ADD BATTLE SCENE
+	var battle_instance = battle_scene.instantiate()
+	$CanvasLayer.add_child(battle_instance)
 	
 	#initialize battle data
 	Global.in_battle = true
@@ -252,17 +262,6 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 		party_array.append(load(player))
 	for enemy in enemies:
 		enemy_array.append(load(enemy))
-	
-	#ADD BATTLE SCENE
-	var battle_instance = battle_scene.instantiate()
-	
-	var transition_instance = transition_scene.instantiate()
-	add_child(transition_instance)
-	
-	transition_instance.iris_transition()
-	await Global.transition_finished
-		
-	$CanvasLayer.add_child(battle_instance)
 	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type, _enemy_node)
 
 
@@ -333,6 +332,9 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		return
 	
 	add_controls()
+	#enable enemy battle areas after 1.5 seconds
+	await get_tree().create_timer(1.5).timeout
+	Global.enemy_battle_active = true
 
 
 
@@ -460,9 +462,7 @@ func _on_back_to_lobby():
 	remove_controls()
 	get_tree().paused = true
 	
-	var transition_instance = transition_scene.instantiate()
-	add_child(transition_instance)
-	transition_instance.iris_transition()
+	call_deferred("add_iris_transition")
 	await Global.transition_finished
 	
 	Global.enter_new_area.emit("lobby", 0)

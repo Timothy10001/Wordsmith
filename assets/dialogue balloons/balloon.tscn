@@ -71,6 +71,7 @@ Panel/styles/panel = SubResource("StyleBoxFlat_uy0d5")
 RichTextLabel/fonts/normal_font = null
 
 [node name="ExampleBalloon" type="CanvasLayer"]
+process_mode = 3
 layer = 100
 script = ExtResource("1_eu6sp")
 
