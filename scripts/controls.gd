@@ -11,7 +11,6 @@ func _ready():
 	Global.interactable_entered.connect(_on_interactable_entered)
 	Global.interactable_exited.connect(_on_interactable_exited)
 	InteractButton.visible = false
-	
 
 func _process(_delta):
 	if Global.chased or Global.is_inside_detection_area:

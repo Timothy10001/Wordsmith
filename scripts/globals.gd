@@ -16,7 +16,6 @@ signal end_skill_check
 signal all_turns_finished
 
 signal transition
-signal transition_ready
 signal transition_finished
 
 signal get_mission

@@ -36,6 +36,10 @@ func _on_body_exited(body):
 		Global.interactable_exited.emit()
 
 func _process(_delta):
+	if !Global.enemy_battle_active:
+		collision_shape.disabled = true
+	else:
+		collision_shape.disabled = false
 	if has_entered:
 		if Input.is_action_just_pressed("interact"):
 			touch_screen_button.visible = false

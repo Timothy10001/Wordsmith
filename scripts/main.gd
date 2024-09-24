@@ -79,7 +79,7 @@ func connect_signals():
 
 
 #create rooms in a different scene?
-const controls_scene: PackedScene = preload("res://scenes/controls.tscn")
+#const controls_scene: PackedScene = preload("res://scenes/controls.tscn")
 const player_scene: PackedScene = preload("res://scenes/player.tscn")
 const pause_scene: PackedScene = preload("res://scenes/pause_menu.tscn")
 const backpack_scene: PackedScene = preload("res://scenes/backpack_ui.tscn")
@@ -120,6 +120,7 @@ func enable_player_process():
 func disable_player_process():
 	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
 
+
 func add_iris_transition():
 	var transition_instance = transition_scene.instantiate()
 	add_child(transition_instance)
@@ -127,14 +128,16 @@ func add_iris_transition():
 
 func add_controls():
 	if Controls.get_child_count() == 0:
-		enemy_required_instance = enemy_required_scene.instantiate()
-		Controls.add_child(enemy_required_instance)
+		var controls_scene: PackedScene = load("res://scenes/controls.tscn")
 		controls_instance = controls_scene.instantiate()
 		Controls.add_child(controls_instance)
+		var enemy_required_scene: PackedScene = load("res://scenes/enemies_required.tscn")
+		enemy_required_instance = enemy_required_scene.instantiate()
+		Controls.add_child(enemy_required_instance)
 
 func remove_controls():
 	for i in range(Controls.get_child_count()):
-		Controls.remove_child(Controls.get_child(0))
+		Controls.get_child(i).queue_free()
 
 func get_current_area(_area):
 	GameStateService.on_scene_transitioning()
@@ -201,7 +204,7 @@ func _get_mission():
 	mission_instance.MissionTitle.text = mission_instance.mission_title_list[State.current_mission]
 	mission_instance.MissionDescription.text = mission_instance.mission_description_list[State.current_mission]
 
-const enemy_required_scene: PackedScene = preload("res://scenes/enemies_required.tscn")
+#const enemy_required_scene: PackedScene = preload("res://scenes/enemies_required.tscn")
 var enemy_required_instance
 
 func _on_confirm_mission():
@@ -242,10 +245,11 @@ const battle_scene: PackedScene = preload("res://scenes/battle.tscn")
 func _on_start_battle(party: Array, enemies: Array, background_texture_path: String, _type: String, _enemy_node: Node2D):
 	
 	#DISABLE PLAYER MOVEMENT
-	player_instance.visible = false
 	remove_controls()
-	get_tree().paused = true
+	player_instance.visible = false
 	Global.enemy_battle_active = false
+	get_tree().paused = true
+	
 	
 	call_deferred("add_iris_transition")
 	await Global.transition_finished
@@ -262,6 +266,7 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 		party_array.append(load(player))
 	for enemy in enemies:
 		enemy_array.append(load(enemy))
+	
 	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type, _enemy_node)
 
 
@@ -293,6 +298,7 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 	#ENABLE PLAYER MOVEMENT
 	get_tree().paused = false
 	player_instance.visible = true
+	player_instance.collision.disabled = false
 	
 	if state == "Win" and _type == "battle":
 		if _enemy_node:

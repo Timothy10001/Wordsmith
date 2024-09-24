@@ -8,3 +8,4 @@ func _on_npc_player_entered():
 
 func _on_npc_player_left():
 	$AnimatedSprite2D/MarginContainer/TextureRect.visible = false
+

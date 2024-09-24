@@ -11,6 +11,7 @@ class_name Player
 @onready var level_component = $LevelComponent
 @onready var camera = $Camera2D
 @onready var ChaseIndicator = $AnimatedSprite2D/ChaseIndicator
+@onready var collision =$CollisionShape2D
 
 var current_stun_duration: int = 0
 var current_miss_duration: int = 0
@@ -35,6 +36,10 @@ func _ready():
 		play_animation()
 
 func _process(_delta):
+	if visible:
+		collision.disabled = false
+	else:
+		collision.disabled = true
 	State.player_position = global_position
 	if Global.chased:
 		ChaseIndicator.visible = true
