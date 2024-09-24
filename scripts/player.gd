@@ -22,6 +22,7 @@ var is_moving = false
 
 func _ready():
 	ChaseIndicator.visible = false
+	Global.cutscene_ended.connect(_on_cutscene_ended)
 	#limits camera to size of tilemap
 	if !Global.in_battle and get_parent() is TileMap:
 		var tilemap_rect = get_parent().get_used_rect()
@@ -34,10 +35,16 @@ func _ready():
 		play_animation()
 
 func _process(_delta):
+	State.player_position = global_position
 	if Global.chased:
 		ChaseIndicator.visible = true
 	else:
 		ChaseIndicator.visible = false
+	if Global.cutscene_playing:
+		camera.enabled = false
+	else:
+		camera.enabled = true
+	play_animation()
 
 func _physics_process(_delta):
 	player_movement(_delta)
@@ -70,7 +77,6 @@ func player_movement(_delta):
 	else:
 		play_animation()
 		is_moving = false
-		current_direction = "none"
 		velocity.x = 0
 		velocity.y = 0
 	move_and_slide()
@@ -107,4 +113,7 @@ func play_animation():
 			"none":
 				animation.play("idle_down")
 	
-	
+
+
+func _on_cutscene_ended():
+	camera.enabled = true

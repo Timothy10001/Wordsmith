@@ -9,6 +9,11 @@ var experience = 0
 var experience_total = 0
 var experience_required
 
+func _process(_delta):
+	State.level = CharacterResource.level
+	CharacterResource.experience = experience
+	CharacterResource.experience_required = experience_required
+
 func _ready():
 	level = CharacterResource.level
 	CharacterResource.experience = experience
@@ -28,7 +33,7 @@ func gain_experience(amount):
 		level_up()
 
 func level_up():
-	level += level + 1
+	level += 1
 	CharacterResource.level = level
 	CharacterResource.strength += 3
 	CharacterResource.max_health += 15

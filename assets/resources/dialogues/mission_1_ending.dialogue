@@ -1,0 +1,33 @@
+~ start
+
+set npc_class = "Low Class"
+Rat Boss: We're so sorry Mr. Cheese.
+Rat Boss: We didn't realize that we're not allowed here.
+Rat Boss: We couldn't read your sign out here.
+Rat Boss: We've also drove your customers away.
+Rat Boss: Hey! You guys! Say sorry to Mr. Cheese!
+Rat: We're sorry Mr. Cheese
+
+set npc_class = "Middle Class"
+Mr Cheese: It's alright guys.
+Mr Cheese: As long as you learned your lesson.
+Mr Cheese: If you guys could drop your act as The RAT Gang and tell bad jokes to people,
+Mr Cheese: Maybe I'll let you in, and give you a special treat!
+
+set npc_class = "Low Class"
+Rat Boss: Really?
+
+set npc_class = "Middle Class"
+Mr Cheese: Of course, I'd be happy to serve a group of lively rats like you!
+
+set npc_class = "Low Class"
+Rat Boss: Okay guys, let's go clean up our acts.
+
+set npc_class = "Middle Class"
+Mr Cheese: Wordsmith! Thank you! Thank you so much!
+Mr Cheese: Now I can go back to business as usual.
+Mr Cheese: As my token of appreciation,
+Mr Cheese: Here you go!
+
+do emit("add_mission_rewards", "res://assets/resources/mission_rewards/mission_1.tres")
+=> END

@@ -539,6 +539,15 @@ func show_skills():
 	RightButtonContainer.visible = true
 	$VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute.visible = false
 	RightCharacterPanel.visible = false
+	IdentifyButton.visible = false
+	StoryTimeButton.visible = false
+	ReviewButton.visible = false
+	if State.level >= 2:
+		IdentifyButton.visible = true
+	if State.level >= 3:
+		StoryTimeButton.visible = true
+	if State.level >= 4:
+		ReviewButton.visible = true
 
 func show_items():
 	show_enemy_selection()

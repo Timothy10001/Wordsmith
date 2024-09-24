@@ -1,7 +1,146 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddktrys17vcy4"]
+[gd_scene load_steps=7 format=3 uid="uid://ddktrys17vcy4"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x8nos"]
 [ext_resource type="Script" path="res://addons/game_state_saver/game_state_helper.gd" id="2_gh745"]
+
+[sub_resource type="Animation" id="Animation_2ql0x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutsceneCamera:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneCamera:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(75, -82)]
+}
+
+[sub_resource type="Animation" id="Animation_w2prc"]
+resource_name = "mission_1_starting_cutscene"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutsceneCamera:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5.06774, 6.01199, 6.01289, 8.99413, 8.99566, 12.1178),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(3.5, 3.5), Vector2(3.5, 3.5), Vector2(3.5, 3.5), Vector2(3, 3), Vector2(3, 3), Vector2(3.5, 3.5), Vector2(3.5, 3.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneCamera:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 5.06774, 6.01199, 6.0129, 8.99413, 8.99566, 12.1178, 12.1182, 15.101, 15.103, 19.1208, 19.1215),
+"transitions": PackedFloat32Array(0.435275, 3.4822, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -99), Vector2(104, -139), Vector2(209, -81), Vector2(209, -81), Vector2(122, -183), Vector2(122, -360), Vector2(55, -495), Vector2(170, -446), Vector2(169, -354), Vector2(57, -240), Vector2(57, -354), Vector2(57, -194), Vector2(99, -136)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 6.01204, 6.01276, 8.99413, 12.1178, 15.101, 19.1208, 19.1215),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": ["res://assets/resources/dialogues/mr_cheese.dialogue", "intro"],
+"method": &"_on_start_npc_dialogue"
+}, {
+"args": ["mission 1 - tavern", 0],
+"method": &"_on_enter_new_area"
+}, {
+"args": [0, Vector2(0, 0), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": [1, Vector2(0, 0), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": [2, Vector2(0, 0), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": [3, Vector2(0, 0), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": ["mission 1 - outside", 0],
+"method": &"_on_enter_new_area"
+}, {
+"args": [0, Vector2(0, -67), "up"],
+"method": &"_on_enter_new_room"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_6v2yt"]
+resource_name = "mission_1_ending_cutscene"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutsceneCamera:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneCamera:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(75, -82), Vector2(75, -108)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["mission_1_ending_cutscene"],
+"method": &"start_cutscene_dialogue"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qaiaw"]
+_data = {
+"RESET": SubResource("Animation_2ql0x"),
+"mission_1_ending_cutscene": SubResource("Animation_6v2yt"),
+"mission_1_starting_cutscene": SubResource("Animation_w2prc")
+}
 
 [node name="Main" type="Node2D"]
 process_mode = 3
@@ -11,11 +150,18 @@ metadata/_edit_lock_ = true
 [node name="Rooms" type="Node2D" parent="."]
 process_mode = 1
 
-[node name="Cutscenes" type="Node2D" parent="."]
-process_mode = 1
-
 [node name="Controls" type="Node2D" parent="."]
 process_mode = 1
+
+[node name="Cutscenes" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Cutscenes"]
+libraries = {
+"": SubResource("AnimationLibrary_qaiaw")
+}
+
+[node name="CutsceneCamera" type="Camera2D" parent="Cutscenes"]
+position = Vector2(75, -82)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -2,5 +2,10 @@
 
 set npc_class = "High Class"
 Narrator: You leveled up!
-
+if State.level == 2:
+	Narrator: You unlocked the skill "Identify"!
+if State.level == 3:
+	Narrator: You unlocked the skill "Story Time"! 
+if State.level == 4:
+	Narrator: You unlocked the skill "Review"!
 => END

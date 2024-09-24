@@ -44,4 +44,15 @@ elif State.current_mission == 1:
 	- No
 		King Pendragon: Okay, come back if you're ready.
 		=> END
+elif State.current_mission == 2:
+	King Pendragon: Wordsmith! The snowmen from Snowland have called us for help.
+	King Pendragon: They keep getting run over by cars!
+	King Pendragon: They don't really get hurt, but it takes time for them to rebuild.
+	King Pendragon: Would you go help the snowmen?
+	- Yes
+		do emit("get_mission")
+		=> END
+	- No
+		King Pendragon: Okay, come back if you're ready.
+		=> END
 => END

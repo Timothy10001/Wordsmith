@@ -9,8 +9,8 @@ var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
-var current_mission_enemy_count: int = 1
-var current_mission_enemy_required: int = 1
+var current_mission_enemy_count: int = 0
+var current_mission_enemy_required: int = 0
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -28,7 +28,7 @@ var dialogue_resource: DialogueResource
 func _ready():
 	connect_signals()
 	start()
-	
+	cutscene_camera.enabled = false
 
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
@@ -68,9 +68,14 @@ func connect_signals():
 	Global.start_battle.connect(_on_start_battle)
 	Global.end_battle.connect(_on_end_battle)
 	#for interactables with dialogue
+	Global.start_npc_dialogue.connect(_on_start_npc_dialogue)
 	Global.start_interactable_dialogue.connect(_on_start_interactable_dialogue)
 	Global.start_sleep.connect(_on_start_sleep)
 	Global.end_sleep.connect(_on_end_sleep)
+	
+	Global.cutscene_start.connect(_on_cutscene_start)
+	Global.stop_cutscene.connect(stop_cutscene)
+	Global.add_mission_rewards.connect(_on_add_mission_rewards)
 
 
 #create rooms in a different scene?
@@ -116,7 +121,7 @@ func disable_player_process():
 	player_instance.process_mode = Node.PROCESS_MODE_DISABLED
 
 func add_controls():
-	if Controls.get_child_count() < 3:
+	if Controls.get_child_count() == 0:
 		enemy_required_instance = enemy_required_scene.instantiate()
 		Controls.add_child(enemy_required_instance)
 		controls_instance = controls_scene.instantiate()
@@ -146,9 +151,11 @@ func init_current_room():
 	GameStateService.on_scene_transitioning()
 	#print(GameStateService._game_state)
 	if Rooms.get_child_count() > 0:
-		Rooms.remove_child(Rooms.get_child(0))
+		for i in range(Rooms.get_child_count()):
+			Rooms.remove_child(Rooms.get_child(0))
 		
-	add_controls()
+	if !Global.cutscene_playing:
+		add_controls()
 	
 	Rooms.add_child(current_area[State.current_room].instantiate())
 	
@@ -214,6 +221,10 @@ func _on_confirm_mission():
 			Global.enter_new_area.emit("mission 2 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
 			removed_enemies = []
+			current_mission_enemy_count = 1
+			current_mission_enemy_required = 1
+			State.current_mission_enemy_count = current_mission_enemy_count
+			State.current_mission_enemy_required = current_mission_enemy_required
 
 func _on_cancel_mission():
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
@@ -316,7 +327,10 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		balloon.start(dialogue_resource, "start")
 		return
 	if state == "Win" and _type == "boss_battle":
-		print("nig")
+		match current_mission:
+			1:
+				Global.cutscene_start.emit("mission_1_ending_cutscene")
+		return
 	
 	add_controls()
 
@@ -360,6 +374,49 @@ func add_loot(inventory: Inventory):
 	else:
 		return
 
+func _on_add_mission_rewards(inventory_path: String):
+	var inventory = load(inventory_path)
+	var player_inventory = player_instance.inventory
+	if inventory.items:
+		for slot in inventory.items:
+			#if a slot in the chest exists
+			if slot:
+				#if the player has the same item as the chest
+				if player_inventory.search_inventory(slot.item.name):
+					var item_index = player_inventory.search_inventory(slot.item.name)
+					#if the chest item can fully merge with the player's item
+					if player_inventory.items[item_index].can_fully_merge_with(slot):
+						
+						set_interactable_dialogue(slot, "loot_get")
+						await Global.dialogue_ended
+						
+						player_inventory.items[item_index].fully_merge_with(slot)
+						player_inventory.inventory_updated.emit(player_inventory)
+						inventory.remove_item(slot.item.name)
+					else:
+						#the chest item is added onto another slot if it cannot fully merge
+						set_interactable_dialogue(slot, "loot_get")
+						await Global.dialogue_ended
+						
+						player_inventory.add_item(slot)
+						inventory.remove_item(slot.item.name)
+				else:
+					#the chest item is added onto another slot if it's a new item
+					set_interactable_dialogue(slot, "loot_get")
+					await Global.dialogue_ended
+					
+					player_inventory.add_item(slot)
+					inventory.remove_item(slot.item.name)
+			else:
+				break
+	else:
+		return
+	await Global.dialogue_ended
+	stop_cutscene()
+	Global.back_to_lobby.emit()
+	State.current_mission += 1
+	current_mission += 1
+
 func set_interactable_dialogue(slot: InventorySlot, title: String):
 	Global.item_name = slot.item.name
 	Global.item_quantity = slot.quantity
@@ -370,6 +427,11 @@ func _on_start_interactable_dialogue(_dialogue_resource: DialogueResource, title
 	add_child(balloon)
 	balloon.start(_dialogue_resource, title)
 
+func _on_start_npc_dialogue(dialogue_path: String, title: String):
+	dialogue_resource = load(dialogue_path)
+	var balloon = BALLOON.instantiate()
+	add_child(balloon)
+	balloon.start(dialogue_resource, title)
 
 func _on_start_sleep():
 	player_instance.visible = false
@@ -409,3 +471,46 @@ func _on_back_to_lobby():
 	add_controls()
 	get_tree().paused = false
 
+const CUTSCENE_BARS = preload("res://scenes/cutscene_bars.tscn")
+var cutscene_bars_instance
+
+@onready var animation_player = $Cutscenes/AnimationPlayer
+@onready var cutscene_camera = $Cutscenes/CutsceneCamera
+var current_cutscene_area: String
+var current_cutscene_player_position: Vector2
+var current_cutscene_room: int
+
+func _on_cutscene_start(cutscene: String):
+	current_cutscene_room = current_room
+	current_cutscene_area = current_area_name
+	current_cutscene_player_position = State.player_position
+	cutscene_bars_instance = CUTSCENE_BARS.instantiate()
+	add_child(cutscene_bars_instance)
+	Global.cutscene_playing = true
+	cutscene_camera.enabled = true
+	remove_controls()
+	match cutscene:
+		"mission_1_starting_cutscene":
+			animation_player.play(cutscene)
+		"mission_1_ending_cutscene":
+			Global.enter_new_area.emit("mission 1 - outside", 0)
+			Global.enter_new_room.emit(0, Vector2(75, -82), "up")
+			animation_player.play(cutscene)
+
+func start_cutscene_dialogue(cutscene: String):
+	match cutscene:
+		"mission_1_starting_cutscene":
+			dialogue_resource = load("res://assets/resources/dialogues/mr_cheese.dialogue")
+			Global.start_interactable_dialogue.emit(dialogue_resource, "start")
+		"mission_1_ending_cutscene":
+			dialogue_resource = load("res://assets/resources/dialogues/mission_1_ending.dialogue")
+			Global.start_interactable_dialogue.emit(dialogue_resource, "start")
+
+
+func stop_cutscene():
+	Global.cutscene_playing = false
+	animation_player.stop()
+	cutscene_camera.enabled = false
+	Global.cutscene_ended.emit()
+	Global.enter_new_area.emit(current_cutscene_area, current_cutscene_room)
+	Global.enter_new_room.emit(current_cutscene_room, current_cutscene_player_position, current_direction)

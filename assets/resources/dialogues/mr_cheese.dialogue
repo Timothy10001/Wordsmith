@@ -1,6 +1,14 @@
 ~ start
 set npc_class = "Middle Class"
 if State.briefed_by_mr_cheese == false:
+	do emit("cutscene_start", "mission_1_starting_cutscene")
+else:
+	do emit("start_npc_dialogue", "res://assets/resources/dialogues/mr_cheese.dialogue", "intro")
+=> END
+
+~ intro
+set npc_class = "Middle Class"
+if State.briefed_by_mr_cheese == false:
 	Mr Cheese: Hello! You must be the Wordsmith!
 	Mr Cheese: You must help me.
 	Mr Cheese: The RATS had made my tavern a hangout place.
@@ -8,6 +16,7 @@ if State.briefed_by_mr_cheese == false:
 	Mr Cheese: They never come here because of the sign outside.
 	Mr Cheese: But because of the curse of the wizard, they can't read it!
 	Mr Cheese: Help me get them out of my tavern and I will reward you!
+	do emit("stop_cutscene")
 	set State.briefed_by_mr_cheese = true
 else:
 	Mr Cheese: Please help me get the RATS out of my tavern!

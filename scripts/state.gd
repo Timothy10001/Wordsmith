@@ -1,5 +1,6 @@
 extends Node
 
+var level: int
 
 var current_room
 var current_area

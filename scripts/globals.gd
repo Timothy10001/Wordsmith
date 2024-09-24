@@ -28,6 +28,7 @@ signal enter_new_area(_area: String, _room_index: int)
 
 signal dialogue_active
 signal dialogue_ended
+signal start_npc_dialogue
 
 signal overlay_active
 signal overlay_inactive
@@ -42,7 +43,12 @@ signal mic_released
 signal start_sleep
 signal end_sleep
 
+signal cutscene_start(cutscene: String)
+var cutscene_playing: bool = false
+signal cutscene_ended
+signal stop_cutscene
 
+signal add_mission_rewards(inventory_path: String)
 signal drop_item(inventory_slot: InventorySlot)
 
 var experience: int

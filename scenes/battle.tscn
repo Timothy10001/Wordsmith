@@ -738,7 +738,7 @@ theme_override_constants/outline_size = 6
 theme_override_constants/shadow_outline_size = 8
 theme_override_fonts/font = ExtResource("8_03ej5")
 theme_override_font_sizes/font_size = 64
-text = "Processing.."
+text = "Processing."
 
 [node name="TryAgain" type="Label" parent="SkillCheck/MarginContainer"]
 layout_mode = 2
