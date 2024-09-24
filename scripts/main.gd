@@ -31,6 +31,7 @@ func _ready():
 	cutscene_camera.enabled = false
 
 func _process(_delta):
+	current_mission = State.current_mission
 	if Input.is_action_just_pressed("pause"):
 		pause_instance = pause_scene.instantiate()
 		add_child(pause_instance)
@@ -220,8 +221,9 @@ func _on_confirm_mission():
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-224, -16), "down")
 			removed_enemies = []
-			current_mission_enemy_count = 14
-			current_mission_enemy_required = 14
+			# 14
+			current_mission_enemy_count = 0
+			current_mission_enemy_required = 0
 			State.current_mission_enemy_count = current_mission_enemy_count
 			State.current_mission_enemy_required = current_mission_enemy_required
 		2:
@@ -332,16 +334,16 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		Global.enemy_battle_active = true
 		return
 	if state == "Win" and _type == "boss_battle":
+		Global.enemy_battle_active = true
 		match current_mission:
 			1:
+				print("nig")
 				Global.cutscene_start.emit("mission_1_ending_cutscene")
 		return
-	
 	add_controls()
 	#enable enemy battle areas after 1.5 seconds
 	await get_tree().create_timer(1.5).timeout
 	Global.enemy_battle_active = true
-
 
 
 
@@ -490,11 +492,15 @@ func _on_cutscene_start(cutscene: String):
 	current_cutscene_room = current_room
 	current_cutscene_area = current_area_name
 	current_cutscene_player_position = State.player_position
+	
 	cutscene_bars_instance = CUTSCENE_BARS.instantiate()
 	add_child(cutscene_bars_instance)
+	
 	Global.cutscene_playing = true
 	cutscene_camera.enabled = true
+	
 	remove_controls()
+	
 	match cutscene:
 		"mission_1_starting_cutscene":
 			animation_player.play(cutscene)
@@ -502,6 +508,7 @@ func _on_cutscene_start(cutscene: String):
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(75, -82), "up")
 			animation_player.play(cutscene)
+			
 
 func start_cutscene_dialogue(cutscene: String):
 	match cutscene:
@@ -511,6 +518,7 @@ func start_cutscene_dialogue(cutscene: String):
 		"mission_1_ending_cutscene":
 			dialogue_resource = load("res://assets/resources/dialogues/mission_1_ending.dialogue")
 			Global.start_interactable_dialogue.emit(dialogue_resource, "start")
+			Rooms.get_child(0).get_node("CutsceneExtras").visible = true
 
 
 func stop_cutscene():
