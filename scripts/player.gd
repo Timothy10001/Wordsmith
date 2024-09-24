@@ -22,6 +22,7 @@ var current_direction = "none"
 var is_moving = false
 
 func _ready():
+	collision.disabled = false
 	ChaseIndicator.visible = false
 	Global.cutscene_ended.connect(_on_cutscene_ended)
 	#limits camera to size of tilemap

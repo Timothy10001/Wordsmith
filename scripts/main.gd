@@ -2,15 +2,15 @@ extends Node
 
 #add player stats and inventory
 
-var current_area_name: String = "mission 1 - outside"
+var current_area_name: String = "lobby"
 var current_room: int = 0
-var current_mission: int = 1
-var tutorial_status: String = "done"
+var current_mission: int = 0
+var tutorial_status: String = "not done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
-var current_mission_enemy_count: int = 14
-var current_mission_enemy_required: int = 14
+var current_mission_enemy_count: int = 0
+var current_mission_enemy_required: int = 0
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -211,7 +211,7 @@ func _on_confirm_mission():
 	# do transition
 	
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
-	
+	call_deferred("add_iris_transition")
 	await Global.transition_finished
 	get_tree().paused = false
 	#load new area after transition
@@ -271,7 +271,6 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 
 
 func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventory, _enemy_node: Node2D):
-	Global.in_battle = false
 	var transition_instance = transition_scene.instantiate()
 	#dialogue balloon for this shit
 	dialogue_resource = load("res://assets/resources/dialogues/battle.dialogue")
@@ -296,9 +295,9 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
 	
 	#ENABLE PLAYER MOVEMENT
+	Global.in_battle = false
 	get_tree().paused = false
 	player_instance.visible = true
-	player_instance.collision.disabled = false
 	
 	if state == "Win" and _type == "battle":
 		if _enemy_node:
@@ -330,6 +329,7 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		var balloon = BALLOON.instantiate()
 		add_child(balloon)
 		balloon.start(dialogue_resource, "start")
+		Global.enemy_battle_active = true
 		return
 	if state == "Win" and _type == "boss_battle":
 		match current_mission:
