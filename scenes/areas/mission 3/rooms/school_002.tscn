@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bgf1rlrkoxm0h"]
+[gd_scene load_steps=43 format=3 uid="uid://bgf1rlrkoxm0h"]
 
 [ext_resource type="TileSet" uid="uid://dqvce1djursoh" path="res://assets/resources/tile_sets/school.tres" id="1_46n15"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_7snt4"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="6_445fr"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="7_q1520"]
 [ext_resource type="Resource" uid="uid://crhoh863ac78x" path="res://assets/resources/items/apple.tres" id="8_dita5"]
+[ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="9_qfdfk"]
+[ext_resource type="Texture2D" uid="uid://cjm5pamoha38e" path="res://assets/art/characters/enemy/kid_female_sprites.png" id="10_8mnpi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ws8ty"]
 size = Vector2(32, 16)
@@ -57,7 +59,158 @@ items = Array[ExtResource("6_445fr")]([SubResource("Resource_0qqwb")])
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amluw"]
 size = Vector2(16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7gcl"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wq0w1"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ai1j"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r48ld"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qjbf"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kunw"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbr6l"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1dqd"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irbka"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpw76"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jqew"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aglqd"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph3v0"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0mkw"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hn73"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f566i"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qsgjj"]
+atlas = ExtResource("10_8mnpi")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kahkh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7gcl")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wq0w1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ai1j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r48ld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qjbf")
+}],
+"loop": true,
+"name": &"run_down",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kunw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbr6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1dqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irbka")
+}],
+"loop": true,
+"name": &"run_left",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpw76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jqew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aglqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph3v0")
+}],
+"loop": true,
+"name": &"run_right",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0mkw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hn73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f566i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qsgjj")
+}],
+"loop": true,
+"name": &"run_up",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ivr36"]
+size = Vector2(6, 3)
+
 [node name="School002" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -76,6 +229,9 @@ layer_3/tile_data = PackedInt32Array(-1441813, 3, 3, -1376277, 3, 4, -1310741, 3
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+z_index = 1
+collision_layer = 4
+collision_mask = 3
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-32, -128, 32, -128, 32, -272, 400, -272, 400, -320, 32, -320, 32, -352, 32, -592, 64, -592, 400, -592, 400, -640, -288, -640, -288, -656, -336, -656, -336, -640, -400, -640, -400, -592, -32, -592, -32, -560, -32, -320, -64, -320, -400, -320, -400, -272, -32, -272, -32, -240, -32, -96, -64, -96, -64, -240, -400, -240, -432, -240, -432, -320, -432, -352, -64, -352, -64, -560, -400, -560, -432, -560, -432, -640, -432, -672, 432, -672, 432, -640, 432, -592, 432, -560, 64, -560, 64, -352, 432, -352, 432, -240, 400, -240, 64, -240, 64, -96, 32, -96, -32, -96)
@@ -120,6 +276,7 @@ position = Vector2(-312, -640)
 shape = SubResource("RectangleShape2D_ep1lc")
 
 [node name="Interactables" type="Node2D" parent="."]
+z_index = 1
 y_sort_enabled = true
 
 [node name="Water Bottle" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("3_6y37n")]
@@ -148,3 +305,26 @@ inventory = SubResource("Resource_okq8y")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Apple"]
 position = Vector2(-136, -312)
 shape = SubResource("RectangleShape2D_amluw")
+
+[node name="Enemies" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="KidFemale002" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("9_qfdfk")]
+position = Vector2(209, -627)
+enemy_name = "Kid"
+enemy_battle_path = "res://scenes/enemies/kid_female.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 72.0
+battle_area = 24.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 100.0
+chases = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/KidFemale002"]
+sprite_frames = SubResource("SpriteFrames_kahkh")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/KidFemale002"]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_ivr36")

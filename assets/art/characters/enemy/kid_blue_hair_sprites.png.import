@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chealxyqcd5kh"
-path="res://.godot/imported/kids_sprites.png-0f05a6a0831b072811991db1e5b611b7.ctex"
+uid="uid://c1gffamx5xhtw"
+path="res://.godot/imported/kid_blue_hair_sprites.png-726993f230f4fc1bd6769153a63effc9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/characters/enemy/kids_sprites.png"
-dest_files=["res://.godot/imported/kids_sprites.png-0f05a6a0831b072811991db1e5b611b7.ctex"]
+source_file="res://assets/art/characters/enemy/kid_blue_hair_sprites.png"
+dest_files=["res://.godot/imported/kid_blue_hair_sprites.png-726993f230f4fc1bd6769153a63effc9.ctex"]
 
 [params]
 

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://dxdk8slds5myv"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_p0lkc"]
+
+[resource]
+script = ExtResource("1_p0lkc")
+name = "Run Around"
+description = "The kid runs around in circles."
+target = "SINGLE"
+attack_damage = 0
+heal_amount = 20
+mana_amount = 0
+mana_cost = 0
+deals_damage = false
+requires_skill_check = false
+status_effect = "none"
+stun_duration = 0
+chance = 25

@@ -293,6 +293,8 @@ layer_3/tile_data = PackedInt32Array()
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 3
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(800, -256, 800, -480, 1424, -480, 1424, -272, 1456, -272, 1456, -192, 1424, -192, 1424, -80, 1456, -80, 1456, 32, 800, 32, 800, 16, 768, 16, 768, -64, 800, -64, 800, -160, 768, -160, 768, -256, 720, -256, 720, 80, 1504, 80, 1504, -528, 672, -528, 672, -256)

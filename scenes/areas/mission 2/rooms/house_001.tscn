@@ -60,6 +60,8 @@ metadata/_edit_lock_ = true
 [node name="Collisions" type="StaticBody2D" parent="."]
 z_index = 1
 y_sort_enabled = true
+collision_layer = 4
+collision_mask = 3
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-192, 16, -192, -160, -48, -160, -48, 48, -32, 48, -32, -176, -208, -176, -208, 32, -16, 32, -16, 16)

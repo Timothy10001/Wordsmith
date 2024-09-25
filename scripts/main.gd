@@ -2,15 +2,15 @@ extends Node
 
 #add player stats and inventory
 
-var current_area_name: String = "mission 2 - outside"
+var current_area_name: String = "mission 3 - outside"
 var current_room: int = 0
-var current_mission: int = 2
+var current_mission: int = 3
 var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
-var current_mission_enemy_count: int = 6
-var current_mission_enemy_required: int = 6
+var current_mission_enemy_count: int = 0
+var current_mission_enemy_required: int = 0
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -438,7 +438,6 @@ func _on_add_mission_rewards(inventory_path: String):
 	stop_cutscene()
 	Global.back_to_lobby.emit()
 	State.current_mission += 1
-	current_mission += 1
 
 func set_interactable_dialogue(slot: InventorySlot, title: String):
 	Global.item_name = slot.item.name
@@ -446,9 +445,12 @@ func set_interactable_dialogue(slot: InventorySlot, title: String):
 	Global.start_interactable_dialogue.emit(load("res://assets/resources/dialogues/interactables/chest.dialogue"), title)
 
 func _on_start_interactable_dialogue(_dialogue_resource: DialogueResource, title: String):
+	remove_controls()
 	var balloon = BALLOON.instantiate()
 	add_child(balloon)
 	balloon.start(_dialogue_resource, title)
+	await Global.dialogue_ended
+	add_controls()
 
 func _on_start_npc_dialogue(dialogue_path: String, title: String):
 	dialogue_resource = load(dialogue_path)

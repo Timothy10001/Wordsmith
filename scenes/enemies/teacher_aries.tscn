@@ -1,0 +1,53 @@
+[gd_scene load_steps=12 format=3 uid="uid://bnddgxuebe40q"]
+
+[ext_resource type="Script" path="res://scripts/enemies/teacher_aries.gd" id="1_ef1ql"]
+[ext_resource type="Texture2D" uid="uid://daky5n0w0ef25" path="res://assets/art/characters/enemy/teacher_aries_sprites.png" id="1_uher8"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="1_xifuu"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="2_rfj6m"]
+[ext_resource type="Resource" uid="uid://bnmclt83nnc5f" path="res://assets/resources/enemies/teacher/teacher_stats.tres" id="3_ur1o0"]
+[ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="3_vk30k"]
+[ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="4_dxusx"]
+[ext_resource type="Resource" uid="uid://bgtova21ipwhe" path="res://assets/resources/enemies/teacher/skills/being_stubborn.tres" id="6_bcpbc"]
+[ext_resource type="Resource" uid="uid://ccgwaubucmxib" path="res://assets/resources/enemies/teacher/skills/confusing_question.tres" id="7_ahos8"]
+[ext_resource type="Resource" uid="uid://ddjrwqtstcj75" path="res://assets/resources/enemies/teacher/skills/irrelevant_story.tres" id="8_mydlo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqxa4"]
+atlas = ExtResource("1_uher8")
+region = Rect2(32, 0, 32, 32)
+
+[node name="TeacherAries" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_xqxa4")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("1_ef1ql")
+CharacterResource = ExtResource("3_ur1o0")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_xifuu")]
+
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_rfj6m")]
+health_component = NodePath("../HealthComponent")
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("6_bcpbc"), ExtResource("7_ahos8"), ExtResource("8_mydlo")])
+user = ExtResource("3_ur1o0")
+
+[node name="SpeedComponent" parent="." instance=ExtResource("3_vk30k")]
+
+[node name="DamageIndicator" parent="." instance=ExtResource("4_dxusx")]

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://csu6kuy2ixuu"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_twbem"]
+
+[resource]
+script = ExtResource("1_twbem")
+name = "Talk Nonsense"
+description = "The kid speaks some gibberish!"
+target = "SINGLE"
+attack_damage = 20
+heal_amount = 0
+mana_amount = 0
+mana_cost = 0
+deals_damage = true
+requires_skill_check = false
+status_effect = "none"
+stun_duration = 0
+chance = 0

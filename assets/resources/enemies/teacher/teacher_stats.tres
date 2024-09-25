@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=2 format=3 uid="uid://bnmclt83nnc5f"]
+
+[ext_resource type="Script" path="res://assets/resources/enemy.gd" id="1_hth6c"]
+
+[resource]
+script = ExtResource("1_hth6c")
+name = "Teacher"
+health = 250
+strength = 6.0
+speed = 8
+initial_armor = 15
+armor = 15
+immortal = false
+experience = 40

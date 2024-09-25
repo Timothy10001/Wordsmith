@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bfwvvub3k04gn"]
+[gd_scene load_steps=27 format=3 uid="uid://bfwvvub3k04gn"]
 
 [ext_resource type="TileSet" uid="uid://dqvce1djursoh" path="res://assets/resources/tile_sets/school.tres" id="1_kcnvj"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_jhct5"]
@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://c3tqr87ilgnri" path="res://scenes/interactables/pickup.tscn" id="8_ny8yk"]
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="9_m4ilf"]
 [ext_resource type="Resource" uid="uid://crhoh863ac78x" path="res://assets/resources/items/apple.tres" id="10_d5p22"]
+[ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="11_wm4hp"]
+[ext_resource type="SpriteFrames" uid="uid://bgkkautce50vw" path="res://assets/resources/enemies/kid/sprites/kid_brown_sprites.tres" id="12_q8i3m"]
+[ext_resource type="SpriteFrames" uid="uid://bbpuadqtrof2i" path="res://assets/resources/enemies/teacher/sprites/teacher_joy.tres" id="13_hau3m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41gkv"]
 size = Vector2(32, 16)
@@ -53,7 +56,14 @@ region = Rect2(0, 224, 16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ura7"]
 size = Vector2(16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bbbgx"]
+size = Vector2(8, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrjn1"]
+size = Vector2(11, 8)
+
 [node name="Classroom002" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -71,6 +81,9 @@ layer_3/name = "deco"
 layer_3/tile_data = PackedInt32Array(-2490355, 786435, 13, -2162684, 786435, 4, -1966069, 917507, 4, -2162680, 851971, 4, -1376237, 786435, 16, -1376236, 851971, 16)
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+z_index = 1
+collision_layer = 4
+collision_mask = 3
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 position = Vector2(432, 0)
@@ -87,6 +100,7 @@ position = Vector2(320, -328)
 shape = SubResource("RectangleShape2D_41gkv")
 
 [node name="Interactables" type="Node2D" parent="."]
+z_index = 1
 y_sort_enabled = true
 
 [node name="Stick" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("3_e8sol")]
@@ -123,3 +137,44 @@ texture = SubResource("AtlasTexture_4305y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Apple"]
 shape = SubResource("RectangleShape2D_4ura7")
+
+[node name="Enemies" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="KidBrown004" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("11_wm4hp")]
+position = Vector2(177, -426)
+enemy_name = "Kid"
+enemy_battle_path = "res://scenes/enemies/kid_brown.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 72.0
+battle_area = 24.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 100.0
+chases = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/KidBrown004"]
+sprite_frames = ExtResource("12_q8i3m")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/KidBrown004"]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_bbbgx")
+
+[node name="TeacherJoy" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("11_wm4hp")]
+position = Vector2(219, -559)
+enemy_name = "Teacher Joy"
+enemy_battle_path = "res://scenes/enemies/teacher_joy.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 96.0
+battle_area = 32.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 100.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/TeacherJoy"]
+sprite_frames = ExtResource("13_hau3m")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/TeacherJoy"]
+position = Vector2(0.5, 12)
+shape = SubResource("RectangleShape2D_yrjn1")

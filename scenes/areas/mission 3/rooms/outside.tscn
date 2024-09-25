@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b1upkytdmoemx"]
+[gd_scene load_steps=24 format=3 uid="uid://b1upkytdmoemx"]
 
 [ext_resource type="TileSet" uid="uid://dqvce1djursoh" path="res://assets/resources/tile_sets/school.tres" id="1_pqvc5"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_7ctys"]
@@ -7,6 +7,10 @@
 [ext_resource type="Resource" uid="uid://dxoq28yrebm5p" path="res://assets/resources/dialogues/interactables/carriage.dialogue" id="5_ikfhp"]
 [ext_resource type="PackedScene" uid="uid://0e4cqtrxwquj" path="res://scenes/interactables/dialogue_object.tscn" id="6_nq35w"]
 [ext_resource type="Resource" uid="uid://df3low4uk5m7c" path="res://assets/resources/dialogues/interactables/playground.dialogue" id="7_y70a6"]
+[ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="8_0mhfc"]
+[ext_resource type="SpriteFrames" uid="uid://c4cgww0da0vjk" path="res://assets/resources/enemies/kid/sprites/kid_blue_sprites.tres" id="9_ofmi8"]
+[ext_resource type="SpriteFrames" uid="uid://cq12v27hu6eni" path="res://assets/resources/enemies/kid/sprites/kid_female_sprites.tres" id="10_t2bjo"]
+[ext_resource type="SpriteFrames" uid="uid://bgkkautce50vw" path="res://assets/resources/enemies/kid/sprites/kid_brown_sprites.tres" id="11_8wshq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_11iwj"]
 size = Vector2(76, 27)
@@ -35,7 +39,17 @@ size = Vector2(144, 48)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2wjbm"]
 size = Vector2(112, 112)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gsivk"]
+size = Vector2(8, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ibuv"]
+size = Vector2(6, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xw20y"]
+size = Vector2(8, 4)
+
 [node name="Outside" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -54,6 +68,9 @@ layer_3/tile_data = PackedInt32Array(524287, 1507328, 7, 589823, 1507328, 7, 655
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+z_index = 1
+collision_layer = 4
+collision_mask = 3
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-464, 64, -464, -688, 448, -688, 448, 240, -464, 240, -512, 240, -512, 320, 592, 320, 592, -784, -608, -784, -608, 384, -464, 384)
@@ -87,10 +104,12 @@ position = Vector2(0, -280)
 shape = SubResource("RectangleShape2D_n72e5")
 
 [node name="Interactables" type="Node2D" parent="."]
+z_index = 1
 y_sort_enabled = true
 
-[node name="Carriage" parent="Interactables" instance=ExtResource("4_roycd")]
+[node name="Carriage" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("4_roycd")]
 position = Vector2(-224, 128)
+collision = NodePath("CollisionShape2D")
 direction = "down"
 dialogue_resource = ExtResource("5_ikfhp")
 
@@ -141,3 +160,64 @@ title = "slide"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Slides"]
 position = Vector2(344, -104)
 shape = SubResource("RectangleShape2D_2wjbm")
+
+[node name="Enemies" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="KidBlue001" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("8_0mhfc")]
+position = Vector2(-242, -490)
+enemy_name = "Kid"
+enemy_battle_path = "res://scenes/enemies/kid_blue.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 72.0
+battle_area = 24.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 100.0
+chases = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/KidBlue001"]
+sprite_frames = ExtResource("9_ofmi8")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/KidBlue001"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_gsivk")
+
+[node name="KidFemale001" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("8_0mhfc")]
+position = Vector2(277, -445)
+enemy_name = "Kid"
+enemy_battle_path = "res://scenes/enemies/kid_female.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 72.0
+battle_area = 24.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 100.0
+chases = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/KidFemale001"]
+sprite_frames = ExtResource("10_t2bjo")
+animation = &"run_right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/KidFemale001"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_7ibuv")
+
+[node name="KidBrown001" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("8_0mhfc")]
+position = Vector2(-71, -490)
+enemy_name = "Kid"
+enemy_battle_path = "res://scenes/enemies/kid_brown.tscn"
+sprite = NodePath("AnimatedSprite2D")
+detection_area = 72.0
+battle_area = 24.0
+enemy_collision = NodePath("CollisionShape2D")
+speed = 100.0
+chases = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/KidBrown001"]
+sprite_frames = ExtResource("11_8wshq")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/KidBrown001"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_xw20y")

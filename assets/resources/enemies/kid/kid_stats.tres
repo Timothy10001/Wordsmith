@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=2 format=3 uid="uid://dfqvia17m755"]
+
+[ext_resource type="Script" path="res://assets/resources/enemy.gd" id="1_ynxr2"]
+
+[resource]
+script = ExtResource("1_ynxr2")
+name = "Kid"
+health = 200
+strength = 5.0
+speed = 9
+initial_armor = 10
+armor = 10
+immortal = false
+experience = 40

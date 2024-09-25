@@ -31,7 +31,7 @@ func _on_end_sleep():
 	bed_sprite.visible = true
 	sleeping_sprite.visible = false
 
-func _process(delta):
+func _process(_delta):
 	if entered:
 		if Input.is_action_just_pressed("interact"):
 			Global.start_sleep.emit()

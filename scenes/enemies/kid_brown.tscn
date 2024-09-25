@@ -1,0 +1,49 @@
+[gd_scene load_steps=11 format=3 uid="uid://bh3j8pdwfqjl3"]
+
+[ext_resource type="Script" path="res://scripts/enemies/kid_brown.gd" id="1_5ayni"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="1_axgv4"]
+[ext_resource type="Texture2D" uid="uid://dp0c3lwcc2fpg" path="res://assets/art/characters/enemy/kid_brown_hair.png" id="1_wpy1p"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="2_ye8n4"]
+[ext_resource type="Resource" uid="uid://dfqvia17m755" path="res://assets/resources/enemies/kid/kid_stats.tres" id="3_j842f"]
+[ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="3_rermb"]
+[ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="4_6dl6e"]
+[ext_resource type="Resource" uid="uid://dhrh524qjnovb" path="res://assets/resources/enemies/kid/skills/confusing_question.tres" id="6_qedre"]
+[ext_resource type="Resource" uid="uid://dxdk8slds5myv" path="res://assets/resources/enemies/kid/skills/run_around.tres" id="7_c5rn2"]
+[ext_resource type="Resource" uid="uid://csu6kuy2ixuu" path="res://assets/resources/enemies/kid/skills/talk_nonsense.tres" id="8_jq60c"]
+
+[node name="KidBrown" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_wpy1p")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("1_5ayni")
+CharacterResource = ExtResource("3_j842f")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_axgv4")]
+
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_ye8n4")]
+health_component = NodePath("../HealthComponent")
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("6_qedre"), ExtResource("7_c5rn2"), ExtResource("8_jq60c")])
+user = ExtResource("3_j842f")
+
+[node name="SpeedComponent" parent="." instance=ExtResource("3_rermb")]
+
+[node name="DamageIndicator" parent="." instance=ExtResource("4_6dl6e")]
