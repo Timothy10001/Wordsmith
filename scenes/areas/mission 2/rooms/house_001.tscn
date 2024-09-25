@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://r4okwmwxvk51"]
+[gd_scene load_steps=18 format=3 uid="uid://r4okwmwxvk51"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_jls5x"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_qjf1a"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="7_h0igv"]
 [ext_resource type="Resource" uid="uid://dmc3jb7dd35co" path="res://assets/resources/items/bread.tres" id="8_o6uim"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="9_ih701"]
+[ext_resource type="PackedScene" uid="uid://dsae0lrhxw2k7" path="res://scenes/npcs/car_in_house.tscn" id="10_q46px"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_weeaq"]
 size = Vector2(48, 16)
@@ -38,6 +39,7 @@ items = Array[ExtResource("7_h0igv")]([])
 size = Vector2(16, 16)
 
 [node name="House001" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -56,6 +58,8 @@ layer_3/tile_data = PackedInt32Array(-524293, 589830, 2, -458760, 589830, 2, -32
 metadata/_edit_lock_ = true
 
 [node name="Collisions" type="StaticBody2D" parent="."]
+z_index = 1
+y_sort_enabled = true
 
 [node name="Border" type="CollisionPolygon2D" parent="Collisions"]
 polygon = PackedVector2Array(-192, 16, -192, -160, -48, -160, -48, 48, -32, 48, -32, -176, -208, -176, -208, 32, -16, 32, -16, 16)
@@ -78,6 +82,8 @@ position = Vector2(-176, -80)
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 0, -16, 0)
 
 [node name="Interactables" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
 
 [node name="Coffee" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("4_vcrwu")]
 collision = NodePath("CollisionShape2D")
@@ -96,5 +102,12 @@ inventory = SubResource("Resource_gnwjb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Empty"]
 position = Vector2(-176, -120)
 shape = SubResource("RectangleShape2D_u30bp")
+
+[node name="NPCs" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="CarInHouse" parent="NPCs" instance=ExtResource("10_q46px")]
+position = Vector2(-106, -94)
 
 [editable path="Collisions/ToHouse002"]

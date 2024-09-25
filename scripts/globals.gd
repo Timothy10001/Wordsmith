@@ -51,6 +51,9 @@ signal stop_cutscene
 signal add_mission_rewards(inventory_path: String)
 signal drop_item(inventory_slot: InventorySlot)
 
+
+signal remove_car_in_house
+
 var experience: int
 #for npc dialogue font
 var npc_class = ""

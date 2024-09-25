@@ -2,15 +2,15 @@ extends Node
 
 #add player stats and inventory
 
-var current_area_name: String = "lobby"
+var current_area_name: String = "mission 2 - outside"
 var current_room: int = 0
-var current_mission: int = 0
-var tutorial_status: String = "not done"
+var current_mission: int = 2
+var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
-var current_mission_enemy_count: int = 0
-var current_mission_enemy_required: int = 0
+var current_mission_enemy_count: int = 6
+var current_mission_enemy_required: int = 6
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -174,6 +174,7 @@ func init_current_room():
 	player_instance = player_scene.instantiate()
 	player_instance.position = State.player_position
 	player_instance.current_direction = State.current_direction
+	Global.enemy_battle_active = true
 	
 	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
 	
@@ -220,18 +221,18 @@ func _on_confirm_mission():
 		1:
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-224, -16), "down")
-			removed_enemies = []
+			removed_enemies.clear()
 			# 14
-			current_mission_enemy_count = 0
-			current_mission_enemy_required = 0
+			current_mission_enemy_count = 14
+			current_mission_enemy_required = 14
 			State.current_mission_enemy_count = current_mission_enemy_count
 			State.current_mission_enemy_required = current_mission_enemy_required
 		2:
 			Global.enter_new_area.emit("mission 2 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
-			removed_enemies = []
-			current_mission_enemy_count = 1
-			current_mission_enemy_required = 1
+			removed_enemies.clear()
+			current_mission_enemy_count = 6
+			current_mission_enemy_required = 6
 			State.current_mission_enemy_count = current_mission_enemy_count
 			State.current_mission_enemy_required = current_mission_enemy_required
 
@@ -325,6 +326,8 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 			player_instance.level_component.gain_experience(experience_gained)
 		if loot.items[0] != null:
 			add_loot(loot)
+	
+	
 	#TO BE CHANGED#
 	if _type == "tutorial" and State.current_room == 0:
 		dialogue_resource = load("res://assets/resources/dialogues/king_pendragon.dialogue")
@@ -333,13 +336,23 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		balloon.start(dialogue_resource, "start")
 		Global.enemy_battle_active = true
 		return
+	
 	if state == "Win" and _type == "boss_battle":
 		Global.enemy_battle_active = true
 		match current_mission:
 			1:
-				print("nig")
 				Global.cutscene_start.emit("mission_1_ending_cutscene")
 		return
+	
+	if state == "Win" and _type == "car_in_house_battle":
+		#removes enemy
+		removed_enemies.append("CarInHouse")
+		current_mission_enemy_count -= 1
+		if current_mission_enemy_count < 0:
+			current_mission_enemy_count = 0
+		State.current_mission_enemy_count = current_mission_enemy_count
+		Global.remove_car_in_house.emit()
+	
 	add_controls()
 	#enable enemy battle areas after 1.5 seconds
 	await get_tree().create_timer(1.5).timeout

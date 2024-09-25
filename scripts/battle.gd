@@ -544,9 +544,9 @@ func show_skills():
 	ReviewButton.visible = false
 	if State.level >= 2:
 		IdentifyButton.visible = true
-	if State.level >= 3:
-		StoryTimeButton.visible = true
 	if State.level >= 4:
+		StoryTimeButton.visible = true
+	if State.level >= 6:
 		ReviewButton.visible = true
 
 func show_items():

@@ -1,0 +1,49 @@
+[gd_scene load_steps=11 format=3 uid="uid://dw68rkatkq2d5"]
+
+[ext_resource type="Script" path="res://scripts/enemies/blue_car.gd" id="1_je5ne"]
+[ext_resource type="Texture2D" uid="uid://lr0e8fp7xdvh" path="res://assets/art/characters/enemy/blue_car.png" id="1_kca8q"]
+[ext_resource type="PackedScene" uid="uid://bfyapsoqkjvfi" path="res://scenes/components/health_component.tscn" id="1_tsnlu"]
+[ext_resource type="PackedScene" uid="uid://cuiyvse4bomnp" path="res://scenes/components/skill_component.tscn" id="2_f7d25"]
+[ext_resource type="PackedScene" uid="uid://c34chmri08t0d" path="res://scenes/components/speed_component.tscn" id="3_8343a"]
+[ext_resource type="Resource" uid="uid://dp08hs717hor3" path="res://assets/resources/enemies/car/car_stats.tres" id="3_j11tr"]
+[ext_resource type="PackedScene" uid="uid://xdeqhs4o2cno" path="res://scenes/components/damage_indicator.tscn" id="4_h3ql8"]
+[ext_resource type="Resource" uid="uid://hiq5gwsi4wyf" path="res://assets/resources/enemies/car/skills/beep.tres" id="6_f3y5s"]
+[ext_resource type="Resource" uid="uid://q0dmo8lw6vfp" path="res://assets/resources/enemies/car/skills/blinker.tres" id="7_yjxfn"]
+[ext_resource type="Resource" uid="uid://cviqcopoqjrdg" path="res://assets/resources/enemies/car/skills/high_beam.tres" id="8_36b6k"]
+
+[node name="BlueCar" type="TextureRect"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kca8q")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("1_je5ne")
+CharacterResource = ExtResource("3_j11tr")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_tsnlu")]
+
+[node name="SkillComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_f7d25")]
+health_component = NodePath("../HealthComponent")
+skills = Array[Resource("res://assets/resources/skills.gd")]([ExtResource("6_f3y5s"), ExtResource("7_yjxfn"), ExtResource("8_36b6k")])
+user = ExtResource("3_j11tr")
+
+[node name="SpeedComponent" parent="." instance=ExtResource("3_8343a")]
+
+[node name="DamageIndicator" parent="." instance=ExtResource("4_h3ql8")]

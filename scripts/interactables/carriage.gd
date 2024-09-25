@@ -24,6 +24,10 @@ func _on_body_exited(body):
 		Global.interactable_exited.emit()
 
 func _process(_delta):
+	if !Global.enemy_battle_active:
+		collision.disabled = true
+	else:
+		collision.disabled = false
 	if entered:
 		if Input.is_action_just_pressed("interact"):
 			Global.start_interactable_dialogue.emit(dialogue_resource, "start")

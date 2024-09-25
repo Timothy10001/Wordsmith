@@ -1,0 +1,13 @@
+~ start
+set npc_class = "Middle Class"
+Deer: Hey! I'm in a bit of a pickle here.
+Deer: Don't ask why I'm in here.
+Deer: I just don't know where to go.
+Deer: Wait, you're the Wordsmith!
+Deer: I'm sorry Wordsmith, but could you help me read again.
+Deer: I couldn't read the directions in my GPS.
+Deer: It led me to here.
+Deer: Please help me out.
+do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/red_car.tscn"], "res://assets/art/backgrounds/tutorial.png", "car_in_house_battle", null)
+
+=> END

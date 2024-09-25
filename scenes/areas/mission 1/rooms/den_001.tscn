@@ -233,7 +233,7 @@ chases = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemies/Rat009"]
 sprite_frames = SubResource("SpriteFrames_lxb4o")
-animation = &"idle"
+animation = &"run_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat009"]
 position = Vector2(2.5, 16)

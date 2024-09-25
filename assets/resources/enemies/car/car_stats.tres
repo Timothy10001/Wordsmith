@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=2 format=3 uid="uid://dp08hs717hor3"]
+
+[ext_resource type="Script" path="res://assets/resources/enemy.gd" id="1_wqcps"]
+
+[resource]
+script = ExtResource("1_wqcps")
+name = "Car"
+health = 250
+strength = 5.0
+speed = 8
+initial_armor = 15
+armor = 15
+immortal = false
+experience = 30
