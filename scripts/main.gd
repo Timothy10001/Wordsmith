@@ -1,16 +1,19 @@
 extends Node
 
-#add player stats and inventory
+#STATES
 
-var current_area_name: String = "mission 3 - outside"
+var current_area_name: String = "mission 1 - outside"
 var current_room: int = 0
-var current_mission: int = 3
+var current_mission: int = 1
 var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
-var current_mission_enemy_count: int = 0
-var current_mission_enemy_required: int = 0
+var current_mission_enemy_count: int = 14
+var current_mission_enemy_required: int = 14
+
+var briefed_by_mr_cheese: bool = false
+var unlocked_key_house: bool = false
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -32,6 +35,11 @@ func _ready():
 
 func _process(_delta):
 	current_mission = State.current_mission
+	briefed_by_mr_cheese = State.briefed_by_mr_cheese
+	unlocked_key_house = State.unlocked_key_house
+	
+	if State.current_area == "mission 1 - house":
+		State.unlocked_key_house = true
 	if Input.is_action_just_pressed("pause"):
 		pause_instance = pause_scene.instantiate()
 		add_child(pause_instance)
@@ -352,6 +360,15 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 			current_mission_enemy_count = 0
 		State.current_mission_enemy_count = current_mission_enemy_count
 		Global.remove_car_in_house.emit()
+	
+	if State.current_mission_enemy_count == 0 and State.current_mission == 2:
+		Global.cutscene_start.emit("mission_2_boss_cutscene")
+	
+	
+	if current_mission == 3 and State.current_mission_enemy_count == 0:
+		Global.enter_new_area.emit("mission 3 - outside", 0)
+		Global.enter_new_room.emit(0, Vector2(0,0), "up")
+		print("do end credits")
 	
 	add_controls()
 	#enable enemy battle areas after 1.5 seconds

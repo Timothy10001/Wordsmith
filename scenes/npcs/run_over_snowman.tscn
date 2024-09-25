@@ -2,11 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/npcs/run_over_snowman.gd" id="1_xcyto"]
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_khpfp"]
+[ext_resource type="Texture2D" uid="uid://b6v8iq7272lj" path="res://assets/art/characters/npc/run_over_snowman.png" id="2_q2dc2"]
 [ext_resource type="PackedScene" uid="uid://bkbkxdafjpdmr" path="res://scenes/npc.tscn" id="3_0t2at"]
 [ext_resource type="Resource" uid="uid://bmaulr60t86j5" path="res://assets/resources/dialogues/run_over_snowman.dialogue" id="4_88y4n"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7iswl"]
-size = Vector2(36, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u5loj"]
 atlas = ExtResource("2_khpfp")
@@ -25,7 +23,7 @@ size = Vector2(36, 36)
 script = ExtResource("1_xcyto")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_7iswl")
+texture = ExtResource("2_q2dc2")
 
 [node name="MarginContainer" type="MarginContainer" parent="Sprite2D"]
 anchors_preset = 15

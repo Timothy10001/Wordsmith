@@ -190,3 +190,6 @@ shape = SubResource("RectangleShape2D_fvnmh")
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="NPC"]
 shape = SubResource("RectangleShape2D_foteu")
+
+[connection signal="player_entered" from="NPC" to="." method="_on_npc_player_entered"]
+[connection signal="player_left" from="NPC" to="." method="_on_npc_player_left"]

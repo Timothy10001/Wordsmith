@@ -1,0 +1,20 @@
+~ start
+set npc_class = "High Class"
+Principal Ronnie: Hello Wordsmith! I need your help.
+Principal Ronnie: Please teach the kids and teachers how to read again.
+Principal Ronnie: The teachers are staying in the classrooms because they don't know it's lunch time.
+Principal Ronnie: They can't read the clocks on the wall.
+Principal Ronnie: The kids however, are playing all around the place not knowing how to read too.
+Principal Ronnie: Ever since the curse, our literacy skills have gone down.
+Principal Ronnie: Now go ahead, and teach them!
+=> END
+
+~ end_credits
+set npc_class = "High Class"
+Principal Ronnie: Wordsmith! I am very grateful for teaching everybody here at Lexonia.
+Principal Ronnie: You should teach here.
+Principal Ronnie: I will ask King Pendragon to make the arrangements.
+Principal Ronnie: Thank you very much for taking the time to teach everybody.
+Narrator: And thank YOU for playing!
+#do end credits
+=> END

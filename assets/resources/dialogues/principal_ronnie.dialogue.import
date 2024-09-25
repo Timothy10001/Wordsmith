@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://ciu83qqpse8eu"
+path="res://.godot/imported/principal_ronnie.dialogue-abedc319567dafcd16541d78590d2892.tres"
+
+[deps]
+
+source_file="res://assets/resources/dialogues/principal_ronnie.dialogue"
+dest_files=["res://.godot/imported/principal_ronnie.dialogue-abedc319567dafcd16541d78590d2892.tres"]
+
+[params]
+
+defaults=true

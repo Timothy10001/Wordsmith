@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddktrys17vcy4"]
+[gd_scene load_steps=9 format=3 uid="uid://ddktrys17vcy4"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x8nos"]
 [ext_resource type="Script" path="res://addons/game_state_saver/game_state_helper.gd" id="2_gh745"]
+[ext_resource type="PackedScene" uid="uid://tlxsuemt0nj1" path="res://scenes/areas/mission 2/rooms/outside.tscn" id="2_nck5w"]
 
 [sub_resource type="Animation" id="Animation_2ql0x"]
 length = 0.001
@@ -135,11 +136,15 @@ tracks/2/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_58a3v"]
+resource_name = "mission_2_boss_cutscene"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qaiaw"]
 _data = {
 "RESET": SubResource("Animation_2ql0x"),
 "mission_1_ending_cutscene": SubResource("Animation_6v2yt"),
-"mission_1_starting_cutscene": SubResource("Animation_w2prc")
+"mission_1_starting_cutscene": SubResource("Animation_w2prc"),
+"mission_2_boss_cutscene": SubResource("Animation_58a3v")
 }
 
 [node name="Main" type="Node2D"]
@@ -149,6 +154,8 @@ metadata/_edit_lock_ = true
 
 [node name="Rooms" type="Node2D" parent="."]
 process_mode = 1
+
+[node name="Outside" parent="Rooms" instance=ExtResource("2_nck5w")]
 
 [node name="Controls" type="Node2D" parent="."]
 process_mode = 1
@@ -167,4 +174,4 @@ position = Vector2(75, -82)
 
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource("2_gh745")
-save_properties = Array[String](["current_area_name", "current_room", "current_mission", "tutorial_status", "player_position", "current_direction", "removed_enemies", "current_mission_enemy_count", "current_mission_enemy_required"])
+save_properties = Array[String](["current_area_name", "current_room", "current_mission", "tutorial_status", "player_position", "current_direction", "removed_enemies", "current_mission_enemy_count", "current_mission_enemy_required", "briefed_by_mr_cheese", "unlocked_key_house"])

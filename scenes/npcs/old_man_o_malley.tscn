@@ -2,11 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/npcs/old_man_o_malley.gd" id="1_i7klj"]
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="1_wu0ig"]
+[ext_resource type="Texture2D" uid="uid://cuv5jdlydx2qn" path="res://assets/art/characters/npc/old_man_o_malley.png" id="2_3y6g6"]
 [ext_resource type="PackedScene" uid="uid://bkbkxdafjpdmr" path="res://scenes/npc.tscn" id="2_cl5u6"]
 [ext_resource type="Resource" uid="uid://bnl0nyeioiptn" path="res://assets/resources/dialogues/old_man_o_malley.dialogue" id="3_de7tj"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_a4u17"]
-size = Vector2(36, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yiqjk"]
 atlas = ExtResource("1_wu0ig")
@@ -28,7 +26,7 @@ script = ExtResource("1_i7klj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
-texture = SubResource("PlaceholderTexture2D_a4u17")
+texture = ExtResource("2_3y6g6")
 
 [node name="MarginContainer" type="MarginContainer" parent="Sprite2D"]
 anchors_preset = 15
