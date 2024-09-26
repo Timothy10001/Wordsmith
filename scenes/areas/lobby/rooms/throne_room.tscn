@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://c67rgg1f002s1"]
+[gd_scene load_steps=11 format=3 uid="uid://c67rgg1f002s1"]
 
 [ext_resource type="Shader" path="res://scripts/misc/scroll.gdshader" id="1_7of86"]
 [ext_resource type="Texture2D" uid="uid://b6lqfvu4mrg2o" path="res://assets/art/backgrounds/clouds.png" id="1_qxyg3"]
 [ext_resource type="PackedScene" uid="uid://cp4of08lo2v1o" path="res://scenes/npcs/king_pendragon.tscn" id="3_su3qj"]
 [ext_resource type="TileSet" uid="uid://do2u15nb0ki1f" path="res://assets/resources/tile_sets/castle.tres" id="3_vmxc5"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="4_s166m"]
+[ext_resource type="PackedScene" uid="uid://rnslowucwlht" path="res://scenes/npcs/mr_cheese.tscn" id="6_tjttq"]
+[ext_resource type="PackedScene" uid="uid://copiosootwu56" path="res://scenes/npcs/snowman.tscn" id="7_hh25p"]
+[ext_resource type="PackedScene" uid="uid://ccsde1bkf32jc" path="res://scenes/npcs/principal_ronnie.tscn" id="8_ck1mi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xkcmh"]
 shader = ExtResource("1_7of86")
@@ -71,3 +74,12 @@ polygon = PackedVector2Array(-288, -336, 272, -336, 272, 240, 80, 240, 80, 256, 
 [node name="King Pendragon" parent="NPCs" instance=ExtResource("3_su3qj")]
 z_index = 1
 position = Vector2(-8, -348)
+
+[node name="Mr Cheese" parent="NPCs" instance=ExtResource("6_tjttq")]
+position = Vector2(-76, -73)
+
+[node name="Snowman" parent="NPCs" instance=ExtResource("7_hh25p")]
+position = Vector2(64, -144)
+
+[node name="PrincipalRonnie" parent="NPCs" instance=ExtResource("8_ck1mi")]
+position = Vector2(-76, -206)

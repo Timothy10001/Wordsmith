@@ -35,7 +35,7 @@ func gain_experience(amount):
 func level_up():
 	level += 1
 	CharacterResource.level = level
-	CharacterResource.strength += 1
+	CharacterResource.strength += 2
 	CharacterResource.max_health += 10
 	CharacterResource.max_mana += 10
 	CharacterResource.initial_armor += 2

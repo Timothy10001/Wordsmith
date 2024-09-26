@@ -1,0 +1,37 @@
+{
+"game_data_version": "1.0",
+"global": {
+"briefed_by_mr_cheese": false,
+"briefed_by_principal_ronnie": false,
+"current_area_name": "lobby",
+"current_direction": "up",
+"current_mission": 0,
+"current_mission_enemy_count": 0,
+"current_mission_enemy_required": 0,
+"current_room": 0,
+"initial_position": Vector2(0, 0),
+"player_position": Vector2(0, 0),
+"removed_enemies": Array[String]([]),
+"tutorial_status": "not done",
+"unlocked_key_house": false
+},
+"meta_data": {
+"current_scene_path": "",
+"data_format_version": "1.0"
+},
+"scene_data": {
+"res://scenes/main.tscn": {
+"node_data": {
+"/root/Main/Rooms/Throne Room/TileMap/player": {
+"CharacterResource": Resource("res://assets/resources/Player.tres"),
+"current_direction": "left",
+"game_state_helper_dynamic_recreate_scene": "res://scenes/player.tscn",
+"game_state_helper_node_path": NodePath("/root/Main/Rooms/Throne Room/TileMap/player"),
+"global_position": Vector2(-27.0838, -219.997),
+"inventory": Resource("res://assets/resources/player_inventory.tres")
+}
+},
+"scene_file_path": "res://scenes/main.tscn"
+}
+}
+}

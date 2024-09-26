@@ -14,7 +14,7 @@ region = Rect2(48, 0, 16, 16)
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pi15i"]
-size = Vector2(118, 114)
+size = Vector2(91, 89)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6runx"]
 size = Vector2(75, 75)
@@ -59,6 +59,7 @@ collision_shape = NodePath("CollisionShape2D2")
 shape = SubResource("RectangleShape2D_pi15i")
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="NPC"]
+visible = false
 shape = SubResource("RectangleShape2D_6runx")
 action = "interact"
 

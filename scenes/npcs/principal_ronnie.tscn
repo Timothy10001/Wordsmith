@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ccsde1bkf32jc"]
+[gd_scene load_steps=11 format=3 uid="uid://ccsde1bkf32jc"]
 
 [ext_resource type="Script" path="res://scripts/npcs/principal_ronnie.gd" id="1_5utic"]
 [ext_resource type="Texture2D" uid="uid://b2ejf54nmgga6" path="res://assets/art/characters/enemy/principal_ronnie_sprites.png" id="2_3m7lf"]
@@ -14,8 +14,11 @@ region = Rect2(32, 0, 32, 32)
 atlas = ExtResource("2_8bkci")
 region = Rect2(48, 0, 16, 16)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_0xqb2"]
+radius = 6.08276
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sxsr8"]
-size = Vector2(186, 173)
+size = Vector2(94.375, 85.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_07nrc"]
 
@@ -23,7 +26,6 @@ size = Vector2(186, 173)
 script = ExtResource("1_5utic")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.6, 1.6)
 texture = SubResource("AtlasTexture_lvcl7")
 
 [node name="MarginContainer" type="MarginContainer" parent="Sprite2D"]
@@ -45,6 +47,7 @@ size_flags_vertical = 0
 texture = SubResource("AtlasTexture_e54bm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0xqb2")
 
 [node name="NPC" parent="." node_paths=PackedStringArray("touch_screen_button", "collision_shape") instance=ExtResource("3_r1kkb")]
 dialogue_resource = ExtResource("5_pfs0b")

@@ -9,9 +9,15 @@ var player_inventory: Inventory = load("res://assets/resources/player_inventory.
 
 var entered: bool = false
 var player
+var picked_up: bool = false
 
 func _ready():
-	sprite.visible = true
+	if picked_up:
+		sprite.visible = false
+		collision.disabled = true
+	else:
+		sprite.visible = true
+		collision.disabled = false
 
 func _on_body_entered(body):
 	if body is Player:
@@ -67,6 +73,7 @@ func _process(_delta):
 							queue_free()
 					else:
 						break
+			picked_up = true
 			Global.start_interactable_dialogue.emit(dialogue_resource, "no_more_items")
 
 

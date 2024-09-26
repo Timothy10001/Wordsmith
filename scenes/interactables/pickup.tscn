@@ -8,8 +8,7 @@ script = ExtResource("1_n2kv2")
 
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource("2_ea3wa")
-save_properties = Array[String](["inventory"])
-dynamic_instance = true
+save_properties = Array[String](["inventory", "picked_up"])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -34,8 +34,10 @@ func _on_items_button_pressed():
 
 
 func _on_exit_to_lobby_button_pressed():
-	pass # Replace with function body.
+	Global.back_to_lobby.emit()
 
 
-func _on_exit_game_button_pressed():
-	pass # Replace with function body.
+func _on_save_and_exit_button_pressed():
+	Input.action_press("show_confirmation")
+	await get_tree().create_timer(0.05).timeout
+	Input.action_release("show_confirmation")

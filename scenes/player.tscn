@@ -205,4 +205,4 @@ CharacterResource = ExtResource("5_mr43v")
 
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource("19_ntf6y")
-save_properties = Array[String](["CharacterResource", "inventory"])
+save_properties = Array[String](["CharacterResource", "inventory", "global_position", "current_direction"])

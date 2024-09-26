@@ -29,6 +29,7 @@ var controls_instance
 var pause_instance
 var mission_instance
 var backpack_instance
+var confirmation_instance
 var dialogue_resource: DialogueResource
 
 func _ready():
@@ -42,23 +43,37 @@ func _process(_delta):
 	unlocked_key_house = State.unlocked_key_house
 	briefed_by_principal_ronnie = State.briefed_by_principal_ronnie
 	
+	if current_area_name == "lobby" and current_room == 0:
+		if has_node("Rooms/Throne Room"):
+			var npc_node = Rooms.get_child(0).get_node("NPCs")
+			npc_node.get_node("Mr Cheese").visible = false
+			npc_node.get_node("Snowman").visible = false
+			npc_node.get_node("PrincipalRonnie").visible = false
+			if current_mission >= 1:
+				npc_node.get_node("Mr Cheese").visible = true
+			if current_mission >= 2:
+				npc_node.get_node("Snowman").visible = true
+			if current_mission >= 3:
+				npc_node.get_node("PrincipalRonnie").visible = true
+	
 	if current_area_name == "mission 3 - classroom" and current_room == 4:
-		var npc_node = Rooms.get_child(0).get_node("NPCs")
-		npc_node.get_node("TeacherJoy").visible = false
-		npc_node.get_node("TeacherGigi").visible = false
-		npc_node.get_node("TeacherAries").visible = false
-		npc_node.get_node("TeacherKen").visible = false
-		if removed_enemies.size() > 0:
-			for enemy_names in removed_enemies:
-				match enemy_names:
-					"TeacherJoy":
-						npc_node.get_node("TeacherJoy").visible = true
-					"TeacherGigi":
-						npc_node.get_node("TeacherGigi").visible = true
-					"TeacherAries":
-						npc_node.get_node("TeacherAries").visible = false
-					"TeacherKen":
-						npc_node.get_node("TeacherKen").visible = false
+		if has_node("Rooms/Outside"):
+			var npc_node = Rooms.get_child(0).get_node("NPCs")
+			npc_node.get_node("TeacherJoy").visible = false
+			npc_node.get_node("TeacherGigi").visible = false
+			npc_node.get_node("TeacherAries").visible = false
+			npc_node.get_node("TeacherKen").visible = false
+			if removed_enemies.size() > 0:
+				for enemy_names in removed_enemies:
+					match enemy_names:
+						"TeacherJoy":
+							npc_node.get_node("TeacherJoy").visible = true
+						"TeacherGigi":
+							npc_node.get_node("TeacherGigi").visible = true
+						"TeacherAries":
+							npc_node.get_node("TeacherAries").visible = false
+						"TeacherKen":
+							npc_node.get_node("TeacherKen").visible = false
 	
 	if State.current_area == "mission 1 - house":
 		State.unlocked_key_house = true
@@ -71,9 +86,11 @@ func _process(_delta):
 		get_tree().paused = false
 		remove_child(pause_instance)
 		if $CanvasLayer.get_child_count() > 0:
-			$CanvasLayer.get_child(0).queue_free()
+			for i in range($CanvasLayer.get_child_count()):
+				$CanvasLayer.get_child(0).queue_free()
 		backpack_instance = null
 		pause_instance = null
+		confirmation_instance = null
 	if Input.is_action_just_pressed("show_inventory"):
 		pause_instance.visible = false
 		if $CanvasLayer.get_child_count() == 0:
@@ -81,9 +98,19 @@ func _process(_delta):
 			$CanvasLayer.add_child(backpack_instance)
 		else:
 			backpack_instance.visible = true
+	if Input.is_action_just_pressed("show_confirmation"):
+		pause_instance.visible = false
+		if $CanvasLayer.get_child_count() == 0:
+			confirmation_instance = confirmation_scene.instantiate()
+			$CanvasLayer.add_child(confirmation_instance)
+		else:
+			confirmation_instance.visible = true
 	if Input.is_action_just_pressed("back_to_pause_menu"):
 		pause_instance.visible = true
-		backpack_instance.visible = false
+		if backpack_instance:
+			backpack_instance.visible = false
+		if confirmation_instance:
+			confirmation_instance.visible = false
 
 #<-TO BE CHANGED->#
 func connect_signals():
@@ -92,6 +119,7 @@ func connect_signals():
 	Global.get_mission.connect(_get_mission)
 	Global.confirm_mission.connect(_on_confirm_mission)
 	Global.cancel_mission.connect(_on_cancel_mission)
+	Global.redo_mission.connect(_on_redo_mission)
 	#for areas
 	Global.enter_new_area.connect(_on_enter_new_area)
 	Global.enter_new_room.connect(_on_enter_new_room)
@@ -114,6 +142,7 @@ func connect_signals():
 const player_scene: PackedScene = preload("res://scenes/player.tscn")
 const pause_scene: PackedScene = preload("res://scenes/pause_menu.tscn")
 const backpack_scene: PackedScene = preload("res://scenes/backpack_ui.tscn")
+const confirmation_scene: PackedScene = preload("res://scenes/exit_confirmation.tscn")
 const transition_scene: PackedScene = preload("res://scenes/transition.tscn")
 const mission_scene: PackedScene = preload("res://scenes/mission.tscn")
 
@@ -121,7 +150,7 @@ var current_area: Array[PackedScene]
 
 func start() -> void:
 	# TO BE CHANGED
-	
+	GameStateService.new_game()
 	State.current_area = current_area_name
 	State.current_room = current_room
 	State.current_mission = current_mission
@@ -130,9 +159,6 @@ func start() -> void:
 	State.current_direction = current_direction
 	State.current_mission_enemy_count = current_mission_enemy_count
 	State.current_mission_enemy_required = current_mission_enemy_required
-	
-	
-	GameStateService.new_game()
 	Global.enter_new_area.emit(State.current_area, State.current_room)
 	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
 	
@@ -140,9 +166,7 @@ func start() -> void:
 		Global.TTS_available = true
 	else:
 		Global.TTS_available = false
-	#Add them to the scene already but remove their visibility
-	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").visible = false
-	#Rooms.get_child(0).get_node("NPCs/Mr Cheese").process_mode = Node.PROCESS_MODE_DISABLED
+
 
 
 func enable_player_process():
@@ -243,9 +267,19 @@ func _get_mission():
 	mission_instance.MissionTitle.text = mission_instance.mission_title_list[State.current_mission]
 	mission_instance.MissionDescription.text = mission_instance.mission_description_list[State.current_mission]
 
+func _on_redo_mission(mission: int):
+	remove_controls()
+	get_tree().paused = true
+	
+	mission_instance = mission_scene.instantiate()
+	$CanvasLayer.add_child(mission_instance)
+	
+	mission_instance.MissionTitle.text = mission_instance.mission_title_list[mission]
+	mission_instance.MissionDescription.text = mission_instance.mission_description_list[mission]
+	State.current_mission = mission
+
 #const enemy_required_scene: PackedScene = preload("res://scenes/enemies_required.tscn")
 var enemy_required_instance
-
 
 
 func _on_confirm_mission():

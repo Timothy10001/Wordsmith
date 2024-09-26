@@ -11,11 +11,12 @@ extends Control
 @export var start_level = load("res://scenes/main_menu.tscn")
 var loading_scene = load("res://scenes/loading_screen.tscn")
 
+
 func _ready():
 	handle_connecting_signals()
 	
-	
-	
+
+
 func on_start_pressed () -> void:
 	get_tree().change_scene_to_packed(loading_scene)
 

@@ -1,5 +1,12 @@
 ~ start
 set npc_class = "Middle Class"
+if State.current_area == "lobby":
+	Mr Cheese: Hello Wordsmith! Do you want to revisit my mission?
+	- Yes
+		do emit("redo_mission", 1)
+		=> END
+	- No
+		=> END
 if State.briefed_by_mr_cheese == false:
 	do emit("cutscene_start", "mission_1_starting_cutscene")
 else:

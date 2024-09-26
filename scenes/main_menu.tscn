@@ -76,7 +76,7 @@ custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_55mr4")
 theme_override_font_sizes/font_size = 40
-text = "START"
+text = "START NEW"
 
 [node name="Options_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 30)

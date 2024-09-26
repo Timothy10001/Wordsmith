@@ -21,6 +21,7 @@ signal transition_finished
 signal get_mission
 signal confirm_mission
 signal cancel_mission
+signal redo_mission
 
 signal enter_new_room(_new_room_index: int, _player_position: Vector2)
 

@@ -40,6 +40,10 @@ func _process(_delta):
 		collision_shape.disabled = true
 	else:
 		collision_shape.disabled = false
+	if get_parent().visible:
+		collision_shape.disabled = false
+	else:
+		collision_shape.disabled = true
 	if has_entered:
 		if Input.is_action_just_pressed("interact"):
 			#touch_screen_button.visible = false

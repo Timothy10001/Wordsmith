@@ -1,4 +1,11 @@
 ~ start
+if State.current_area == "lobby":
+	Mr Cheese: Hello Wordsmith! Do you want to revisit my mission?
+	- Yes
+		do emit("redo_mission", 1)
+		=> END
+	- No
+		=> END
 if State.current_mission == 3 and State.current_mission_enemy_count == 0:
 	set npc_class = "High Class"
 	Principal Ronnie: Wordsmith! I am very grateful for teaching everybody here at Lexonia.

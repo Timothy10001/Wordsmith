@@ -82,6 +82,10 @@ back_to_pause_menu={
 "deadzone": 0.5,
 "events": []
 }
+show_confirmation={
+"deadzone": 0.5,
+"events": []
+}
 
 [input_devices]
 

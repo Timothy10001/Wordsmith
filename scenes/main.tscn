@@ -403,3 +403,8 @@ frame_progress = 0.632179
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource("2_gh745")
 save_properties = Array[String](["current_area_name", "current_room", "current_mission", "tutorial_status", "player_position", "current_direction", "removed_enemies", "current_mission_enemy_count", "current_mission_enemy_required", "briefed_by_mr_cheese", "unlocked_key_house", "initial_position", "briefed_by_principal_ronnie"])
+global = true
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
