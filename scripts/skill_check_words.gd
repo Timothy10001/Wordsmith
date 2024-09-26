@@ -11,6 +11,6 @@ var identify = {
 
 var story_time = {
 	"words": ["Hat", "Wall", "Cat", "Cow", "Fish", "Cherry"],
-	"sentences": ["Which word ends with the same sound as \"cat\"?", "Which word rhymes with \"ball\"?", "How many syllables are in the word \"TOMATO\"?", "Which word has the \"a\" sound like in \"apple\"?", "What animal says \"moo\"?", "Which animal lives in water?", "Which fruit is red and round?"],
+	"sentences": ["Which word ends with the same sound as \"cat\"?", "Which word rhymes with \"ball\"?", "Which word has the \"a\" sound like in \"apple\"?", "What animal says \"moo\"?", "Which animal lives in water?", "Which fruit is red and round?"],
 	"illustration": ["res://assets/art/backgrounds/skill illustrations/story time/hat_illust.png", "res://assets/art/backgrounds/skill illustrations/story time/wall_illust.png", "res://assets/art/backgrounds/skill illustrations/story time/cat_illust.png", "res://assets/art/backgrounds/skill illustrations/story time/cow_illust.png", "res://assets/art/backgrounds/skill illustrations/story time/fish_illust.png", "res://assets/art/backgrounds/skill illustrations/story time/cherry_illust.png"]
 }
