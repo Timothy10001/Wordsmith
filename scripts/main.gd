@@ -251,7 +251,7 @@ var enemy_required_instance
 func _on_confirm_mission():
 	# do transition
 	
-	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
+	$CanvasLayer.get_child(0).queue_free()
 	call_deferred("add_iris_transition")
 	await Global.transition_finished
 	get_tree().paused = false
@@ -287,10 +287,10 @@ func _on_confirm_mission():
 			State.current_mission_enemy_required = current_mission_enemy_required
 
 func _on_cancel_mission():
-	$CanvasLayer.remove_child($CanvasLayer.get_child(0))
-	
-	add_controls()
+	if $CanvasLayer.get_child_count() > 0:
+		$CanvasLayer.get_child(0).queue_free()
 	get_tree().paused = false
+	add_controls()
 
 
 const battle_scene: PackedScene = preload("res://scenes/battle.tscn")

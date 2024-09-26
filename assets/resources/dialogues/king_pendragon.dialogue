@@ -43,6 +43,7 @@ elif State.current_mission == 1:
 		=> END
 	- No
 		King Pendragon: Okay, come back if you're ready.
+		do emit("cancel_mission")
 		=> END
 elif State.current_mission == 2:
 	King Pendragon: Wordsmith! The snowmen from Snowland have called us for help.
@@ -55,6 +56,7 @@ elif State.current_mission == 2:
 		=> END
 	- No
 		King Pendragon: Okay, come back if you're ready.
+		do emit("cancel_mission")
 		=> END
 elif State.current_mission == 3:
 	King Pendragon: Wordsmith! Principal Ronnie of Lexonia Academy has called us for help.
@@ -65,5 +67,6 @@ elif State.current_mission == 3:
 		=> END
 	- No
 		King Pendragon: Okay, come back if you're ready.
+		do emit("cancel_mission")
 		=> END
 => END

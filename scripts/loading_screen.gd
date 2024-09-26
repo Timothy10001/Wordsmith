@@ -9,7 +9,7 @@ var progress = []
 func _ready():
 	ResourceLoader.load_threaded_request(main_scene)
 
-func _process(delta):
+func _process(_delta):
 	loading_status = ResourceLoader.load_threaded_get_status(main_scene, progress)
 	Progress.value = progress[0]
 	ProgressLabel.text = "[center]" + str(floor(progress[0] * 100)) + "%"
