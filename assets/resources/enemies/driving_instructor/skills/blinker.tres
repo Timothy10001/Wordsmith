@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Skill" load_steps=2 format=3 uid="uid://hslfexf7ps8a"]
+
+[ext_resource type="Script" path="res://assets/resources/skills.gd" id="1_387bl"]
+
+[resource]
+script = ExtResource("1_387bl")
+name = "Blinker"
+description = "The driving instructor uses the wrong blinker!"
+target = "SINGLE"
+attack_damage = 0
+heal_amount = 0
+mana_amount = 0
+mana_cost = 0
+deals_damage = true
+requires_skill_check = false
+status_effect = "stun"
+stun_duration = 1
+chance = 15

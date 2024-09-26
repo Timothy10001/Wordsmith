@@ -2,18 +2,21 @@ extends Node
 
 #STATES
 
-var current_area_name: String = "mission 1 - outside"
+var current_area_name: String = "lobby"
 var current_room: int = 0
-var current_mission: int = 1
-var tutorial_status: String = "done"
+var current_mission: int = 0
+var tutorial_status: String = "not done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
-var current_mission_enemy_count: int = 14
-var current_mission_enemy_required: int = 14
+var initial_position: Vector2 = Vector2(0, 0)
+
+var current_mission_enemy_count: int = 0
+var current_mission_enemy_required: int = 0
 
 var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false
+var briefed_by_principal_ronnie: bool = false
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -37,6 +40,25 @@ func _process(_delta):
 	current_mission = State.current_mission
 	briefed_by_mr_cheese = State.briefed_by_mr_cheese
 	unlocked_key_house = State.unlocked_key_house
+	briefed_by_principal_ronnie = State.briefed_by_principal_ronnie
+	
+	if current_area_name == "mission 3 - classroom" and current_room == 4:
+		var npc_node = Rooms.get_child(0).get_node("NPCs")
+		npc_node.get_node("TeacherJoy").visible = false
+		npc_node.get_node("TeacherGigi").visible = false
+		npc_node.get_node("TeacherAries").visible = false
+		npc_node.get_node("TeacherKen").visible = false
+		if removed_enemies.size() > 0:
+			for enemy_names in removed_enemies:
+				match enemy_names:
+					"TeacherJoy":
+						npc_node.get_node("TeacherJoy").visible = true
+					"TeacherGigi":
+						npc_node.get_node("TeacherGigi").visible = true
+					"TeacherAries":
+						npc_node.get_node("TeacherAries").visible = false
+					"TeacherKen":
+						npc_node.get_node("TeacherKen").visible = false
 	
 	if State.current_area == "mission 1 - house":
 		State.unlocked_key_house = true
@@ -167,6 +189,9 @@ func _on_enter_new_area(_area: String, _room_index: int):
 func init_current_room():
 	GameStateService.on_scene_transitioning()
 	#print(GameStateService._game_state)
+	if current_area_name != "mission 2 - highway" and current_room == 0:
+		cutscene_extras.get_node("TruckBoss").visible = false
+	
 	if Rooms.get_child_count() > 0:
 		for i in range(Rooms.get_child_count()):
 			Rooms.remove_child(Rooms.get_child(0))
@@ -185,7 +210,11 @@ func init_current_room():
 	Global.enemy_battle_active = true
 	
 	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
-	
+	print(current_room)
+	if current_area_name == "mission 2 - highway" and current_room == 1:
+		player_instance.visible = false
+	else:
+		player_instance.visible = true
 
 var removed_enemies: Array[String]
 
@@ -217,6 +246,8 @@ func _get_mission():
 #const enemy_required_scene: PackedScene = preload("res://scenes/enemies_required.tscn")
 var enemy_required_instance
 
+
+
 func _on_confirm_mission():
 	# do transition
 	
@@ -229,6 +260,7 @@ func _on_confirm_mission():
 		1:
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-224, -16), "down")
+			initial_position = Vector2(-224, -16)
 			removed_enemies.clear()
 			# 14
 			current_mission_enemy_count = 14
@@ -238,9 +270,19 @@ func _on_confirm_mission():
 		2:
 			Global.enter_new_area.emit("mission 2 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
+			initial_position = Vector2(0, 0)
 			removed_enemies.clear()
 			current_mission_enemy_count = 6
 			current_mission_enemy_required = 6
+			State.current_mission_enemy_count = current_mission_enemy_count
+			State.current_mission_enemy_required = current_mission_enemy_required
+		3:
+			Global.enter_new_area.emit("mission 3 - outside", 0)
+			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
+			initial_position = Vector2(0, 0)
+			removed_enemies.clear()
+			current_mission_enemy_count = 16
+			current_mission_enemy_required = 16
 			State.current_mission_enemy_count = current_mission_enemy_count
 			State.current_mission_enemy_required = current_mission_enemy_required
 
@@ -294,8 +336,11 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		var balloon = BATTLE_BALLOON.instantiate()
 		add_child(balloon)
 		balloon.start(dialogue_resource, "lose")
-		player_instance.CharacterResource.health = int(player_instance.CharacterResource.max_health / 2)
-		Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
+		if current_mission != 2 and _type != "boss_battle":
+			Global.cutscene_start.emit("mission_2_boss_cutscene_part_1")
+		else:
+			player_instance.CharacterResource.health = int(player_instance.CharacterResource.max_health * 0.75)
+			Global.enter_new_room.emit(State.current_room, initial_position, State.current_direction)
 	
 	await Global.dialogue_ended
 	add_child(transition_instance)
@@ -350,6 +395,8 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		match current_mission:
 			1:
 				Global.cutscene_start.emit("mission_1_ending_cutscene")
+			2:
+				go_to_mission_2_end()
 		return
 	
 	if state == "Win" and _type == "car_in_house_battle":
@@ -362,13 +409,15 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		Global.remove_car_in_house.emit()
 	
 	if State.current_mission_enemy_count == 0 and State.current_mission == 2:
-		Global.cutscene_start.emit("mission_2_boss_cutscene")
+		Global.cutscene_start.emit("mission_2_boss_cutscene_part_1")
 	
 	
 	if current_mission == 3 and State.current_mission_enemy_count == 0:
-		Global.enter_new_area.emit("mission 3 - outside", 0)
-		Global.enter_new_room.emit(0, Vector2(0,0), "up")
-		print("do end credits")
+		var overlay = load("res://scenes/go_to_principal_ronnie.tscn")
+		var overlay_instance
+		overlay_instance = overlay.instantiate()
+		add_child(overlay_instance)
+		#print("do end credits")
 	
 	add_controls()
 	#enable enemy battle areas after 1.5 seconds
@@ -462,12 +511,10 @@ func set_interactable_dialogue(slot: InventorySlot, title: String):
 	Global.start_interactable_dialogue.emit(load("res://assets/resources/dialogues/interactables/chest.dialogue"), title)
 
 func _on_start_interactable_dialogue(_dialogue_resource: DialogueResource, title: String):
-	remove_controls()
 	var balloon = BALLOON.instantiate()
 	add_child(balloon)
 	balloon.start(_dialogue_resource, title)
 	await Global.dialogue_ended
-	add_controls()
 
 func _on_start_npc_dialogue(dialogue_path: String, title: String):
 	dialogue_resource = load(dialogue_path)
@@ -516,6 +563,8 @@ var cutscene_bars_instance
 
 @onready var animation_player = $Cutscenes/AnimationPlayer
 @onready var cutscene_camera = $Cutscenes/CutsceneCamera
+@onready var cutscene_extras = $Cutscenes/CutsceneExtras
+
 var current_cutscene_area: String
 var current_cutscene_player_position: Vector2
 var current_cutscene_room: int
@@ -540,9 +589,18 @@ func _on_cutscene_start(cutscene: String):
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(75, -82), "up")
 			animation_player.play(cutscene)
-			
+		"mission_2_boss_cutscene_part_1":
+			animation_player.play(cutscene)
+		"mission_2_boss_cutscene_part_2":
+			animation_player.play(cutscene)
+		"mission_2_boss_cutscene_part_3":
+			animation_player.play(cutscene)
+		"mission_2_boss_highway":
+			animation_player.play(cutscene)
+
 
 func start_cutscene_dialogue(cutscene: String):
+	remove_controls()
 	match cutscene:
 		"mission_1_starting_cutscene":
 			dialogue_resource = load("res://assets/resources/dialogues/mr_cheese.dialogue")
@@ -552,6 +610,34 @@ func start_cutscene_dialogue(cutscene: String):
 			Global.start_interactable_dialogue.emit(dialogue_resource, "start")
 			Rooms.get_child(0).get_node("CutsceneExtras").visible = true
 
+
+func start_cutscene_custom_dialogue(cutscene: String, title: String):
+	remove_controls()
+	match cutscene:
+		"mission_2_boss_cutscene":
+			dialogue_resource = load("res://assets/resources/dialogues/snowman.dialogue")
+			Global.start_interactable_dialogue.emit(dialogue_resource, title)
+			cutscene_extras.get_node("TruckBoss").visible = true
+		"mission_2_boss_help":
+			dialogue_resource = load("res://assets/resources/dialogues/driving_instructor.dialogue")
+			Global.start_interactable_dialogue.emit(dialogue_resource, title)
+		"mission_2_boss_highway":
+			dialogue_resource = load("res://assets/resources/dialogues/driving_instructor.dialogue")
+			Global.start_interactable_dialogue.emit(dialogue_resource, title)
+
+func go_to_mission_2_boss():
+	add_iris_transition()
+	await Global.transition_finished
+	Global.enter_new_area.emit("mission 2 - highway", 1)
+	Global.enter_new_room.emit(1, Vector2(0, 0), "up")
+
+func go_to_mission_2_end():
+	Global.enter_new_area.emit("mission 2 - highway", 0)
+	Global.enter_new_room.emit(0, Vector2(0, 0), "up")
+	State.current_mission += 1
+	Global.cutscene_playing = false
+	animation_player.stop()
+	cutscene_camera.enabled = false
 
 func stop_cutscene():
 	Global.cutscene_playing = false

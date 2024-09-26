@@ -56,4 +56,14 @@ elif State.current_mission == 2:
 	- No
 		King Pendragon: Okay, come back if you're ready.
 		=> END
+elif State.current_mission == 3:
+	King Pendragon: Wordsmith! Principal Ronnie of Lexonia Academy has called us for help.
+	King Pendragon: The students, even the teachers all got affected by the curse.
+	King Pendragon: Will you help them out?
+	- Yes
+		do emit("get_mission")
+		=> END
+	- No
+		King Pendragon: Okay, come back if you're ready.
+		=> END
 => END

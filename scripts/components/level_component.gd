@@ -36,9 +36,9 @@ func level_up():
 	level += 1
 	CharacterResource.level = level
 	CharacterResource.strength += 1
-	CharacterResource.max_health += 5
-	CharacterResource.max_mana += 5
-	CharacterResource.initial_armor += 1
+	CharacterResource.max_health += 10
+	CharacterResource.max_mana += 10
+	CharacterResource.initial_armor += 2
 	
 	Global.start_interactable_dialogue.emit(load("res://assets/resources/dialogues/level_up.dialogue"), "start")
 	experience_required = get_required_experience(level + 1)

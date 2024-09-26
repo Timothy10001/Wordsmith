@@ -102,5 +102,3 @@ func calculate_miss_chance(_miss_chance: int):
 		return true
 	else:
 		return false
-
-

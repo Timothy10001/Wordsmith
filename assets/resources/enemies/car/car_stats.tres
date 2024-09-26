@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_wqcps")
 name = "Car"
-health = 250
+health = 175
 strength = 5.0
 speed = 8
 initial_armor = 15

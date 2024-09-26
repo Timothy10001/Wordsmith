@@ -1,0 +1,15 @@
+~ start
+
+Deer: I don't know where I'm going!
+do emit("cutscene_start", "mission_2_boss_cutscene_part_3")
+=> END
+
+~ help
+
+Deer: Wordsmith! Please help!
+Deer: I don't know where I'm going!
+Deer: I can't read the GPS!
+set Global.cutscene_playing = false
+do emit("cutscene_ended")
+do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/driving_instructor.tscn"], "res://assets/art/backgrounds/tutorial.png", "boss_battle", null)
+=> END

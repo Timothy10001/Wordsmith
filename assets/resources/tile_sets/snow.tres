@@ -802,6 +802,9 @@ texture = ExtResource("1_n6mvl")
 21:18/0/y_sort_origin = 2
 21:18/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 21:18/0/physics_layer_0/angular_velocity = 0.0
+19:1/0 = 0
+19:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+19:1/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wwre4"]
 texture = ExtResource("2_4mfnf")

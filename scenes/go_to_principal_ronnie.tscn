@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6u0d78istirk"]
+
+[ext_resource type="FontFile" uid="uid://tifhkuc01jal" path="res://assets/fonts/normal.ttf" id="1_rlwr1"]
+
+[node name="GoToPrincipalRonnie" type="CanvasLayer"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_bottom = 100
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_rlwr1")
+theme_override_font_sizes/font_size = 36
+text = "Go to Principal Ronnie on the 2nd Floor!"

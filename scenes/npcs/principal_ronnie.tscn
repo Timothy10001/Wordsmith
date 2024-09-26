@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccsde1bkf32jc"]
+[gd_scene load_steps=10 format=3 uid="uid://ccsde1bkf32jc"]
 
 [ext_resource type="Script" path="res://scripts/npcs/principal_ronnie.gd" id="1_5utic"]
 [ext_resource type="Texture2D" uid="uid://b2ejf54nmgga6" path="res://assets/art/characters/enemy/principal_ronnie_sprites.png" id="2_3m7lf"]
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_8bkci"]
 [ext_resource type="PackedScene" uid="uid://bkbkxdafjpdmr" path="res://scenes/npc.tscn" id="3_r1kkb"]
+[ext_resource type="Resource" uid="uid://ciu83qqpse8eu" path="res://assets/resources/dialogues/principal_ronnie.dialogue" id="5_pfs0b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lvcl7"]
 atlas = ExtResource("2_3m7lf")
@@ -46,6 +47,7 @@ texture = SubResource("AtlasTexture_e54bm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="NPC" parent="." node_paths=PackedStringArray("touch_screen_button", "collision_shape") instance=ExtResource("3_r1kkb")]
+dialogue_resource = ExtResource("5_pfs0b")
 touch_screen_button = NodePath("TouchScreenButton")
 collision_shape = NodePath("CollisionShape2D")
 

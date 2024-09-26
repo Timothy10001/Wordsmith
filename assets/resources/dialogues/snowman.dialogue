@@ -1,10 +1,30 @@
 ~ start
 set npc_class = "Middle Class"
 
-Snowman: Hello! You must be the Wordsmith.
-Snowman: The curse caused these drivers to not be able to read those signs.
-Snowman: We keep getting run over.
-Snowman: We don't get hurt, but it's takes time for us to rebuild.
-Snowman: Please teach them how to read again.
+if State.current_area == "mission 2 - highway":
+	Snowman: Thanks for helping out!
+	Deer: Thank you Wordsmith!
+	Deer: I'll go ahead and teach every other driver!.
+	=> END
+else:
+	Snowman: Hello! You must be the Wordsmith.
+	Snowman: The curse caused these drivers to not be able to read those signs.
+	Snowman: We keep getting run over.
+	Snowman: We don't get hurt, but it's takes time for us to rebuild.
+	Snowman: Please teach them how to read again.
+	=> END
 
+~ boss_dialogue
+
+set npc_class = "Middle Class"
+Snowman: I guess that's all of them.
+do emit("cutscene_start", "mission_2_boss_cutscene_part_2")
+=> END
+
+~ boss_dialogue_2
+set npc_class = "Middle Class"
+Snowman: That was the driving instructor!
+Snowman: Come, get in my car!
+Snowman: Let's help him!
+do emit("cutscene_start", "mission_2_boss_highway")
 => END
