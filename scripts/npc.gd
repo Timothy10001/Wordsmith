@@ -21,7 +21,7 @@ var has_entered = false
 func _on_body_entered(body):
 	if body is Player:
 		has_entered = true
-		touch_screen_button.visible = true
+		#touch_screen_button.visible = true
 		print("player has entered")
 		player_entered.emit()
 		Global.interactable_entered.emit()
@@ -29,7 +29,7 @@ func _on_body_entered(body):
 
 func _on_body_exited(body):
 	if body is Player:
-		touch_screen_button.visible = false
+		#touch_screen_button.visible = false
 		has_entered = false
 		print("player has left")
 		player_left.emit()
@@ -42,7 +42,7 @@ func _process(_delta):
 		collision_shape.disabled = false
 	if has_entered:
 		if Input.is_action_just_pressed("interact"):
-			touch_screen_button.visible = false
+			#touch_screen_button.visible = false
 			action()
 
 func action() -> void:
@@ -51,4 +51,4 @@ func action() -> void:
 	balloon.start(dialogue_resource, dialogue_start)
 
 func _on_dialogue_ended():
-	touch_screen_button.visible = true
+	touch_screen_button.visible = false
