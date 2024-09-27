@@ -5,6 +5,7 @@ class_name SkillComponent
 @export var skills: Array[Skill]
 @export var user: Resource
 
+
 var miss_chance: int = 0
 var skill_list = []
 var damage: int
@@ -26,6 +27,7 @@ func calculate_damage(skill, target):
 
 func calculate_heal(_skill, _user):
 	heal_amount = _skill.heal_amount
+	Global.play_sfx.emit("heal")
 	Global.skill_description = _skill.description
 
 func calculate_skill_damage(skill, target):
@@ -102,3 +104,5 @@ func calculate_miss_chance(_miss_chance: int):
 		return true
 	else:
 		return false
+
+

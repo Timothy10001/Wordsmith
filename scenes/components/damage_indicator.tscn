@@ -53,3 +53,6 @@ text = "0"
 libraries = {
 "": SubResource("AnimationLibrary_2gwrn")
 }
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"

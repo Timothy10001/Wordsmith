@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://ddktrys17vcy4"]
+[gd_scene load_steps=15 format=3 uid="uid://ddktrys17vcy4"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x8nos"]
-[ext_resource type="Script" path="res://addons/game_state_saver/game_state_helper.gd" id="2_gh745"]
 [ext_resource type="Texture2D" uid="uid://bihdeeic61121" path="res://assets/art/characters/enemy/truck_sprites.png" id="3_htf80"]
 
 [sub_resource type="Animation" id="Animation_2ql0x"]
@@ -400,11 +399,8 @@ frame_progress = 0.632179
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="GameStateHelper" type="Node" parent="."]
-script = ExtResource("2_gh745")
-save_properties = Array[String](["current_area_name", "current_room", "current_mission", "tutorial_status", "player_position", "current_direction", "removed_enemies", "current_mission_enemy_count", "current_mission_enemy_required", "briefed_by_mr_cheese", "unlocked_key_house", "initial_position", "briefed_by_principal_ronnie"])
-global = true
-
 [node name="Music" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"

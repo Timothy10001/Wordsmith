@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dw68rkatkq2d5"]
+[gd_scene load_steps=14 format=3 uid="uid://dw68rkatkq2d5"]
 
 [ext_resource type="Script" path="res://scripts/enemies/blue_car.gd" id="1_je5ne"]
 [ext_resource type="Texture2D" uid="uid://lr0e8fp7xdvh" path="res://assets/art/characters/enemy/blue_car.png" id="1_kca8q"]
@@ -10,6 +10,66 @@
 [ext_resource type="Resource" uid="uid://hiq5gwsi4wyf" path="res://assets/resources/enemies/car/skills/beep.tres" id="6_f3y5s"]
 [ext_resource type="Resource" uid="uid://q0dmo8lw6vfp" path="res://assets/resources/enemies/car/skills/blinker.tres" id="7_yjxfn"]
 [ext_resource type="Resource" uid="uid://cviqcopoqjrdg" path="res://assets/resources/enemies/car/skills/high_beam.tres" id="8_36b6k"]
+
+[sub_resource type="Animation" id="Animation_4uce5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.25, 1.25)]
+}
+
+[sub_resource type="Animation" id="Animation_me8ot"]
+resource_name = "shake"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0610865, -0.0610865, 0.0610865, -0.0610865, 0.0610865, -0.0610865, 0.0610865, -0.0610865, 0.0610865, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.25, 1.25), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g8n5o"]
+_data = {
+"RESET": SubResource("Animation_4uce5"),
+"shake": SubResource("Animation_me8ot")
+}
 
 [node name="BlueCar" type="TextureRect"]
 anchors_preset = 8
@@ -23,6 +83,10 @@ offset_right = 32.0
 offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.25, 1.25)
+pivot_offset = Vector2(32, 32)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("1_kca8q")
 expand_mode = 3
 stretch_mode = 5
@@ -47,3 +111,8 @@ user = ExtResource("3_j11tr")
 [node name="SpeedComponent" parent="." instance=ExtResource("3_8343a")]
 
 [node name="DamageIndicator" parent="." instance=ExtResource("4_h3ql8")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_g8n5o")
+}

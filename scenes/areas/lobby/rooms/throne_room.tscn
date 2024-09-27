@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c67rgg1f002s1"]
+[gd_scene load_steps=12 format=3 uid="uid://c67rgg1f002s1"]
 
 [ext_resource type="Shader" path="res://scripts/misc/scroll.gdshader" id="1_7of86"]
 [ext_resource type="Texture2D" uid="uid://b6lqfvu4mrg2o" path="res://assets/art/backgrounds/clouds.png" id="1_qxyg3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://rnslowucwlht" path="res://scenes/npcs/mr_cheese.tscn" id="6_tjttq"]
 [ext_resource type="PackedScene" uid="uid://copiosootwu56" path="res://scenes/npcs/snowman.tscn" id="7_hh25p"]
 [ext_resource type="PackedScene" uid="uid://ccsde1bkf32jc" path="res://scenes/npcs/principal_ronnie.tscn" id="8_ck1mi"]
+[ext_resource type="Script" path="res://addons/game_state_saver/game_state_helper.gd" id="9_rulay"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xkcmh"]
 shader = ExtResource("1_7of86")
@@ -83,3 +84,7 @@ position = Vector2(64, -144)
 
 [node name="PrincipalRonnie" parent="NPCs" instance=ExtResource("8_ck1mi")]
 position = Vector2(-76, -206)
+
+[node name="GameStateHelper" type="Node" parent="."]
+script = ExtResource("9_rulay")
+dynamic_instance = true

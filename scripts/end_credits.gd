@@ -1,0 +1,13 @@
+extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$SkipButton.visible = false
+	await get_tree().create_timer(10.0).timeout
+	$SkipButton.visible = true
+
+
+
+func _on_skip_button_pressed():
+	get_tree().change_scene_to_packed(load("res://scenes/main_menu.tscn"))

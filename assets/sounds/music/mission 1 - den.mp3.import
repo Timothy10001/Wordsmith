@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ov02vciwmg7n"
+path="res://.godot/imported/mission 1 - den.mp3-8ac6d2601de6c81a8f1d6bc72d0738ba.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/music/mission 1 - den.mp3"
+dest_files=["res://.godot/imported/mission 1 - den.mp3-8ac6d2601de6c81a8f1d6bc72d0738ba.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

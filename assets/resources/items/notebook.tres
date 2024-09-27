@@ -10,7 +10,7 @@ region = Rect2(128, 208, 16, 16)
 [resource]
 script = ExtResource("1_7djo4")
 name = "Notebook"
-description = "Write something down! Removes 20 IP."
+description = "Write something down! Removes 35 IP."
 texture = SubResource("AtlasTexture_0cg1f")
 stackable = true
 droppable = true
@@ -21,4 +21,4 @@ mana_value = 0
 stun_duration = 0
 miss_duration = 0
 damage_duration = 0
-damage = 20
+damage = 35

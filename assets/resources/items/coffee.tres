@@ -10,14 +10,14 @@ region = Rect2(224, 240, 16, 16)
 [resource]
 script = ExtResource("1_hdomx")
 name = "Coffee"
-description = "Wakes you up. Adds 15 EN."
+description = "Wakes you up. Adds 30 EN."
 texture = SubResource("AtlasTexture_mhjp7")
 stackable = true
 droppable = true
 type = "consumable"
 target = "player"
 heal_value = 0
-mana_value = 15
+mana_value = 30
 stun_duration = 0
 miss_duration = 0
 damage_duration = 0

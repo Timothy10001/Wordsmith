@@ -8,8 +8,10 @@ var mission_description_list: Array[String] = ["Tutorial", "[center]Help out Mr.
 
 
 func _on_yes_pressed():
+	Global.play_sfx.emit("button_click")
 	Global.confirm_mission.emit()
 
 
 func _on_no_pressed():
+	Global.play_sfx.emit("button_click")
 	Global.cancel_mission.emit()

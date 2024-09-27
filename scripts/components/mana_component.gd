@@ -32,4 +32,5 @@ func item_mana(item: Item):
 	if mana > MAX_MANA:
 		mana = MAX_MANA
 	mana_changed.emit(item.mana_value)
+	Global.play_sfx.emit("add_mana")
 	DamageIndicator.display_damage_number(item.mana_value, "mana")

@@ -52,8 +52,12 @@ signal stop_cutscene
 signal add_mission_rewards(inventory_path: String)
 signal drop_item(inventory_slot: InventorySlot)
 
+signal end_credits
 
 signal remove_car_in_house
+
+signal play_sfx(_name: String)
+signal play_battle_music(enemy: String)
 
 var experience: int
 #for npc dialogue font
@@ -73,6 +77,8 @@ var in_battle: bool = false
 var Voices: Array[Dictionary] = DisplayServer.tts_get_voices()
 var VoiceID: int = 0
 var TTS_available: bool
+
+const SAVE_FILE = "user://wordsmith_save_file.json"
 
 var enemy_battle_active: bool = true
 """

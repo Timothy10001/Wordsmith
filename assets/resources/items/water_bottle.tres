@@ -10,14 +10,14 @@ region = Rect2(80, 304, 16, 16)
 [resource]
 script = ExtResource("1_jfjr0")
 name = "Water Bottle"
-description = "Don't forget to drink it. Adds 15 EN."
+description = "Don't forget to drink it. Adds 40 EN."
 texture = SubResource("AtlasTexture_b4tnk")
 stackable = true
 droppable = true
 type = "consumable"
 target = "player"
 heal_value = 0
-mana_value = 15
+mana_value = 40
 stun_duration = 0
 miss_duration = 0
 damage_duration = 0

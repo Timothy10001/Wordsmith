@@ -31,6 +31,7 @@ func show_player_inventory():
 func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
 	match type:
 		"select":
+			Global.play_sfx.emit("button_click")
 			#set selected slot data
 			selected_inventory_slot = inventory.selected_slot_data(index)
 			selected_inventory_slot_index = index

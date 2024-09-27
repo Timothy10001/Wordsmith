@@ -12,6 +12,7 @@ class_name Player
 @onready var camera = $Camera2D
 @onready var ChaseIndicator = $AnimatedSprite2D/ChaseIndicator
 @onready var collision =$CollisionShape2D
+@onready var footstep_sfx = $footstep_sfx
 
 var current_stun_duration: int = 0
 var current_miss_duration: int = 0
@@ -22,6 +23,7 @@ var current_direction = "none"
 var is_moving = false
 
 func _ready():
+	footstep_sfx.stream = load("res://assets/sounds/sfx/footstep.wav")
 	collision.disabled = false
 	ChaseIndicator.visible = false
 	Global.cutscene_ended.connect(_on_cutscene_ended)
@@ -120,6 +122,19 @@ func play_animation():
 				animation.play("idle_down")
 	
 
+var footstep_frames: Array = [1]
+
+func play_sfx():
+	footstep_sfx.pitch_scale = randf_range(0.8, 1.2)
+	footstep_sfx.play()
 
 func _on_cutscene_ended():
 	camera.enabled = true
+
+
+func _on_animated_sprite_2d_frame_changed():
+	var animation = $AnimatedSprite2D
+	if animation.animation == "idle_down" or animation.animation == "idle_left" or animation.animation == "idle_up":
+		return
+	if animation.frame in footstep_frames:
+		play_sfx()

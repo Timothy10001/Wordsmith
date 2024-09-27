@@ -10,14 +10,14 @@ region = Rect2(112, 304, 16, 16)
 [resource]
 script = ExtResource("1_jtu1e")
 name = "Cheese Juice"
-description = "Tastes cheesy. Adds 15 EN."
+description = "Tastes cheesy. Adds 25 EN."
 texture = SubResource("AtlasTexture_3yyk3")
 stackable = true
 droppable = true
 type = "consumable"
 target = "player"
 heal_value = 0
-mana_value = 15
+mana_value = 25
 stun_duration = 0
 miss_duration = 0
 damage_duration = 0

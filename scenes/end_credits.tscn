@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://diobohscixe6b"]
+
+[ext_resource type="Script" path="res://scripts/end_credits.gd" id="1_4kf5j"]
+[ext_resource type="Texture2D" uid="uid://cm43revcg28mq" path="res://assets/art/ui/skip_button.png" id="2_sd784"]
+[ext_resource type="Texture2D" uid="uid://bbq1rbph4l47q" path="res://assets/art/backgrounds/end_credits.png" id="2_tkxxt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7q0s"]
+atlas = ExtResource("2_sd784")
+region = Rect2(0, 0, 96, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wrtxy"]
+texture = SubResource("AtlasTexture_n7q0s")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xe4pl"]
+atlas = ExtResource("2_sd784")
+region = Rect2(0, 32, 96, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7s5hc"]
+texture = SubResource("AtlasTexture_xe4pl")
+
+[node name="EndCredits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4kf5j")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_tkxxt")
+
+[node name="SkipButton" type="Button" parent="."]
+custom_minimum_size = Vector2(288, 96)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_wrtxy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_7s5hc")
+
+[connection signal="pressed" from="SkipButton" to="." method="_on_skip_button_pressed"]

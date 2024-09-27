@@ -10,13 +10,13 @@ region = Rect2(208, 224, 16, 16)
 [resource]
 script = ExtResource("1_er38b")
 name = "Bread"
-description = "Soft, fluffy, and delicious. Adds 20 INT."
+description = "Soft, fluffy, and delicious. Adds 28 INT."
 texture = SubResource("AtlasTexture_ucndb")
 stackable = true
 droppable = true
 type = "consumable"
 target = "player"
-heal_value = 20
+heal_value = 28
 mana_value = 0
 stun_duration = 0
 miss_duration = 0

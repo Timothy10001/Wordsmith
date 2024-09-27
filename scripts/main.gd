@@ -18,6 +18,8 @@ var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false
 var briefed_by_principal_ronnie: bool = false
 
+var music_position = 0
+
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 
@@ -35,6 +37,7 @@ var dialogue_resource: DialogueResource
 func _ready():
 	connect_signals()
 	start()
+	#continue_game()
 	cutscene_camera.enabled = false
 
 func _process(_delta):
@@ -78,10 +81,16 @@ func _process(_delta):
 	if State.current_area == "mission 1 - house":
 		State.unlocked_key_house = true
 	if Input.is_action_just_pressed("pause"):
+		music_position = Music.get_playback_position()
+		Music.stop()
+		GameStateService.on_scene_transitioning()
+		GameStateService.save_game_state(Global.SAVE_FILE)
 		pause_instance = pause_scene.instantiate()
 		add_child(pause_instance)
 		get_tree().paused = true
 	if Input.is_action_just_pressed("resume"):
+		Music.play()
+		Music.seek(music_position)
 		print("unpaused")
 		get_tree().paused = false
 		remove_child(pause_instance)
@@ -135,6 +144,10 @@ func connect_signals():
 	Global.cutscene_start.connect(_on_cutscene_start)
 	Global.stop_cutscene.connect(stop_cutscene)
 	Global.add_mission_rewards.connect(_on_add_mission_rewards)
+	
+	Global.play_battle_music.connect(play_battle_music)
+	Global.play_sfx.connect(play_sfx)
+	Global.end_credits.connect(_on_end_credits)
 
 
 #create rooms in a different scene?
@@ -150,7 +163,7 @@ var current_area: Array[PackedScene]
 
 func start() -> void:
 	# TO BE CHANGED
-	GameStateService.new_game()
+	#GameStateService.new_game()
 	State.current_area = current_area_name
 	State.current_room = current_room
 	State.current_mission = current_mission
@@ -168,6 +181,10 @@ func start() -> void:
 		Global.TTS_available = false
 
 
+func continue_game():
+	pass
+	#var scene := GameStateService.load_game_state(Global.SAVE_FILE)
+	#get_tree().change_scene_to_file(scene)
 
 func enable_player_process():
 	player_instance.process_mode = Node.PROCESS_MODE_INHERIT
@@ -179,6 +196,7 @@ func disable_player_process():
 func add_iris_transition():
 	var transition_instance = transition_scene.instantiate()
 	add_child(transition_instance)
+	Global.play_sfx.emit("iris_transition")
 	transition_instance.iris_transition()
 
 func add_controls():
@@ -206,7 +224,7 @@ func _on_enter_new_area(_area: String, _room_index: int):
 	State.current_room = _room_index
 	current_area_name = _area
 	current_room = _room_index
-	
+	play_area_music()
 	get_current_area(_area)
 	
 
@@ -377,6 +395,7 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 			Global.enter_new_room.emit(State.current_room, initial_position, State.current_direction)
 	
 	await Global.dialogue_ended
+	play_area_music()
 	add_child(transition_instance)
 	
 	transition_instance.fade_transition()
@@ -680,3 +699,93 @@ func stop_cutscene():
 	Global.cutscene_ended.emit()
 	Global.enter_new_area.emit(current_cutscene_area, current_cutscene_room)
 	Global.enter_new_room.emit(current_cutscene_room, current_cutscene_player_position, current_direction)
+
+
+#AUDIO STUFF
+
+@onready var Music = $Music
+func play_area_music():
+	if Music.playing:
+		Music.stop()
+	match current_area_name:
+		"lobby":
+			if !Music.stream == load("res://assets/sounds/music/lobby.mp3"):
+				Music.stream = load("res://assets/sounds/music/lobby.mp3")
+		"mission 1 - outside":
+			if !Music.stream == load("res://assets/sounds/music/mission 1 - outside.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 1 - outside.mp3")
+		"mission 1 - den":
+			if !Music.stream == load("res://assets/sounds/music/mission 1 - den.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 1 - den.mp3")
+		"mission 1 - house":
+			if !Music.stream == load("res://assets/sounds/music/mission 1 - house.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 1 - house.mp3")
+		"mission 1 - tavern":
+			if !Music.stream == load("res://assets/sounds/music/mission 1 - tavern.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 1 - tavern.mp3")
+		_:
+			pass
+	Music.play()
+
+@onready var SFX = $SFX
+func play_sfx(_name: String):
+	match _name:
+		"great":
+			if !SFX.stream == load("res://assets/sounds/sfx/great.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/great.wav")
+		"good_job":
+			if !SFX.stream == load("res://assets/sounds/sfx/good_job.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/good_job.wav")
+		"awesome":
+			if !SFX.stream == load("res://assets/sounds/sfx/awesome.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/awesome.wav")
+		"amazing":
+			if !SFX.stream == load("res://assets/sounds/sfx/amazing.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/amazing.wav")
+		"Notebook":
+			if !SFX.stream == load("res://assets/sounds/sfx/notebook.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/notebook.wav")
+		"Snowball":
+			if !SFX.stream == load("res://assets/sounds/sfx/snowball.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/snowball.wav")
+		"Marker":
+			if !SFX.stream == load("res://assets/sounds/sfx/marker.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/marker.wav")
+		"Teaching Stick":
+			if !SFX.stream == load("res://assets/sounds/sfx/teaching_stick.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/teaching_stick.wav")
+		"Bouncy Ball":
+			if !SFX.stream == load("res://assets/sounds/sfx/bouncing_ball.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/bouncing_ball.wav")
+		"button_click":
+			if !SFX.stream == load("res://assets/sounds/sfx/button_click.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/button_click.wav")
+		"heal":
+			if !SFX.stream == load("res://assets/sounds/sfx/heal.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/heal.wav")
+		"add_mana":
+			if !SFX.stream == load("res://assets/sounds/sfx/add_mana.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/add_mana.wav")
+		"iris_transition":
+			if !SFX.stream == load("res://assets/sounds/sfx/iris_transition.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/iris_transition.wav")
+	SFX.play()
+
+func play_battle_music(enemy: String):
+	if Music.playing:
+		Music.stop()
+	match enemy:
+		"Dummy":
+			if !Music.stream == load("res://assets/sounds/music/dummy_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/dummy_battle.mp3")
+		"Rat":
+			if !Music.stream == load("res://assets/sounds/music/rat_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/rat_battle.mp3")
+		_:
+			pass
+	await get_tree().create_timer(1.5).timeout
+	Music.play()
+
+func _on_end_credits():
+	var end_credits = load("res://scenes/end_credits.tscn")
+	get_tree().change_scene_to_packed(end_credits)

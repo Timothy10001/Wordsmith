@@ -1,7 +1,8 @@
-[gd_scene load_steps=33 format=3 uid="uid://cd2h1if0274f4"]
+[gd_scene load_steps=38 format=3 uid="uid://cd2h1if0274f4"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_3l4q4"]
 [ext_resource type="Theme" uid="uid://cwif4cu3aua73" path="res://assets/resources/battle.tres" id="1_gxkwb"]
+[ext_resource type="SpriteFrames" uid="uid://d0lgdhs42r1e2" path="res://assets/resources/item_animation.tres" id="3_2g7ck"]
 [ext_resource type="Texture2D" uid="uid://1kyhqm246jrq" path="res://assets/art/characters/placeholder/idle.png" id="3_udsod"]
 [ext_resource type="Texture2D" uid="uid://b8e2ry862q8je" path="res://assets/art/Pixel Crawler - FREE - 1.8/Heroes/Rogue/Idle/Idle-Sheet.png" id="4_f51b5"]
 [ext_resource type="Texture2D" uid="uid://28hltji5lx5o" path="res://assets/art/backgrounds/paper_overlay_001.png" id="4_m4s3m"]
@@ -10,6 +11,7 @@
 [ext_resource type="FontFile" uid="uid://tifhkuc01jal" path="res://assets/fonts/normal.ttf" id="6_ekbxr"]
 [ext_resource type="FontFile" uid="uid://bo78o48s27ltg" path="res://assets/fonts/king.ttf" id="8_03ej5"]
 [ext_resource type="Script" path="res://scripts/speech_to_text.gd" id="8_wcu6d"]
+[ext_resource type="SpriteFrames" uid="uid://cgqca8tgcxagu" path="res://assets/resources/skill_check_animation.tres" id="10_ewvdv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oa3kn"]
 atlas = ExtResource("3_udsod")
@@ -82,6 +84,36 @@ region = Rect2(0, 32, 96, 32)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ucqjr"]
 texture = SubResource("AtlasTexture_h7gln")
 
+[sub_resource type="Animation" id="Animation_3v5ga"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations/SkillCheckPassedSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 1000)]
+}
+
+[sub_resource type="Animation" id="Animation_m4gn2"]
+resource_name = "play_item_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/ItemSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="Animation" id="Animation_6wyce"]
 resource_name = "processing"
 length = 1.5
@@ -111,9 +143,28 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_jrb7g"]
+resource_name = "skill_check_passed"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations/SkillCheckPassedSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 2, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 1000), Vector2(0, 0), Vector2(0, 0), Vector2(0, 1000)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qtcx3"]
 _data = {
-"processing": SubResource("Animation_6wyce")
+"RESET": SubResource("Animation_3v5ga"),
+"play_item_animation": SubResource("Animation_m4gn2"),
+"processing": SubResource("Animation_6wyce"),
+"skill_check_passed": SubResource("Animation_jrb7g")
 }
 
 [node name="Battle" type="Control"]
@@ -221,6 +272,22 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 50
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemSprite" type="AnimatedSprite2D" parent="MarginContainer"]
+visible = false
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("3_2g7ck")
+animation = &"Bouncy Ball"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -748,6 +815,22 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("6_ekbxr")
 theme_override_font_sizes/font_size = 48
 text = "Please Try Again."
+
+[node name="Animations" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SkillCheckPassedSprite" type="AnimatedSprite2D" parent="Animations"]
+position = Vector2(0, 1000)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("10_ewvdv")
+animation = &"great"
 
 [node name="SpeechToText" type="Node" parent="."]
 script = ExtResource("8_wcu6d")

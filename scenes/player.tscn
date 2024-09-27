@@ -161,7 +161,7 @@ shape = SubResource("RectangleShape2D_etjyt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_8tutj")
-animation = &"idle_down"
+animation = &"walk_down"
 
 [node name="ChaseIndicator" type="MarginContainer" parent="AnimatedSprite2D"]
 anchors_preset = 15
@@ -206,3 +206,10 @@ CharacterResource = ExtResource("5_mr43v")
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource("19_ntf6y")
 save_properties = Array[String](["CharacterResource", "inventory", "global_position", "current_direction"])
+dynamic_instance = true
+
+[node name="footstep_sfx" type="AudioStreamPlayer" parent="."]
+volume_db = -15.0
+bus = &"SFX"
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]

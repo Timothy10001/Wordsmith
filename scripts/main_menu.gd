@@ -6,6 +6,7 @@ extends Control
 @onready var exit_button = $MarginContainer/HBoxContainer/VBoxContainer/Exit_Button as Button
 @onready var options_button = $MarginContainer/HBoxContainer/VBoxContainer/Options_Button as Button
 @onready var options_menu = $Options_Menu as OptionsMenu
+@onready var continue_button = $MarginContainer/HBoxContainer/VBoxContainer/Continue_Button as Button
 @onready var margin_container = $MarginContainer as MarginContainer
 
 @export var start_level = load("res://scenes/main_menu.tscn")
@@ -26,6 +27,8 @@ func on_options_pressed() -> void:
 	options_menu.set_process(true)
 	options_menu.visible = true
 
+func on_continue_pressed() -> void:
+	get_tree().change_scene_to_packed(loading_scene)
 
 func on_exit_pressed() -> void:
 	get_tree().quit()
@@ -36,9 +39,10 @@ func on_exit_options_menu() -> void:
 	options_menu.visible = false
 
 func handle_connecting_signals() -> void:
-	start_button.button_down.connect(on_start_pressed)
-	options_button.button_down.connect(on_options_pressed)
-	exit_button.button_down.connect(on_exit_pressed)
+	start_button.pressed.connect(on_start_pressed)
+	options_button.pressed.connect(on_options_pressed)
+	exit_button.pressed.connect(on_exit_pressed)
+	continue_button.pressed.connect(on_continue_pressed)
 	options_menu.exit_options_menu.connect(on_exit_options_menu)
 
 

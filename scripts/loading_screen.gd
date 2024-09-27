@@ -15,6 +15,8 @@ func _process(_delta):
 	ProgressLabel.text = "[center]" + str(floor(progress[0] * 100)) + "%"
 	if loading_status == ResourceLoader.THREAD_LOAD_LOADED:
 		await get_tree().create_timer(1.5).timeout
+		
+		#get_tree().change_scene_to_file(GameStateService.load_game_state(Global.SAVE_FILE))
 		get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(main_scene))
 	
 

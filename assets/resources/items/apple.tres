@@ -10,14 +10,14 @@ region = Rect2(0, 224, 16, 16)
 [resource]
 script = ExtResource("1_uxths")
 name = "Apple"
-description = "Keeps the doctor away! Heals 15 INT and adds 10 EN."
+description = "Keeps the doctor away! Heals 25 INT and adds 15 EN."
 texture = SubResource("AtlasTexture_2fgml")
 stackable = true
 droppable = true
 type = "consumable"
 target = "player"
-heal_value = 15
-mana_value = 10
+heal_value = 25
+mana_value = 15
 stun_duration = 0
 miss_duration = 0
 damage_duration = 0

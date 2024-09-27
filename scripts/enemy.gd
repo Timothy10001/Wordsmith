@@ -128,4 +128,23 @@ func _on_timer_timeout():
 func _on_battle_area_body_entered(body):
 	if body is Player:
 		enemy_state = STATE.IDLE
-		Global.start_battle.emit(["res://scenes/player.tscn"], [enemy_battle_path], "res://assets/art/backgrounds/tutorial.png", "battle", self)
+		var battle_background_path
+		match enemy_name:
+			"Rat":
+				battle_background_path = "res://assets/art/backgrounds/rat.png"
+			"Car":
+				battle_background_path = "res://assets/art/backgrounds/car.png"
+			"Kid":
+				battle_background_path = "res://assets/art/backgrounds/classroom.png"
+			"Teacher Ken":
+				battle_background_path = "res://assets/art/backgrounds/classroom.png"
+			"Teacher Joy":
+				battle_background_path = "res://assets/art/backgrounds/classroom.png"
+			"Teacher Gigi":
+				battle_background_path = "res://assets/art/backgrounds/classroom.png"
+			"Teacher Aries":
+				battle_background_path = "res://assets/art/backgrounds/classroom.png"
+			_:
+				battle_background_path = "res://assets/art/backgrounds/tutorial.png"
+		Global.play_battle_music.emit(enemy_name)
+		Global.start_battle.emit(["res://scenes/player.tscn"], [enemy_battle_path], battle_background_path, "battle", self)

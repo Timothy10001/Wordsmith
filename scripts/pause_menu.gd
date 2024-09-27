@@ -10,6 +10,10 @@ var player_resource = load("res://assets/resources/Player.tres")
 
 
 func _process(_delta):
+	if State.current_area == "lobby":
+		$TextureRect/MarginContainer/ButtonContainer/ExitToLobbyButton.visible = false
+	else:
+		$TextureRect/MarginContainer/ButtonContainer/ExitToLobbyButton.visible = true
 	health.text = "%s/%s" % [player_resource.health, player_resource.max_health]
 	mana.text = "%s/%s" % [player_resource.mana, player_resource.max_mana]
 	strength.text = "%s" % player_resource.strength
@@ -41,3 +45,4 @@ func _on_save_and_exit_button_pressed():
 	Input.action_press("show_confirmation")
 	await get_tree().create_timer(0.05).timeout
 	Input.action_release("show_confirmation")
+	

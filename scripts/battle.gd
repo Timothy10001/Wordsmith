@@ -397,6 +397,8 @@ func _on_execute():
 					get_tree().root.add_child(balloon)
 					balloon.start(dialogue_resource, "use_item")
 					#change is turn finished to true
+					play_item_animation(selected_inventory_slot.item.name)
+					await animation_player.animation_finished
 					selected_unit["is_turn_finished"] = true
 			else:
 				if is_skill_check_required:
@@ -594,6 +596,7 @@ func show_end_turn():
 
 #PLAYER ACTIONS
 func _on_teach_pressed():
+	Global.play_sfx.emit("button_click")
 	show_end_turn()
 	current_action = "Basic Attack"
 	is_skill_check_required = false
@@ -601,10 +604,12 @@ func _on_teach_pressed():
 
 
 func _on_skills_pressed():
+	Global.play_sfx.emit("button_click")
 	show_skills()
 
 # ITEM GRID
 func _on_items_pressed():
+	Global.play_sfx.emit("button_click")
 	show_items()
 	current_action = "Use Item"
 	populate_item_grid(inventory_data)
@@ -619,6 +624,7 @@ var inventory_slots: Array[PanelContainer]
 
 func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
 	if type == "select":
+		Global.play_sfx.emit("button_click")
 		#set selected slot data
 		selected_inventory_slot = inventory.selected_slot_data(index)
 		selected_inventory_slot_index = index
@@ -656,9 +662,15 @@ func populate_item_grid(inventory: Inventory) -> void:
 			#adds slot's data
 			inventory_slot_instance.set_inventory_slot_data(inventory_slot.item, inventory_slot.quantity)
 
+@onready var ItemSprite = $MarginContainer/ItemSprite
 
+func play_item_animation(_name: String):
+	animation_player.play("play_item_animation")
+	ItemSprite.play(_name)
+	Global.play_sfx.emit(_name)
 
 func _on_guard_pressed():
+	Global.play_sfx.emit("button_click")
 	show_end_turn()
 	current_action = "Guard"
 	#ADD BIT OF MANA TO PLAYER AND ADD DAMAGE REDUCTION
@@ -676,30 +688,35 @@ func _on_execute_pressed():
 
 
 func _on_cancel_pressed():
+	Global.play_sfx.emit("button_click")
 	show_default_container()
 	current_action = ""
 
 #----------------------------#
 #WORDSMITH SKILLS
 func _on_flash_cards_pressed():
+	Global.play_sfx.emit("button_click")
 	show_end_turn()
 	current_action = "Flash Cards"
 	is_skill_check_required = true
 	
 
 func _on_identify_pressed():
+	Global.play_sfx.emit("button_click")
 	show_end_turn()
 	current_action = "Identify"
 	is_skill_check_required = true
 
 
 func _on_story_time_pressed():
+	Global.play_sfx.emit("button_click")
 	show_end_turn() 
 	current_action = "Story Time"
 	is_skill_check_required = true
 
 
 func _on_review_pressed():
+	Global.play_sfx.emit("button_click")
 	show_end_turn()
 	current_action = "Review"
 	is_skill_check_required = false
@@ -707,6 +724,7 @@ func _on_review_pressed():
 #---------------------------------------#
 
 func _on_select_pressed(button):
+	Global.play_sfx.emit("button_click")
 	for unit in unit_list:
 		if unit.has("select_button"):
 			if unit["select_button"] == button:
@@ -816,6 +834,8 @@ func _on_speech_to_text_stt_response_generated(response):
 
 var try_again_text = ["Please try again.", "Try again, you can do it!", "You can do it one more time!", "Try again, you got this!"]
 
+var skill_check_passed_array = ["amazing", "good_job", "awesome", "great"]
+@onready var skill_check_passed_sprite = $Animations/SkillCheckPassedSprite
 func check_if_skill_check_passed():
 	MicButton.disabled = false
 	SkipButton.disabled = false
@@ -826,6 +846,15 @@ func check_if_skill_check_passed():
 	print("Completed Text: " + str(completed_text))
 	if current_word in completed_text or current_word.to_lower() in completed_text:
 		Global.skill_check_passed = true
+		SkillCheck.visible = false
+		ProcessingLabel.visible = false
+		randomize()
+		var skill_check_index = randi_range(0, 3)
+		skill_check_passed_sprite.play(skill_check_passed_array[skill_check_index])
+		animation_player.play("skill_check_passed")
+		await get_tree().create_timer(0.3).timeout
+		Global.play_sfx.emit(skill_check_passed_array[skill_check_index])
+		await animation_player.animation_finished
 		Global.end_skill_check.emit()
 	else:
 		TryAgain.text = try_again_text.pick_random()

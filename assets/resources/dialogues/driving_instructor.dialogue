@@ -11,5 +11,5 @@ Deer: I don't know where I'm going!
 Deer: I can't read the GPS!
 set Global.cutscene_playing = false
 do emit("cutscene_ended")
-do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/driving_instructor.tscn"], "res://assets/art/backgrounds/tutorial.png", "boss_battle", null)
+do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/driving_instructor.tscn"], "res://assets/art/backgrounds/car.png", "boss_battle", null)
 => END
