@@ -13,9 +13,10 @@ if State.current_mission == 3 and State.current_mission_enemy_count == 0:
 	Principal Ronnie: I will ask King Pendragon to make the arrangements.
 	Principal Ronnie: Thank you very much for taking the time to teach everybody.
 	Narrator: And thank YOU for playing!
-	do emit("end_credits")
 	#do end credits
-	=> END
+	do emit("end_credits")
+	=> END!
+	
 else:
 	if State.briefed_by_principal_ronnie == false:
 		set npc_class = "High Class"

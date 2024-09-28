@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dsulnavqderu3"
+path="res://.godot/imported/mission 3 - outside.mp3-cc943745f9994c5663aeac0279507470.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/music/mission 3 - outside.mp3"
+dest_files=["res://.godot/imported/mission 3 - outside.mp3-cc943745f9994c5663aeac0279507470.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

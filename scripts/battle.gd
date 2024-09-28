@@ -121,6 +121,8 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 # ONLY FOR DEBUGGING
 # ~~~~~~~~~~~~~~~~~~~~~~~~~
 func _ready():
+	$VBoxContainer.pivot_offset.x = $VBoxContainer.size.x / 2
+	$VBoxContainer.pivot_offset.y = $VBoxContainer.size.y / 2
 	connect_signals()
 	dialogue_resource = load("res://assets/resources/dialogues/battle.dialogue")
 

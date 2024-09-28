@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/rat_battle.mp3-06742c859d82f59d3c68d4d7d3df76
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

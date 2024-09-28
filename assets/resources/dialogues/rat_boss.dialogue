@@ -7,6 +7,7 @@ if State.current_mission_enemy_count == 0:
 	Rat Boss: Why are you here?
 	Rat Boss: Let's hang out!
 	do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/rat_boss.tscn"], "res://assets/art/backgrounds/rat_boss.png", "boss_battle", null)
+	do emit("play_battle_music", "Rat Boss")
 	=> END
 else:
 	set npc_class = "Low Class"

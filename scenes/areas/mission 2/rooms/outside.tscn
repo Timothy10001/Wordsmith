@@ -469,6 +469,7 @@ z_index = 1
 y_sort_enabled = true
 
 [node name="Carriage" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("6_px0pe")]
+z_index = 0
 position = Vector2(-224, 80)
 collision = NodePath("CollisionShape2D")
 direction = "down"
@@ -512,7 +513,7 @@ z_index = 1
 y_sort_enabled = true
 
 [node name="RedCar001" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("18_2m2he")]
-position = Vector2(-242, 187)
+position = Vector2(-238, 166)
 enemy_name = "Car"
 enemy_battle_path = "res://scenes/enemies/red_car.tscn"
 sprite = NodePath("AnimatedSprite2D")

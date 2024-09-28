@@ -53,8 +53,11 @@ shape = SubResource("RectangleShape2D_5qn2t")
 z_index = 1
 y_sort_enabled = true
 
-[node name="Bed" parent="Interactables" instance=ExtResource("3_wup5n")]
+[node name="Bed" parent="Interactables" node_paths=PackedStringArray("Collision", "bed_sprite", "sleeping_sprite") instance=ExtResource("3_wup5n")]
 position = Vector2(368, -672)
+Collision = NodePath("CollisionShape2D")
+bed_sprite = NodePath("Bed")
+sleeping_sprite = NodePath("Sleeping")
 
 [node name="Bed" type="Sprite2D" parent="Interactables/Bed"]
 texture = ExtResource("4_5p5rk")

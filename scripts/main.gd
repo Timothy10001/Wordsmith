@@ -2,23 +2,29 @@ extends Node
 
 #STATES
 
-var current_area_name: String = "lobby"
+var current_area_name: String = "mission 3 - outside"
 var current_room: int = 0
-var current_mission: int = 0
-var tutorial_status: String = "not done"
+var current_mission: int = 3
+var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
 var initial_position: Vector2 = Vector2(0, 0)
 
-var current_mission_enemy_count: int = 0
-var current_mission_enemy_required: int = 0
+var current_mission_enemy_count: int = 1
+var current_mission_enemy_required: int = 1
 
 var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false
 var briefed_by_principal_ronnie: bool = false
 
 var music_position = 0
+
+var removed_enemies: Array[String]
+
+var mission_1_done: bool = false
+var mission_2_done: bool = false
+var mission_3_done: bool = false
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -52,11 +58,14 @@ func _process(_delta):
 			npc_node.get_node("Mr Cheese").visible = false
 			npc_node.get_node("Snowman").visible = false
 			npc_node.get_node("PrincipalRonnie").visible = false
-			if current_mission >= 1:
+			if mission_1_done:
 				npc_node.get_node("Mr Cheese").visible = true
-			if current_mission >= 2:
+			if mission_2_done:
+				npc_node.get_node("Mr Cheese").visible = true
 				npc_node.get_node("Snowman").visible = true
-			if current_mission >= 3:
+			if mission_3_done:
+				npc_node.get_node("Mr Cheese").visible = true
+				npc_node.get_node("Snowman").visible = true
 				npc_node.get_node("PrincipalRonnie").visible = true
 	
 	if current_area_name == "mission 3 - classroom" and current_room == 4:
@@ -174,6 +183,9 @@ func start() -> void:
 	State.current_mission_enemy_required = current_mission_enemy_required
 	Global.enter_new_area.emit(State.current_area, State.current_room)
 	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
+	mission_1_done = false
+	mission_2_done = false
+	mission_3_done = false
 	
 	if Global.Voices:
 		Global.TTS_available = true
@@ -258,7 +270,7 @@ func init_current_room():
 	else:
 		player_instance.visible = true
 
-var removed_enemies: Array[String]
+
 
 func init_current_enemies(enemy_node: Node2D):
 	for enemy_index in range(enemy_node.get_child_count()):
@@ -470,6 +482,7 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		var overlay_instance
 		overlay_instance = overlay.instantiate()
 		add_child(overlay_instance)
+		mission_3_done = true
 		#print("do end credits")
 	
 	add_controls()
@@ -576,6 +589,7 @@ func _on_start_npc_dialogue(dialogue_path: String, title: String):
 	balloon.start(dialogue_resource, title)
 
 func _on_start_sleep():
+	Global.play_battle_music.emit("Sleep")
 	player_instance.visible = false
 	get_tree().paused = true
 	remove_controls()
@@ -594,6 +608,8 @@ func _on_start_sleep():
 
 func _on_end_sleep():
 	get_tree().paused = false
+	play_area_music()
+	play_sfx("add_mana")
 	add_controls()
 	player_instance.visible = true
 
@@ -641,6 +657,7 @@ func _on_cutscene_start(cutscene: String):
 		"mission_1_ending_cutscene":
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(75, -82), "up")
+			mission_1_done = true
 			animation_player.play(cutscene)
 		"mission_2_boss_cutscene_part_1":
 			animation_player.play(cutscene)
@@ -685,6 +702,7 @@ func go_to_mission_2_boss():
 	Global.enter_new_room.emit(1, Vector2(0, 0), "up")
 
 func go_to_mission_2_end():
+	mission_2_done = true
 	Global.enter_new_area.emit("mission 2 - highway", 0)
 	Global.enter_new_room.emit(0, Vector2(0, 0), "up")
 	State.current_mission += 1
@@ -705,7 +723,9 @@ func stop_cutscene():
 
 @onready var Music = $Music
 func play_area_music():
+	print(current_area_name)
 	if Music.playing:
+		music_position = Music.get_playback_position()
 		Music.stop()
 	match current_area_name:
 		"lobby":
@@ -723,9 +743,41 @@ func play_area_music():
 		"mission 1 - tavern":
 			if !Music.stream == load("res://assets/sounds/music/mission 1 - tavern.mp3"):
 				Music.stream = load("res://assets/sounds/music/mission 1 - tavern.mp3")
+		"mission 2 - outside":
+			if !Music.stream == load("res://assets/sounds/music/mission 2 - outside.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 2 - outside.mp3")
+		"mission 2 - igloo":
+			if !Music.stream == load("res://assets/sounds/music/mission 2 - igloo.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 2 - igloo.mp3")
+		"mission 2 - shed":
+			if !Music.stream == load("res://assets/sounds/music/mission 2 - igloo.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 2 - igloo.mp3")
+		"mission 2 - house":
+			if !Music.stream == load("res://assets/sounds/music/mission 1 - house.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 1 - house.mp3")
+		"mission 2 - highway":
+			if !Music.stream == load("res://assets/sounds/music/mission 2 - highway.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 2 - highway.mp3")
+		"mission 3 - outside":
+			if !Music.stream == load("res://assets/sounds/music/mission 3 - outside.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 3 - outside.mp3")
+		"mission 3 - school":
+			if !Music.stream == load("res://assets/sounds/music/mission 3 - school.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 3 - school.mp3")
+		"mission 3 - classroom":
+			if !Music.stream == load("res://assets/sounds/music/mission 3 - school.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 3 - school.mp3")
+		"mission 3 - stock room":
+			if !Music.stream == load("res://assets/sounds/music/mission 3 - school.mp3"):
+				Music.stream = load("res://assets/sounds/music/mission 3 - school.mp3")
 		_:
 			pass
+	if current_area_name == "mission 2 - highway" and current_room == 0:
+		if !Music.stream == load("res://assets/sounds/music/mission 2 - outside.mp3"):
+			Music.stream = load("res://assets/sounds/music/mission 2 - outside.mp3")
 	Music.play()
+	if current_area_name == "mission 2 - igloo" or current_area_name == "mission 2 - shed" or current_area_name == "mission 3 - classroom" or current_area_name == "mission 3 - stock room":
+		Music.seek(music_position)
 
 @onready var SFX = $SFX
 func play_sfx(_name: String):
@@ -769,6 +821,12 @@ func play_sfx(_name: String):
 		"iris_transition":
 			if !SFX.stream == load("res://assets/sounds/sfx/iris_transition.wav"):
 				SFX.stream = load("res://assets/sounds/sfx/iris_transition.wav")
+		"door":
+			if !SFX.stream == load("res://assets/sounds/sfx/door.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/door.wav")
+		"item_get":
+			if !SFX.stream == load("res://assets/sounds/sfx/item_get.wav"):
+				SFX.stream = load("res://assets/sounds/sfx/item_get.wav")
 	SFX.play()
 
 func play_battle_music(enemy: String):
@@ -781,11 +839,39 @@ func play_battle_music(enemy: String):
 		"Rat":
 			if !Music.stream == load("res://assets/sounds/music/rat_battle.mp3"):
 				Music.stream = load("res://assets/sounds/music/rat_battle.mp3")
+		"Rat Boss":
+			if !Music.stream == load("res://assets/sounds/music/rat_boss_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/rat_boss_battle.mp3")
+		"Car":
+			if !Music.stream == load("res://assets/sounds/music/car_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/car_battle.mp3")
+		"Kid":
+			if !Music.stream == load("res://assets/sounds/music/school_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/school_battle.mp3")
+		"Teacher Gigi":
+			if !Music.stream == load("res://assets/sounds/music/school_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/school_battle.mp3")
+		"Teacher Aries":
+			if !Music.stream == load("res://assets/sounds/music/school_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/school_battle.mp3")
+		"Teacher Ken":
+			if !Music.stream == load("res://assets/sounds/music/school_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/school_battle.mp3")
+		"Teacher Joy":
+			if !Music.stream == load("res://assets/sounds/music/school_battle.mp3"):
+				Music.stream = load("res://assets/sounds/music/school_battle.mp3")
+		"Sleep":
+			if !Music.stream == load("res://assets/sounds/music/sleep.mp3"):
+				Music.stream = load("res://assets/sounds/music/sleep.mp3")
 		_:
 			pass
-	await get_tree().create_timer(1.5).timeout
-	Music.play()
+	if enemy != "Sleep":
+		await get_tree().create_timer(1.5).timeout
+		Music.play()
+	else:
+		Music.play()
 
 func _on_end_credits():
+	await Global.dialogue_ended
 	var end_credits = load("res://scenes/end_credits.tscn")
 	get_tree().change_scene_to_packed(end_credits)

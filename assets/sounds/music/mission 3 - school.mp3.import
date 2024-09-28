@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dv7ymf2brfnnu"
+path="res://.godot/imported/mission 3 - school.mp3-3b54077fe0bdf7779f55287e312ed476.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/music/mission 3 - school.mp3"
+dest_files=["res://.godot/imported/mission 3 - school.mp3-3b54077fe0bdf7779f55287e312ed476.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

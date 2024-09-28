@@ -48,6 +48,7 @@ func _process(_delta):
 						Global.start_interactable_dialogue.emit(dialogue_resource, "without_key")
 
 func enter_door():
+	Global.play_sfx.emit("door")
 	match direction:
 		"up":
 			next_position.x = player.position.x

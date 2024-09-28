@@ -1,5 +1,6 @@
 ~ item_picked_up
 set npc_class = "High Class"
+do emit("play_sfx", "item_get")
 Narrator: You found {{Global.item_name}} x{{Global.item_quantity}}.
 => END
 
@@ -16,6 +17,7 @@ Narrator: There's nothing of use inside.
 
 ~ loot_get
 set npc_class = "High Class"
+do emit("play_sfx", "item_get")
 Narrator: You got {{Global.item_name}} x{{Global.item_quantity}}!
 => END
 

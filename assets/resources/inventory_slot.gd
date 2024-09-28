@@ -20,4 +20,4 @@ func set_quantity(value: int):
 	quantity = value
 	if quantity > 1 and not item.stackable:
 		quantity = 1
-		push_error("item is not stackable")
+		print("item is not stackable")

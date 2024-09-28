@@ -7,6 +7,7 @@ extends CanvasLayer
 func _ready():
 	iris.visible = false
 	fade.visible = false
+	$Label.visible = false
 
 
 func iris_transition():
@@ -20,6 +21,7 @@ func fade_transition():
 func sleep_transition():
 	animation_player.play("Sleep Fade In")
 	fade.visible = true
+	$Label.visible = true
 
 func _on_animation_player_animation_finished(anim_name):
 
@@ -38,8 +40,9 @@ func _on_animation_player_animation_finished(anim_name):
 			queue_free()
 		"Sleep Fade In":
 			animation_player.play("Sleep Fade Out")
-			Global.transition_finished.emit()
 		"Sleep Fade Out":
+			Global.transition_finished.emit()
 			fade.visible = false
+			$Label.visible = false
 			queue_free()
 

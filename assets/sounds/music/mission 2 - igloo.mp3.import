@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dmcnt3jphxg8b"
+path="res://.godot/imported/mission 2 - igloo.mp3-a975a9c0e9f37d78250f3903b1e1bfd9.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/music/mission 2 - igloo.mp3"
+dest_files=["res://.godot/imported/mission 2 - igloo.mp3-a975a9c0e9f37d78250f3903b1e1bfd9.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
