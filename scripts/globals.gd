@@ -70,6 +70,7 @@ var skill_description: String
 var item_name: String
 var item_quantity: int
 
+
 var skill_check_passed: bool = false
 
 var in_battle: bool = false

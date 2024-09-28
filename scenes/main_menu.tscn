@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqqw10bsqtbxn"]
+[gd_scene load_steps=5 format=3 uid="uid://bqqw10bsqtbxn"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_57cm8"]
 [ext_resource type="Texture2D" uid="uid://derujn2ak8k82" path="res://assets/art/environments/tile_0015.png" id="1_xsm2q"]
-[ext_resource type="PackedScene" uid="uid://bfo4puwiya180" path="res://scenes/options_menu.tscn" id="3_vlmto"]
 
 [sub_resource type="SystemFont" id="SystemFont_jecam"]
 font_names = PackedStringArray("Impact")
@@ -96,14 +95,3 @@ layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_55mr4")
 theme_override_font_sizes/font_size = 40
 text = "EXIT GAME"
-
-[node name="Options_Menu" parent="." instance=ExtResource("3_vlmto")]
-visible = false
-layout_mode = 2
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 1140.0
-offset_bottom = 636.0

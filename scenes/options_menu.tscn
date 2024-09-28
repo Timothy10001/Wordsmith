@@ -1,6 +1,167 @@
-[gd_scene load_steps=2 format=3 uid="uid://bfo4puwiya180"]
+[gd_scene load_steps=22 format=3 uid="uid://bfo4puwiya180"]
 
 [ext_resource type="Script" path="res://scripts/options_menu.gd" id="1_gqt7x"]
+[ext_resource type="Texture2D" uid="uid://r43ghoojstbl" path="res://assets/art/ui/slider_button.png" id="1_y7a51"]
+[ext_resource type="FontFile" uid="uid://bxror4jw86uab" path="res://assets/fonts/handwritten.ttf" id="2_qxe1k"]
+[ext_resource type="FontFile" uid="uid://tifhkuc01jal" path="res://assets/fonts/normal.ttf" id="3_7a40x"]
+[ext_resource type="Texture2D" uid="uid://byash3vpkv426" path="res://assets/art/ui/book_plain.png" id="3_ejgcd"]
+[ext_resource type="AudioStream" uid="uid://cbgpujpmy7vfi" path="res://assets/sounds/sfx/item_get.wav" id="5_sg7ji"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="6_nsi4s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4smar"]
+bg_color = Color(0.137255, 0.207843, 0.47451, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 4.0
+expand_margin_top = 2.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rwur"]
+bg_color = Color(0.294118, 0.454902, 0.745098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 4.0
+expand_margin_top = 2.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebsvs"]
+bg_color = Color(0.294118, 0.454902, 0.745098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 4.0
+expand_margin_top = 2.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rqgj"]
+bg_color = Color(0.137255, 0.207843, 0.47451, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 4.0
+expand_margin_top = 2.0
+expand_margin_right = 4.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycasb"]
+atlas = ExtResource("1_y7a51")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21spr"]
+atlas = ExtResource("1_y7a51")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bf4g"]
+atlas = ExtResource("1_y7a51")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ffsyk"]
+bg_color = Color(0.290196, 0.113725, 0.0392157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.162202, 0.0515463, 0.00395471, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h51rh"]
+bg_color = Color(0.54902, 0.286275, 0.172549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.290196, 0.113725, 0.0392157, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkfo7"]
+bg_color = Color(0.54902, 0.286275, 0.172549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.290196, 0.113725, 0.0392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6pihn"]
+bg_color = Color(0.54902, 0.286275, 0.172549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.290196, 0.113725, 0.0392157, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id="Theme_rjroq"]
+Button/fonts/font = ExtResource("3_7a40x")
+Button/styles/focus = SubResource("StyleBoxFlat_4smar")
+Button/styles/hover = SubResource("StyleBoxFlat_2rwur")
+Button/styles/normal = SubResource("StyleBoxFlat_ebsvs")
+Button/styles/pressed = SubResource("StyleBoxFlat_2rqgj")
+HSlider/icons/grabber = SubResource("AtlasTexture_ycasb")
+HSlider/icons/grabber_disabled = SubResource("AtlasTexture_21spr")
+HSlider/icons/grabber_highlight = SubResource("AtlasTexture_3bf4g")
+HSlider/icons/tick = null
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_ffsyk")
+HSlider/styles/slider = SubResource("StyleBoxFlat_h51rh")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/font_sizes/font_size = 48
+Label/fonts/font = ExtResource("2_qxe1k")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_kkfo7")
+TextEdit/colors/font_color = Color(1, 1, 1, 1)
+TextEdit/colors/font_outline_color = Color(0, 0, 0, 1)
+TextEdit/colors/font_placeholder_color = Color(1, 1, 1, 1)
+TextEdit/constants/outline_size = 1
+TextEdit/fonts/font = ExtResource("3_7a40x")
+TextEdit/styles/normal = SubResource("StyleBoxFlat_6pihn")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ahkv"]
+atlas = ExtResource("6_nsi4s")
+region = Rect2(176, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6io5j"]
+atlas = ExtResource("6_nsi4s")
+region = Rect2(192, 16, 16, 16)
 
 [node name="Options_Menu" type="Control"]
 layout_mode = 3
@@ -9,6 +170,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_rjroq")
 script = ExtResource("1_gqt7x")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -22,3 +184,98 @@ theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
+
+[node name="Background" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Book" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("3_ejgcd")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 175
+theme_override_constants/margin_top = 175
+theme_override_constants/margin_right = 175
+theme_override_constants/margin_bottom = 175
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "MUSIC"
+
+[node name="Music" type="HSlider" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+mouse_filter = 1
+max_value = 1.0
+step = 0.01
+
+[node name="SFXLabel" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "SOUND EFFECTS"
+
+[node name="SFX" type="HSlider" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="TTSLabel" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "TEXT-TO-SPEECH"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(250, 150)
+layout_mode = 2
+placeholder_text = "This is how I sound like."
+wrap_mode = 1
+
+[node name="TTSOptions" type="OptionButton" parent="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="SpeakButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "SPEAK"
+
+[node name="BackButton" type="TextureButton" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_4ahkv")
+texture_pressed = SubResource("AtlasTexture_6io5j")
+stretch_mode = 5
+
+[node name="PauseMusic" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_sg7ji")
+bus = &"SFX"
+
+[connection signal="drag_ended" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Music" to="." method="_on_music_drag_ended"]
+[connection signal="value_changed" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Music" to="." method="_on_music_value_changed"]
+[connection signal="drag_ended" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/SFX" to="." method="_on_sfx_drag_ended"]
+[connection signal="value_changed" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/SFX" to="." method="_on_sfx_value_changed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer/SpeakButton" to="." method="_on_speak_button_pressed"]
+[connection signal="pressed" from="MarginContainer/BackButton" to="." method="_on_back_button_pressed"]

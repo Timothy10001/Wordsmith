@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="1_7f76g"]
 [ext_resource type="Resource" uid="uid://c01wuw0j68fh0" path="res://assets/resources/items/picture_book.tres" id="1_lgnth"]
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="2_svni0"]
-[ext_resource type="Resource" uid="uid://b3etspj6m66nl" path="res://assets/resources/items/bouncy_ball.tres" id="3_d6ll5"]
+[ext_resource type="Resource" uid="uid://chwqn7jrvuxfu" path="res://assets/resources/items/coffee.tres" id="3_2is83"]
 [ext_resource type="Resource" uid="uid://cdhd01lp5hbcv" path="res://assets/resources/items/teaching_stick.tres" id="4_etud8"]
 [ext_resource type="Resource" uid="uid://wjmn2yecnewn" path="res://assets/resources/items/snowball.tres" id="5_rekhk"]
 [ext_resource type="Resource" uid="uid://b8ldf5o06v0bv" path="res://assets/resources/items/marker.tres" id="6_qnbcp"]
@@ -16,8 +16,8 @@ quantity = 1
 
 [sub_resource type="Resource" id="Resource_qhgsh"]
 script = ExtResource("2_svni0")
-item = ExtResource("3_d6ll5")
-quantity = 1
+item = ExtResource("3_2is83")
+quantity = 10
 
 [sub_resource type="Resource" id="Resource_0rids"]
 script = ExtResource("2_svni0")

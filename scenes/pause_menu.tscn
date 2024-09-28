@@ -208,6 +208,9 @@ layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_in354")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_5siew")
 
+[node name="PauseMusic" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
+
 [connection signal="pressed" from="TextureRect/MarginContainer/ButtonContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="TextureRect/MarginContainer/ButtonContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="TextureRect/MarginContainer/ButtonContainer/ItemsButton" to="." method="_on_items_button_pressed"]

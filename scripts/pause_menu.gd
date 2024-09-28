@@ -7,6 +7,11 @@ var player_resource = load("res://assets/resources/Player.tres")
 @onready var armor = $TextureRect/MarginContainer/StatsContainer/Armor
 @onready var level = $TextureRect/MarginContainer/StatsContainer/Level
 @onready var experience = $TextureRect/MarginContainer/StatsContainer/Experience
+@onready var PauseMusic = $PauseMusic
+
+func _ready():
+	PauseMusic.stream = load("res://assets/sounds/music/pause_music.mp3")
+	PauseMusic.play()
 
 
 func _process(_delta):
@@ -28,7 +33,9 @@ func _on_resume_button_pressed():
 
 
 func _on_options_button_pressed():
-	pass # Replace with function body.
+	Input.action_press("options")
+	await get_tree().create_timer(0.05).timeout
+	Input.action_release("options")
 
 
 func _on_items_button_pressed():
@@ -38,6 +45,7 @@ func _on_items_button_pressed():
 
 
 func _on_exit_to_lobby_button_pressed():
+	PauseMusic.stop()
 	Global.back_to_lobby.emit()
 
 

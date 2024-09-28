@@ -35,6 +35,7 @@ const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 var player_instance
 var controls_instance
 var pause_instance
+var options_instance
 var mission_instance
 var backpack_instance
 var confirmation_instance
@@ -109,6 +110,13 @@ func _process(_delta):
 		backpack_instance = null
 		pause_instance = null
 		confirmation_instance = null
+	if Input.is_action_just_pressed("options"):
+		pause_instance.visible = false
+		if $CanvasLayer.get_child_count() == 0:
+			options_instance = options_scene.instantiate()
+			$CanvasLayer.add_child(options_instance)
+		else:
+			options_instance.visible = true
 	if Input.is_action_just_pressed("show_inventory"):
 		pause_instance.visible = false
 		if $CanvasLayer.get_child_count() == 0:
@@ -125,10 +133,15 @@ func _process(_delta):
 			confirmation_instance.visible = true
 	if Input.is_action_just_pressed("back_to_pause_menu"):
 		pause_instance.visible = true
+		if $CanvasLayer.get_child_count() > 0:
+			for i in range($CanvasLayer.get_child_count()):
+				$CanvasLayer.get_child(0).queue_free()
+				"""
 		if backpack_instance:
 			backpack_instance.visible = false
 		if confirmation_instance:
 			confirmation_instance.visible = false
+			"""
 
 #<-TO BE CHANGED->#
 func connect_signals():
@@ -163,6 +176,7 @@ func connect_signals():
 #const controls_scene: PackedScene = preload("res://scenes/controls.tscn")
 const player_scene: PackedScene = preload("res://scenes/player.tscn")
 const pause_scene: PackedScene = preload("res://scenes/pause_menu.tscn")
+const options_scene: PackedScene = preload("res://scenes/options_menu.tscn")
 const backpack_scene: PackedScene = preload("res://scenes/backpack_ui.tscn")
 const confirmation_scene: PackedScene = preload("res://scenes/exit_confirmation.tscn")
 const transition_scene: PackedScene = preload("res://scenes/transition.tscn")

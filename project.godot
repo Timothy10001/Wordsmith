@@ -86,6 +86,10 @@ show_confirmation={
 "deadzone": 0.5,
 "events": []
 }
+options={
+"deadzone": 0.5,
+"events": []
+}
 
 [input_devices]
 
