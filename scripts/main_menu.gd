@@ -16,12 +16,19 @@ func _ready():
 	handle_connecting_signals()
 	
 
+func _notification(what):
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		get_tree().quit()
 
 func on_start_pressed () -> void:
+	$SFX.play()
+	await $SFX.finished
 	get_tree().change_scene_to_packed(loading_scene)
 
 
 func on_options_pressed() -> void:
+	$SFX.play()
+	await $SFX.finished
 	get_tree().change_scene_to_packed(options_scene)
 
 func on_continue_pressed() -> void:

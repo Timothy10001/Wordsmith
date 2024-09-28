@@ -1,12 +1,16 @@
-[gd_scene load_steps=22 format=3 uid="uid://bfo4puwiya180"]
+[gd_scene load_steps=34 format=3 uid="uid://bfo4puwiya180"]
 
 [ext_resource type="Script" path="res://scripts/options_menu.gd" id="1_gqt7x"]
 [ext_resource type="Texture2D" uid="uid://r43ghoojstbl" path="res://assets/art/ui/slider_button.png" id="1_y7a51"]
 [ext_resource type="FontFile" uid="uid://bxror4jw86uab" path="res://assets/fonts/handwritten.ttf" id="2_qxe1k"]
 [ext_resource type="FontFile" uid="uid://tifhkuc01jal" path="res://assets/fonts/normal.ttf" id="3_7a40x"]
 [ext_resource type="Texture2D" uid="uid://byash3vpkv426" path="res://assets/art/ui/book_plain.png" id="3_ejgcd"]
+[ext_resource type="Texture2D" uid="uid://b6lqfvu4mrg2o" path="res://assets/art/backgrounds/clouds.png" id="5_jqdpm"]
 [ext_resource type="AudioStream" uid="uid://cbgpujpmy7vfi" path="res://assets/sounds/sfx/item_get.wav" id="5_sg7ji"]
+[ext_resource type="Texture2D" uid="uid://dqk7wnixnhraj" path="res://assets/art/animations/main_menu/background.png" id="6_gbefr"]
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="6_nsi4s"]
+[ext_resource type="Texture2D" uid="uid://dvmwx0xj0na6s" path="res://assets/art/animations/main_menu/foreground.png" id="7_ta4ce"]
+[ext_resource type="Texture2D" uid="uid://nttw37a28h3i" path="res://assets/art/animations/main_menu/animated_part.png" id="8_rix8w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4smar"]
 bg_color = Color(0.137255, 0.207843, 0.47451, 1)
@@ -133,6 +137,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="Theme" id="Theme_rjroq"]
+Button/font_sizes/font_size = 42
 Button/fonts/font = ExtResource("3_7a40x")
 Button/styles/focus = SubResource("StyleBoxFlat_4smar")
 Button/styles/hover = SubResource("StyleBoxFlat_2rwur")
@@ -145,15 +150,71 @@ HSlider/icons/tick = null
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_ffsyk")
 HSlider/styles/slider = SubResource("StyleBoxFlat_h51rh")
 Label/colors/font_color = Color(0, 0, 0, 1)
-Label/font_sizes/font_size = 48
+Label/font_sizes/font_size = 64
 Label/fonts/font = ExtResource("2_qxe1k")
+OptionButton/font_sizes/font_size = 42
 OptionButton/styles/normal = SubResource("StyleBoxFlat_kkfo7")
 TextEdit/colors/font_color = Color(1, 1, 1, 1)
 TextEdit/colors/font_outline_color = Color(0, 0, 0, 1)
 TextEdit/colors/font_placeholder_color = Color(1, 1, 1, 1)
 TextEdit/constants/outline_size = 1
+TextEdit/font_sizes/font_size = 32
 TextEdit/fonts/font = ExtResource("3_7a40x")
 TextEdit/styles/normal = SubResource("StyleBoxFlat_6pihn")
+
+[sub_resource type="Shader" id="Shader_norfy"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	UV.x -= TIME * 0.025;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_72ru0"]
+shader = SubResource("Shader_norfy")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mqks"]
+atlas = ExtResource("8_rix8w")
+region = Rect2(0, 0, 386, 214)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebipp"]
+atlas = ExtResource("8_rix8w")
+region = Rect2(386, 0, 386, 214)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jhyv"]
+atlas = ExtResource("8_rix8w")
+region = Rect2(772, 0, 386, 214)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_706g7"]
+atlas = ExtResource("8_rix8w")
+region = Rect2(1158, 0, 386, 214)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umiu5"]
+atlas = ExtResource("8_rix8w")
+region = Rect2(1544, 0, 386, 214)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_leyur"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mqks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebipp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7jhyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_706g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umiu5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ahkv"]
 atlas = ExtResource("6_nsi4s")
@@ -172,6 +233,51 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_rjroq")
 script = ExtResource("1_gqt7x")
+
+[node name="BG" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="BG"]
+layout_mode = 2
+color = Color(0.254902, 0.690196, 0.996078, 1)
+
+[node name="Clouds" type="Sprite2D" parent="BG"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_72ru0")
+position = Vector2(481, 149)
+scale = Vector2(3.18391, 5.10417)
+texture = ExtResource("5_jqdpm")
+
+[node name="Background" type="TextureRect" parent="BG"]
+layout_mode = 2
+texture = ExtResource("6_gbefr")
+
+[node name="Clouds2" type="Sprite2D" parent="BG"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_72ru0")
+position = Vector2(540, 439)
+scale = Vector2(7.31001, 2.89583)
+texture = ExtResource("5_jqdpm")
+
+[node name="Foreground" type="TextureRect" parent="BG"]
+layout_mode = 2
+texture = ExtResource("7_ta4ce")
+
+[node name="MarginContainer2" type="MarginContainer" parent="BG"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Animated" type="AnimatedSprite2D" parent="BG/MarginContainer2"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_leyur")
+autoplay = "default"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -250,6 +356,7 @@ wrap_mode = 1
 [node name="TTSOptions" type="OptionButton" parent="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_filter = 1
 
 [node name="SpeakButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2

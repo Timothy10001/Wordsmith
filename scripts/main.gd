@@ -2,17 +2,17 @@ extends Node
 
 #STATES
 
-var current_area_name: String = "mission 3 - outside"
+var current_area_name: String = "lobby"
 var current_room: int = 0
-var current_mission: int = 3
-var tutorial_status: String = "done"
+var current_mission: int = 0
+var tutorial_status: String = "not done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
 var initial_position: Vector2 = Vector2(0, 0)
 
-var current_mission_enemy_count: int = 1
-var current_mission_enemy_required: int = 1
+var current_mission_enemy_count: int = 0
+var current_mission_enemy_required: int = 0
 
 var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false
@@ -47,11 +47,18 @@ func _ready():
 	#continue_game()
 	cutscene_camera.enabled = false
 
+func _notification(what):
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST and !Global.in_battle:
+		Input.action_press("pause")
+		await get_tree().create_timer(0.05).timeout
+		Input.action_release("pause")
+
 func _process(_delta):
 	current_mission = State.current_mission
 	briefed_by_mr_cheese = State.briefed_by_mr_cheese
 	unlocked_key_house = State.unlocked_key_house
 	briefed_by_principal_ronnie = State.briefed_by_principal_ronnie
+	
 	
 	if current_area_name == "lobby" and current_room == 0:
 		if has_node("Rooms/Throne Room"):
@@ -110,6 +117,7 @@ func _process(_delta):
 		backpack_instance = null
 		pause_instance = null
 		confirmation_instance = null
+		options_instance = null
 	if Input.is_action_just_pressed("options"):
 		pause_instance.visible = false
 		if $CanvasLayer.get_child_count() == 0:
@@ -136,12 +144,7 @@ func _process(_delta):
 		if $CanvasLayer.get_child_count() > 0:
 			for i in range($CanvasLayer.get_child_count()):
 				$CanvasLayer.get_child(0).queue_free()
-				"""
-		if backpack_instance:
-			backpack_instance.visible = false
-		if confirmation_instance:
-			confirmation_instance.visible = false
-			"""
+	
 
 #<-TO BE CHANGED->#
 func connect_signals():
@@ -628,12 +631,23 @@ func _on_end_sleep():
 	player_instance.visible = true
 
 func _on_back_to_lobby():
+	
 	# do transition
 	remove_controls()
 	get_tree().paused = true
 	
 	call_deferred("add_iris_transition")
 	await Global.transition_finished
+	if is_instance_valid(pause_instance):
+		get_tree().paused = false
+		remove_child(pause_instance)
+		if $CanvasLayer.get_child_count() > 0:
+			for i in range($CanvasLayer.get_child_count()):
+				$CanvasLayer.get_child(0).queue_free()
+		backpack_instance = null
+		pause_instance = null
+		confirmation_instance = null
+		options_instance = null
 	
 	Global.enter_new_area.emit("lobby", 0)
 	Global.enter_new_room.emit(0, Vector2(0,0), "down")

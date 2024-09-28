@@ -25,8 +25,11 @@ func _ready():
 	init_sliders()
 	#plays pause music
 	if get_parent().name == "root":
+		$BG.visible = true
 		PauseMusic.stream = load("res://assets/sounds/music/pause_music.mp3")
 		PauseMusic.play()
+	else:
+		$BG.visible = false
 
 func init_voices():
 	for voice in Global.Voices:

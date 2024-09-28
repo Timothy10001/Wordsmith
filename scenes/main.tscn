@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://ddktrys17vcy4"]
+[gd_scene load_steps=16 format=3 uid="uid://ddktrys17vcy4"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x8nos"]
 [ext_resource type="Texture2D" uid="uid://bihdeeic61121" path="res://assets/art/characters/enemy/truck_sprites.png" id="3_htf80"]
+[ext_resource type="AudioStream" uid="uid://c0o4td4q4v500" path="res://assets/sounds/music/title_theme.mp3" id="3_lkjy6"]
 
 [sub_resource type="Animation" id="Animation_2ql0x"]
 length = 0.001
@@ -400,6 +401,8 @@ frame_progress = 0.632179
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_lkjy6")
+autoplay = true
 bus = &"Music"
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]

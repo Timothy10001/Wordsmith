@@ -1,15 +1,72 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqqw10bsqtbxn"]
+[gd_scene load_steps=19 format=3 uid="uid://bqqw10bsqtbxn"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_57cm8"]
-[ext_resource type="Texture2D" uid="uid://derujn2ak8k82" path="res://assets/art/environments/tile_0015.png" id="1_xsm2q"]
+[ext_resource type="FontFile" uid="uid://bxror4jw86uab" path="res://assets/fonts/handwritten.ttf" id="1_pe62d"]
+[ext_resource type="Texture2D" uid="uid://dqk7wnixnhraj" path="res://assets/art/animations/main_menu/background.png" id="2_50fgi"]
+[ext_resource type="Texture2D" uid="uid://b6lqfvu4mrg2o" path="res://assets/art/backgrounds/clouds.png" id="2_wbmtc"]
+[ext_resource type="Texture2D" uid="uid://dvmwx0xj0na6s" path="res://assets/art/animations/main_menu/foreground.png" id="3_hmgvu"]
+[ext_resource type="Texture2D" uid="uid://nttw37a28h3i" path="res://assets/art/animations/main_menu/animated_part.png" id="4_bw1mc"]
+[ext_resource type="Texture2D" uid="uid://c50ujr8o7a7if" path="res://assets/art/ui/title.png" id="5_a15nv"]
+[ext_resource type="AudioStream" uid="uid://d0e1k6n653gl7" path="res://assets/sounds/sfx/button_click.wav" id="8_rfr26"]
+[ext_resource type="AudioStream" uid="uid://c0o4td4q4v500" path="res://assets/sounds/music/title_theme.mp3" id="8_wl02o"]
 
-[sub_resource type="SystemFont" id="SystemFont_jecam"]
-font_names = PackedStringArray("Impact")
-subpixel_positioning = 0
+[sub_resource type="Theme" id="Theme_8s0qm"]
+Button/font_sizes/font_size = 48
+Button/fonts/font = ExtResource("1_pe62d")
 
-[sub_resource type="SystemFont" id="SystemFont_55mr4"]
-font_names = PackedStringArray("Impact")
-subpixel_positioning = 0
+[sub_resource type="Shader" id="Shader_wr1d7"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	UV.x -= TIME * 0.025;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gkoxg"]
+shader = SubResource("Shader_wr1d7")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mqks"]
+atlas = ExtResource("4_bw1mc")
+region = Rect2(0, 0, 386, 214)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebipp"]
+atlas = ExtResource("4_bw1mc")
+region = Rect2(386, 0, 386, 214)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jhyv"]
+atlas = ExtResource("4_bw1mc")
+region = Rect2(772, 0, 386, 214)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_706g7"]
+atlas = ExtResource("4_bw1mc")
+region = Rect2(1158, 0, 386, 214)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umiu5"]
+atlas = ExtResource("4_bw1mc")
+region = Rect2(1544, 0, 386, 214)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uticu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mqks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebipp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7jhyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_706g7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umiu5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
 
 [node name="Main_Menu" type="Control"]
 layout_mode = 3
@@ -18,16 +75,79 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_8s0qm")
 script = ExtResource("1_57cm8")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_xsm2q")
+color = Color(0.254902, 0.690196, 0.996078, 1)
+
+[node name="Clouds" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_gkoxg")
+position = Vector2(481, 149)
+scale = Vector2(3.18391, 5.10417)
+texture = ExtResource("2_wbmtc")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_50fgi")
+
+[node name="Clouds2" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_gkoxg")
+position = Vector2(540, 439)
+scale = Vector2(7.31001, 2.89583)
+texture = ExtResource("2_wbmtc")
+
+[node name="Foreground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_hmgvu")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Animated" type="AnimatedSprite2D" parent="MarginContainer2"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_uticu")
+autoplay = "default"
+frame_progress = 0.829794
+
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 45
+theme_override_constants/margin_top = 10
+
+[node name="Title" type="TextureRect" parent="MarginContainer3"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+texture = ExtResource("5_a15nv")
+expand_mode = 3
+stretch_mode = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -38,8 +158,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 75
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -48,18 +168,10 @@ theme_override_constants/separation = 60
 [node name="Seperator" type="Control" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 12
-theme_override_fonts/font = SubResource("SystemFont_jecam")
-theme_override_font_sizes/font_size = 65
-text = "WORDSMITH"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
@@ -73,8 +185,6 @@ layout_mode = 2
 [node name="Start_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_55mr4")
-theme_override_font_sizes/font_size = 40
 text = "START"
 
 [node name="Continue_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
@@ -85,13 +195,18 @@ text = "CONTINUE"
 [node name="Options_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_55mr4")
-theme_override_font_sizes/font_size = 40
 text = "OPTIONS"
 
 [node name="Exit_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_55mr4")
-theme_override_font_sizes/font_size = 40
-text = "EXIT GAME"
+text = " EXIT GAME "
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_wl02o")
+autoplay = true
+bus = &"Music"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_rfr26")
+bus = &"SFX"

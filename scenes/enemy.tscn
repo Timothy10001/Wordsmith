@@ -35,7 +35,6 @@ autostart = true
 radius = 30.0
 avoidance_layers = 0
 avoidance_mask = 0
-debug_enabled = true
 
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]
