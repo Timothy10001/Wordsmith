@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://diobohscixe6b"]
+[gd_scene load_steps=11 format=3 uid="uid://diobohscixe6b"]
 
 [ext_resource type="Script" path="res://scripts/end_credits.gd" id="1_4kf5j"]
 [ext_resource type="Texture2D" uid="uid://cm43revcg28mq" path="res://assets/art/ui/skip_button.png" id="2_sd784"]
@@ -17,6 +17,43 @@ region = Rect2(0, 32, 96, 32)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7s5hc"]
 texture = SubResource("AtlasTexture_xe4pl")
+
+[sub_resource type="Animation" id="Animation_wyxpc"]
+resource_name = "Fade Out"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_t2d8c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3cl2d"]
+_data = {
+"Fade Out": SubResource("Animation_wyxpc"),
+"RESET": SubResource("Animation_t2d8c")
+}
 
 [node name="EndCredits" type="Control"]
 layout_mode = 3
@@ -50,5 +87,20 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_wrtxy")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_7s5hc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3cl2d")
+}
 
 [connection signal="pressed" from="SkipButton" to="." method="_on_skip_button_pressed"]

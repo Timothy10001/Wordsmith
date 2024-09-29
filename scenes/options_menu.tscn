@@ -78,15 +78,15 @@ expand_margin_bottom = 2.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ycasb"]
 atlas = ExtResource("1_y7a51")
-region = Rect2(0, 0, 16, 32)
+region = Rect2(0, 0, 48, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_21spr"]
 atlas = ExtResource("1_y7a51")
-region = Rect2(16, 0, 16, 32)
+region = Rect2(48, 0, 48, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3bf4g"]
 atlas = ExtResource("1_y7a51")
-region = Rect2(16, 0, 16, 32)
+region = Rect2(48, 0, 48, 96)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ffsyk"]
 bg_color = Color(0.290196, 0.113725, 0.0392157, 1)
@@ -99,8 +99,8 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
-expand_margin_top = 4.0
-expand_margin_bottom = 4.0
+expand_margin_top = 16.0
+expand_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h51rh"]
 bg_color = Color(0.54902, 0.286275, 0.172549, 1)
@@ -113,8 +113,8 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
-expand_margin_top = 4.0
-expand_margin_bottom = 4.0
+expand_margin_top = 16.0
+expand_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkfo7"]
 bg_color = Color(0.54902, 0.286275, 0.172549, 1)
@@ -152,13 +152,13 @@ HSlider/styles/slider = SubResource("StyleBoxFlat_h51rh")
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 64
 Label/fonts/font = ExtResource("2_qxe1k")
-OptionButton/font_sizes/font_size = 42
+OptionButton/font_sizes/font_size = 32
 OptionButton/styles/normal = SubResource("StyleBoxFlat_kkfo7")
 TextEdit/colors/font_color = Color(1, 1, 1, 1)
 TextEdit/colors/font_outline_color = Color(0, 0, 0, 1)
 TextEdit/colors/font_placeholder_color = Color(1, 1, 1, 1)
 TextEdit/constants/outline_size = 1
-TextEdit/font_sizes/font_size = 32
+TextEdit/font_sizes/font_size = 30
 TextEdit/fonts/font = ExtResource("3_7a40x")
 TextEdit/styles/normal = SubResource("StyleBoxFlat_6pihn")
 
@@ -279,6 +279,15 @@ scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_leyur")
 autoplay = "default"
 
+[node name="Book" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ejgcd")
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -291,13 +300,6 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="Background" type="TextureRect" parent="MarginContainer"]
-layout_mode = 2
-
-[node name="Book" type="TextureRect" parent="MarginContainer"]
-layout_mode = 2
-texture = ExtResource("3_ejgcd")
-
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 175
@@ -307,58 +309,63 @@ theme_override_constants/margin_bottom = 175
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 150
+alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
 
 [node name="MusicLabel" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 2
 text = "MUSIC"
 
 [node name="Music" type="HSlider" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+size_flags_vertical = 2
 mouse_filter = 1
 max_value = 1.0
 step = 0.01
 
 [node name="SFXLabel" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 2
 text = "SOUND EFFECTS"
 
 [node name="SFX" type="HSlider" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 2
 max_value = 1.0
 step = 0.01
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
-custom_minimum_size = Vector2(300, 200)
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 2
+
+[node name="TTSLabel" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 0
-
-[node name="TTSLabel" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer2"]
-layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "TEXT-TO-SPEECH"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
+size_flags_horizontal = 8
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(250, 150)
 layout_mode = 2
 placeholder_text = "This is how I sound like."
 wrap_mode = 1
 
-[node name="TTSOptions" type="OptionButton" parent="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+[node name="TTSOptions" type="OptionButton" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 4
 mouse_filter = 1
 
-[node name="SpeakButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer"]
+[node name="SpeakButton" type="Button" parent="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -384,5 +391,5 @@ bus = &"SFX"
 [connection signal="value_changed" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Music" to="." method="_on_music_value_changed"]
 [connection signal="drag_ended" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/SFX" to="." method="_on_sfx_drag_ended"]
 [connection signal="value_changed" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/SFX" to="." method="_on_sfx_value_changed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer/SpeakButton" to="." method="_on_speak_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/VBoxContainer/SpeakButton" to="." method="_on_speak_button_pressed"]
 [connection signal="pressed" from="MarginContainer/BackButton" to="." method="_on_back_button_pressed"]

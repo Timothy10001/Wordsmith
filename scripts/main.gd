@@ -901,5 +901,5 @@ func play_battle_music(enemy: String):
 
 func _on_end_credits():
 	await Global.dialogue_ended
-	var end_credits = load("res://scenes/end_credits.tscn")
+	var end_credits = load("res://assets/credits/scenes/end_credits/end_credits.tscn")
 	get_tree().change_scene_to_packed(end_credits)

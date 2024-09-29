@@ -14,6 +14,7 @@ config/name="Wordsmith"
 run/main_scene="res://scenes/main_menu.tscn"
 config/quit_on_go_back=false
 config/features=PackedStringArray("4.2", "Mobile")
+config/icon="res://assets/art/ui/game_icon.png"
 
 [audio]
 
@@ -43,7 +44,7 @@ run/main_run_args="--rendering-driver opengl3 --gpu-validation --gpu-abort"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/game_state_saver/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/game_state_saver/plugin.cfg", "res://addons/maaacks_credits_scene/plugin.cfg")
 
 [input]
 
@@ -105,6 +106,11 @@ locale/translations_pot_files=PackedStringArray("res://assets/resources/dialogue
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Obstacles"
+
+[maaacks_credits_scene]
+
+disable_plugin_dialogues=true
+copy_path="res://assets/credits"
 
 [rendering]
 

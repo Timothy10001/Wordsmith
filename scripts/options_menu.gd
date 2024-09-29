@@ -5,9 +5,9 @@ extends Control
 @onready var SFXSlider = $MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/SFX
 @onready var PauseMusic = $PauseMusic
 @onready var SFX = $SFX
-@onready var text_edit = $MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer/TextEdit
-@onready var TTSOptions = $MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer/TTSOptions
-@onready var SpeakButton = $MarginContainer/MarginContainer/VBoxContainer2/VBoxContainer/SpeakButton
+@onready var text_edit = $MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/VBoxContainer/TextEdit
+@onready var TTSOptions = $MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/VBoxContainer/TTSOptions
+@onready var SpeakButton = $MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/VBoxContainer/SpeakButton
 
 var main_menu_scene = load("res://scenes/main_menu.tscn")
 
@@ -69,6 +69,7 @@ func _on_speak_button_pressed():
 	else:
 		text = text_edit.text
 	var VoiceID = TTSOptions.get_selected_id()
+	Global.VoiceID = VoiceID
 	if text:
 		DisplayServer.tts_speak(text, Global.Voices[VoiceID]["id"])
 
