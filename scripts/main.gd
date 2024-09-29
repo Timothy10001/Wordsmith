@@ -2,17 +2,17 @@ extends Node
 
 #STATES
 
-var current_area_name: String = "lobby"
+var current_area_name: String = "mission 3 - outside"
 var current_room: int = 0
-var current_mission: int = 0
-var tutorial_status: String = "not done"
+var current_mission: int = 3
+var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
 var initial_position: Vector2 = Vector2(0, 0)
 
-var current_mission_enemy_count: int = 0
-var current_mission_enemy_required: int = 0
+var current_mission_enemy_count: int = 16
+var current_mission_enemy_required: int = 16
 
 var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false

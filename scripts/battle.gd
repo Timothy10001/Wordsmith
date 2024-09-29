@@ -191,7 +191,10 @@ func _process(_delta):
 				start_tutorial_cutscene()
 			battle_state = STATE.WAIT
 		STATE.WAIT:
-			await tutorial_cutscene_ended
+			if State.tutorial_status == "not done" and battle_type == "tutorial":
+				await tutorial_cutscene_ended
+			else:
+				pass
 			#wait for player input
 			#print("WAIT PHASE")
 			if selected_unit["is_turn_finished"] and selected_unit["type"] == "Player":

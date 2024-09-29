@@ -99,8 +99,8 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
-expand_margin_top = 16.0
-expand_margin_bottom = 16.0
+expand_margin_top = 8.0
+expand_margin_bottom = 8.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h51rh"]
 bg_color = Color(0.54902, 0.286275, 0.172549, 1)
@@ -113,8 +113,8 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
-expand_margin_top = 16.0
-expand_margin_bottom = 16.0
+expand_margin_top = 8.0
+expand_margin_bottom = 8.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkfo7"]
 bg_color = Color(0.54902, 0.286275, 0.172549, 1)
@@ -288,6 +288,22 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_ejgcd")
 
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+
+[node name="BackButton" type="TextureButton" parent="MarginContainer2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_4ahkv")
+texture_pressed = SubResource("AtlasTexture_6io5j")
+stretch_mode = 5
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -296,16 +312,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 150
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 175
-theme_override_constants/margin_top = 175
-theme_override_constants/margin_right = 175
-theme_override_constants/margin_bottom = 175
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
 layout_mode = 2
@@ -371,15 +383,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "SPEAK"
 
-[node name="BackButton" type="TextureButton" parent="MarginContainer"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture_normal = SubResource("AtlasTexture_4ahkv")
-texture_pressed = SubResource("AtlasTexture_6io5j")
-stretch_mode = 5
-
 [node name="PauseMusic" type="AudioStreamPlayer" parent="."]
 bus = &"Music"
 
@@ -387,9 +390,9 @@ bus = &"Music"
 stream = ExtResource("5_sg7ji")
 bus = &"SFX"
 
+[connection signal="pressed" from="MarginContainer2/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="drag_ended" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Music" to="." method="_on_music_drag_ended"]
 [connection signal="value_changed" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/Music" to="." method="_on_music_value_changed"]
 [connection signal="drag_ended" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/SFX" to="." method="_on_sfx_drag_ended"]
 [connection signal="value_changed" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer/SFX" to="." method="_on_sfx_value_changed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/HBoxContainer/VBoxContainer2/VBoxContainer/SpeakButton" to="." method="_on_speak_button_pressed"]
-[connection signal="pressed" from="MarginContainer/BackButton" to="." method="_on_back_button_pressed"]

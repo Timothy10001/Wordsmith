@@ -85,6 +85,9 @@ position = Vector2(64, -144)
 [node name="PrincipalRonnie" parent="NPCs" instance=ExtResource("8_ck1mi")]
 position = Vector2(-76, -206)
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.73, 0.883, 1, 1)
+
 [node name="GameStateHelper" type="Node" parent="."]
 script = ExtResource("9_rulay")
 dynamic_instance = true
