@@ -8,7 +8,6 @@ if State.current_mission == 0:
 			Dummy: Let's go then!
 			do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial")
 			do emit("play_battle_music", "Dummy")
-			set State.tutorial_status = "done"
 			set State.current_mission = 1
 			=> END
 		- No
@@ -33,7 +32,6 @@ else:
 		Dummy: Let's go then!
 		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial")
 		do emit("play_battle_music", "Dummy")
-		set State.tutorial_status = "done"
 		=> END
 	- No
 		Dummy: Okay, come back if you want to!

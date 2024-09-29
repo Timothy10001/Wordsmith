@@ -1,5 +1,8 @@
 extends Control
 
+signal tutorial_cutscene_ended
+
+
 #export variables
 var enemies: Array[PackedScene]
 var enemy_node: Node2D
@@ -47,7 +50,6 @@ var unit_list = []
 #the unit doing a turn
 var selected_unit
 var selected_enemy
-
 
 var total_enemy_experience: int
 var total_enemy_loot: Inventory
@@ -123,6 +125,8 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 func _ready():
 	$VBoxContainer.pivot_offset.x = $VBoxContainer.size.x / 2
 	$VBoxContainer.pivot_offset.y = $VBoxContainer.size.y / 2
+	Global.play_tutorial_cutscene.connect(play_tutorial_cutscene)
+	Global.end_tutorial_cutscene.connect(end_tutorial_cutscene)
 	connect_signals()
 	dialogue_resource = load("res://assets/resources/dialogues/battle.dialogue")
 
@@ -150,6 +154,7 @@ func _process(_delta):
 	match(battle_state):
 		STATE.INIT:
 			#initialize battle values and progress bars
+			
 			show_default_container()
 			unit_list.append(get_player_data())
 			unit_list.append_array(get_enemy_data())
@@ -182,8 +187,11 @@ func _process(_delta):
 			#show UI if player's turn
 			if selected_unit["type"] == "Player" and !selected_unit["is_turn_finished"]:
 				show_default_container()
+			if State.tutorial_status == "not done" and battle_type == "tutorial":
+				start_tutorial_cutscene()
 			battle_state = STATE.WAIT
 		STATE.WAIT:
+			await tutorial_cutscene_ended
 			#wait for player input
 			#print("WAIT PHASE")
 			if selected_unit["is_turn_finished"] and selected_unit["type"] == "Player":
@@ -262,6 +270,20 @@ func set_battle_data(_party: Array[PackedScene], _enemies: Array[PackedScene], _
 		enemy_node = _enemy_node
 
 
+func start_tutorial_cutscene():
+	animation_player.play("tutorial_part_1")
+
+func play_tutorial_cutscene(cutscene: String):
+	animation_player.play(cutscene)
+
+func end_tutorial_cutscene():
+	State.tutorial_status = "done"
+	tutorial_cutscene_ended.emit()
+
+func start_battle_dialogue(title: String):
+	var balloon = BALLOON.instantiate()
+	get_tree().root.add_child(balloon)
+	balloon.start(dialogue_resource, title)
 
 func show_default_container():
 	if selected_unit:

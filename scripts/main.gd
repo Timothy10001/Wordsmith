@@ -54,6 +54,7 @@ func _notification(what):
 		Input.action_release("pause")
 
 func _process(_delta):
+	tutorial_status = State.tutorial_status
 	current_mission = State.current_mission
 	briefed_by_mr_cheese = State.briefed_by_mr_cheese
 	unlocked_key_house = State.unlocked_key_house

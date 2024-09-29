@@ -48,6 +48,8 @@ signal cutscene_start(cutscene: String)
 var cutscene_playing: bool = false
 signal cutscene_ended
 signal stop_cutscene
+signal play_tutorial_cutscene(cutscene: String)
+signal end_tutorial_cutscene
 
 signal add_mission_rewards(inventory_path: String)
 signal drop_item(inventory_slot: InventorySlot)

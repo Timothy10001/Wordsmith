@@ -37,3 +37,57 @@ Narrator: You are confused!
 ~ exp_gained
 set npc_class = "High Class"
 Narrator: You gained {{Global.experience}} EXP!
+=> END
+
+~ tutorial_part_1
+set npc_class = "Low Class"
+Dummy: Welcome to the tutorial!
+do emit("play_tutorial_cutscene", "tutorial_part_2")
+=> END
+
+~ tutorial_part_2
+set npc_class = "Low Class"
+Dummy: I am your training partner for today.
+Dummy: I will teach you how to teach other people you will encounter.
+do emit("play_tutorial_cutscene", "tutorial_part_3")
+=> END
+
+~ tutorial_part_3
+set npc_class = "Low Class"
+Dummy: Down at the middle you will see your Intelligence (INT) and Energy (EN) points.
+Dummy: Your goal is to not let your "student" bring your INT down to 0.
+Dummy: Your "students" have Illiteracy Points (IP).
+Dummy: You can teach them using your skills and remove their IP. 
+do emit("play_tutorial_cutscene", "tutorial_part_4")
+=> END
+
+~ tutorial_part_4
+set npc_class = "Low Class"
+Dummy: Down at the left you will see the different actions you have.
+Dummy: "Teach" will remove a small amount of IP, but regain some energy.
+Dummy: "Skills" will require you to do some reading to remove a big amount of IP.
+Dummy: "Items" will show you all of your items you can use to teach.
+Dummy: "Guard will shield you from losing too much INT."
+do emit("play_tutorial_cutscene", "tutorial_part_5")
+=> END
+
+~ tutorial_part_5
+set npc_class = "Low Class"
+Dummy: Doing "Skills" will show a "skill check."
+Dummy: You will either have to Read the word on screen,
+Dummy: Identify what the word is,
+Dummy: or Answer a question.
+Dummy: When you want to read out the word,
+Dummy: Hold the RED BUTTON and start reading.
+Dummy: If you don't know how to read the word,
+Dummy: Press the BLUE BUTTON.
+Dummy: You can also SKIP the skill check by pressing SKIP, but it won't teach the student anything.
+do emit("play_tutorial_cutscene", "tutorial_part_6")
+=> END
+
+~ tutorial_part_6
+set npc_class = "Low Class"
+Dummy: Now you can try it all out on me!
+Dummy: Good luck Mr. Wordsmith!
+do emit("end_tutorial_cutscene")
+=> END

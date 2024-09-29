@@ -48,14 +48,16 @@ var dialogue_line: DialogueLine:
 		#character_label.visible = not dialogue_line.character.is_empty()
 		#character_label.text = tr(dialogue_line.character, "dialogue")
 
-		"""
-		var portrait_path: String = "res://assets/art/characters/npc/%s.svg" % dialogue_line.character.to_lower()
+		var portrait_path: String = "res://assets/art/characters/npc/portraits/%s.png" % dialogue_line.character.to_lower()
+		var portrait_import_path: String = "res://assets/art/characters/npc/portraits/%s.png.import" % dialogue_line.character.to_lower()
 		
-		if FileAccess.file_exists(portrait_path):
+		
+		if FileAccess.file_exists(portrait_path) or FileAccess.file_exists(portrait_import_path):
 			portrait.texture = load(portrait_path)
+			portrait.visible = true
 		else:
 			portrait.texture = null
-		"""
+			portrait.visible = false
 
 
 		var font_path: String
