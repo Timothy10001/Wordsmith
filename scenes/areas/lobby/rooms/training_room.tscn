@@ -1,11 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2knyoxu72khd"]
+[gd_scene load_steps=8 format=3 uid="uid://d2knyoxu72khd"]
 
 [ext_resource type="TileSet" uid="uid://do2u15nb0ki1f" path="res://assets/resources/tile_sets/castle.tres" id="1_k5s88"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_k7pm7"]
 [ext_resource type="PackedScene" uid="uid://dievyui0yq6g4" path="res://scenes/npcs/dummy_npc.tscn" id="3_vj5na"]
+[ext_resource type="Texture2D" uid="uid://dipgwtpb3nee1" path="res://assets/art/ui/light.png" id="4_vei4h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vypff"]
 size = Vector2(32, 16)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3u1b3"]
+polygon = PackedVector2Array(-224, -336, -256, -368, -256, -336)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4cw4u"]
+polygon = PackedVector2Array(-192, -336, -160, -368, -160, -336)
 
 [node name="TrainingRoom" type="Node2D"]
 y_sort_enabled = true
@@ -46,3 +53,18 @@ y_sort_enabled = true
 
 [node name="DummyNPC" parent="NPCs" instance=ExtResource("3_vj5na")]
 position = Vector2(-208, -432)
+
+[node name="Lighting" type="Node2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="Lighting"]
+position = Vector2(-208, -336)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("4_vei4h")
+texture_scale = 0.3
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Lighting"]
+occluder = SubResource("OccluderPolygon2D_3u1b3")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Lighting"]
+occluder = SubResource("OccluderPolygon2D_4cw4u")

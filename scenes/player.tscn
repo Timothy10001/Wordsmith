@@ -161,7 +161,7 @@ shape = SubResource("RectangleShape2D_etjyt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_8tutj")
-animation = &"walk_down"
+animation = &"walk_up"
 
 [node name="ChaseIndicator" type="MarginContainer" parent="AnimatedSprite2D"]
 anchors_preset = 15

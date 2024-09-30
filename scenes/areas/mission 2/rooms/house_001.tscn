@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://r4okwmwxvk51"]
+[gd_scene load_steps=19 format=3 uid="uid://r4okwmwxvk51"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_jls5x"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_qjf1a"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://dmc3jb7dd35co" path="res://assets/resources/items/bread.tres" id="8_o6uim"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="9_ih701"]
 [ext_resource type="PackedScene" uid="uid://dsae0lrhxw2k7" path="res://scenes/npcs/car_in_house.tscn" id="10_q46px"]
+[ext_resource type="Texture2D" uid="uid://dipgwtpb3nee1" path="res://assets/art/ui/light.png" id="11_nqdg7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_weeaq"]
 size = Vector2(48, 16)
@@ -111,5 +112,15 @@ y_sort_enabled = true
 
 [node name="CarInHouse" parent="NPCs" instance=ExtResource("10_q46px")]
 position = Vector2(-106, -94)
+
+[node name="Lighting" type="Node2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="Lighting"]
+position = Vector2(-176, -95)
+color = Color(1, 0.6115, 0.37, 1)
+energy = 0.8
+shadow_enabled = true
+texture = ExtResource("11_nqdg7")
+texture_scale = 0.5
 
 [editable path="Collisions/ToHouse002"]

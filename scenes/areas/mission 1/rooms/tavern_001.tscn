@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://syml87hsnyxv"]
+[gd_scene load_steps=39 format=3 uid="uid://syml87hsnyxv"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_i2t70"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_y76av"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c5xridcjg0ccn" path="res://scenes/npcs/rat_boss.tscn" id="10_lxnjp"]
 [ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="11_vlun4"]
 [ext_resource type="Texture2D" uid="uid://cpxkx2qd2rh17" path="res://assets/art/characters/enemy/rat_sprite.png" id="12_0rmxd"]
+[ext_resource type="Texture2D" uid="uid://dipgwtpb3nee1" path="res://assets/art/ui/light.png" id="13_rwga2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1ehc"]
 size = Vector2(32, 16)
@@ -370,5 +371,15 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat012"]
 position = Vector2(2.5, 16)
 shape = SubResource("RectangleShape2D_uv0sb")
+
+[node name="Lighting" type="Node2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="Lighting"]
+position = Vector2(-24, -271)
+color = Color(1, 0.6115, 0.37, 1)
+energy = 0.8
+shadow_enabled = true
+texture = ExtResource("13_rwga2")
+texture_scale = 0.5
 
 [editable path="Collisions/ToTavern004"]

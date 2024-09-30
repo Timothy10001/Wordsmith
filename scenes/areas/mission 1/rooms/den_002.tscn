@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://5tg52q50nxl4"]
+[gd_scene load_steps=35 format=3 uid="uid://5tg52q50nxl4"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_wsu2v"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="3_ayqap"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="8_hrbju"]
 [ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="9_xeos8"]
 [ext_resource type="Texture2D" uid="uid://cpxkx2qd2rh17" path="res://assets/art/characters/enemy/rat_sprite.png" id="10_e3qns"]
+[ext_resource type="Texture2D" uid="uid://dipgwtpb3nee1" path="res://assets/art/ui/light.png" id="11_e3r5g"]
 
 [sub_resource type="Resource" id="Resource_578s6"]
 script = ExtResource("6_1o7e6")
@@ -163,6 +164,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hrj2n"]
 size = Vector2(27, 14)
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wmo0y"]
+polygon = PackedVector2Array(1184, -1744, 1168, -1776, 1168, -1744)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bb3pc"]
+polygon = PackedVector2Array(1280, -1744, 1296, -1776, 1296, -1744)
+
 [node name="Den002" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -236,5 +243,20 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat010"]
 position = Vector2(2.5, 16)
 shape = SubResource("RectangleShape2D_hrj2n")
+
+[node name="Lighting" type="Node2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="Lighting"]
+position = Vector2(1232, -1744)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("11_e3r5g")
+texture_scale = 0.5
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Lighting"]
+occluder = SubResource("OccluderPolygon2D_wmo0y")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Lighting"]
+occluder = SubResource("OccluderPolygon2D_bb3pc")
 
 [editable path="Collisions/ToDen002"]

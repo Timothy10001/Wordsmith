@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dfsgydy33h38g"]
+[gd_scene load_steps=26 format=3 uid="uid://dfsgydy33h38g"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_1akfc"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_5ka26"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://dkbc6623umoh1" path="res://assets/resources/items/water_bottle.tres" id="9_4lpvb"]
 [ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="10_vvxx0"]
 [ext_resource type="SpriteFrames" uid="uid://dvhlxosrhum5l" path="res://assets/resources/enemies/rat/sprites/rat.tres" id="11_f885d"]
+[ext_resource type="Texture2D" uid="uid://dipgwtpb3nee1" path="res://assets/art/ui/light.png" id="12_u2nsv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_583aq"]
 size = Vector2(48, 16)
@@ -55,6 +56,9 @@ size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4rmal"]
 size = Vector2(27, 14)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_lqhab"]
+polygon = PackedVector2Array(224, -400, 272, -400, 272, -384, 224, -384)
 
 [node name="Tavern002" type="Node2D"]
 y_sort_enabled = true
@@ -164,5 +168,18 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Rat013"]
 position = Vector2(2.5, 16)
 shape = SubResource("RectangleShape2D_4rmal")
+
+[node name="Lighting" type="Node2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="Lighting"]
+position = Vector2(248, -402)
+color = Color(1, 0.6115, 0.37, 1)
+energy = 0.8
+shadow_enabled = true
+texture = ExtResource("12_u2nsv")
+texture_scale = 0.5
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Lighting"]
+occluder = SubResource("OccluderPolygon2D_lqhab")
 
 [editable path="Collisions/ToTavernBasement"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cgl6vq5t57vl0"]
+[gd_scene load_steps=24 format=3 uid="uid://cgl6vq5t57vl0"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_5hsgk"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_cncd4"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="8_8iilr"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="9_txjjv"]
 [ext_resource type="Resource" uid="uid://diksxjeacjr2s" path="res://assets/resources/dialogues/interactables/clock.dialogue" id="10_7vllq"]
+[ext_resource type="Texture2D" uid="uid://dipgwtpb3nee1" path="res://assets/art/ui/light.png" id="11_5s4tb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iyp33"]
 size = Vector2(48, 16)
@@ -47,6 +48,9 @@ size = Vector2(80, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y0kc6"]
 size = Vector2(16, 16)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_60o2q"]
+polygon = PackedVector2Array(224, -400, 272, -400, 272, -416, 224, -416)
 
 [node name="Tavern003" type="Node2D"]
 
@@ -152,5 +156,18 @@ title = "start"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Clock"]
 position = Vector2(72, -376)
 shape = SubResource("RectangleShape2D_y0kc6")
+
+[node name="Lighting" type="Node2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="Lighting"]
+position = Vector2(248, -399)
+color = Color(1, 0.6115, 0.37, 1)
+energy = 0.8
+shadow_enabled = true
+texture = ExtResource("11_5s4tb")
+texture_scale = 0.5
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Lighting"]
+occluder = SubResource("OccluderPolygon2D_60o2q")
 
 [editable path="Collisions/ToTavernKitchen"]

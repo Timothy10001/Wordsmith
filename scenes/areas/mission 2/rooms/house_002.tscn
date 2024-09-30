@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ip8jc3a70yio"]
+[gd_scene load_steps=18 format=3 uid="uid://ip8jc3a70yio"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_ya205"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="3_kus51"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://b4tnp2bhjekbr" path="res://assets/resources/items/notebook.tres" id="8_jfkat"]
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="9_ugxwv"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="10_kgplv"]
+[ext_resource type="Texture2D" uid="uid://dipgwtpb3nee1" path="res://assets/art/ui/light.png" id="11_86dmh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_22i4d"]
 size = Vector2(64, 64)
@@ -28,6 +29,9 @@ items = Array[ExtResource("9_ugxwv")]([SubResource("Resource_ms2el")])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j3ixe"]
 size = Vector2(48, 16)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vfmtj"]
+polygon = PackedVector2Array(-192, -64, -160, -64, -160, -48, -192, -48)
 
 [node name="House002" type="Node2D"]
 
@@ -87,5 +91,18 @@ inventory = SubResource("Resource_225if")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Bookshelf"]
 position = Vector2(-120, 24)
 shape = SubResource("RectangleShape2D_j3ixe")
+
+[node name="Lighting" type="Node2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="Lighting"]
+position = Vector2(-176, -65)
+color = Color(1, 0.6115, 0.37, 1)
+energy = 0.8
+shadow_enabled = true
+texture = ExtResource("11_86dmh")
+texture_scale = 0.5
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Lighting"]
+occluder = SubResource("OccluderPolygon2D_vfmtj")
 
 [editable path="Collisions/ToHouse001"]
