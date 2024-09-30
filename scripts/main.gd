@@ -99,13 +99,14 @@ func _process(_delta):
 	if State.current_area == "mission 1 - house":
 		State.unlocked_key_house = true
 	if Input.is_action_just_pressed("pause"):
-		music_position = Music.get_playback_position()
-		Music.stop()
-		GameStateService.on_scene_transitioning()
-		GameStateService.save_game_state(Global.SAVE_FILE)
-		pause_instance = pause_scene.instantiate()
-		add_child(pause_instance)
-		get_tree().paused = true
+		if !has_node("PauseMenu"):
+			music_position = Music.get_playback_position()
+			Music.stop()
+			GameStateService.on_scene_transitioning()
+			GameStateService.save_game_state(Global.SAVE_FILE)
+			pause_instance = pause_scene.instantiate()
+			add_child(pause_instance)
+			get_tree().paused = true
 	if Input.is_action_just_pressed("resume"):
 		Music.play()
 		Music.seek(music_position)
