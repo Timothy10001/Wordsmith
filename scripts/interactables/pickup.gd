@@ -12,12 +12,8 @@ var player
 var picked_up: bool = false
 
 func _ready():
-	if picked_up:
-		sprite.visible = false
-		collision.disabled = true
-	else:
-		sprite.visible = true
-		collision.disabled = false
+	sprite.visible = true
+	collision.disabled = false
 
 func _on_body_entered(body):
 	if body is Player:
@@ -34,6 +30,15 @@ func _on_body_exited(body):
 
 
 func _process(_delta):
+	if inventory.items:
+		for slot in inventory.items:
+			if slot:
+				pass
+			else:
+				picked_up = true
+	if picked_up:
+		sprite.visible = false
+		collision.disabled = true
 	if entered:
 		if Input.is_action_just_pressed("interact"):
 			if inventory.items:
@@ -52,7 +57,7 @@ func _process(_delta):
 								player_inventory.items[item_index].fully_merge_with(slot)
 								player_inventory.inventory_updated.emit(player_inventory)
 								inventory.remove_item(slot.item.name)
-								queue_free()
+								
 							else:
 								#the chest item is added onto another slot if it cannot fully merge
 								set_interactable_dialogue(slot, "item_picked_up")
@@ -60,7 +65,7 @@ func _process(_delta):
 								
 								player_inventory.add_item(slot)
 								inventory.remove_item(slot.item.name)
-								queue_free()
+								
 								
 						else:
 							#the chest item is added onto another slot if it's a new item
@@ -70,11 +75,11 @@ func _process(_delta):
 							
 							player_inventory.add_item(slot)
 							inventory.remove_item(slot.item.name)
-							queue_free()
+							
 					else:
 						break
-			picked_up = true
 			Global.start_interactable_dialogue.emit(dialogue_resource, "no_more_items")
+			picked_up = true
 
 
 func set_interactable_dialogue(slot: InventorySlot, title: String):

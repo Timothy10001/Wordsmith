@@ -81,7 +81,7 @@ var Voices: Array[Dictionary] = DisplayServer.tts_get_voices()
 var VoiceID: int = 0
 var TTS_available: bool
 
-const SAVE_FILE = "user://wordsmith_save_file.json"
+const SAVE_FILE = "user://wordsmith_save_file.tres"
 
 var enemy_battle_active: bool = true
 """

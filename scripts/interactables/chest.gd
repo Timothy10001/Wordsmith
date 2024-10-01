@@ -33,6 +33,14 @@ func _on_body_exited(body):
 
 
 func _process(_delta):
+	if inventory.items:
+		for slot in inventory.items:
+			if slot:
+				pass
+			else:
+				if closed_texture and opened_texture:
+					closed_texture.visible = false
+					opened_texture.visible = true
 	if entered:
 		if Input.is_action_just_pressed("interact"):
 			if closed_texture and opened_texture:

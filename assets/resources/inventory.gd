@@ -24,7 +24,6 @@ func use_item(index: int, target):
 		slot.quantity -= 1
 		if slot.quantity < 1:
 			items[index] = null
-	print("item used")
 	slot.item.use_item(target)
 	inventory_updated.emit(self)
 
@@ -35,7 +34,6 @@ func add_item(other_item: InventorySlot):
 			pass
 		else:
 			items[i] = other_item
-			print(other_item.item.name)
 			inventory_updated.emit(self)
 			break
 

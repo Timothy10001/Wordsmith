@@ -1,15 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdbdgkigbjfga"]
+[gd_scene load_steps=2 format=3 uid="uid://cdbdgkigbjfga"]
 
 [ext_resource type="Script" path="res://scripts/interactables/chest.gd" id="1_sy8d8"]
-[ext_resource type="Script" path="res://addons/game_state_saver/game_state_helper.gd" id="2_femui"]
 
 [node name="Chest" type="Area2D"]
 y_sort_enabled = true
 script = ExtResource("1_sy8d8")
-
-[node name="GameStateHelper" type="Node" parent="."]
-script = ExtResource("2_femui")
-save_properties = Array[String](["inventory"])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -2,17 +2,17 @@ extends Node
 
 #STATES
 
-var current_area_name: String = "lobby"
+var current_area_name: String = "mission 3 - outside"
 var current_room: int = 0
-var current_mission: int = 0
-var tutorial_status: String = "not done"
+var current_mission: int = 3
+var tutorial_status: String = "done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
 var initial_position: Vector2 = Vector2(0, 0)
 
-var current_mission_enemy_count: int = 0
-var current_mission_enemy_required: int = 0
+var current_mission_enemy_count: int = 1
+var current_mission_enemy_required: int = 1
 
 var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false
@@ -25,6 +25,7 @@ var removed_enemies: Array[String]
 var mission_1_done: bool = false
 var mission_2_done: bool = false
 var mission_3_done: bool = false
+
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -43,8 +44,11 @@ var dialogue_resource: DialogueResource
 
 func _ready():
 	connect_signals()
-	start()
-	#continue_game()
+	if !FileAccess.file_exists(Global.SAVE_FILE):
+		start()
+	else:
+		continue_game()
+		#start()
 	cutscene_camera.enabled = false
 
 func _notification(what):
@@ -102,8 +106,8 @@ func _process(_delta):
 		if !has_node("PauseMenu"):
 			music_position = Music.get_playback_position()
 			Music.stop()
-			GameStateService.on_scene_transitioning()
-			GameStateService.save_game_state(Global.SAVE_FILE)
+			#GameStateService.on_scene_transitioning()
+			#GameStateService.save_game_state(Global.SAVE_FILE)
 			pause_instance = pause_scene.instantiate()
 			add_child(pause_instance)
 			get_tree().paused = true
@@ -135,6 +139,7 @@ func _process(_delta):
 		else:
 			backpack_instance.visible = true
 	if Input.is_action_just_pressed("show_confirmation"):
+		save_game()
 		pause_instance.visible = false
 		if $CanvasLayer.get_child_count() == 0:
 			confirmation_instance = confirmation_scene.instantiate()
@@ -213,9 +218,73 @@ func start() -> void:
 
 
 func continue_game():
-	pass
+	load_game()
+	#print(saved_data.CharacterResource.level)
+	if saved_data:
+		current_area_name = saved_data.current_area_name
+		current_room = saved_data.current_room
+		current_mission = saved_data.current_mission
+		tutorial_status = saved_data.tutorial_status
+		player_position = saved_data.player_position
+		current_direction = saved_data.current_direction
+		current_mission_enemy_count = saved_data.current_mission_enemy_count
+		current_mission_enemy_required = saved_data.current_mission_enemy_required
+		initial_position = saved_data.initial_position
+		briefed_by_mr_cheese = saved_data.briefed_by_mr_cheese
+		unlocked_key_house = saved_data.unlocked_key_house
+		briefed_by_principal_ronnie = saved_data.briefed_by_principal_ronnie
+		removed_enemies = saved_data.removed_enemies
+		mission_1_done = saved_data.mission_1_done
+		mission_2_done = saved_data.mission_2_done
+		mission_3_done = saved_data.mission_3_done
+		
+	State.current_area = current_area_name
+	State.current_room = current_room
+	State.current_mission = current_mission
+	State.tutorial_status  = tutorial_status
+	State.player_position = player_position
+	State.current_direction = current_direction
+	State.current_mission_enemy_count = current_mission_enemy_count
+	State.current_mission_enemy_required = current_mission_enemy_required
+	Global.enter_new_area.emit(State.current_area, State.current_room)
+	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
+	#await init_current_room()
+	#player_instance.CharacterResource = saved_data.CharacterResource
+	
+	#player_instance.inventory = saved_data.PlayerInventory
 	#var scene := GameStateService.load_game_state(Global.SAVE_FILE)
 	#get_tree().change_scene_to_file(scene)
+
+var saved_data
+
+func save_game():
+	saved_data = SavedGame.new()
+	saved_data.current_area_name = current_area_name
+	saved_data.current_room = current_room
+	saved_data.current_mission = current_mission
+	saved_data.tutorial_status = tutorial_status
+	saved_data.player_position = player_instance.position
+	saved_data.current_direction = player_instance.current_direction
+	saved_data.current_mission_enemy_count = current_mission_enemy_count
+	saved_data.current_mission_enemy_required = current_mission_enemy_required
+	saved_data.initial_position = initial_position
+	saved_data.briefed_by_mr_cheese = briefed_by_mr_cheese
+	saved_data.briefed_by_principal_ronnie = briefed_by_principal_ronnie
+	saved_data.unlocked_key_house = unlocked_key_house
+	saved_data.removed_enemies = removed_enemies
+	saved_data.mission_1_done = mission_1_done
+	saved_data.mission_2_done = mission_2_done
+	saved_data.mission_3_done = mission_3_done
+	saved_data.CharacterResource = player_instance.CharacterResource
+	saved_data.PlayerInventory = player_instance.inventory
+	#print(saved_data.CharacterResource.level)
+	#saved_data.InteractableInventory = saved_data.InteractableInventory
+	ResourceSaver.save(saved_data, Global.SAVE_FILE)
+
+func load_game():
+	saved_data = load(Global.SAVE_FILE) as SavedGame
+
+
 
 func enable_player_process():
 	player_instance.process_mode = Node.PROCESS_MODE_INHERIT
@@ -244,7 +313,7 @@ func remove_controls():
 		Controls.get_child(i).queue_free()
 
 func get_current_area(_area):
-	GameStateService.on_scene_transitioning()
+	#GameStateService.on_scene_transitioning()
 	current_area.clear()
 	for room in Global.area_list[_area]:
 		current_area.append(load(room))
@@ -260,8 +329,7 @@ func _on_enter_new_area(_area: String, _room_index: int):
 	
 
 func init_current_room():
-	GameStateService.on_scene_transitioning()
-	#print(GameStateService._game_state)
+	
 	if current_area_name != "mission 2 - highway" and current_room == 0:
 		cutscene_extras.get_node("TruckBoss").visible = false
 	
@@ -283,11 +351,12 @@ func init_current_room():
 	Global.enemy_battle_active = true
 	
 	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
-	print(current_room)
 	if current_area_name == "mission 2 - highway" and current_room == 1:
 		player_instance.visible = false
 	else:
 		player_instance.visible = true
+	
+	#GameStateService.on_scene_transitioning()
 
 
 
@@ -753,7 +822,6 @@ func stop_cutscene():
 
 @onready var Music = $Music
 func play_area_music():
-	print(current_area_name)
 	if Music.playing:
 		music_position = Music.get_playback_position()
 		Music.stop()
