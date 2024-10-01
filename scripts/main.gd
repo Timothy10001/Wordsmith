@@ -2,17 +2,17 @@ extends Node
 
 #STATES
 
-var current_area_name: String = "mission 3 - outside"
+var current_area_name: String = "lobby"
 var current_room: int = 0
-var current_mission: int = 3
-var tutorial_status: String = "done"
+var current_mission: int = 0
+var tutorial_status: String = "not done"
 var player_position: Vector2 = Vector2(0,0)
 var current_direction: String = "up"
 
 var initial_position: Vector2 = Vector2(0, 0)
 
-var current_mission_enemy_count: int = 1
-var current_mission_enemy_required: int = 1
+var current_mission_enemy_count: int = 0
+var current_mission_enemy_required: int = 0
 
 var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false
@@ -44,11 +44,7 @@ var dialogue_resource: DialogueResource
 
 func _ready():
 	connect_signals()
-	if !FileAccess.file_exists(Global.SAVE_FILE):
-		start()
-	else:
-		continue_game()
-		#start()
+	start()
 	cutscene_camera.enabled = false
 
 func _notification(what):
