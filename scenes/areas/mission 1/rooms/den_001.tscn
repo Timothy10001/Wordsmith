@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://dr8erlirvq563"]
+[gd_scene load_steps=32 format=3 uid="uid://dr8erlirvq563"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_4kvak"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_glwnp"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="3_n8bka"]
 [ext_resource type="PackedScene" uid="uid://0e4cqtrxwquj" path="res://scenes/interactables/dialogue_object.tscn" id="4_f62g5"]
 [ext_resource type="Resource" uid="uid://rajcohj25naw" path="res://assets/resources/dialogues/interactables/rat_den_bookshelf.dialogue" id="5_edejd"]
+[ext_resource type="Resource" uid="uid://bkvm3s34d6o1r" path="res://assets/resources/dialogues/interactables/rat_den_sign.dialogue" id="6_h2yyp"]
 [ext_resource type="PackedScene" uid="uid://bde23rjcy8qr8" path="res://scenes/enemy.tscn" id="6_p0dm6"]
 [ext_resource type="Texture2D" uid="uid://cpxkx2qd2rh17" path="res://assets/art/characters/enemy/rat_sprite.png" id="7_8o6sm"]
 [ext_resource type="Texture2D" uid="uid://dipgwtpb3nee1" path="res://assets/art/ui/light.png" id="8_kpgbr"]
@@ -220,6 +221,8 @@ shape = SubResource("RectangleShape2D_844am")
 
 [node name="Sign" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("4_f62g5")]
 Collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("6_h2yyp")
+title = "start"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Sign"]
 position = Vector2(1192, -1720)

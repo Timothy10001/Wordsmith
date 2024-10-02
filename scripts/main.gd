@@ -367,6 +367,7 @@ func _on_enter_new_room(_new_room_index: int, _player_position: Vector2, _direct
 	State.current_room = _new_room_index
 	current_room = _new_room_index
 	State.player_position = _player_position
+	initial_position = _player_position
 	State.current_direction = _direction
 	call_deferred("init_current_room")
 
@@ -444,7 +445,6 @@ func _on_cancel_mission():
 const battle_scene: PackedScene = preload("res://scenes/battle.tscn")
 
 func _on_start_battle(party: Array, enemies: Array, background_texture_path: String, _type: String, _enemy_node: Node2D):
-	
 	#DISABLE PLAYER MOVEMENT
 	remove_controls()
 	player_instance.visible = false
@@ -484,9 +484,10 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		var balloon = BATTLE_BALLOON.instantiate()
 		add_child(balloon)
 		balloon.start(dialogue_resource, "lose")
-		if current_mission != 2 and _type != "boss_battle":
+		if current_mission == 2 and _type == "boss_battle":
 			Global.cutscene_start.emit("mission_2_boss_cutscene_part_1")
 		else:
+			Global.in_battle = false
 			player_instance.CharacterResource.health = int(player_instance.CharacterResource.max_health * 0.75)
 			Global.enter_new_room.emit(State.current_room, initial_position, State.current_direction)
 	

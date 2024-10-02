@@ -147,7 +147,7 @@ func _process(_delta):
 		MicButton.visible = false
 		ReadButton.visible = false
 		SkipButton.visible = false
-		print(MicButton.visible)
+		
 	else:
 		MicButton.visible = true
 		ReadButton.visible = true
@@ -311,11 +311,17 @@ func show_default_container():
 	RightContainer.visible = false
 	RightButtonContainer.visible = false
 	RightCharacterPanel.visible = false
-	EnemyPanel.visible = false
+	EnemyPanel.visible = true
 	SkillCheck.visible = false
 	for unit in unit_list:
 		if unit.has("select_button"):
+			selected_enemy = unit
+			set_enemy_panel_data(unit["name"], unit["health"], unit["max_health"])
+			break
+	for unit in unit_list:
+		if unit.has("select_button"):
 			unit["select_button"].visible = false
+			
 
 # get unit data
 func get_player_data():
@@ -776,7 +782,7 @@ func _on_select_pressed(button):
 
 var current_word: String
 @onready var CurrentWord = $SkillCheck/PaperOverlay/WordContainer/CurrentWord
-@onready var ProcessingLabel = $SkillCheck/MarginContainer
+@onready var ProcessingLabel = $SkillCheck/MarginContainer/Processing
 @onready var CurrentSentence = $SkillCheck/PaperOverlay/WordContainer/CurrentSentence
 
 #skill check
@@ -801,10 +807,13 @@ func _on_start_skill_check():
 	# ADD SKILL ILLUSTRATION AND SKILL WORD
 	match current_action:
 		"Flash Cards":
+			PaperOverlay.texture = null
 			random_index = randi_range(0, SkillCheckWords.flash_cards["words"].size() - 1)
 			current_word = SkillCheckWords.flash_cards["words"][random_index]
+			SkillIllustration.texture = load(SkillCheckWords.flash_cards["illustration"][random_index])
+			SkillIllustration.visible = true
 			CurrentWord.size_flags_horizontal = SIZE_SHRINK_CENTER
-			CurrentWord.size_flags_vertical = SIZE_SHRINK_CENTER
+			CurrentWord.size_flags_vertical = SIZE_SHRINK_END
 			CurrentWord.text = current_word
 			CurrentWord.visible = true
 		"Identify":
