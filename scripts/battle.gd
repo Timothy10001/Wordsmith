@@ -142,15 +142,27 @@ func connect_signals():
 
 func _process(_delta):
 	#manages states
-	if DisplayServer.tts_is_speaking():
-		MicButton.disabled = true
-		SkipButton.disabled = true
-		ReadButton.disabled = true
-	else:
-		MicButton.disabled = false
-		SkipButton.disabled = false
-		ReadButton.disabled = false
+	if is_STT_processing:
 		
+		MicButton.visible = false
+		ReadButton.visible = false
+		SkipButton.visible = false
+		print(MicButton.visible)
+	else:
+		MicButton.visible = true
+		ReadButton.visible = true
+		SkipButton.visible = true
+	
+	"""
+	if DisplayServer.tts_is_speaking():
+		MicButton.visible = false
+		ReadButton.visible = false
+		SkipButton.visible = false
+	else:
+		MicButton.visible = true
+		ReadButton.visible = true
+		SkipButton.visible = true
+	"""
 	match(battle_state):
 		STATE.INIT:
 			#initialize battle values and progress bars
@@ -834,25 +846,34 @@ var completed_text := ""
 @onready var speech_to_text: SpeechToText = $SpeechToText
 
 func _on_mic_button_button_up():
-	MicButton.disabled = true
+	is_STT_processing = true
+	
+	MicButton.visible = false
+	ReadButton.visible = false
+	SkipButton.visible = false
+	
 	await get_tree().create_timer(1.5).timeout
+	speech_to_text.stop_recording()
 	ProcessingLabel.visible = true
 	animation_player.play("processing")
-	speech_to_text.stop_recording()
 	print("Timer Stopped!")
 	await speech_to_text.STT_response_generated
 	check_if_skill_check_passed()
 
+var is_STT_processing: bool = false
 
 func _on_mic_button_button_down():
+	
+	ReadButton.visible = false
+	SkipButton.visible = false
+	TryAgain.visible = false
 	completed_text = ""
 	speech_to_text.start_recording()
-	SkipButton.disabled = true
-	ReadButton.disabled = true
-	TryAgain.visible = false
+	
 
 
 func _on_skip_button_pressed():
+	TryAgain.visible = false
 	Global.skill_check_passed = false
 	Global.end_skill_check.emit()
 
@@ -864,9 +885,6 @@ var try_again_text = ["Please try again.", "Try again, you can do it!", "You can
 var skill_check_passed_array = ["amazing", "good_job", "awesome", "great"]
 @onready var skill_check_passed_sprite = $Animations/SkillCheckPassedSprite
 func check_if_skill_check_passed():
-	MicButton.disabled = false
-	SkipButton.disabled = false
-	ReadButton.disabled = false
 	
 	ProcessingLabel.visible = false
 	animation_player.stop()
@@ -882,16 +900,28 @@ func check_if_skill_check_passed():
 		await get_tree().create_timer(0.3).timeout
 		Global.play_sfx.emit(skill_check_passed_array[skill_check_index])
 		await animation_player.animation_finished
+		MicButton.visible = true
+		ReadButton.visible = true
+		SkipButton.visible = true
+		is_STT_processing = false
 		Global.end_skill_check.emit()
 	else:
 		TryAgain.text = try_again_text.pick_random()
 		TryAgain.visible = true
+		is_STT_processing = false
+		MicButton.visible = true
+		ReadButton.visible = true
+		SkipButton.visible = true
+	
 
 @onready var TryAgain = $SkillCheck/MarginContainer/TryAgain
 
 func _on_read_button_pressed():
 	TryAgain.visible = false
 	DisplayServer.tts_speak(current_word, Global.Voices[Global.VoiceID]["id"])
+	#await !DisplayServer.tts_is_speaking()
 
 # ANIMATION STUFF
 @onready var animation_player = $AnimationPlayer
+
+

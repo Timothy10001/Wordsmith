@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cd2h1if0274f4"]
+[gd_scene load_steps=48 format=3 uid="uid://cd2h1if0274f4"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_3l4q4"]
 [ext_resource type="Theme" uid="uid://cwif4cu3aua73" path="res://assets/resources/battle.tres" id="1_gxkwb"]
@@ -12,7 +12,6 @@
 [ext_resource type="FontFile" uid="uid://bo78o48s27ltg" path="res://assets/fonts/king.ttf" id="8_03ej5"]
 [ext_resource type="Script" path="res://scripts/speech_to_text.gd" id="8_wcu6d"]
 [ext_resource type="SpriteFrames" uid="uid://cgqca8tgcxagu" path="res://assets/resources/skill_check_animation.tres" id="10_ewvdv"]
-[ext_resource type="Texture2D" uid="uid://d3v01d0gnr61o" path="res://assets/art/ui/white.png" id="13_8xb2i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oa3kn"]
 atlas = ExtResource("3_udsod")
@@ -24,17 +23,26 @@ region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fdxfm"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s5fpw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs24n"]
 atlas = ExtResource("5_ijhi7")
 region = Rect2(80, 16, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gioil"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lr5lu"]
+texture = SubResource("AtlasTexture_cs24n")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kw55a"]
 atlas = ExtResource("5_ijhi7")
 region = Rect2(96, 16, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a7fwc"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g5vdp"]
+texture = SubResource("AtlasTexture_kw55a")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnxni"]
 atlas = ExtResource("5_ijhi7")
 region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k2w0d"]
+texture = SubResource("AtlasTexture_tnxni")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ax7xv"]
 atlas = ExtResource("5_ijhi7")
@@ -57,8 +65,11 @@ region = Rect2(128, 16, 16, 16)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lk0jp"]
 texture = SubResource("AtlasTexture_wh6j8")
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_oexg6"]
+load_path = "res://.godot/imported/ui_elements.png-f34241891f45738e3c2b30b97783d3b5.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_fghhk"]
-atlas = ExtResource("5_ijhi7")
+atlas = SubResource("CompressedTexture2D_oexg6")
 region = Rect2(128, 16, 16, 16)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b5olj"]
@@ -78,12 +89,12 @@ region = Rect2(0, 32, 96, 32)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_786tx"]
 texture = SubResource("AtlasTexture_fwph0")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h7gln"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ym8v4"]
 atlas = ExtResource("6_3b2sa")
 region = Rect2(0, 32, 96, 32)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ucqjr"]
-texture = SubResource("AtlasTexture_h7gln")
+texture = SubResource("AtlasTexture_ym8v4")
 
 [sub_resource type="Animation" id="Animation_3v5ga"]
 length = 0.001
@@ -102,7 +113,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Light:visible")
+tracks/1/path = NodePath("SkillCheck:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -114,50 +125,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Light:position")
+tracks/2/path = NodePath("SkillCheck/MarginContainer:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(700.5, 526.5)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Light:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.37, 2.19)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Dark:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("SkillCheck:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_m4gn2"]
@@ -236,30 +211,6 @@ tracks/0/keys = {
 "method": &"start_battle_dialogue"
 }]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Light:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Dark:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_8ujxo"]
 resource_name = "tutorial_part_2"
@@ -294,54 +245,6 @@ tracks/0/keys = {
 "method": &"start_battle_dialogue"
 }]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Light:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Light:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(706, 526.5)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Light:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(8.58, 2.19)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Dark:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_0n47s"]
 resource_name = "tutorial_part_4"
@@ -358,30 +261,6 @@ tracks/0/keys = {
 "args": ["tutorial_part_4"],
 "method": &"start_battle_dialogue"
 }]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Light:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(128, 526.5)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Light:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.26, 2.19)]
 }
 
 [sub_resource type="Animation" id="Animation_a3lcx"]
@@ -415,22 +294,10 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Light:visible")
+tracks/2/path = NodePath("SkillCheck/MarginContainer:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Dark:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1060,15 +927,14 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="SkillCheck/PaperOverlay/Panel/HBoxContainer"]
 layout_mode = 2
 
-[node name="MicButton" type="TextureButton" parent="SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer"]
+[node name="MicButton" type="Button" parent="SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = SubResource("AtlasTexture_s5fpw")
-texture_pressed = SubResource("AtlasTexture_gioil")
-texture_disabled = SubResource("AtlasTexture_a7fwc")
-stretch_mode = 5
+theme_override_styles/normal = SubResource("StyleBoxTexture_lr5lu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g5vdp")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_k2w0d")
 
 [node name="ReadButton" type="Button" parent="SkillCheck/PaperOverlay/Panel/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(150, 150)
@@ -1107,7 +973,6 @@ grow_vertical = 2
 theme_override_constants/margin_bottom = 100
 
 [node name="Processing" type="Label" parent="SkillCheck/MarginContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -1122,7 +987,6 @@ theme_override_font_sizes/font_size = 64
 text = "Processing."
 
 [node name="TryAgain" type="Label" parent="SkillCheck/MarginContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -1149,23 +1013,6 @@ animation = &"great"
 
 [node name="SpeechToText" type="Node" parent="."]
 script = ExtResource("8_wcu6d")
-
-[node name="Light" type="PointLight2D" parent="."]
-visible = false
-position = Vector2(700.5, 526.5)
-scale = Vector2(2.37, 2.19)
-energy = 0.5
-range_layer_max = 1
-texture = ExtResource("13_8xb2i")
-
-[node name="Dark" type="PointLight2D" parent="."]
-visible = false
-position = Vector2(573.5, 330.5)
-scale = Vector2(12.47, 7.61)
-energy = 0.5
-blend_mode = 1
-range_layer_max = 1
-texture = ExtResource("13_8xb2i")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
