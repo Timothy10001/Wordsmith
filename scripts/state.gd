@@ -19,6 +19,7 @@ var current_mission: int = 0
 var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false
 
+var unlocked_igloo: bool = false
 
 var briefed_by_principal_ronnie: bool = false
 

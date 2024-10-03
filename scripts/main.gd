@@ -17,6 +17,7 @@ var current_mission_enemy_required: int = 0
 var briefed_by_mr_cheese: bool = false
 var unlocked_key_house: bool = false
 var briefed_by_principal_ronnie: bool = false
+var unlocked_igloo: bool = false
 
 var music_position = 0
 
@@ -59,6 +60,7 @@ func _process(_delta):
 	current_mission = State.current_mission
 	briefed_by_mr_cheese = State.briefed_by_mr_cheese
 	unlocked_key_house = State.unlocked_key_house
+	unlocked_igloo = State.unlocked_igloo
 	briefed_by_principal_ronnie = State.briefed_by_principal_ronnie
 	
 	
@@ -99,6 +101,9 @@ func _process(_delta):
 	
 	if State.current_area == "mission 1 - house":
 		State.unlocked_key_house = true
+	
+	if State.current_area == "mission 2 - igloo" and State.current_room == 1:
+		State.unlocked_igloo = true
 	
 	if Input.is_action_just_pressed("open_to_do_list"):
 		to_do_instance.visible = true
@@ -344,6 +349,9 @@ func init_current_room():
 	if current_area_name == "mission 1 - den":
 		Global.remove_to_do.emit("- Find the Rat Scroll down east to enter the den.")
 	
+	if State.current_area == "mission 2 - igloo" and State.current_room == 1:
+		Global.remove_to_do.emit("- Find a shovel inside the third igloo.")
+	
 	if Rooms.get_child_count() > 0:
 		for i in range(Rooms.get_child_count()):
 			Rooms.remove_child(Rooms.get_child(0))
@@ -567,8 +575,10 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		Global.enemy_battle_active = true
 		match current_mission:
 			1:
+				Global.clear_to_do.emit()
 				Global.cutscene_start.emit("mission_1_ending_cutscene")
 			2:
+				Global.clear_to_do.emit()
 				go_to_mission_2_end()
 		return
 	
@@ -586,6 +596,7 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 	
 	
 	if current_mission == 3 and State.current_mission_enemy_count == 0:
+		Global.clear_to_do.emit()
 		var overlay = load("res://scenes/go_to_principal_ronnie.tscn")
 		var overlay_instance
 		overlay_instance = overlay.instantiate()
