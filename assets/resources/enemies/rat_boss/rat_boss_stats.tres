@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_j0oe0")
 name = "Rat Boss"
-health = 500
+health = 300
 strength = 3.0
 speed = 8
 initial_armor = 5

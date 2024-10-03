@@ -164,7 +164,7 @@ tracks/0/keys = {
 "args": ["mission 2 - outside", 0],
 "method": &"_on_enter_new_area"
 }, {
-"args": [0, Vector2(-64, 138), "up"],
+"args": [0, Vector2(-31, 123), "up"],
 "method": &"_on_enter_new_room"
 }, {
 "args": ["mission_2_boss_cutscene", "boss_dialogue"],
@@ -178,10 +178,10 @@ tracks/1/path = NodePath("CutsceneCamera:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.000429687),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.000429687),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-64, 108)]
+"values": [Vector2(-31, 123), Vector2(-31, 123)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cldmsj5y4488m"]
+[gd_scene load_steps=15 format=3 uid="uid://cldmsj5y4488m"]
 
 [ext_resource type="TileSet" uid="uid://c4uhjoxt7aeya" path="res://assets/resources/tile_sets/snow.tres" id="1_popm6"]
 [ext_resource type="PackedScene" uid="uid://sx8d1fd6ter4" path="res://scenes/interactables/door.tscn" id="2_wun82"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://assets/resources/inventory_slot.gd" id="6_i1bra"]
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="7_j3cep"]
 [ext_resource type="PackedScene" uid="uid://0e4cqtrxwquj" path="res://scenes/interactables/dialogue_object.tscn" id="8_i7bcu"]
+[ext_resource type="Resource" uid="uid://b3g8c28ki0aek" path="res://assets/resources/dialogues/interactables/igloo_sign.dialogue" id="9_e4a7f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2nkl"]
 size = Vector2(16, 16)
@@ -74,6 +75,8 @@ shape = SubResource("RectangleShape2D_h4uli")
 
 [node name="Sign" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("8_i7bcu")]
 Collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("9_e4a7f")
+title = "start"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Sign"]
 position = Vector2(232, -24)

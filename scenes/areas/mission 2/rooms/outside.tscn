@@ -503,7 +503,7 @@ y_sort_enabled = true
 position = Vector2(112, 192)
 
 [node name="Snowman" parent="NPCs" instance=ExtResource("9_4nv73")]
-position = Vector2(-64, 80)
+position = Vector2(-34, 76)
 
 [node name="CoolSnowman" parent="NPCs" instance=ExtResource("10_dtc08")]
 position = Vector2(96, -48)
@@ -513,7 +513,7 @@ z_index = 1
 y_sort_enabled = true
 
 [node name="RedCar001" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("18_2m2he")]
-position = Vector2(-238, 166)
+position = Vector2(103, 264)
 enemy_name = "Car"
 enemy_battle_path = "res://scenes/enemies/red_car.tscn"
 sprite = NodePath("AnimatedSprite2D")
@@ -551,7 +551,7 @@ position = Vector2(0, 13.5)
 shape = SubResource("RectangleShape2D_4wk5o")
 
 [node name="YellowCar001" parent="Enemies" node_paths=PackedStringArray("sprite", "enemy_collision") instance=ExtResource("18_2m2he")]
-position = Vector2(-253, -230)
+position = Vector2(91, -249)
 enemy_name = "Car"
 enemy_battle_path = "res://scenes/enemies/yellow_car.tscn"
 sprite = NodePath("AnimatedSprite2D")
