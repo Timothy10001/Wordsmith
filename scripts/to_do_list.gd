@@ -28,6 +28,8 @@ func remove_to_do(to_do: String):
 	for i in range(to_do_array.size()):
 		if to_do in to_do_array[i]:
 			to_do_array.remove_at(i)
+			break
+		return
 	set_to_do_list()
 
 func clear_to_do():
