@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://bc8qlcdyqpv8e"]
+
+[ext_resource type="Texture2D" uid="uid://b5hvn6qtd0656" path="res://assets/art/ui/scroll.png" id="1_givn4"]
+[ext_resource type="Script" path="res://scripts/to_do_list.gd" id="1_mjlau"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="2_1kq20"]
+[ext_resource type="FontFile" uid="uid://bo78o48s27ltg" path="res://assets/fonts/king.ttf" id="3_6elcm"]
+[ext_resource type="FontFile" uid="uid://bxror4jw86uab" path="res://assets/fonts/handwritten.ttf" id="4_s88qo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gl6t"]
+atlas = ExtResource("2_1kq20")
+region = Rect2(176, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_63ybg"]
+texture = SubResource("AtlasTexture_0gl6t")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmexr"]
+atlas = ExtResource("2_1kq20")
+region = Rect2(192, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jekmo"]
+texture = SubResource("AtlasTexture_jmexr")
+
+[node name="ToDoList" type="CanvasLayer"]
+script = ExtResource("1_mjlau")
+
+[node name="Scroll" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_givn4")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 350.0
+offset_bottom = 300.0
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="BackButton" type="Button" parent="MarginContainer"]
+custom_minimum_size = Vector2(125, 125)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_63ybg")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jekmo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.5
+offset_top = -13.5
+offset_right = 45.5
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_6elcm")
+theme_override_font_sizes/font_size = 60
+text = "TO DO LIST:"
+horizontal_alignment = 1
+
+[node name="ToDoList" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(475, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_s88qo")
+theme_override_font_sizes/font_size = 48
+text = "> Teach all the rats.
+> Get the rat mask from the den up north.
+> Get the rat scroll from the east."
+autowrap_mode = 2
+
+[connection signal="pressed" from="MarginContainer/BackButton" to="." method="_on_back_button_pressed"]

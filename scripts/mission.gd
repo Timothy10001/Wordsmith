@@ -15,3 +15,8 @@ func _on_yes_pressed():
 func _on_no_pressed():
 	Global.play_sfx.emit("button_click")
 	Global.cancel_mission.emit()
+
+func _notification(what):
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		Global.play_sfx.emit("button_click")
+		Global.cancel_mission.emit()

@@ -36,6 +36,7 @@ const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 var player_instance
 var controls_instance
 var pause_instance
+var to_do_instance
 var options_instance
 var mission_instance
 var backpack_instance
@@ -98,6 +99,13 @@ func _process(_delta):
 	
 	if State.current_area == "mission 1 - house":
 		State.unlocked_key_house = true
+	
+	if Input.is_action_just_pressed("open_to_do_list"):
+		to_do_instance.visible = true
+		get_tree().paused = true
+	if Input.is_action_just_pressed("close_to_do_list"):
+		get_tree().paused = false
+		to_do_instance.visible = false
 	if Input.is_action_just_pressed("pause"):
 		if !has_node("PauseMenu"):
 			music_position = Music.get_playback_position()
@@ -182,6 +190,7 @@ func connect_signals():
 #const controls_scene: PackedScene = preload("res://scenes/controls.tscn")
 const player_scene: PackedScene = preload("res://scenes/player.tscn")
 const pause_scene: PackedScene = preload("res://scenes/pause_menu.tscn")
+const to_do_scene: PackedScene = preload("res://scenes/to_do_list.tscn")
 const options_scene: PackedScene = preload("res://scenes/options_menu.tscn")
 const backpack_scene: PackedScene = preload("res://scenes/backpack_ui.tscn")
 const confirmation_scene: PackedScene = preload("res://scenes/exit_confirmation.tscn")
@@ -329,6 +338,12 @@ func init_current_room():
 	if current_area_name != "mission 2 - highway" and current_room == 0:
 		cutscene_extras.get_node("TruckBoss").visible = false
 	
+	if current_area_name == "mission 1 - tavern":
+		Global.remove_to_do.emit("- Find the Rat Mask up north inside the den.")
+	
+	if current_area_name == "mission 1 - den":
+		Global.remove_to_do.emit("- Find the Rat Scroll down east to enter the den.")
+	
 	if Rooms.get_child_count() > 0:
 		for i in range(Rooms.get_child_count()):
 			Rooms.remove_child(Rooms.get_child(0))
@@ -345,6 +360,11 @@ func init_current_room():
 	player_instance.position = State.player_position
 	player_instance.current_direction = State.current_direction
 	Global.enemy_battle_active = true
+	
+	if !has_node("ToDoList"):
+		to_do_instance = to_do_scene.instantiate()
+		add_child(to_do_instance)
+		to_do_instance.visible = false
 	
 	Rooms.get_child(0).get_node("TileMap").add_child(player_instance)
 	if current_area_name == "mission 2 - highway" and current_room == 1:
@@ -409,6 +429,7 @@ func _on_confirm_mission():
 		1:
 			Global.enter_new_area.emit("mission 1 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(-224, -16), "down")
+			Global.add_to_do.emit("- Teach all of the rats.")
 			initial_position = Vector2(-224, -16)
 			removed_enemies.clear()
 			# 14
@@ -419,6 +440,7 @@ func _on_confirm_mission():
 		2:
 			Global.enter_new_area.emit("mission 2 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
+			Global.add_to_do.emit("- Teach all of the drivers.")
 			initial_position = Vector2(0, 0)
 			removed_enemies.clear()
 			current_mission_enemy_count = 6
@@ -428,6 +450,7 @@ func _on_confirm_mission():
 		3:
 			Global.enter_new_area.emit("mission 3 - outside", 0)
 			Global.enter_new_room.emit(0, Vector2(0, 0), "down")
+			Global.add_to_do.emit("- Teach all of the students and teachers.")
 			initial_position = Vector2(0, 0)
 			removed_enemies.clear()
 			current_mission_enemy_count = 16

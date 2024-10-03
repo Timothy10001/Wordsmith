@@ -92,6 +92,14 @@ options={
 "deadzone": 0.5,
 "events": []
 }
+open_to_do_list={
+"deadzone": 0.5,
+"events": []
+}
+close_to_do_list={
+"deadzone": 0.5,
+"events": []
+}
 
 [input_devices]
 

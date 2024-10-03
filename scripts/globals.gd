@@ -61,6 +61,10 @@ signal remove_car_in_house
 signal play_sfx(_name: String)
 signal play_battle_music(enemy: String)
 
+signal add_to_do(to_do: String)
+signal remove_to_do(to_do: String)
+signal clear_to_do
+
 var experience: int
 #for npc dialogue font
 var npc_class = ""

@@ -71,3 +71,8 @@ func _on_back_button_pressed():
 	await get_tree().create_timer(0.1).timeout
 	Input.action_release("back_to_pause_menu")
 
+func _notification(what):
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		Input.action_press("back_to_pause_menu")
+		await get_tree().create_timer(0.1).timeout
+		Input.action_release("back_to_pause_menu")

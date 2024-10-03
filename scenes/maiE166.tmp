@@ -1,0 +1,409 @@
+[gd_scene load_steps=16 format=3 uid="uid://ddktrys17vcy4"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_x8nos"]
+[ext_resource type="Texture2D" uid="uid://bihdeeic61121" path="res://assets/art/characters/enemy/truck_sprites.png" id="3_htf80"]
+[ext_resource type="AudioStream" uid="uid://c0o4td4q4v500" path="res://assets/sounds/music/title_theme.mp3" id="3_lkjy6"]
+
+[sub_resource type="Animation" id="Animation_2ql0x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutsceneCamera:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneCamera:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(75, -82)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CutsceneExtras/TruckBoss:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-504, -206)]
+}
+
+[sub_resource type="Animation" id="Animation_6v2yt"]
+resource_name = "mission_1_ending_cutscene"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutsceneCamera:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneCamera:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(75, -82), Vector2(75, -108)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["mission_1_ending_cutscene"],
+"method": &"start_cutscene_dialogue"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_w2prc"]
+resource_name = "mission_1_starting_cutscene"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutsceneCamera:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5.06774, 6.01199, 6.01289, 8.99413, 8.99566, 12.1178),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(3.5, 3.5), Vector2(3.5, 3.5), Vector2(3.5, 3.5), Vector2(3, 3), Vector2(3, 3), Vector2(3.5, 3.5), Vector2(3.5, 3.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneCamera:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 5.06774, 6.01199, 6.0129, 8.99413, 8.99566, 12.1178, 12.1182, 15.101, 15.103, 19.1208, 19.1215),
+"transitions": PackedFloat32Array(0.435275, 3.4822, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -99), Vector2(104, -139), Vector2(209, -81), Vector2(209, -81), Vector2(122, -183), Vector2(122, -360), Vector2(55, -495), Vector2(170, -446), Vector2(169, -354), Vector2(57, -240), Vector2(57, -354), Vector2(57, -194), Vector2(99, -136)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 6.01204, 6.01276, 8.99413, 12.1178, 15.101, 19.1208, 19.1215),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": ["res://assets/resources/dialogues/mr_cheese.dialogue", "intro"],
+"method": &"_on_start_npc_dialogue"
+}, {
+"args": ["mission 1 - tavern", 0],
+"method": &"_on_enter_new_area"
+}, {
+"args": [0, Vector2(0, 0), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": [1, Vector2(0, 0), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": [2, Vector2(0, 0), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": [3, Vector2(0, 0), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": ["mission 1 - outside", 0],
+"method": &"_on_enter_new_area"
+}, {
+"args": [0, Vector2(0, -67), "up"],
+"method": &"_on_enter_new_room"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_58a3v"]
+resource_name = "mission_2_boss_cutscene_part_1"
+length = 2.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.000509844, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": ["mission 2 - outside", 0],
+"method": &"_on_enter_new_area"
+}, {
+"args": [0, Vector2(-31, 123), "up"],
+"method": &"_on_enter_new_room"
+}, {
+"args": ["mission_2_boss_cutscene", "boss_dialogue"],
+"method": &"start_cutscene_custom_dialogue"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneCamera:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.000429687),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-31, 123), Vector2(-31, 123)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CutsceneExtras/TruckBoss:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CutsceneCamera:zoom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3.5, 3.5)]
+}
+
+[sub_resource type="Animation" id="Animation_8i5k2"]
+resource_name = "mission_2_boss_cutscene_part_2"
+length = 5.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["mission_2_boss_help", "start"],
+"method": &"start_cutscene_custom_dialogue"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneExtras/TruckBoss:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-504, -206), Vector2(504, -206)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CutsceneCamera:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.9, 4.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-64, 108), Vector2(-169, -192), Vector2(169, -192)]
+}
+
+[sub_resource type="Animation" id="Animation_rmumh"]
+resource_name = "mission_2_boss_cutscene_part_3"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CutsceneCamera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(169, -192), Vector2(-64, 108)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["mission_2_boss_cutscene", "boss_dialogue_2"],
+"method": &"start_cutscene_custom_dialogue"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CutsceneExtras/TruckBoss:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(504, -206)]
+}
+
+[sub_resource type="Animation" id="Animation_6orav"]
+resource_name = "mission_2_boss_highway"
+length = 5.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"go_to_mission_2_boss"
+}, {
+"args": ["mission_2_boss_highway", "help"],
+"method": &"start_cutscene_custom_dialogue"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CutsceneCamera:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, -47)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qaiaw"]
+_data = {
+"RESET": SubResource("Animation_2ql0x"),
+"mission_1_ending_cutscene": SubResource("Animation_6v2yt"),
+"mission_1_starting_cutscene": SubResource("Animation_w2prc"),
+"mission_2_boss_cutscene_part_1": SubResource("Animation_58a3v"),
+"mission_2_boss_cutscene_part_2": SubResource("Animation_8i5k2"),
+"mission_2_boss_cutscene_part_3": SubResource("Animation_rmumh"),
+"mission_2_boss_highway": SubResource("Animation_6orav")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oplam"]
+atlas = ExtResource("3_htf80")
+region = Rect2(0, 0, 128, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8x1in"]
+atlas = ExtResource("3_htf80")
+region = Rect2(128, 0, 128, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvxvi"]
+atlas = ExtResource("3_htf80")
+region = Rect2(256, 0, 128, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_40sud"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oplam")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8x1in")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvxvi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}]
+
+[node name="Main" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_x8nos")
+metadata/_edit_lock_ = true
+
+[node name="Rooms" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Controls" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Cutscenes" type="Node2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Cutscenes"]
+libraries = {
+"": SubResource("AnimationLibrary_qaiaw")
+}
+
+[node name="CutsceneCamera" type="Camera2D" parent="Cutscenes"]
+position = Vector2(75, -82)
+
+[node name="CutsceneExtras" type="Node2D" parent="Cutscenes"]
+
+[node name="TruckBoss" type="AnimatedSprite2D" parent="Cutscenes/CutsceneExtras"]
+visible = false
+position = Vector2(-504, -206)
+sprite_frames = SubResource("SpriteFrames_40sud")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.632179
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_lkjy6")
+autoplay = true
+bus = &"Music"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"

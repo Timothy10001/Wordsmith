@@ -54,20 +54,21 @@ do emit("play_tutorial_cutscene", "tutorial_part_3")
 
 ~ tutorial_part_3
 set npc_class = "Low Class"
-Dummy: Down at the middle you will see your Intelligence (INT) and Energy (EN) points.
-Dummy: Your goal is to not let your "student" bring your INT down to 0.
-Dummy: Your "students" have Illiteracy Points (IP).
-Dummy: You can teach them using your skills and remove their IP. 
+Dummy: Look down in the middle.
+Dummy: You will see your Intelligence (INT) and Energy (EN) points.
+Dummy: Don't let your student make your INT go to 0.
+Dummy: Your students have Illiteracy Points (IP).
+Dummy: You can teach them using your skills and make their IP go down. 
 do emit("play_tutorial_cutscene", "tutorial_part_4")
 => END
 
 ~ tutorial_part_4
 set npc_class = "Low Class"
-Dummy: Down at the left you will see the different actions you have.
-Dummy: "Teach" will remove a small amount of IP, but regain some energy.
-Dummy: "Skills" will require you to do some reading to remove a big amount of IP.
-Dummy: "Items" will show you all of your items you can use to teach.
-Dummy: "Guard will shield you from losing too much INT."
+Dummy: On the left, you have choices.
+Dummy: "Teach" will help your student a little, but give you EN.
+Dummy: "Skills" you'll have to read something to help a lot.
+Dummy: "Items" will show you things you can use to help.
+Dummy: "Guard" will stop you from losing too much INT.
 do emit("play_tutorial_cutscene", "tutorial_part_5")
 => END
 
@@ -81,7 +82,8 @@ Dummy: When you want to read out the word,
 Dummy: Hold the RED BUTTON and start reading.
 Dummy: If you don't know how to read the word,
 Dummy: Press the BLUE BUTTON.
-Dummy: You can also SKIP the skill check by pressing SKIP, but it won't teach the student anything.
+Dummy: You can also SKIP the skill check by pressing SKIP.
+Dummy: But it won't teach the student anything.
 do emit("play_tutorial_cutscene", "tutorial_part_6")
 => END
 

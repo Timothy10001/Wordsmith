@@ -11,15 +11,12 @@ var experience_required
 
 func _process(_delta):
 	State.level = CharacterResource.level
-	CharacterResource.experience = experience
+	level = CharacterResource.level
+	experience_required = get_required_experience(level + 1)
 	CharacterResource.experience_required = experience_required
 
 func _ready():
-	level = CharacterResource.level
-	CharacterResource.experience = experience
-	experience_required = get_required_experience(level + 1)
-	CharacterResource.experience_required = experience_required
-	
+	experience = CharacterResource.experience
 
 func get_required_experience(_level):
 	return round(pow(_level, 1.8) + _level * 4)
@@ -27,6 +24,7 @@ func get_required_experience(_level):
 func gain_experience(amount):
 	experience_total += amount
 	experience += amount
+	CharacterResource.experience += amount
 	print(experience_required)
 	while experience >= experience_required:
 		experience -= experience_required

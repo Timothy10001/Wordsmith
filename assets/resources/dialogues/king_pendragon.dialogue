@@ -1,9 +1,9 @@
 ~ start
 set npc_class = "King"
 if State.tutorial_status == "not done" and State.current_mission == 0:
-	King Pendragon: Wordsmith! I have summoned you today as I have a favor.
-	King Pendragon: The Dark Wizard Malgrim has put a curse on our people.
-	King Pendragon: The people of our kingdom Lexonia has forgotten how to read.
+	King Pendragon: Wordsmith! I need your help
+	King Pendragon: The Dark Wizard Malgrim has cursed this place.
+	King Pendragon: A lot of people forgot how to read.
 	King Pendragon: I want you to teach them how to read again.
 	King Pendragon: Would you like to learn the basics?
 	- Yes
@@ -19,8 +19,8 @@ if State.tutorial_status == "not done" and State.current_mission == 0:
 	=> END
 	
 elif State.tutorial_status == "not done":
-	King Pendragon: Wordsmith! I see you have not gone through our training yet.
-	King Pendragon: I would like to offer some help.
+	King Pendragon: Wordsmith! You have not trained yet.
+	King Pendragon: I can help you.
 	King Pendragon: Would you like to learn the basics?
 	- Yes
 		King Pendragon: Good, let us go to the training room.
@@ -34,7 +34,7 @@ elif State.tutorial_status == "not done":
 	
 	
 elif State.current_mission == 1:
-	King Pendragon: Wordsmith, Mr. Cheese has called us for help.
+	King Pendragon: Wordsmith, Mr. Cheese needs our help.
 	King Pendragon: His tavern has become a hangout for rats.
 	King Pendragon: The rats could not read the sign that says: "NO RATS INSIDE"
 	King Pendragon: Would you go help Mr. Cheese?
@@ -46,11 +46,11 @@ elif State.current_mission == 1:
 		do emit("cancel_mission")
 		=> END
 elif State.current_mission == 2:
-	King Pendragon: Wordsmith! The snowmen from Snowland have called us for help.
-	King Pendragon: They keep getting run over by cars!
+	King Pendragon: Wordsmith! The snowmen need our help!
+	King Pendragon: Cars keep bumping into them!
 	King Pendragon: They don't really get hurt, but it takes time for them to rebuild.
-	King Pendragon: The deer driving the cars can't read the warning signs.
-	King Pendragon: Would you go help the snowmen by teaching the drivers?
+	King Pendragon: The deer driving the cars can't read.
+	King Pendragon: Can you teach them not to hit the snowmen?
 	- Yes
 		do emit("get_mission")
 		=> END

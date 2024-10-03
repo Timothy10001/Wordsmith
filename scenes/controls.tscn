@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c3kr4v0fqvg0u"]
+[gd_scene load_steps=18 format=3 uid="uid://c3kr4v0fqvg0u"]
 
 [ext_resource type="Texture2D" uid="uid://w7dw7daoxytr" path="res://assets/art/ui/ui_controls.png" id="1_pyjpf"]
 [ext_resource type="Script" path="res://scripts/controls.gd" id="1_y0k1c"]
@@ -43,6 +43,14 @@ region = Rect2(144, 16, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_4wlkj"]
 atlas = ExtResource("3_xo72d")
 region = Rect2(160, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdowa"]
+atlas = ExtResource("3_xo72d")
+region = Rect2(176, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v08t"]
+atlas = ExtResource("3_xo72d")
+region = Rect2(208, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b5iq1"]
 atlas = ExtResource("1_pyjpf")
@@ -98,16 +106,30 @@ passby_press = true
 action = "ui_right"
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 128.0
+offset_bottom = 108.0
 scale = Vector2(6, 6)
+size_flags_horizontal = 0
+size_flags_vertical = 0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 
-[node name="PauseButton" type="TextureButton" parent="MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="PauseButton" type="TextureButton" parent="MarginContainer2/HBoxContainer"]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_20pes")
 texture_pressed = SubResource("AtlasTexture_4wlkj")
+
+[node name="ToDoButton" type="TextureButton" parent="MarginContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_rdowa")
+texture_pressed = SubResource("AtlasTexture_3v08t")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 3
@@ -129,5 +151,6 @@ layout_mode = 2
 texture_normal = SubResource("AtlasTexture_b5iq1")
 texture_pressed = SubResource("AtlasTexture_c1jbd")
 
-[connection signal="pressed" from="MarginContainer2/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/HBoxContainer/PauseButton" to="." method="_on_pause_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/HBoxContainer/ToDoButton" to="." method="_on_to_do_button_pressed"]
 [connection signal="pressed" from="MarginContainer/InteractButton" to="." method="_on_interact_button_pressed"]
