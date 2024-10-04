@@ -86,6 +86,8 @@ var VoiceID: int = 0
 var TTS_available: bool
 
 const SAVE_FILE = "user://wordsmith_save_file.tres"
+const STATS_SAVE_FILE = "user://wordsmith_stats_save_file.tres"
+const INVENTORY_SAVE_FILE = "user://wordsmith_inventory_save_file.tres"
 
 var enemy_battle_active: bool = true
 """

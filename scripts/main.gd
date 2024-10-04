@@ -27,6 +27,8 @@ var mission_1_done: bool = false
 var mission_2_done: bool = false
 var mission_3_done: bool = false
 
+var world_inventory: Dictionary
+
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -46,7 +48,10 @@ var dialogue_resource: DialogueResource
 
 func _ready():
 	connect_signals()
-	start()
+	if FileAccess.file_exists(Global.SAVE_FILE):
+		continue_game()
+	else:
+		start()
 	cutscene_camera.enabled = false
 
 func _notification(what):
@@ -62,6 +67,7 @@ func _process(_delta):
 	unlocked_key_house = State.unlocked_key_house
 	unlocked_igloo = State.unlocked_igloo
 	briefed_by_principal_ronnie = State.briefed_by_principal_ronnie
+	world_inventory = State.world_inventory
 	
 	
 	if current_area_name == "lobby" and current_room == 0:
@@ -205,8 +211,7 @@ const mission_scene: PackedScene = preload("res://scenes/mission.tscn")
 var current_area: Array[PackedScene]
 
 func start() -> void:
-	# TO BE CHANGED
-	#GameStateService.new_game()
+	State.world_inventory = {}
 	State.current_area = current_area_name
 	State.current_room = current_room
 	State.current_mission = current_mission
@@ -217,6 +222,7 @@ func start() -> void:
 	State.current_mission_enemy_required = current_mission_enemy_required
 	Global.enter_new_area.emit(State.current_area, State.current_room)
 	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
+	removed_enemies.clear()
 	mission_1_done = false
 	mission_2_done = false
 	mission_3_done = false
@@ -229,25 +235,7 @@ func start() -> void:
 
 func continue_game():
 	load_game()
-	#print(saved_data.CharacterResource.level)
-	if saved_data:
-		current_area_name = saved_data.current_area_name
-		current_room = saved_data.current_room
-		current_mission = saved_data.current_mission
-		tutorial_status = saved_data.tutorial_status
-		player_position = saved_data.player_position
-		current_direction = saved_data.current_direction
-		current_mission_enemy_count = saved_data.current_mission_enemy_count
-		current_mission_enemy_required = saved_data.current_mission_enemy_required
-		initial_position = saved_data.initial_position
-		briefed_by_mr_cheese = saved_data.briefed_by_mr_cheese
-		unlocked_key_house = saved_data.unlocked_key_house
-		briefed_by_principal_ronnie = saved_data.briefed_by_principal_ronnie
-		removed_enemies = saved_data.removed_enemies
-		mission_1_done = saved_data.mission_1_done
-		mission_2_done = saved_data.mission_2_done
-		mission_3_done = saved_data.mission_3_done
-		
+	load_data()
 	State.current_area = current_area_name
 	State.current_room = current_room
 	State.current_mission = current_mission
@@ -258,16 +246,27 @@ func continue_game():
 	State.current_mission_enemy_required = current_mission_enemy_required
 	Global.enter_new_area.emit(State.current_area, State.current_room)
 	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
-	#await init_current_room()
-	#player_instance.CharacterResource = saved_data.CharacterResource
-	
-	#player_instance.inventory = saved_data.PlayerInventory
-	#var scene := GameStateService.load_game_state(Global.SAVE_FILE)
-	#get_tree().change_scene_to_file(scene)
+	await init_current_room()
+	load_player_stats()
+	load_player_inventory()
+	#print(world_inventory)
 
 var saved_data
+var saved_stats
+var saved_inventory
+var saved_world_inventory
 
 func save_game():
+	save_data()
+	save_player_stats()
+	save_player_inventory()
+
+func load_game():
+	saved_data = load(Global.SAVE_FILE) as SavedGame
+	saved_stats = load(Global.STATS_SAVE_FILE) as PlayerResource
+	saved_inventory = load(Global.INVENTORY_SAVE_FILE) as Inventory
+
+func save_data():
 	saved_data = SavedGame.new()
 	saved_data.current_area_name = current_area_name
 	saved_data.current_room = current_room
@@ -281,19 +280,78 @@ func save_game():
 	saved_data.briefed_by_mr_cheese = briefed_by_mr_cheese
 	saved_data.briefed_by_principal_ronnie = briefed_by_principal_ronnie
 	saved_data.unlocked_key_house = unlocked_key_house
+	saved_data.unlocked_igloo = unlocked_igloo
 	saved_data.removed_enemies = removed_enemies
 	saved_data.mission_1_done = mission_1_done
 	saved_data.mission_2_done = mission_2_done
 	saved_data.mission_3_done = mission_3_done
-	saved_data.CharacterResource = player_instance.CharacterResource
-	saved_data.PlayerInventory = player_instance.inventory
-	#print(saved_data.CharacterResource.level)
-	#saved_data.InteractableInventory = saved_data.InteractableInventory
+	saved_data.world_inventory = State.world_inventory
 	ResourceSaver.save(saved_data, Global.SAVE_FILE)
 
-func load_game():
-	saved_data = load(Global.SAVE_FILE) as SavedGame
+func load_data():
+	if saved_data:
+		current_area_name = saved_data.current_area_name
+		current_room = saved_data.current_room
+		current_mission = saved_data.current_mission
+		tutorial_status = saved_data.tutorial_status
+		player_position = saved_data.player_position
+		current_direction = saved_data.current_direction
+		current_mission_enemy_count = saved_data.current_mission_enemy_count
+		current_mission_enemy_required = saved_data.current_mission_enemy_required
+		initial_position = saved_data.initial_position
+		briefed_by_mr_cheese = saved_data.briefed_by_mr_cheese
+		unlocked_igloo = saved_data.unlocked_igloo
+		unlocked_key_house = saved_data.unlocked_key_house
+		briefed_by_principal_ronnie = saved_data.briefed_by_principal_ronnie
+		removed_enemies = saved_data.removed_enemies
+		mission_1_done = saved_data.mission_1_done
+		mission_2_done = saved_data.mission_2_done
+		mission_3_done = saved_data.mission_3_done
+		State.world_inventory = saved_data.world_inventory
 
+func save_player_stats():
+	saved_stats = PlayerResource.new()
+	saved_stats.name = player_instance.CharacterResource.name
+	saved_stats.health = player_instance.CharacterResource.health
+	saved_stats.max_health = player_instance.CharacterResource.max_health
+	saved_stats.strength = player_instance.CharacterResource.strength
+	saved_stats.speed = player_instance.CharacterResource.speed
+	saved_stats.initial_armor = player_instance.CharacterResource.initial_armor
+	saved_stats.armor = player_instance.CharacterResource.armor
+	saved_stats.mana = player_instance.CharacterResource.mana
+	saved_stats.max_mana = player_instance.CharacterResource.max_mana
+	saved_stats.immortal = player_instance.CharacterResource.immortal
+	saved_stats.level = player_instance.CharacterResource.level
+	saved_stats.experience_required = player_instance.CharacterResource.experience_required
+	saved_stats.experience = player_instance.CharacterResource.experience
+	ResourceSaver.save(saved_stats, Global.STATS_SAVE_FILE)
+
+func load_player_stats():
+	if saved_stats:
+		player_instance.CharacterResource.name = saved_stats.name
+		player_instance.CharacterResource.health = saved_stats.health
+		player_instance.CharacterResource.max_health = saved_stats.max_health
+		player_instance.CharacterResource.strength = saved_stats.strength
+		player_instance.CharacterResource.speed = saved_stats.speed
+		player_instance.CharacterResource.initial_armor = saved_stats.initial_armor
+		player_instance.CharacterResource.armor = saved_stats.armor
+		player_instance.CharacterResource.mana = saved_stats.mana
+		player_instance.CharacterResource.max_mana = saved_stats.max_mana
+		player_instance.CharacterResource.immortal = saved_stats.immortal
+		player_instance.CharacterResource.level = saved_stats.level
+		player_instance.CharacterResource.experience_required = saved_stats.experience_required
+		player_instance.CharacterResource.experience = saved_stats.experience
+
+
+func save_player_inventory():
+	saved_inventory = Inventory.new()
+	saved_inventory.items = player_instance.inventory.items
+	ResourceSaver.save(saved_inventory, Global.INVENTORY_SAVE_FILE)
+
+
+func load_player_inventory():
+	if saved_inventory:
+		player_instance.inventory.items = saved_inventory.items
 
 
 func enable_player_process():

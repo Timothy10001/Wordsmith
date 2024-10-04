@@ -12,6 +12,9 @@ var player
 var picked_up: bool = false
 
 func _ready():
+	if State.world_inventory:
+		if State.world_inventory.has(self.get_path()):
+			inventory.items = State.world_inventory[self.get_path()]
 	sprite.visible = true
 	collision.disabled = false
 
@@ -77,7 +80,9 @@ func _process(_delta):
 							inventory.remove_item(slot.item.name)
 							
 					else:
+						State.world_inventory[self.get_path()] = inventory.items
 						break
+			State.world_inventory[self.get_path()] = inventory.items
 			Global.start_interactable_dialogue.emit(dialogue_resource, "no_more_items")
 			picked_up = true
 

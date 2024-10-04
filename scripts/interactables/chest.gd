@@ -14,6 +14,9 @@ var entered: bool = false
 var player
 
 func _ready():
+	if State.world_inventory:
+		if State.world_inventory.has(self.get_path()):
+			inventory.items = State.world_inventory[self.get_path()]
 	if closed_texture and opened_texture:
 		closed_texture.visible = true
 		opened_texture.visible = false
@@ -80,8 +83,12 @@ func _process(_delta):
 						break
 			else:
 				Global.start_interactable_dialogue.emit(dialogue_resource, "no_items")
+				State.world_inventory[self.get_path()] = inventory.items
+				#print(State.world_inventory)
 				return
 			Global.start_interactable_dialogue.emit(dialogue_resource, "no_more_items")
+			State.world_inventory[self.get_path()] = inventory.items
+			#print(State.world_inventory)
 
 
 func set_interactable_dialogue(slot: InventorySlot, title: String):

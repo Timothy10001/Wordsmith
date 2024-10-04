@@ -119,7 +119,8 @@ shape = SubResource("RectangleShape2D_48bq4")
 
 [node name="Ropes" parent="Interactables" node_paths=PackedStringArray("Collision") instance=ExtResource("6_nq35w")]
 Collision = NodePath("CollisionShape2D")
-title = "start"
+dialogue_resource = ExtResource("7_y70a6")
+title = "ropes"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Ropes"]
 position = Vector2(-360, -136)

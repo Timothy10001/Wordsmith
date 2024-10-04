@@ -479,8 +479,9 @@ dialogue_resource = ExtResource("7_mqr4v")
 position = Vector2(0, 21.25)
 shape = SubResource("RectangleShape2D_lttsx")
 
-[node name="Chest" parent="Interactables" node_paths=PackedStringArray("opened_texture", "closed_texture") instance=ExtResource("8_7d5w8")]
+[node name="Chest" parent="Interactables" node_paths=PackedStringArray("collision", "opened_texture", "closed_texture") instance=ExtResource("8_7d5w8")]
 position = Vector2(-160, -384)
+collision = NodePath("CollisionShape2D")
 dialogue_resource = ExtResource("9_j6oud")
 inventory = SubResource("Resource_o7cno")
 opened_texture = NodePath("Opened")

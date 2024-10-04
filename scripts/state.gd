@@ -27,3 +27,5 @@ var briefed_by_principal_ronnie: bool = false
 var mission_1_done: bool = false
 var mission_2_done: bool = false
 var mission_3_done: bool = false
+
+var world_inventory = {}

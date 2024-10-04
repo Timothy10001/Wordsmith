@@ -13,20 +13,51 @@ extends Control
 var loading_scene = load("res://scenes/loading_screen.tscn")
 var options_scene = load("res://scenes/options_menu.tscn")
 var credits_scene = load("res://assets/credits/scenes/end_credits/end_credits.tscn")
+var start_confirmation_scene = load("res://scenes/start_confirmation.tscn")
 
 func _ready():
 	handle_connecting_signals()
-	
+	if FileAccess.file_exists(Global.SAVE_FILE):
+		continue_button.visible = true
+	else:
+		continue_button.visible = false
 
 func _notification(what):
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
 		get_tree().quit()
 
-func on_start_pressed () -> void:
+func on_start_pressed() -> void:
 	$SFX.play()
 	await $SFX.finished
+	if FileAccess.file_exists(Global.SAVE_FILE):
+		var start_confirmation_instance
+		start_confirmation_instance = start_confirmation_scene.instantiate()
+		start_button.visible = false
+		continue_button.visible = false
+		options_button.visible = false
+		credits_button.visible = false
+		exit_button.visible = false
+		add_child(start_confirmation_instance)
+		start_confirmation_instance.YesButton.pressed.connect(on_start_confirmation_yes)
+		start_confirmation_instance.NoButton.pressed.connect(on_start_confirmation_no)
+	else:
+		get_tree().change_scene_to_packed(loading_scene)
+
+func on_start_confirmation_yes() -> void:
+	if FileAccess.file_exists(Global.SAVE_FILE):
+		DirAccess.remove_absolute(Global.SAVE_FILE)
+		DirAccess.remove_absolute(Global.STATS_SAVE_FILE)
+		DirAccess.remove_absolute(Global.INVENTORY_SAVE_FILE)
 	get_tree().change_scene_to_packed(loading_scene)
 
+func on_start_confirmation_no() -> void:
+	if has_node("StartConfirmation"):
+		get_node("StartConfirmation").queue_free()
+	start_button.visible = true
+	continue_button.visible = true
+	options_button.visible = true
+	credits_button.visible = true
+	exit_button.visible = true
 
 func on_options_pressed() -> void:
 	$SFX.play()

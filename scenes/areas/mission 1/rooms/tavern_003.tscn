@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cgl6vq5t57vl0"]
+[gd_scene load_steps=25 format=3 uid="uid://cgl6vq5t57vl0"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_5hsgk"]
 [ext_resource type="PackedScene" uid="uid://bd6kftdahgbka" path="res://scenes/components/level_transition.tscn" id="2_cncd4"]
@@ -42,6 +42,10 @@ items = Array[ExtResource("8_8iilr")]([])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6180"]
 size = Vector2(80, 16)
+
+[sub_resource type="Resource" id="Resource_deypd"]
+script = ExtResource("9_txjjv")
+items = Array[ExtResource("8_8iilr")]([])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b15ll"]
 size = Vector2(80, 16)
@@ -142,7 +146,10 @@ inventory = SubResource("Resource_ych2s")
 position = Vector2(8, -216)
 shape = SubResource("RectangleShape2D_v6180")
 
-[node name="HouseKeyDrawer" parent="Interactables" instance=ExtResource("5_a8j1p")]
+[node name="HouseKeyDrawer" parent="Interactables" node_paths=PackedStringArray("collision") instance=ExtResource("5_a8j1p")]
+collision = NodePath("CollisionShape2D")
+dialogue_resource = ExtResource("6_jp2gb")
+inventory = SubResource("Resource_deypd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HouseKeyDrawer"]
 position = Vector2(136, -216)

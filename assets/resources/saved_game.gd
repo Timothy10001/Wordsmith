@@ -16,6 +16,7 @@ extends Resource
 @export var briefed_by_mr_cheese: bool
 @export var unlocked_key_house: bool
 @export var briefed_by_principal_ronnie: bool
+@export var unlocked_igloo: bool
 
 
 @export var removed_enemies: Array[String]
@@ -24,8 +25,4 @@ extends Resource
 @export var mission_2_done: bool
 @export var mission_3_done: bool
 
-@export var CharacterResource: PlayerResource
-@export var PlayerInventory: Inventory
-
-@export var InteractableInventory: Dictionary
-
+@export var world_inventory: Dictionary

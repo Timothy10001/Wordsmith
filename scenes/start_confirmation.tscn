@@ -1,0 +1,86 @@
+[gd_scene load_steps=13 format=3 uid="uid://wu45xxnemol"]
+
+[ext_resource type="Texture2D" uid="uid://b5hvn6qtd0656" path="res://assets/art/ui/scroll.png" id="1_0nuh1"]
+[ext_resource type="Script" path="res://scripts/start_confirmation.gd" id="1_4erbf"]
+[ext_resource type="FontFile" uid="uid://bo78o48s27ltg" path="res://assets/fonts/king.ttf" id="2_8frmw"]
+[ext_resource type="Texture2D" uid="uid://tiwm7lw0in3b" path="res://assets/art/ui/ui_elements.png" id="3_ivshs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k14xa"]
+atlas = ExtResource("3_ivshs")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0tots"]
+texture = SubResource("AtlasTexture_k14xa")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8niut"]
+atlas = ExtResource("3_ivshs")
+region = Rect2(208, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8d3q4"]
+texture = SubResource("AtlasTexture_8niut")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ltj7"]
+atlas = ExtResource("3_ivshs")
+region = Rect2(192, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kdmwn"]
+texture = SubResource("AtlasTexture_7ltj7")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efrnm"]
+atlas = ExtResource("3_ivshs")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8pbpr"]
+texture = SubResource("AtlasTexture_efrnm")
+
+[node name="StartConfirmation" type="CanvasLayer"]
+script = ExtResource("1_4erbf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_0nuh1")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 250
+theme_override_constants/margin_top = 175
+theme_override_constants/margin_right = 250
+theme_override_constants/margin_bottom = 175
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_8frmw")
+theme_override_font_sizes/font_size = 36
+text = "You have a previously saved game.
+Do you want to start a new one?"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 250
+
+[node name="Yes" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_0tots")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_8d3q4")
+
+[node name="No" type="Button" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_kdmwn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_8pbpr")
