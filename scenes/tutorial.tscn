@@ -1,0 +1,111 @@
+[gd_scene load_steps=11 format=3 uid="uid://di3fy3n3ugjas"]
+
+[ext_resource type="Script" path="res://scripts/tutorial.gd" id="1_0bp5k"]
+[ext_resource type="Texture2D" uid="uid://cn0v8wqmtllcp" path="res://assets/art/backgrounds/paper_overlay_004.png" id="1_us3qo"]
+[ext_resource type="FontFile" uid="uid://bxror4jw86uab" path="res://assets/fonts/handwritten.ttf" id="2_vde7y"]
+[ext_resource type="Texture2D" uid="uid://cm43revcg28mq" path="res://assets/art/ui/skip_button.png" id="3_n6tre"]
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_4efug"]
+file = "res://assets/videos/tutorial1.ogg"
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_cvh5o"]
+file = "res://assets/videos/tutorial2.ogg"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jq3g"]
+atlas = ExtResource("3_n6tre")
+region = Rect2(0, 0, 96, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m8h88"]
+texture = SubResource("AtlasTexture_2jq3g")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5k1f"]
+atlas = ExtResource("3_n6tre")
+region = Rect2(0, 32, 96, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mmnq2"]
+texture = SubResource("AtlasTexture_q5k1f")
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0bp5k")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_us3qo")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 1
+offset_left = 166.0
+offset_top = 282.0
+offset_right = 1606.0
+offset_bottom = 1370.0
+scale = Vector2(0.25, 0.25)
+stream = SubResource("VideoStreamTheora_4efug")
+autoplay = true
+loop = true
+
+[node name="VideoStreamPlayer2" type="VideoStreamPlayer" parent="."]
+layout_mode = 0
+offset_left = 596.0
+offset_top = 282.0
+offset_right = 2036.0
+offset_bottom = 1370.0
+scale = Vector2(0.25, 0.25)
+stream = SubResource("VideoStreamTheora_cvh5o")
+autoplay = true
+loop = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 195.0
+offset_right = 542.0
+offset_bottom = 249.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_vde7y")
+theme_override_font_sizes/font_size = 48
+text = "PRESS ARROWS TO MOVE"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 623.0
+offset_top = 195.0
+offset_right = 1014.0
+offset_bottom = 249.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_vde7y")
+theme_override_font_sizes/font_size = 48
+text = "PRESS ! TO INTERACT"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="SkipButton" type="Button" parent="MarginContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_m8h88")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mmnq2")
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="pressed" from="MarginContainer/SkipButton" to="." method="_on_skip_button_pressed"]

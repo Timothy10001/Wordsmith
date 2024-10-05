@@ -207,8 +207,11 @@ const backpack_scene: PackedScene = preload("res://scenes/backpack_ui.tscn")
 const confirmation_scene: PackedScene = preload("res://scenes/exit_confirmation.tscn")
 const transition_scene: PackedScene = preload("res://scenes/transition.tscn")
 const mission_scene: PackedScene = preload("res://scenes/mission.tscn")
+const tutorial_scene: PackedScene = preload("res://scenes/tutorial.tscn")
 
 var current_area: Array[PackedScene]
+
+
 
 func start() -> void:
 	State.world_inventory = {}
@@ -222,6 +225,10 @@ func start() -> void:
 	State.current_mission_enemy_required = current_mission_enemy_required
 	Global.enter_new_area.emit(State.current_area, State.current_room)
 	Global.enter_new_room.emit(State.current_room, State.player_position, State.current_direction)
+	await init_current_room()
+	var tutorial_instance
+	tutorial_instance = tutorial_scene.instantiate()
+	$CanvasLayer.add_child(tutorial_instance)
 	removed_enemies.clear()
 	mission_1_done = false
 	mission_2_done = false
@@ -231,6 +238,10 @@ func start() -> void:
 		Global.TTS_available = true
 	else:
 		Global.TTS_available = false
+	
+	get_tree().paused = true
+	await Global.tutorial_closed
+	get_tree().paused = false
 
 
 func continue_game():

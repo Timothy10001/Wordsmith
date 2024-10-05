@@ -1,7 +1,7 @@
 ~ start
 set npc_class = "King"
 if State.tutorial_status == "not done" and State.current_mission == 0:
-	King Pendragon: Wordsmith! I need your help
+	King Pendragon: Wordsmith! I need your help.
 	King Pendragon: The Dark Wizard Malgrim has cursed this place.
 	King Pendragon: A lot of people forgot how to read.
 	King Pendragon: I want you to teach them how to read again.

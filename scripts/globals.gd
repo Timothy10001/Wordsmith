@@ -65,6 +65,8 @@ signal add_to_do(to_do: String)
 signal remove_to_do(to_do: String)
 signal clear_to_do
 
+signal tutorial_closed
+
 var experience: int
 #for npc dialogue font
 var npc_class = ""
