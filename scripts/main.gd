@@ -792,6 +792,7 @@ func _on_end_sleep():
 
 func _on_back_to_lobby():
 	
+	State.world_inventory = {}
 	# do transition
 	remove_controls()
 	get_tree().paused = true
