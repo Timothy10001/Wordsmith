@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0sbrty08j3o7"]
+
+[ext_resource type="Texture2D" uid="uid://58lwcde7rfpi" path="res://assets/art/ui/green_arrow.png" id="1_rplqi"]
+[ext_resource type="Script" path="res://scripts/go_to_king_pendragon.gd" id="1_s47bn"]
+[ext_resource type="FontFile" uid="uid://bo78o48s27ltg" path="res://assets/fonts/king.ttf" id="2_w6jb1"]
+
+[sub_resource type="Animation" id="Animation_fbv5q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/VBoxContainer/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(263, -84)]
+}
+
+[sub_resource type="Animation" id="Animation_rj00d"]
+resource_name = "arrow"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/VBoxContainer/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(263, -84), Vector2(263, -114), Vector2(263, -84)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h2fnv"]
+_data = {
+"RESET": SubResource("Animation_fbv5q"),
+"arrow": SubResource("Animation_rj00d")
+}
+
+[node name="GoToKingPendragon" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_s47bn")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/VBoxContainer"]
+position = Vector2(263, -84)
+scale = Vector2(3, 3)
+texture = ExtResource("1_rplqi")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_w6jb1")
+theme_override_font_sizes/font_size = 56
+text = "Talk to King Pendragon!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_h2fnv")
+}
+autoplay = "arrow"

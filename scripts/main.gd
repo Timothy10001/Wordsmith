@@ -44,6 +44,7 @@ var options_instance
 var mission_instance
 var backpack_instance
 var confirmation_instance
+
 var dialogue_resource: DialogueResource
 
 func _ready():
@@ -208,6 +209,8 @@ const confirmation_scene: PackedScene = preload("res://scenes/exit_confirmation.
 const transition_scene: PackedScene = preload("res://scenes/transition.tscn")
 const mission_scene: PackedScene = preload("res://scenes/mission.tscn")
 const tutorial_scene: PackedScene = preload("res://scenes/tutorial.tscn")
+const go_to_king_pendragon_scene: PackedScene = preload("res://scenes/go_to_king_pendragon.tscn")
+
 
 var current_area: Array[PackedScene]
 
@@ -407,7 +410,17 @@ func _on_enter_new_area(_area: String, _room_index: int):
 	get_current_area(_area)
 	
 
+
+
 func init_current_room():
+	
+	if current_area_name == "lobby" and current_room == 0:
+		if !$CanvasLayer.has_node("GoToKingPendragon"):
+			var go_to_king_pendragon_instance
+			go_to_king_pendragon_instance = go_to_king_pendragon_scene.instantiate()
+			$CanvasLayer.add_child(go_to_king_pendragon_instance)
+	elif current_area_name != "lobby" and current_room != 0 and $CanvasLayer.has_node("GoToKingPendragon"):
+		$CanvasLayer.get_node("GoToKingPendragon").queue_free()
 	
 	if current_area_name != "mission 2 - highway" and current_room == 0:
 		cutscene_extras.get_node("TruckBoss").visible = false
