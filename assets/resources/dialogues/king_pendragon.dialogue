@@ -17,7 +17,21 @@ if State.tutorial_status == "not done" and State.current_mission == 0:
 		set State.current_mission = 1
 		do emit("get_mission")
 	=> END
-	
+elif State.current_mission == 1 and State.mission_1_done == false:
+	King Pendragon: You have not yet finished your mission.
+	King Pendragon: You can train with our dummy at the left.
+	King Pendragon: If you're ready, talk to Mr. Cheese.
+	=> END
+elif State.current_mission == 2 and State.mission_2_done == false:
+	King Pendragon: You have not yet finished your mission.
+	King Pendragon: You can train with our dummy at the left.
+	King Pendragon: If you're ready, talk to the Snowman.
+	=> END
+elif State.current_mission == 3 and State.mission_3_done == false:
+	King Pendragon: You have not yet finished your mission.
+	King Pendragon: You can train with our dummy at the left.
+	King Pendragon: If you're ready, talk to Principal Ronnie.
+	=> END
 elif State.tutorial_status == "not done":
 	King Pendragon: Wordsmith! You have not trained yet.
 	King Pendragon: I can help you.
@@ -31,8 +45,6 @@ elif State.tutorial_status == "not done":
 		King Pendragon: Good, now go on with your mission.
 		do emit("get_mission")
 		=> END
-	
-	
 elif State.current_mission == 1:
 	King Pendragon: Wordsmith, Mr. Cheese needs our help.
 	King Pendragon: His tavern has become a hangout for rats.

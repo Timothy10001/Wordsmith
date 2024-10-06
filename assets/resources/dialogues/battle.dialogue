@@ -41,55 +41,80 @@ Narrator: You gained {{Global.experience}} EXP!
 
 ~ tutorial_part_1
 set npc_class = "Low Class"
+do emit("play_voice_over", 1)
 Dummy: Welcome to the tutorial!
 do emit("play_tutorial_cutscene", "tutorial_part_2")
 => END
 
 ~ tutorial_part_2
 set npc_class = "Low Class"
+do emit("play_voice_over", 2)
 Dummy: I am your training partner for today.
+do emit("play_voice_over", 3)
 Dummy: I will teach you how to teach other people you will encounter.
 do emit("play_tutorial_cutscene", "tutorial_part_3")
 => END
 
 ~ tutorial_part_3
 set npc_class = "Low Class"
+do emit("play_voice_over", 4)
 Dummy: Look down in the middle.
+do emit("play_voice_over", 5)
 Dummy: You will see your Intelligence (INT) and Energy (EN) points.
+do emit("play_voice_over", 6)
 Dummy: Don't let your student make your INT go to 0.
+do emit("play_voice_over", 7)
 Dummy: Your students have Illiteracy Points (IP).
+do emit("play_voice_over", 8)
 Dummy: You can teach them using your skills and make their IP go down. 
 do emit("play_tutorial_cutscene", "tutorial_part_4")
 => END
 
 ~ tutorial_part_4
 set npc_class = "Low Class"
+do emit("play_voice_over", 9)
 Dummy: On the left, you have choices.
+do emit("play_voice_over", 10)
 Dummy: "Teach" will help your student a little, but give you EN.
+do emit("play_voice_over", 11)
 Dummy: "Skills" you'll have to read something to help a lot.
+do emit("play_voice_over", 12)
 Dummy: "Items" will show you things you can use to help.
+do emit("play_voice_over", 13)
 Dummy: "Guard" will stop you from losing too much INT.
 do emit("play_tutorial_cutscene", "tutorial_part_5")
 => END
 
 ~ tutorial_part_5
 set npc_class = "Low Class"
+do emit("play_voice_over", 14)
 Dummy: Doing "Skills" will show a "skill check."
+do emit("play_voice_over", 15)
 Dummy: You will either have to Read the word on screen,
+do emit("play_voice_over", 16)
 Dummy: Identify what the word is,
+do emit("play_voice_over", 17)
 Dummy: or Answer a question.
+do emit("play_voice_over", 18)
 Dummy: When you want to read out the word,
+do emit("play_voice_over", 19)
 Dummy: Hold the RED BUTTON and start reading.
+do emit("play_voice_over", 20)
 Dummy: If you don't know how to read the word,
+do emit("play_voice_over", 21)
 Dummy: Press the BLUE BUTTON.
+do emit("play_voice_over", 22)
 Dummy: You can also SKIP the skill check by pressing SKIP.
+do emit("play_voice_over", 23)
 Dummy: But it won't teach the student anything.
 do emit("play_tutorial_cutscene", "tutorial_part_6")
 => END
 
 ~ tutorial_part_6
 set npc_class = "Low Class"
+do emit("play_voice_over", 24)
 Dummy: Now you can try it all out on me!
+do emit("play_voice_over", 25)
 Dummy: Good luck Mr. Wordsmith!
 do emit("end_tutorial_cutscene")
 => END

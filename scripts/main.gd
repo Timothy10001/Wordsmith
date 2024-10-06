@@ -77,12 +77,12 @@ func _process(_delta):
 			npc_node.get_node("Mr Cheese").visible = false
 			npc_node.get_node("Snowman").visible = false
 			npc_node.get_node("PrincipalRonnie").visible = false
-			if mission_1_done:
+			if current_mission == 1:
 				npc_node.get_node("Mr Cheese").visible = true
-			if mission_2_done:
+			if current_mission == 2:
 				npc_node.get_node("Mr Cheese").visible = true
 				npc_node.get_node("Snowman").visible = true
-			if mission_3_done:
+			if current_mission == 3:
 				npc_node.get_node("Mr Cheese").visible = true
 				npc_node.get_node("Snowman").visible = true
 				npc_node.get_node("PrincipalRonnie").visible = true
@@ -135,21 +135,22 @@ func _process(_delta):
 		remove_child(pause_instance)
 		if $CanvasLayer.get_child_count() > 0:
 			for i in range($CanvasLayer.get_child_count()):
-				$CanvasLayer.get_child(0).queue_free()
+				if i < $CanvasLayer.get_child_count() - 1:
+					$CanvasLayer.get_child(i + 1).queue_free()
 		backpack_instance = null
 		pause_instance = null
 		confirmation_instance = null
 		options_instance = null
 	if Input.is_action_just_pressed("options"):
 		pause_instance.visible = false
-		if $CanvasLayer.get_child_count() == 0:
+		if !$CanvasLayer.has_node("Options_Menu"):
 			options_instance = options_scene.instantiate()
 			$CanvasLayer.add_child(options_instance)
 		else:
 			options_instance.visible = true
 	if Input.is_action_just_pressed("show_inventory"):
 		pause_instance.visible = false
-		if $CanvasLayer.get_child_count() == 0:
+		if !$CanvasLayer.has_node("BackpackUI"):
 			backpack_instance = backpack_scene.instantiate()
 			$CanvasLayer.add_child(backpack_instance)
 		else:
@@ -157,7 +158,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("show_confirmation"):
 		save_game()
 		pause_instance.visible = false
-		if $CanvasLayer.get_child_count() == 0:
+		if !$CanvasLayer.has_node("ExitConfirmation"):
 			confirmation_instance = confirmation_scene.instantiate()
 			$CanvasLayer.add_child(confirmation_instance)
 		else:
@@ -166,7 +167,8 @@ func _process(_delta):
 		pause_instance.visible = true
 		if $CanvasLayer.get_child_count() > 0:
 			for i in range($CanvasLayer.get_child_count()):
-				$CanvasLayer.get_child(0).queue_free()
+				if i < $CanvasLayer.get_child_count() - 1:
+					$CanvasLayer.get_child(i + 1).queue_free()
 	
 
 #<-TO BE CHANGED->#
@@ -195,6 +197,7 @@ func connect_signals():
 	
 	Global.play_battle_music.connect(play_battle_music)
 	Global.play_sfx.connect(play_sfx)
+	Global.play_voice_over.connect(play_voice_over)
 	Global.end_credits.connect(_on_end_credits)
 
 
@@ -414,12 +417,12 @@ func _on_enter_new_area(_area: String, _room_index: int):
 
 func init_current_room():
 	
-	if current_area_name == "lobby" and current_room == 0:
+	if current_area_name == "lobby" and current_room == 0 and current_mission == 0:
 		if !$CanvasLayer.has_node("GoToKingPendragon"):
 			var go_to_king_pendragon_instance
 			go_to_king_pendragon_instance = go_to_king_pendragon_scene.instantiate()
 			$CanvasLayer.add_child(go_to_king_pendragon_instance)
-	elif current_area_name != "lobby" and current_room != 0 and $CanvasLayer.has_node("GoToKingPendragon"):
+	elif current_area_name != "lobby" and current_room != 0 and current_mission == 0 and $CanvasLayer.has_node("GoToKingPendragon"):
 		$CanvasLayer.get_node("GoToKingPendragon").queue_free()
 	
 	if current_area_name != "mission 2 - highway" and current_room == 0:
@@ -514,6 +517,9 @@ func _on_confirm_mission():
 	call_deferred("add_iris_transition")
 	await Global.transition_finished
 	get_tree().paused = false
+	if FileAccess.file_exists(Global.SAVE_FILE):
+		load_mission()
+		return
 	#load new area after transition
 	match State.current_mission:
 		1:
@@ -547,6 +553,26 @@ func _on_confirm_mission():
 			current_mission_enemy_required = 16
 			State.current_mission_enemy_count = current_mission_enemy_count
 			State.current_mission_enemy_required = current_mission_enemy_required
+
+func load_mission():
+	load_game()
+	load_data()
+	match current_mission:
+		1:
+			Global.enter_new_area.emit(current_area_name, current_room)
+			Global.enter_new_room.emit(current_room, player_position, current_direction)
+			Global.add_to_do.emit("- Teach all of the rats.")
+			initial_position = Vector2(-224, -16)
+		2:
+			Global.enter_new_area.emit(current_area_name, current_room)
+			Global.enter_new_room.emit(current_room, player_position, current_direction)
+			Global.add_to_do.emit("- Teach all of the drivers.")
+			initial_position = Vector2(0, 0)
+		3:
+			Global.enter_new_area.emit(current_area_name, current_room)
+			Global.enter_new_room.emit(current_room, player_position, current_direction)
+			Global.add_to_do.emit("- Teach all of the students and teachers.")
+			initial_position = Vector2(0, 0)
 
 func _on_cancel_mission():
 	if $CanvasLayer.get_child_count() > 0:
@@ -815,7 +841,7 @@ func _on_end_sleep():
 	player_instance.visible = true
 
 func _on_back_to_lobby():
-	
+	save_game()
 	State.world_inventory = {}
 	# do transition
 	remove_controls()
@@ -1040,6 +1066,14 @@ func play_sfx(_name: String):
 			if !SFX.stream == load("res://assets/sounds/sfx/item_get.wav"):
 				SFX.stream = load("res://assets/sounds/sfx/item_get.wav")
 	SFX.play()
+
+func play_voice_over(_name: int):
+	if SFX.playing:
+		SFX.stop()
+	if !SFX.stream == load("res://assets/sounds/voice_overs/%s.wav" % _name):
+		SFX.stream = load("res://assets/sounds/voice_overs/%s.wav" % _name)
+	SFX.play()
+
 
 func play_battle_music(enemy: String):
 	if Music.playing:
