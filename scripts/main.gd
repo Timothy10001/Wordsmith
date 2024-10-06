@@ -77,15 +77,18 @@ func _process(_delta):
 			npc_node.get_node("Mr Cheese").visible = false
 			npc_node.get_node("Snowman").visible = false
 			npc_node.get_node("PrincipalRonnie").visible = false
-			if current_mission == 1 and State.was_in_mission:
-				npc_node.get_node("Mr Cheese").visible = true
-			if current_mission == 2 and State.was_in_mission:
-				npc_node.get_node("Mr Cheese").visible = true
-				npc_node.get_node("Snowman").visible = true
-			if current_mission == 3 and State.was_in_mission:
-				npc_node.get_node("Mr Cheese").visible = true
-				npc_node.get_node("Snowman").visible = true
-				npc_node.get_node("PrincipalRonnie").visible = true
+			if current_mission >= 1:
+				if State.was_in_mission or mission_1_done:
+					npc_node.get_node("Mr Cheese").visible = true
+			if current_mission >= 2:
+				if State.was_in_mission or mission_2_done:
+					npc_node.get_node("Mr Cheese").visible = true
+					npc_node.get_node("Snowman").visible = true
+			if current_mission == 3:
+				if State.was_in_mission or mission_3_done:
+					npc_node.get_node("Mr Cheese").visible = true
+					npc_node.get_node("Snowman").visible = true
+					npc_node.get_node("PrincipalRonnie").visible = true
 	
 	if current_area_name == "mission 3 - classroom" and current_room == 4:
 		if has_node("Rooms/Outside"):
@@ -171,7 +174,8 @@ func _process(_delta):
 		else:
 			backpack_instance.visible = true
 	if Input.is_action_just_pressed("show_confirmation"):
-		save_game()
+		if State.current_area != "lobby":
+			save_game()
 		pause_instance.visible = false
 		if $CanvasLayer.has_node("Tutorial"):
 			$CanvasLayer.get_node("Tutorial").visible = false
@@ -321,6 +325,7 @@ func save_data():
 	saved_data.mission_2_done = mission_2_done
 	saved_data.mission_3_done = mission_3_done
 	saved_data.world_inventory = State.world_inventory
+	saved_data.was_in_mission = State.was_in_mission
 	ResourceSaver.save(saved_data, Global.SAVE_FILE)
 
 func load_data():
@@ -343,6 +348,7 @@ func load_data():
 		mission_2_done = saved_data.mission_2_done
 		mission_3_done = saved_data.mission_3_done
 		State.world_inventory = saved_data.world_inventory
+		State.was_in_mission = saved_data.was_in_mission
 
 func save_player_stats():
 	saved_stats = PlayerResource.new()

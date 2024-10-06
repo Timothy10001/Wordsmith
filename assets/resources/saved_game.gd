@@ -26,3 +26,5 @@ extends Resource
 @export var mission_3_done: bool
 
 @export var world_inventory: Dictionary
+
+@export var was_in_mission: bool
