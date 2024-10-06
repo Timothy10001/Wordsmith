@@ -143,6 +143,8 @@ func _process(_delta):
 			for i in range($CanvasLayer.get_child_count()):
 				if i < $CanvasLayer.get_child_count() - 1:
 					$CanvasLayer.get_child(i + 1).queue_free()
+				else:
+					$CanvasLayer.get_child(0).queue_free()
 		backpack_instance = null
 		pause_instance = null
 		confirmation_instance = null
@@ -187,6 +189,8 @@ func _process(_delta):
 			for i in range($CanvasLayer.get_child_count()):
 				if i < $CanvasLayer.get_child_count() - 1:
 					$CanvasLayer.get_child(i + 1).queue_free()
+				else:
+					$CanvasLayer.get_child(0).queue_free()
 	
 
 #<-TO BE CHANGED->#
