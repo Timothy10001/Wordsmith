@@ -141,10 +141,9 @@ func _process(_delta):
 			$CanvasLayer.get_node("GoToKingPendragon").visible = true
 		if $CanvasLayer.get_child_count() > 0:
 			for i in range($CanvasLayer.get_child_count()):
-				if i < $CanvasLayer.get_child_count() - 1:
-					$CanvasLayer.get_child(i + 1).queue_free()
-				else:
-					$CanvasLayer.get_child(0).queue_free()
+				if $CanvasLayer.get_child(i).name != "GoToKingPendragon" and $CanvasLayer.get_child(i).name != "Tutorial":
+					$CanvasLayer.get_child(i).queue_free()
+					print($CanvasLayer.get_child(i).name)
 		backpack_instance = null
 		pause_instance = null
 		confirmation_instance = null
@@ -187,11 +186,8 @@ func _process(_delta):
 		pause_instance.visible = true
 		if $CanvasLayer.get_child_count() > 0:
 			for i in range($CanvasLayer.get_child_count()):
-				if i < $CanvasLayer.get_child_count() - 1:
-					$CanvasLayer.get_child(i + 1).queue_free()
-				else:
-					$CanvasLayer.get_child(0).queue_free()
-	
+				if $CanvasLayer.get_child(i).name != "GoToKingPendragon" and $CanvasLayer.get_child(i).name != "Tutorial":
+					$CanvasLayer.get_child(i).queue_free()
 
 #<-TO BE CHANGED->#
 func connect_signals():
