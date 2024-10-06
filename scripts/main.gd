@@ -119,6 +119,10 @@ func _process(_delta):
 		get_tree().paused = false
 		to_do_instance.visible = false
 	if Input.is_action_just_pressed("pause"):
+		if $CanvasLayer.has_node("GoToKingPendragon"):
+			$CanvasLayer.get_node("GoToKingPendragon").visible = false
+		if $CanvasLayer.has_node("Tutorial"):
+			$CanvasLayer.get_node("Tutorial").visible = false
 		if !has_node("PauseMenu"):
 			music_position = Music.get_playback_position()
 			Music.stop()
@@ -133,6 +137,8 @@ func _process(_delta):
 		print("unpaused")
 		get_tree().paused = false
 		remove_child(pause_instance)
+		if $CanvasLayer.has_node("GoToKingPendragon"):
+			$CanvasLayer.get_node("GoToKingPendragon").visible = true
 		if $CanvasLayer.get_child_count() > 0:
 			for i in range($CanvasLayer.get_child_count()):
 				if i < $CanvasLayer.get_child_count() - 1:
@@ -143,6 +149,10 @@ func _process(_delta):
 		options_instance = null
 	if Input.is_action_just_pressed("options"):
 		pause_instance.visible = false
+		if $CanvasLayer.has_node("Tutorial"):
+			$CanvasLayer.get_node("Tutorial").visible = false
+		if $CanvasLayer.has_node("GoToKingPendragon"):
+			$CanvasLayer.get_node("GoToKingPendragon").visible = false
 		if !$CanvasLayer.has_node("Options_Menu"):
 			options_instance = options_scene.instantiate()
 			$CanvasLayer.add_child(options_instance)
@@ -150,6 +160,10 @@ func _process(_delta):
 			options_instance.visible = true
 	if Input.is_action_just_pressed("show_inventory"):
 		pause_instance.visible = false
+		if $CanvasLayer.has_node("Tutorial"):
+			$CanvasLayer.get_node("Tutorial").visible = false
+		if $CanvasLayer.has_node("GoToKingPendragon"):
+			$CanvasLayer.get_node("GoToKingPendragon").visible = false
 		if !$CanvasLayer.has_node("BackpackUI"):
 			backpack_instance = backpack_scene.instantiate()
 			$CanvasLayer.add_child(backpack_instance)
@@ -158,6 +172,10 @@ func _process(_delta):
 	if Input.is_action_just_pressed("show_confirmation"):
 		save_game()
 		pause_instance.visible = false
+		if $CanvasLayer.has_node("Tutorial"):
+			$CanvasLayer.get_node("Tutorial").visible = false
+		if $CanvasLayer.has_node("GoToKingPendragon"):
+			$CanvasLayer.get_node("GoToKingPendragon").visible = false
 		if !$CanvasLayer.has_node("ExitConfirmation"):
 			confirmation_instance = confirmation_scene.instantiate()
 			$CanvasLayer.add_child(confirmation_instance)
@@ -685,9 +703,11 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 			1:
 				Global.clear_to_do.emit()
 				Global.cutscene_start.emit("mission_1_ending_cutscene")
+				State.was_in_mission = false
 			2:
 				Global.clear_to_do.emit()
 				go_to_mission_2_end()
+				State.was_in_mission = false
 		return
 	
 	if state == "Win" and _type == "car_in_house_battle":
@@ -1118,6 +1138,7 @@ func play_battle_music(enemy: String):
 		Music.play()
 
 func _on_end_credits():
+	State.was_in_mission = false
 	await Global.dialogue_ended
 	var end_credits = load("res://assets/credits/scenes/end_credits/end_credits.tscn")
 	get_tree().change_scene_to_packed(end_credits)

@@ -23,6 +23,7 @@ var unlocked_igloo: bool = false
 
 var briefed_by_principal_ronnie: bool = false
 
+var was_in_mission: bool = false
 
 var mission_1_done: bool = false
 var mission_2_done: bool = false

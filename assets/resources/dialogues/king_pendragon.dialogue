@@ -17,34 +17,21 @@ if State.tutorial_status == "not done" and State.current_mission == 0:
 		set State.current_mission = 1
 		do emit("get_mission")
 	=> END
-elif State.current_mission == 1 and State.mission_1_done == false:
+elif State.current_mission == 1 and State.was_in_mission:
 	King Pendragon: You have not yet finished your mission.
 	King Pendragon: You can train with our dummy at the left.
 	King Pendragon: If you're ready, talk to Mr. Cheese.
 	=> END
-elif State.current_mission == 2 and State.mission_2_done == false:
+elif State.current_mission == 2 and State.was_in_mission:
 	King Pendragon: You have not yet finished your mission.
 	King Pendragon: You can train with our dummy at the left.
 	King Pendragon: If you're ready, talk to the Snowman.
 	=> END
-elif State.current_mission == 3 and State.mission_3_done == false:
+elif State.current_mission == 3 and State.was_in_mission:
 	King Pendragon: You have not yet finished your mission.
 	King Pendragon: You can train with our dummy at the left.
 	King Pendragon: If you're ready, talk to Principal Ronnie.
 	=> END
-elif State.tutorial_status == "not done":
-	King Pendragon: Wordsmith! You have not trained yet.
-	King Pendragon: I can help you.
-	King Pendragon: Would you like to learn the basics?
-	- Yes
-		King Pendragon: Good, let us go to the training room.
-		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial", null)
-		do emit("play_battle_music", "Dummy")
-		=> END
-	- No
-		King Pendragon: Good, now go on with your mission.
-		do emit("get_mission")
-		=> END
 elif State.current_mission == 1:
 	King Pendragon: Wordsmith, Mr. Cheese needs our help.
 	King Pendragon: His tavern has become a hangout for rats.

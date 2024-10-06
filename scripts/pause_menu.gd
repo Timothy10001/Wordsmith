@@ -45,6 +45,7 @@ func _on_items_button_pressed():
 
 
 func _on_exit_to_lobby_button_pressed():
+	State.was_in_mission = true
 	PauseMusic.stop()
 	Global.back_to_lobby.emit()
 
