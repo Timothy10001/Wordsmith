@@ -77,12 +77,12 @@ func _process(_delta):
 			npc_node.get_node("Mr Cheese").visible = false
 			npc_node.get_node("Snowman").visible = false
 			npc_node.get_node("PrincipalRonnie").visible = false
-			if current_mission == 1:
+			if current_mission == 1 and State.was_in_mission:
 				npc_node.get_node("Mr Cheese").visible = true
-			if current_mission == 2:
+			if current_mission == 2 and State.was_in_mission:
 				npc_node.get_node("Mr Cheese").visible = true
 				npc_node.get_node("Snowman").visible = true
-			if current_mission == 3:
+			if current_mission == 3 and State.was_in_mission:
 				npc_node.get_node("Mr Cheese").visible = true
 				npc_node.get_node("Snowman").visible = true
 				npc_node.get_node("PrincipalRonnie").visible = true
@@ -535,7 +535,7 @@ func _on_confirm_mission():
 	call_deferred("add_iris_transition")
 	await Global.transition_finished
 	get_tree().paused = false
-	if FileAccess.file_exists(Global.SAVE_FILE):
+	if FileAccess.file_exists(Global.SAVE_FILE) and State.was_in_mission:
 		load_mission()
 		return
 	#load new area after transition
@@ -702,12 +702,13 @@ func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventor
 		match current_mission:
 			1:
 				Global.clear_to_do.emit()
-				Global.cutscene_start.emit("mission_1_ending_cutscene")
 				State.was_in_mission = false
+				Global.cutscene_start.emit("mission_1_ending_cutscene")
+				
 			2:
 				Global.clear_to_do.emit()
-				go_to_mission_2_end()
 				State.was_in_mission = false
+				go_to_mission_2_end()
 		return
 	
 	if state == "Win" and _type == "car_in_house_battle":

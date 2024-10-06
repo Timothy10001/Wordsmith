@@ -23,6 +23,8 @@ func calculate_damage(skill, target):
 	var strength_modifier = float(skill.attack_damage * (1 + (sqrt(strength) / 10)))
 	var armor_modifier = 1 - (armor / 100)
 	damage = round(strength_modifier * armor_modifier)
+	if damage < 0:
+		damage = 0
 
 
 func calculate_heal(_skill, _user):
