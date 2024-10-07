@@ -539,7 +539,6 @@ text = "Guard"
 custom_minimum_size = Vector2(900, 243)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
 
 [node name="CharacterContainer" type="HBoxContainer" parent="VBoxContainer2/BottomContainer/MainContainer"]
 layout_mode = 1

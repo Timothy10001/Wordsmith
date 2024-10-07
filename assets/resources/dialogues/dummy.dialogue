@@ -6,7 +6,7 @@ if State.current_mission == 0:
 		Dummy: Would you like to learn the basics with me?
 		- Yes
 			Dummy: Let's go then!
-			do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial")
+			do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial", null)
 			do emit("play_battle_music", "Dummy")
 			set State.current_mission = 1
 			=> END
@@ -18,7 +18,7 @@ if State.current_mission == 0:
 		Dummy: Would you like to train your skills with me?
 		- Yes
 			Dummy: Let's go then!
-			do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial")
+			do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "battle", null)
 			do emit("play_battle_music", "Dummy")
 			set State.current_mission = 1
 			=> END
@@ -30,7 +30,7 @@ else:
 	Dummy: Would you like to train your skills with me?
 	- Yes
 		Dummy: Let's go then!
-		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "tutorial")
+		do emit("start_battle", ["res://scenes/player.tscn"], ["res://scenes/enemies/dummy.tscn"], "res://assets/art/backgrounds/tutorial.png", "battle", null)
 		do emit("play_battle_music", "Dummy")
 		=> END
 	- No
