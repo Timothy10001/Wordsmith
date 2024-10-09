@@ -28,3 +28,5 @@ extends Resource
 @export var world_inventory: Dictionary
 
 @export var was_in_mission: bool
+
+@export var past_mission: int

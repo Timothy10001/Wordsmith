@@ -174,7 +174,9 @@ func _process(_delta):
 		else:
 			backpack_instance.visible = true
 	if Input.is_action_just_pressed("show_confirmation"):
-		if State.current_area != "lobby":
+		if State.current_area == "lobby" and !State.was_in_mission:
+			save_game()
+		else:
 			save_game()
 		pause_instance.visible = false
 		if $CanvasLayer.has_node("Tutorial"):
@@ -326,6 +328,7 @@ func save_data():
 	saved_data.mission_3_done = mission_3_done
 	saved_data.world_inventory = State.world_inventory
 	saved_data.was_in_mission = State.was_in_mission
+	saved_data.past_mission = past_mission
 	ResourceSaver.save(saved_data, Global.SAVE_FILE)
 
 func load_data():
@@ -349,6 +352,7 @@ func load_data():
 		mission_3_done = saved_data.mission_3_done
 		State.world_inventory = saved_data.world_inventory
 		State.was_in_mission = saved_data.was_in_mission
+		past_mission = saved_data.past_mission
 
 func save_player_stats():
 	saved_stats = PlayerResource.new()
@@ -440,7 +444,7 @@ func _on_enter_new_area(_area: String, _room_index: int):
 
 
 func init_current_room():
-	
+	#print(State.current_mission)
 	if current_area_name == "lobby" and current_room == 0 and current_mission == 0:
 		if !$CanvasLayer.has_node("GoToKingPendragon"):
 			var go_to_king_pendragon_instance
@@ -528,11 +532,13 @@ func _on_redo_mission(mission: int):
 	
 	mission_instance.MissionTitle.text = mission_instance.mission_title_list[mission]
 	mission_instance.MissionDescription.text = mission_instance.mission_description_list[mission]
+	past_mission = State.current_mission
 	State.current_mission = mission
 
 #const enemy_required_scene: PackedScene = preload("res://scenes/enemies_required.tscn")
 var enemy_required_instance
 
+var past_mission: int = 0
 
 func _on_confirm_mission():
 	# do transition
@@ -541,7 +547,7 @@ func _on_confirm_mission():
 	call_deferred("add_iris_transition")
 	await Global.transition_finished
 	get_tree().paused = false
-	if FileAccess.file_exists(Global.SAVE_FILE) and State.was_in_mission:
+	if FileAccess.file_exists(Global.SAVE_FILE) and State.was_in_mission and State.current_mission == past_mission:
 		load_mission()
 		return
 	#load new area after transition
@@ -581,7 +587,7 @@ func _on_confirm_mission():
 func load_mission():
 	load_game()
 	load_data()
-	match current_mission:
+	match State.current_mission:
 		1:
 			Global.enter_new_area.emit(current_area_name, current_room)
 			Global.enter_new_room.emit(current_room, player_position, current_direction)
@@ -823,7 +829,10 @@ func _on_add_mission_rewards(inventory_path: String):
 	await Global.dialogue_ended
 	stop_cutscene()
 	Global.back_to_lobby.emit()
-	State.current_mission += 1
+	if mission_1_done and past_mission > State.current_mission:
+		State.current_mission = past_mission
+	else:
+		State.current_mission += 1
 
 func set_interactable_dialogue(slot: InventorySlot, title: String):
 	Global.item_name = slot.item.name
@@ -968,10 +977,13 @@ func go_to_mission_2_boss():
 	Global.enter_new_room.emit(1, Vector2(0, 0), "up")
 
 func go_to_mission_2_end():
+	if mission_2_done and past_mission > State.current_mission:
+		State.current_mission = past_mission
+	else:
+		State.current_mission += 1
 	mission_2_done = true
 	Global.enter_new_area.emit("mission 2 - highway", 0)
 	Global.enter_new_room.emit(0, Vector2(0, 0), "up")
-	State.current_mission += 1
 	Global.cutscene_playing = false
 	animation_player.stop()
 	cutscene_camera.enabled = false

@@ -28,6 +28,7 @@ func gain_experience(amount):
 	print(experience_required)
 	while experience >= experience_required:
 		experience -= experience_required
+		CharacterResource.experience -= experience_required
 		level_up()
 
 func level_up():

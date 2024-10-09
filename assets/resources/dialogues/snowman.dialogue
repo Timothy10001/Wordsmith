@@ -2,9 +2,9 @@
 set npc_class = "Middle Class"
 
 if State.current_area == "lobby":
-	Mr Cheese: Hello Wordsmith! Do you want to revisit my mission?
+	Snowman: Hello Wordsmith! Do you want to revisit my mission?
 	- Yes
-		do emit("redo_mission", 1)
+		do emit("redo_mission", 2)
 		=> END
 	- No
 		=> END

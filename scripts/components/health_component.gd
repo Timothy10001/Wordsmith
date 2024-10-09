@@ -50,6 +50,7 @@ func heal(skill: SkillComponent):
 
 func item_heal(item: Item):
 	health += item.heal_value
+	Global.play_sfx.emit("add_mana")
 	if health > MAX_HEALTH:
 		health = MAX_HEALTH
 	health_changed.emit(item.heal_value)

@@ -15,4 +15,4 @@ deals_damage = false
 requires_skill_check = false
 status_effect = "none"
 stun_duration = 0
-chance = 10
+chance = 30
