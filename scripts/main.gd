@@ -176,6 +176,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("show_confirmation"):
 		if State.current_area == "lobby" and !State.was_in_mission:
 			save_game()
+		elif State.current_area == "lobby" and State.was_in_mission:
+			pass
 		else:
 			save_game()
 		pause_instance.visible = false
