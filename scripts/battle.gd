@@ -107,6 +107,7 @@ var bus_layout: AudioBusLayout = load("res://default_bus_layout.tres")
 @onready var IdentifyButton = $VBoxContainer2/BottomContainer/MainContainer/SkillsContainer/Identify
 @onready var StoryTimeButton = $"VBoxContainer2/BottomContainer/MainContainer/SkillsContainer/Story Time"
 @onready var ReviewButton = $VBoxContainer2/BottomContainer/MainContainer/SkillsContainer/Review
+@onready var ExecuteButton = $VBoxContainer2/BottomContainer/RightContainer/ButtonContainer/Panel/VBoxContainer/Execute
 
 #for skill check
 @onready var SkillCheck = $SkillCheck
@@ -656,6 +657,7 @@ func _on_skills_pressed():
 func _on_items_pressed():
 	Global.play_sfx.emit("button_click")
 	show_items()
+	ExecuteButton.visible = false
 	current_action = "Use Item"
 	populate_item_grid(inventory_data)
 
@@ -673,6 +675,7 @@ func _on_inventory_interacted(inventory: Inventory, index: int, type: String):
 		#set selected slot data
 		selected_inventory_slot = inventory.selected_slot_data(index)
 		selected_inventory_slot_index = index
+		ExecuteButton.visible = true
 		#highlight selected slot
 		update_selected_slot()
 

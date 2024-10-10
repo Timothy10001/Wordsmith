@@ -29,6 +29,7 @@ var mission_3_done: bool = false
 
 var world_inventory: Dictionary
 
+var past_mission: int = 0
 
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
@@ -122,6 +123,8 @@ func _process(_delta):
 		get_tree().paused = false
 		to_do_instance.visible = false
 	if Input.is_action_just_pressed("pause"):
+		print("Past mission: %s" % past_mission)
+		print("current mission: %s" % State.current_mission)
 		if $CanvasLayer.has_node("GoToKingPendragon"):
 			$CanvasLayer.get_node("GoToKingPendragon").visible = false
 		if $CanvasLayer.has_node("Tutorial"):
@@ -534,13 +537,16 @@ func _on_redo_mission(mission: int):
 	
 	mission_instance.MissionTitle.text = mission_instance.mission_title_list[mission]
 	mission_instance.MissionDescription.text = mission_instance.mission_description_list[mission]
-	past_mission = State.current_mission
+	if mission == State.current_mission:
+		pass
+	else:
+		past_mission = State.current_mission
 	State.current_mission = mission
+	
 
 #const enemy_required_scene: PackedScene = preload("res://scenes/enemies_required.tscn")
 var enemy_required_instance
 
-var past_mission: int = 0
 
 func _on_confirm_mission():
 	# do transition
@@ -549,6 +555,9 @@ func _on_confirm_mission():
 	call_deferred("add_iris_transition")
 	await Global.transition_finished
 	get_tree().paused = false
+	print("Past mission: %s" % past_mission)
+	print("current mission: %s" % State.current_mission)
+	print(State.current_mission == past_mission)
 	if FileAccess.file_exists(Global.SAVE_FILE) and State.was_in_mission and State.current_mission == past_mission:
 		load_mission()
 		return
@@ -835,6 +844,7 @@ func _on_add_mission_rewards(inventory_path: String):
 		State.current_mission = past_mission
 	else:
 		State.current_mission += 1
+		past_mission = 1
 
 func set_interactable_dialogue(slot: InventorySlot, title: String):
 	Global.item_name = slot.item.name
@@ -903,6 +913,15 @@ func _on_back_to_lobby():
 	
 	add_controls()
 	get_tree().paused = false
+	print("Past mission: %s" % past_mission)
+	print("current mission: %s" % State.current_mission)
+	if past_mission > State.current_mission:
+		var last_mission = past_mission
+		past_mission = State.current_mission
+		State.current_mission = last_mission
+		
+	print("Past mission: %s" % past_mission)
+	print("current mission: %s" % State.current_mission)
 
 const CUTSCENE_BARS = preload("res://scenes/cutscene_bars.tscn")
 var cutscene_bars_instance
@@ -983,6 +1002,7 @@ func go_to_mission_2_end():
 		State.current_mission = past_mission
 	else:
 		State.current_mission += 1
+		past_mission = 2
 	mission_2_done = true
 	Global.enter_new_area.emit("mission 2 - highway", 0)
 	Global.enter_new_room.emit(0, Vector2(0, 0), "up")
