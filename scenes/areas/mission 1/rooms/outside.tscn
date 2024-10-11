@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://dvke46ty67iv4"]
+[gd_scene load_steps=70 format=3 uid="uid://dvke46ty67iv4"]
 
 [ext_resource type="TileSet" uid="uid://b3v8i8oi20y22" path="res://assets/resources/tile_sets/outside.tres" id="1_b4h5j"]
 [ext_resource type="PackedScene" uid="uid://rnslowucwlht" path="res://scenes/npcs/mr_cheese.tscn" id="2_66il4"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://assets/resources/inventory.gd" id="10_dech3"]
 [ext_resource type="Resource" uid="uid://crhoh863ac78x" path="res://assets/resources/items/apple.tres" id="10_mnoon"]
 [ext_resource type="PackedScene" uid="uid://0e4cqtrxwquj" path="res://scenes/interactables/dialogue_object.tscn" id="13_dcivx"]
+[ext_resource type="Resource" uid="uid://dmc3jb7dd35co" path="res://assets/resources/items/bread.tres" id="14_fspqn"]
 [ext_resource type="Resource" uid="uid://d87erwsb7ilt" path="res://assets/resources/dialogues/interactables/chopped_trees.dialogue" id="14_ti0go"]
 [ext_resource type="PackedScene" uid="uid://bgv5p840ijn6m" path="res://scenes/interactables/carriage.tscn" id="16_rdwl5"]
 [ext_resource type="Resource" uid="uid://dxoq28yrebm5p" path="res://assets/resources/dialogues/interactables/carriage.dialogue" id="17_xfr01"]
@@ -44,9 +45,14 @@ script = ExtResource("9_t0ifj")
 item = ExtResource("10_mnoon")
 quantity = 5
 
+[sub_resource type="Resource" id="Resource_gwhvw"]
+script = ExtResource("9_t0ifj")
+item = ExtResource("14_fspqn")
+quantity = 2
+
 [sub_resource type="Resource" id="Resource_qa7k2"]
 script = ExtResource("10_dech3")
-items = Array[ExtResource("9_t0ifj")]([SubResource("Resource_acgdh")])
+items = Array[ExtResource("9_t0ifj")]([SubResource("Resource_acgdh"), SubResource("Resource_gwhvw")])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pdw8a"]
 size = Vector2(32, 32)

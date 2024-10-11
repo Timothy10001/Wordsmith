@@ -45,6 +45,7 @@ var options_instance
 var mission_instance
 var backpack_instance
 var confirmation_instance
+var show_item_instance
 
 var dialogue_resource: DialogueResource
 
@@ -92,7 +93,7 @@ func _process(_delta):
 					npc_node.get_node("PrincipalRonnie").visible = true
 	
 	if current_area_name == "mission 3 - classroom" and current_room == 4:
-		if has_node("Rooms/Outside"):
+		if has_node("Rooms/Classroom005"):
 			var npc_node = Rooms.get_child(0).get_node("NPCs")
 			npc_node.get_node("TeacherJoy").visible = false
 			npc_node.get_node("TeacherGigi").visible = false
@@ -227,6 +228,7 @@ func connect_signals():
 	Global.play_battle_music.connect(play_battle_music)
 	Global.play_sfx.connect(play_sfx)
 	Global.play_voice_over.connect(play_voice_over)
+	Global.show_item.connect(show_item)
 	Global.end_credits.connect(_on_end_credits)
 
 
@@ -242,7 +244,7 @@ const transition_scene: PackedScene = preload("res://scenes/transition.tscn")
 const mission_scene: PackedScene = preload("res://scenes/mission.tscn")
 const tutorial_scene: PackedScene = preload("res://scenes/tutorial.tscn")
 const go_to_king_pendragon_scene: PackedScene = preload("res://scenes/go_to_king_pendragon.tscn")
-
+const show_item_scene: PackedScene = preload("res://scenes/show_item.tscn")
 
 var current_area: Array[PackedScene]
 
@@ -814,6 +816,7 @@ func _on_add_mission_rewards(inventory_path: String):
 					if player_inventory.items[item_index].can_fully_merge_with(slot):
 						
 						set_interactable_dialogue(slot, "loot_get")
+						Global.show_item.emit(slot.item.texture)
 						await Global.dialogue_ended
 						
 						player_inventory.items[item_index].fully_merge_with(slot)
@@ -822,6 +825,7 @@ func _on_add_mission_rewards(inventory_path: String):
 					else:
 						#the chest item is added onto another slot if it cannot fully merge
 						set_interactable_dialogue(slot, "loot_get")
+						Global.show_item.emit(slot.item.texture)
 						await Global.dialogue_ended
 						
 						player_inventory.add_item(slot)
@@ -829,6 +833,7 @@ func _on_add_mission_rewards(inventory_path: String):
 				else:
 					#the chest item is added onto another slot if it's a new item
 					set_interactable_dialogue(slot, "loot_get")
+					Global.show_item.emit(slot.item.texture)
 					await Global.dialogue_ended
 					
 					player_inventory.add_item(slot)
@@ -845,6 +850,15 @@ func _on_add_mission_rewards(inventory_path: String):
 	else:
 		State.current_mission += 1
 		past_mission = 1
+
+func show_item(texture: Texture2D):
+	if has_node("ShowItem"):
+		show_item_instance = null
+		get_node("ShowItem").queue_free()
+	show_item_instance = show_item_scene.instantiate()
+	add_child(show_item_instance)
+	show_item_instance.texture_rect.texture = texture
+
 
 func set_interactable_dialogue(slot: InventorySlot, title: String):
 	Global.item_name = slot.item.name

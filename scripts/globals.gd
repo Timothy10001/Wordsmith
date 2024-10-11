@@ -61,6 +61,7 @@ signal remove_car_in_house
 signal play_sfx(_name: String)
 signal play_voice_over(_name: int)
 signal play_battle_music(enemy: String)
+signal show_item(texture: Texture2D)
 
 signal add_to_do(to_do: String)
 signal remove_to_do(to_do: String)

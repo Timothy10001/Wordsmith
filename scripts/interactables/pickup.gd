@@ -55,6 +55,7 @@ func _process(_delta):
 							if player_inventory.items[item_index].can_fully_merge_with(slot):
 								
 								set_interactable_dialogue(slot, "item_picked_up")
+								Global.show_item.emit(slot.item.texture)
 								await Global.dialogue_ended
 								
 								player_inventory.items[item_index].fully_merge_with(slot)
@@ -64,6 +65,7 @@ func _process(_delta):
 							else:
 								#the chest item is added onto another slot if it cannot fully merge
 								set_interactable_dialogue(slot, "item_picked_up")
+								Global.show_item.emit(slot.item.texture)
 								await Global.dialogue_ended
 								
 								player_inventory.add_item(slot)
@@ -72,8 +74,9 @@ func _process(_delta):
 								
 						else:
 							#the chest item is added onto another slot if it's a new item
-							print(slot.quantity)
+							
 							set_interactable_dialogue(slot, "item_picked_up")
+							Global.show_item.emit(slot.item.texture)
 							await Global.dialogue_ended
 							
 							player_inventory.add_item(slot)
