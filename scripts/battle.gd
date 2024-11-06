@@ -791,10 +791,15 @@ var current_word: String
 #skill check
 func _on_start_skill_check():
 	SkillCheck.visible = true
+	ProcessingLabel.visible = false
 	TryAgain.visible = false
 	SkillIllustration.visible = false
 	CurrentSentence.visible = false
 	CurrentWord.visible = false
+	
+	TryAgain.text = ""
+	CurrentWord.text = ""
+	CurrentSentence.text = ""
 	
 	if Global.TTS_available:
 		ReadButton.visible = true
