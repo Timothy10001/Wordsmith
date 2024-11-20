@@ -124,8 +124,8 @@ func _process(_delta):
 		get_tree().paused = false
 		to_do_instance.visible = false
 	if Input.is_action_just_pressed("pause"):
-		print("Past mission: %s" % past_mission)
-		print("current mission: %s" % State.current_mission)
+		#print("Past mission: %s" % past_mission)
+		#print("current mission: %s" % State.current_mission)
 		if $CanvasLayer.has_node("GoToKingPendragon"):
 			$CanvasLayer.get_node("GoToKingPendragon").visible = false
 		if $CanvasLayer.has_node("Tutorial"):
@@ -141,7 +141,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("resume"):
 		Music.play()
 		Music.seek(music_position)
-		print("unpaused")
+		#print("unpaused")
 		get_tree().paused = false
 		remove_child(pause_instance)
 		if $CanvasLayer.has_node("GoToKingPendragon"):
@@ -150,7 +150,7 @@ func _process(_delta):
 			for i in range($CanvasLayer.get_child_count()):
 				if $CanvasLayer.get_child(i).name != "GoToKingPendragon" and $CanvasLayer.get_child(i).name != "Tutorial":
 					$CanvasLayer.get_child(i).queue_free()
-					print($CanvasLayer.get_child(i).name)
+					#print($CanvasLayer.get_child(i).name)
 		backpack_instance = null
 		pause_instance = null
 		confirmation_instance = null
@@ -557,9 +557,9 @@ func _on_confirm_mission():
 	call_deferred("add_iris_transition")
 	await Global.transition_finished
 	get_tree().paused = false
-	print("Past mission: %s" % past_mission)
-	print("current mission: %s" % State.current_mission)
-	print(State.current_mission == past_mission)
+	#print("Past mission: %s" % past_mission)
+	#print("current mission: %s" % State.current_mission)
+	#print(State.current_mission == past_mission)
 	if FileAccess.file_exists(Global.SAVE_FILE) and State.was_in_mission and State.current_mission == past_mission:
 		load_mission()
 		return
@@ -927,15 +927,15 @@ func _on_back_to_lobby():
 	
 	add_controls()
 	get_tree().paused = false
-	print("Past mission: %s" % past_mission)
-	print("current mission: %s" % State.current_mission)
+	#print("Past mission: %s" % past_mission)
+	#print("current mission: %s" % State.current_mission)
 	if past_mission > State.current_mission:
 		var last_mission = past_mission
 		past_mission = State.current_mission
 		State.current_mission = last_mission
 		
-	print("Past mission: %s" % past_mission)
-	print("current mission: %s" % State.current_mission)
+	#print("Past mission: %s" % past_mission)
+	#print("current mission: %s" % State.current_mission)
 
 const CUTSCENE_BARS = preload("res://scenes/cutscene_bars.tscn")
 var cutscene_bars_instance

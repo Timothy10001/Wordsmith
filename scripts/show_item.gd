@@ -6,7 +6,7 @@ extends CanvasLayer
 func _ready():
 	await get_tree().create_timer(0.1).timeout
 	animation_player.play("Show Item")
-	print(texture_rect.texture)
+	#print(texture_rect.texture)
 
 
 

@@ -10,6 +10,8 @@ var party: Array[PackedScene]
 var dialogue_resource: DialogueResource
 var battle_type: String
 var end_battle_emitted: bool = false
+var is_tutorial_skill_check: bool = false
+
 
 """
 • init
@@ -791,6 +793,7 @@ var current_word: String
 #skill check
 func _on_start_skill_check():
 	SkillCheck.visible = true
+	$SkillCheck/PaperOverlay/Panel/MarginContainer.visible = true
 	ProcessingLabel.visible = false
 	TryAgain.visible = false
 	SkillIllustration.visible = false
@@ -901,35 +904,63 @@ var try_again_text = ["Please try again.", "Try again, you can do it!", "You can
 
 var skill_check_passed_array = ["amazing", "good_job", "awesome", "great"]
 @onready var skill_check_passed_sprite = $Animations/SkillCheckPassedSprite
+
 func check_if_skill_check_passed():
 	
 	ProcessingLabel.visible = false
 	animation_player.stop()
-	print("Completed Text: " + str(completed_text))
-	if current_word in completed_text or current_word.to_lower() in completed_text:
-		Global.skill_check_passed = true
-		SkillCheck.visible = false
-		ProcessingLabel.visible = false
-		randomize()
-		var skill_check_index = randi_range(0, 3)
-		skill_check_passed_sprite.play(skill_check_passed_array[skill_check_index])
-		animation_player.play("skill_check_passed")
-		await get_tree().create_timer(0.3).timeout
-		Global.play_sfx.emit(skill_check_passed_array[skill_check_index])
-		await animation_player.animation_finished
-		MicButton.visible = true
-		ReadButton.visible = true
-		SkipButton.visible = true
-		is_STT_processing = false
-		Global.end_skill_check.emit()
+	if !is_tutorial_skill_check:
+		print("Completed Text: " + str(completed_text))
+		if current_word in completed_text or current_word.to_lower() in completed_text or current_word.to_upper() in completed_text:
+			Global.skill_check_passed = true
+			SkillCheck.visible = false
+			ProcessingLabel.visible = false
+			randomize()
+			var skill_check_index = randi_range(0, 3)
+			skill_check_passed_sprite.play(skill_check_passed_array[skill_check_index])
+			animation_player.play("skill_check_passed")
+			await get_tree().create_timer(0.3).timeout
+			Global.play_sfx.emit(skill_check_passed_array[skill_check_index])
+			await animation_player.animation_finished
+			MicButton.visible = true
+			ReadButton.visible = true
+			SkipButton.visible = true
+			is_STT_processing = false
+			Global.end_skill_check.emit()
+		else:
+			TryAgain.text = try_again_text.pick_random()
+			TryAgain.visible = true
+			is_STT_processing = false
+			MicButton.visible = true
+			ReadButton.visible = true
+			SkipButton.visible = true
 	else:
-		TryAgain.text = try_again_text.pick_random()
-		TryAgain.visible = true
-		is_STT_processing = false
-		MicButton.visible = true
-		ReadButton.visible = true
-		SkipButton.visible = true
-	
+		current_word = "Apple"
+		if current_word in completed_text or current_word.to_lower() in completed_text or current_word.to_upper() in completed_text:
+			Global.skill_check_passed = true
+			SkillCheck.visible = false
+			ProcessingLabel.visible = false
+			randomize()
+			var skill_check_index = randi_range(0, 3)
+			skill_check_passed_sprite.play(skill_check_passed_array[skill_check_index])
+			animation_player.play("skill_check_passed")
+			await get_tree().create_timer(0.3).timeout
+			Global.play_sfx.emit(skill_check_passed_array[skill_check_index])
+			await animation_player.animation_finished
+			MicButton.visible = true
+			ReadButton.visible = true
+			SkipButton.visible = true
+			is_STT_processing = false
+			Global.play_tutorial_cutscene.emit("tutorial_part_5_5")
+			is_tutorial_skill_check = false
+			current_word = ""
+		else:
+			TryAgain.text = try_again_text.pick_random()
+			TryAgain.visible = true
+			is_STT_processing = false
+			MicButton.visible = true
+			ReadButton.visible = true
+			SkipButton.visible = true
 
 @onready var TryAgain = $SkillCheck/MarginContainer/TryAgain
 
@@ -942,3 +973,5 @@ func _on_read_button_pressed():
 @onready var animation_player = $AnimationPlayer
 
 
+func set_tutorial_skill_check():
+	is_tutorial_skill_check = true

@@ -103,6 +103,12 @@ do emit("play_voice_over", 20)
 Dummy: If you don't know how to read the word,
 do emit("play_voice_over", 21)
 Dummy: Press the BLUE BUTTON.
+do emit("play_voice_over", 26)
+Dummy: Try it now!
+do emit("play_tutorial_cutscene", "tutorial_part_5_25")
+=> END
+
+~ tutorial_part_5_5
 do emit("play_voice_over", 22)
 Dummy: You can also SKIP the skill check by pressing SKIP.
 do emit("play_voice_over", 23)
