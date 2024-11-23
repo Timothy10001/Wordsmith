@@ -31,6 +31,8 @@ var world_inventory: Dictionary
 
 var past_mission: int = 0
 
+var skill_check_stats: Array = []
+
 const BATTLE_BALLOON = preload("res://assets/dialogue balloons/battle dialogue/battle_balloon.tscn")
 const BALLOON = preload("res://assets/dialogue balloons/balloon.tscn")
 
@@ -71,7 +73,7 @@ func _process(_delta):
 	unlocked_igloo = State.unlocked_igloo
 	briefed_by_principal_ronnie = State.briefed_by_principal_ronnie
 	world_inventory = State.world_inventory
-	
+	State.skill_check_stats = skill_check_stats
 	
 	if current_area_name == "lobby" and current_room == 0:
 		if has_node("Rooms/Throne Room"):
@@ -251,6 +253,7 @@ var current_area: Array[PackedScene]
 
 
 func start() -> void:
+	skill_check_stats = []
 	State.world_inventory = {}
 	State.current_area = current_area_name
 	State.current_room = current_room
@@ -333,6 +336,7 @@ func save_data():
 	saved_data.mission_1_done = mission_1_done
 	saved_data.mission_2_done = mission_2_done
 	saved_data.mission_3_done = mission_3_done
+	saved_data.skill_check_stats = skill_check_stats
 	saved_data.world_inventory = State.world_inventory
 	saved_data.was_in_mission = State.was_in_mission
 	saved_data.past_mission = past_mission
@@ -357,6 +361,7 @@ func load_data():
 		mission_1_done = saved_data.mission_1_done
 		mission_2_done = saved_data.mission_2_done
 		mission_3_done = saved_data.mission_3_done
+		skill_check_stats = saved_data.skill_check_stats 
 		State.world_inventory = saved_data.world_inventory
 		State.was_in_mission = saved_data.was_in_mission
 		past_mission = saved_data.past_mission
@@ -653,7 +658,11 @@ func _on_start_battle(party: Array, enemies: Array, background_texture_path: Str
 	battle_instance.set_battle_data(party_array, enemy_array, background_texture_path, _type, _enemy_node)
 
 
-func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventory, _enemy_node: Node2D):
+func _on_end_battle(state, _type: String, experience_gained: int, loot: Inventory, _enemy_node: Node2D, _skill_check_stats: Array):
+	
+	skill_check_stats.append_array(_skill_check_stats)
+	print(skill_check_stats)
+	
 	var transition_instance = transition_scene.instantiate()
 	#dialogue balloon for this shit
 	dialogue_resource = load("res://assets/resources/dialogues/battle.dialogue")

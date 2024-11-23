@@ -162,7 +162,7 @@ TextEdit/font_sizes/font_size = 30
 TextEdit/fonts/font = ExtResource("3_7a40x")
 TextEdit/styles/normal = SubResource("StyleBoxFlat_6pihn")
 
-[sub_resource type="Shader" id="Shader_norfy"]
+[sub_resource type="Shader" id="Shader_xwvrs"]
 code = "shader_type canvas_item;
 
 void vertex() {
@@ -171,7 +171,7 @@ void vertex() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_72ru0"]
-shader = SubResource("Shader_norfy")
+shader = SubResource("Shader_xwvrs")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mqks"]
 atlas = ExtResource("8_rix8w")

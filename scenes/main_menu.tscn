@@ -192,6 +192,10 @@ visible = false
 layout_mode = 2
 text = "CONTINUE"
 
+[node name="Stats_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "STATS"
+
 [node name="Options_Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2

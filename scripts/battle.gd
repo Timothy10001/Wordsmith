@@ -169,7 +169,7 @@ func _process(_delta):
 	match(battle_state):
 		STATE.INIT:
 			#initialize battle values and progress bars
-			
+			skill_check_stats.clear()
 			show_default_container()
 			unit_list.append(get_player_data())
 			unit_list.append_array(get_enemy_data())
@@ -258,7 +258,7 @@ func _process(_delta):
 			set_player_resource_data()
 			if !end_battle_emitted:
 				end_battle_emitted = true
-				Global.end_battle.emit("Win", battle_type, total_enemy_experience, total_enemy_loot, enemy_node)
+				Global.end_battle.emit("Win", battle_type, total_enemy_experience, total_enemy_loot, enemy_node, skill_check_stats)
 				await Global.end_battle
 			battle_state = null
 		STATE.LOSE:
@@ -266,7 +266,7 @@ func _process(_delta):
 			print("lost")
 			if !end_battle_emitted:
 				end_battle_emitted = true
-				Global.end_battle.emit("Lose", battle_type, total_enemy_experience, total_enemy_loot, enemy_node)
+				Global.end_battle.emit("Lose", battle_type, total_enemy_experience, total_enemy_loot, enemy_node, skill_check_stats)
 				await Global.end_battle
 			battle_state = null
 
@@ -812,16 +812,18 @@ func _on_start_skill_check():
 	ProcessingLabel.visible = false
 	PaperOverlay.texture = load(paper_overlays.pick_random())
 	
-	randomize()
-	var random_index
 	
-	# ADD SKILL ILLUSTRATION AND SKILL WORD
+	
+	#randomize()
+	#var random_index
+	var index
 	match current_action:
 		"Flash Cards":
 			PaperOverlay.texture = null
-			random_index = randi_range(0, SkillCheckWords.flash_cards["words"].size() - 1)
-			current_word = SkillCheckWords.flash_cards["words"][random_index]
-			SkillIllustration.texture = load(SkillCheckWords.flash_cards["illustration"][random_index])
+			index = current_word_index_selector(SkillCheckWords.flash_cards["words"])
+			#random_index = randi_range(0, SkillCheckWords.flash_cards["words"].size() - 1)
+			current_word = SkillCheckWords.flash_cards["words"][index]
+			SkillIllustration.texture = load(SkillCheckWords.flash_cards["illustration"][index])
 			SkillIllustration.visible = true
 			CurrentWord.size_flags_horizontal = SIZE_SHRINK_CENTER
 			CurrentWord.size_flags_vertical = SIZE_SHRINK_END
@@ -829,25 +831,94 @@ func _on_start_skill_check():
 			CurrentWord.visible = true
 		"Identify":
 			PaperOverlay.texture = null
-			random_index = randi_range(0, SkillCheckWords.identify["words"].size() - 1)
-			current_word = SkillCheckWords.flash_cards["words"][random_index]
+			index = current_word_index_selector(SkillCheckWords.flash_cards["words"])
+			#random_index = randi_range(0, SkillCheckWords.identify["words"].size() - 1)
+			current_word = SkillCheckWords.flash_cards["words"][index]
 			CurrentWord.size_flags_horizontal = SIZE_SHRINK_CENTER
 			CurrentWord.size_flags_vertical = SIZE_SHRINK_END
 			CurrentWord.text = blank_text(current_word)
 			CurrentWord.visible = true
-			SkillIllustration.texture = load(SkillCheckWords.identify["illustration"][random_index])
+			SkillIllustration.texture = load(SkillCheckWords.identify["illustration"][index])
 			SkillIllustration.visible = true
 		"Story Time":
 			PaperOverlay.texture = null
-			random_index = randi_range(0, SkillCheckWords.story_time["words"].size() - 1)
-			current_word = SkillCheckWords.story_time["words"][random_index]
-			CurrentSentence.text = SkillCheckWords.story_time["sentences"][random_index]
+			#random_index = randi_range(0, SkillCheckWords.story_time["words"].size() - 1)
+			index = current_word_index_selector(SkillCheckWords.story_time["words"])
+			current_word = SkillCheckWords.story_time["words"][index]
+			CurrentSentence.text = SkillCheckWords.story_time["sentences"][index]
 			CurrentSentence.visible = true
-			SkillIllustration.texture = load(SkillCheckWords.story_time["illustration"][random_index])
+			SkillIllustration.texture = load(SkillCheckWords.story_time["illustration"][index])
 			SkillIllustration.visible = true
 	
 	print(current_word)
 
+
+var skipped_words = []
+
+func get_skipped_words():
+	skipped_words.clear()
+	if State.skill_check_stats.size() > 0:
+		for word_state in State.skill_check_stats:
+			if word_state[2] == false:
+				skipped_words.append(word_state[0])
+	if skill_check_stats.size() > 0:
+		for word_state in skill_check_stats:
+			if word_state[2] == false:
+				skipped_words.append(word_state[0])
+
+func current_word_index_selector(skill_check_words: Array):
+	get_skipped_words()
+	for player in party:
+		var player_instance = player.instantiate()
+		var letter_count = 3
+		var chosen_indexes = []
+		
+		if player_instance.CharacterResource.level <= 3:
+			letter_count = 3
+		elif player_instance.CharacterResource.level > 3 and player_instance.CharacterResource.level <= 6:
+			letter_count = 5
+		elif player_instance.CharacterResource.level > 6 and player_instance.CharacterResource.level <= 9:
+			letter_count = 6
+		else:
+			letter_count = 10
+		
+		for index in skill_check_words.size():
+			
+			if len(skill_check_words[index]) <= letter_count:
+				chosen_indexes.append(index)
+			else:
+				continue
+			if skill_check_words[index] == get_most_skipped_word():
+				randomize()
+				var chance = randi_range(1, 100)
+				if chance <= 75:
+					print("returning most skipped")
+					return index
+				else:
+					chosen_indexes.append(index)
+		
+		randomize()
+		return chosen_indexes.pick_random()
+
+
+func search_array(array: Array, value):
+	for index in array.size():
+		if value == array[index]:
+			return index
+	return null
+
+func get_most_skipped_word():
+	var frequency_dict = {}
+	var max_frequency = 0
+	var most_frequent_skipped_word = null
+	
+	for word in skipped_words:
+		frequency_dict[word] = frequency_dict.get(word, 0) + 1
+		if frequency_dict[word] > max_frequency:
+			max_frequency = frequency_dict[word]
+			most_frequent_skipped_word = word
+	
+	return most_frequent_skipped_word
 
 func blank_text(text: String):
 	var result = ""
@@ -894,6 +965,7 @@ func _on_mic_button_button_down():
 
 func _on_skip_button_pressed():
 	TryAgain.visible = false
+	skill_check_stats.append([current_word, current_action, false])
 	Global.skill_check_passed = false
 	Global.end_skill_check.emit()
 
@@ -905,6 +977,10 @@ var try_again_text = ["Please try again.", "Try again, you can do it!", "You can
 var skill_check_passed_array = ["amazing", "good_job", "awesome", "great"]
 @onready var skill_check_passed_sprite = $Animations/SkillCheckPassedSprite
 
+#WORD STATE == [current word, skill, passed]
+
+var skill_check_stats = []
+
 func check_if_skill_check_passed():
 	
 	ProcessingLabel.visible = false
@@ -915,6 +991,7 @@ func check_if_skill_check_passed():
 			Global.skill_check_passed = true
 			SkillCheck.visible = false
 			ProcessingLabel.visible = false
+			skill_check_stats.append([current_word, current_action, true])
 			randomize()
 			var skill_check_index = randi_range(0, 3)
 			skill_check_passed_sprite.play(skill_check_passed_array[skill_check_index])

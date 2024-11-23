@@ -30,3 +30,5 @@ extends Resource
 @export var was_in_mission: bool
 
 @export var past_mission: int
+
+@export var skill_check_stats: Array

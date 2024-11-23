@@ -30,3 +30,5 @@ var mission_2_done: bool = false
 var mission_3_done: bool = false
 
 var world_inventory = {}
+
+var skill_check_stats = []
